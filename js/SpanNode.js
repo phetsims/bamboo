@@ -1,4 +1,4 @@
-// Copyright 2019, University of Colorado Boulder
+// Copyright 2019-2020, University of Colorado Boulder
 
 /**
  * Shows an double headed arrow arrow pointing to parallel bars, and a text label.  Shown under a chart to indicate the

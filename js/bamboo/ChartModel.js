@@ -34,6 +34,7 @@ class ChartModel {
     // TODO: So we can make log plots, etc., which would show up in the gridlines
     this.modelViewTransformProperty = new Property( options.modelViewTransform );
 
+    // TODO: Support mutable chart dimensions
     this.width = options.width;
     this.height = options.height;
   }

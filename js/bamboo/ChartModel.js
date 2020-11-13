@@ -1,5 +1,7 @@
 // Copyright 2020, University of Colorado Boulder
 
+import Emitter from '../../../axon/js/Emitter.js';
+import Property from '../../../axon/js/Property.js';
 import merge from '../../../phet-core/js/merge.js';
 import ModelViewTransform2 from '../../../phetcommon/js/view/ModelViewTransform2.js';
 import griddle from '../griddle.js';
@@ -16,7 +18,7 @@ class ChartModel {
       width: 400,
       height: 400,
 
-      // must be invertible to back-compute model region
+      // must be invertible to back-compute model region, which may be used to compute gridlines?
       modelViewTransform: ModelViewTransform2.createIdentity()
     }, options );
 
@@ -32,10 +34,18 @@ class ChartModel {
     // TODO: Maybe this should be an arbitrary function in the x direction and in the y direction
     // TODO: So we can make log plots, etc., which would show up in the gridlines
     // this.modelViewTransform = ModelViewTransform2.createIdentity();
-    this.modelViewTransform = options.modelViewTransform;
+    // this.modelViewTransform = options.modelViewTransform;
+    this.modelViewTransformProperty = new Property(options.modelViewTransform);
+    this.modelViewTransformChangedEmitter = new Emitter();
 
     this.width = options.width;
     this.height = options.height;
+  }
+
+  // @public
+  setModelViewTransform( modelViewTransform ) {
+    this.modelViewTransform = modelViewTransform;
+    this.modelViewTransformChangedEmitter.emit();
   }
 }
 

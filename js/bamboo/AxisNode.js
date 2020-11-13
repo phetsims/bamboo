@@ -19,12 +19,17 @@ class AxisNode extends ArrowNode {
       headWidth: 10,
       tailWidth: 2
     }, options );
-    const viewX1 = chartModel.modelViewTransform.modelToViewX( x1 );
-    const viewY1 = chartModel.modelViewTransform.modelToViewY( y1 );
-    const viewX2 = chartModel.modelViewTransform.modelToViewX( x2 );
-    const viewY2 = chartModel.modelViewTransform.modelToViewX( y2 );
 
-    super( viewX1, viewY1, viewX2, viewY2, options );
+    super( 0, 0, 0, 0, options );
+
+    chartModel.modelViewTransformProperty.link( modelViewTransform => {
+
+      const viewX1 = modelViewTransform.modelToViewX( x1 );
+      const viewY1 = modelViewTransform.modelToViewY( y1 );
+      const viewX2 = modelViewTransform.modelToViewX( x2 );
+      const viewY2 = modelViewTransform.modelToViewY( y2 );
+      this.setTailAndTip( viewX1, viewY1, viewX2, viewY2 );
+    } );
   }
 }
 

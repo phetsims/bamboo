@@ -20,16 +20,20 @@ class TickMarkNode extends Line {
       stroke: 'black'
     }, options );
 
-    const viewX = chartModel.modelViewTransform.modelToViewX( x );
-    const viewY = chartModel.modelViewTransform.modelToViewY( y );
+    super( 0, 0, 0, 0, options );
 
-    const x1 = orientation === Orientation.VERTICAL ? viewX : viewX + options.extent;
-    const x2 = orientation === Orientation.VERTICAL ? viewX : viewX - options.extent;
+    chartModel.modelViewTransformProperty.link( modelViewTransform => {
+      const viewX = modelViewTransform.modelToViewX( x );
+      const viewY = modelViewTransform.modelToViewY( y );
 
-    const y1 = orientation === Orientation.VERTICAL ? viewY - options.extent : viewY;
-    const y2 = orientation === Orientation.VERTICAL ? viewY + options.extent : viewY;
+      const x1 = orientation === Orientation.VERTICAL ? viewX : viewX + options.extent;
+      const x2 = orientation === Orientation.VERTICAL ? viewX : viewX - options.extent;
 
-    super( x1, y1, x2, y2, options );
+      const y1 = orientation === Orientation.VERTICAL ? viewY - options.extent : viewY;
+      const y2 = orientation === Orientation.VERTICAL ? viewY + options.extent : viewY;
+
+      this.setLine( x1, y1, x2, y2 );
+    } );
   }
 }
 

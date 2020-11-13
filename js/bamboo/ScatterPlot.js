@@ -14,15 +14,14 @@ class ScatterPlot extends Node {
   constructor( chartModel, data, options ) {
     super();
 
-    const childLayer = new Node();
-    this.addChild( childLayer );
+    const nodes = data.map( () => new Circle( 2, { fill: 'blue' } ) );
+
+    nodes.forEach( node => this.addChild( node ) );
+
     chartModel.modelViewTransformProperty.link( modelViewTransform => {
-      childLayer.children = data.map( dataPoint => {
-        return new Circle( 2, {
-          fill: 'blue',
-          center: modelViewTransform.modelToViewPosition( dataPoint )
-        } );
-      } );
+      for ( let i = 0; i < nodes.length; i++ ) {
+        nodes[ i ].center = modelViewTransform.modelToViewPosition( data[ i ] );
+      }
     } );
   }
 }

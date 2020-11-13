@@ -1,0 +1,24 @@
+// Copyright 2020, University of Colorado Boulder
+
+import Line from '../../../scenery/js/nodes/Line.js';
+import griddle from '../griddle.js';
+
+/**
+ *
+ * @author Sam Reid (PhET Interactive Simulations)
+ */
+
+class ChartLineNode extends Line {
+
+  constructor( chartModel, x1, y1, x2, y2, options ) {
+    const viewX1 = chartModel.modelViewTransform.modelToViewX( x1 );
+    const viewY1 = chartModel.modelViewTransform.modelToViewY( y1 );
+    const viewX2 = chartModel.modelViewTransform.modelToViewX( x2 );
+    const viewY2 = chartModel.modelViewTransform.modelToViewX( y2 );
+
+    super( viewX1, viewY1, viewX2, viewY2, options );
+  }
+}
+
+griddle.register( 'ChartLineNode', ChartLineNode );
+export default ChartLineNode;

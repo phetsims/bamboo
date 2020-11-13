@@ -1,6 +1,5 @@
 // Copyright 2020, University of Colorado Boulder
 
-import Emitter from '../../../axon/js/Emitter.js';
 import Property from '../../../axon/js/Property.js';
 import merge from '../../../phet-core/js/merge.js';
 import ModelViewTransform2 from '../../../phetcommon/js/view/ModelViewTransform2.js';
@@ -33,19 +32,10 @@ class ChartModel {
     // for scrolling
     // TODO: Maybe this should be an arbitrary function in the x direction and in the y direction
     // TODO: So we can make log plots, etc., which would show up in the gridlines
-    // this.modelViewTransform = ModelViewTransform2.createIdentity();
-    // this.modelViewTransform = options.modelViewTransform;
-    this.modelViewTransformProperty = new Property(options.modelViewTransform);
-    this.modelViewTransformChangedEmitter = new Emitter();
+    this.modelViewTransformProperty = new Property( options.modelViewTransform );
 
     this.width = options.width;
     this.height = options.height;
-  }
-
-  // @public
-  setModelViewTransform( modelViewTransform ) {
-    this.modelViewTransform = modelViewTransform;
-    this.modelViewTransformChangedEmitter.emit();
   }
 }
 

@@ -30,9 +30,11 @@ class AxisNode extends ArrowNode {
 
       if ( orientation === Orientation.VERTICAL ) {
         this.setTailAndTip( viewValue, 0 - options.extension, viewValue, chartModel.height + options.extension );
+        this.setVisible( viewValue >= 0 && viewValue <= chartModel.width );
       }
       else {
         this.setTailAndTip( 0 - options.extension, viewValue, chartModel.width + options.extension, viewValue );
+        this.setVisible( viewValue >= 0 && viewValue <= chartModel.height );
       }
     } );
   }

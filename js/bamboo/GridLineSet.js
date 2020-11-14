@@ -23,7 +23,8 @@ class GridLineSet extends Path {
   constructor( chartModel, orientation, spacing, options ) {
     options = merge( {
       origin: 0,
-      stroke: 'black'
+      stroke: 'black',
+      clipped: false
     }, options );
 
     super( null );
@@ -31,7 +32,7 @@ class GridLineSet extends Path {
     chartModel.link( () => {
 
       const shape = new Shape();
-      chartModel.forEachSpacing( orientation, spacing, options.origin, ( modelPosition, viewPosition ) => {
+      chartModel.forEachSpacing( orientation, spacing, options.origin, options.clipped, ( modelPosition, viewPosition ) => {
         if ( orientation === Orientation.HORIZONTAL ) {
           shape.moveTo( viewPosition, 0 );
           shape.lineTo( viewPosition, chartModel.height );

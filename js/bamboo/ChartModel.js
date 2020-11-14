@@ -39,17 +39,26 @@ class ChartModel {
     this.modelYRange = options.modelYRange;
   }
 
-  // @public - generates no garbage
-  forEachSpacing( orientation, spacing, origin, callback ) {
+  /**
+   * @param {Orientation} orientation
+   * @param {number} spacing - model separation
+   * @param {number} origin - where one is guaranteed to land
+   * @param {boolean} clipped - if something is clipped elsewhere, we allow slack so it doesn't disappear from view like a flicker
+   * @param {function} callback
+   * @public
+   */
+  forEachSpacing( orientation, spacing, origin, clipped, callback ) {
 
     const modelRange = this.getModelRange( orientation );
 
     // n* spacing + origin = x
-    // n = (x-origin)/spacing.   Must be integer
-    // TODO: Round to ceiling/floor?  Sometimes it is nice to have points go a step outside so in-grid tick labels don't
-    // flicker out while still in view
-    const nMin = Util.roundSymmetric( ( modelRange.min - origin ) / spacing );
-    const nMax = Util.roundSymmetric( ( modelRange.max - origin ) / spacing );
+    // n = (x-origin)/spacing, where n is an integer
+    const nMin = clipped ?
+                 Util.roundSymmetric( ( modelRange.min - origin ) / spacing ) :
+                 Math.ceil( ( modelRange.min - origin ) / spacing );
+    const nMax = clipped ?
+                 Util.roundSymmetric( ( modelRange.max - origin ) / spacing ) :
+                 Math.floor( ( modelRange.max - origin ) / spacing );
 
     for ( let n = nMin; n <= nMax + 1E-6; n++ ) {
       const modelPosition = n * spacing + origin;
@@ -58,7 +67,7 @@ class ChartModel {
     }
   }
 
-  // @public
+  // @public - called when the chart transform has changed, and right away for initialization
   link( listener ) {
     this.transformChangedEmitter.addListener( listener );
     listener();

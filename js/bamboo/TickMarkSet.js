@@ -19,17 +19,21 @@ class TickMarkSet extends Path {
 
   /**
    * @param chartModel
-   * @param orientation
+   * @param {Orientation} orientation - the progression of the ticks.  For instance HORIZONTAL has ticks at x=0,1,2, etc.
    * @param {number} spacing - in model coordinates
    * @param options
    */
   constructor( chartModel, orientation, spacing, options ) {
     options = merge( {
       value: 0, // appear on the axis by default
+      edge: null, // 'min' or 'max' put the ticks on that edge of the chart (takes precedence over value)
       origin: 0,
       stroke: 'black',
       lineWidth: 2,
       extent: 10,
+
+      // determines whether the rounding is loose, see ChartModel
+      clipped: false,
       createLabel: value => new Text( value.toFixed( 1 ), { fontSize: 12 } ),
       positionLabel: ( label, tickBounds, orientation ) => {
         if ( orientation === Orientation.HORIZONTAL ) {
@@ -44,6 +48,10 @@ class TickMarkSet extends Path {
       }
     }, options );
 
+    if ( options.edge ) {
+      assert && assert( options.value === 0, 'value and edge are mutually exclusive' );
+    }
+
     super( null );
 
     // cache labels for quick reuse
@@ -56,16 +64,20 @@ class TickMarkSet extends Path {
       const children = [];
       const used = new Set();
 
-      chartModel.forEachSpacing( orientation, spacing, options.origin, ( modelPosition, viewPosition ) => {
+      chartModel.forEachSpacing( orientation, spacing, options.origin, options.clipped, ( modelPosition, viewPosition ) => {
         const tickBounds = new Bounds2( 0, 0, 0, 0 );
         if ( orientation === Orientation.HORIZONTAL ) {
-          const viewY = chartModel.modelToView( orientation.opposite, options.value );
+          const viewY = options.edge === 'min' ? 0 :
+                        options.edge === 'max' ? chartModel.width :
+                        chartModel.modelToView( orientation.opposite, options.value );
           shape.moveTo( viewPosition, viewY - options.extent / 2 );
           shape.lineTo( viewPosition, viewY + options.extent / 2 );
           tickBounds.setMinMax( viewPosition, viewY - options.extent / 2, viewPosition, viewY + options.extent / 2 );
         }
         else {
-          const viewX = chartModel.modelToView( orientation.opposite, options.value );
+          const viewX = options.edge === 'min' ? 0 :
+                        options.edge === 'max' ? chartModel.height :
+                        chartModel.modelToView( orientation.opposite, options.value );
           shape.moveTo( viewX - options.extent / 2, viewPosition );
           shape.lineTo( viewX + options.extent / 2, viewPosition );
           tickBounds.setMinMax( viewX - options.extent / 2, viewPosition, viewX + options.extent / 2, viewPosition );

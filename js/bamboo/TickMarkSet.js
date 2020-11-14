@@ -29,11 +29,14 @@ class TickMarkSet extends Path {
       edge: null, // 'min' or 'max' put the ticks on that edge of the chart (takes precedence over value)
       origin: 0,
       stroke: 'black',
-      lineWidth: 2,
+      lineWidth: 1,
       extent: 10,
 
       // determines whether the rounding is loose, see ChartModel
       clipped: false,
+
+      // or return null if no label
+      // TODO: It seems the default should be no label?
       createLabel: value => new Text( value.toFixed( 1 ), { fontSize: 12 } ),
       positionLabel: ( label, tickBounds, orientation ) => {
         if ( orientation === Orientation.HORIZONTAL ) {
@@ -68,7 +71,7 @@ class TickMarkSet extends Path {
         const tickBounds = new Bounds2( 0, 0, 0, 0 );
         if ( orientation === Orientation.HORIZONTAL ) {
           const viewY = options.edge === 'min' ? 0 :
-                        options.edge === 'max' ? chartModel.width :
+                        options.edge === 'max' ? chartModel.height :
                         chartModel.modelToView( orientation.opposite, options.value );
           shape.moveTo( viewPosition, viewY - options.extent / 2 );
           shape.lineTo( viewPosition, viewY + options.extent / 2 );
@@ -76,17 +79,19 @@ class TickMarkSet extends Path {
         }
         else {
           const viewX = options.edge === 'min' ? 0 :
-                        options.edge === 'max' ? chartModel.height :
+                        options.edge === 'max' ? chartModel.width :
                         chartModel.modelToView( orientation.opposite, options.value );
           shape.moveTo( viewX - options.extent / 2, viewPosition );
           shape.lineTo( viewX + options.extent / 2, viewPosition );
           tickBounds.setMinMax( viewX - options.extent / 2, viewPosition, viewX + options.extent / 2, viewPosition );
         }
 
-        const label = labelMap.has( modelPosition ) ? labelMap.get( modelPosition ) : options.createLabel( modelPosition );
+        const label = labelMap.has( modelPosition ) ? labelMap.get( modelPosition ) :
+                      options.createLabel ? options.createLabel( modelPosition ) :
+                      null;
         labelMap.set( modelPosition, label );
-        options.positionLabel( label, tickBounds, orientation );
-        children.push( label );
+        label && options.positionLabel( label, tickBounds, orientation );
+        label && children.push( label );
         used.add( modelPosition );
       } );
 

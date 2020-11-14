@@ -86,7 +86,11 @@ class ChartModel {
     assert && assert( orientation === Orientation.VERTICAL || orientation === Orientation.HORIZONTAL );
     const modelRange = orientation === Orientation.HORIZONTAL ? this.modelXRange : this.modelYRange;
     const viewDimension = orientation === Orientation.HORIZONTAL ? this.width : this.height;
-    return Util.linear( modelRange.min, modelRange.max, 0, viewDimension, value );
+
+    // For vertical, +y is usually up
+    return orientation === Orientation.HORIZONTAL ?
+           Util.linear( modelRange.min, modelRange.max, 0, viewDimension, value ) :
+           Util.linear( modelRange.max, modelRange.min, 0, viewDimension, value );
   }
 
   // @public

@@ -32,8 +32,6 @@ class ChartModel {
     // TODO: So we can make log plots, etc., which would show up in the gridlines
     this.transformChangedEmitter = new Emitter();
 
-    // TODO: Support mutable chart dimensions, say if the chart is resized.
-
     // @public (read-only)
     this.width = options.width;
     this.height = options.height;

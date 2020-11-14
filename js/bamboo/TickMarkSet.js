@@ -77,33 +77,25 @@ class TickMarkSet extends Path {
         const modelPosition = n * spacing + options.origin;
         const viewPosition = chartModel.modelToView( orientation, modelPosition );
 
+        const tickBounds = new Bounds2( 0, 0, 0, 0 );
         if ( orientation === Orientation.HORIZONTAL ) {
           const viewY = chartModel.modelToView( orientation.opposite, options.value );
           shape.moveTo( viewPosition, viewY - options.extent / 2 );
           shape.lineTo( viewPosition, viewY + options.extent / 2 );
-
-          // TODO: extent in bounds?
-          // TODO: pool a single bounds instance?
-          const tickBounds = new Bounds2( viewPosition, viewY - options.extent / 2, viewPosition, viewY + options.extent / 2 );
-          const label = labelMap.has( modelPosition ) ? labelMap.get( modelPosition ) : options.createLabel( modelPosition );
-          labelMap.set( modelPosition, label );
-          options.positionLabel( label, tickBounds, orientation );
-          children.push( label );
-          used.add( modelPosition );
+          tickBounds.setMinMax( viewPosition, viewY - options.extent / 2, viewPosition, viewY + options.extent / 2 );
         }
         else {
           const viewX = chartModel.modelToView( orientation.opposite, options.value );
           shape.moveTo( viewX - options.extent / 2, viewPosition );
           shape.lineTo( viewX + options.extent / 2, viewPosition );
-
-          const label = labelMap.has( modelPosition ) ? labelMap.get( modelPosition ) : options.createLabel( modelPosition );
-          labelMap.set( modelPosition, label );
-
-          const tickBounds = new Bounds2( viewX - options.extent / 2, viewPosition, viewX + options.extent / 2, viewPosition );
-          options.positionLabel( label, tickBounds, orientation );
-          children.push( label );
-          used.add( modelPosition );
+          tickBounds.setMinMax( viewX - options.extent / 2, viewPosition, viewX + options.extent / 2, viewPosition );
         }
+
+        const label = labelMap.has( modelPosition ) ? labelMap.get( modelPosition ) : options.createLabel( modelPosition );
+        labelMap.set( modelPosition, label );
+        options.positionLabel( label, tickBounds, orientation );
+        children.push( label );
+        used.add( modelPosition );
       }
 
       // empty cache of unused values

@@ -68,6 +68,7 @@ class ChartModel {
   }
 
   // @public - called when the chart transform has changed, and right away for initialization
+  // TODO: we need unlink
   link( listener ) {
     this.transformChangedEmitter.addListener( listener );
     listener();

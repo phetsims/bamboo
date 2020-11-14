@@ -29,10 +29,12 @@ class GridLineSet extends Path {
 
     super( null );
 
-    chartModel.modelViewTransformProperty.link( modelViewTransform => {
+    chartModel.link( () => {
 
-      const modelMin = orientation.viewToModel( modelViewTransform, 0 );
-      const modelMax = orientation.viewToModel( modelViewTransform, chartModel.width );
+      const modelRange = chartModel.getModelRange( orientation );
+
+      const modelMin = modelRange.min;
+      const modelMax = modelRange.max;
 
       assert && assert( modelMin < modelMax );
 
@@ -49,7 +51,7 @@ class GridLineSet extends Path {
 
       for ( let n = nMin; n <= nMax + 1E-6; n++ ) {
         const modelPosition = n * spacing + options.origin;
-        const viewPosition = orientation.modelToView( modelViewTransform, modelPosition );
+        const viewPosition = chartModel.modelToView( orientation, modelPosition );
 
         if ( orientation === Orientation.HORIZONTAL ) {
           shape.moveTo( viewPosition, 0 );

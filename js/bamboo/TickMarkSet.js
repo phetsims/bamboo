@@ -50,10 +50,12 @@ class TickMarkSet extends Path {
     // cache labels for quick reuse
     const labelMap = new Map();
 
-    chartModel.modelViewTransformProperty.link( modelViewTransform => {
+    chartModel.link( () => {
 
-      const modelMin = orientation.viewToModel( modelViewTransform, 0 );
-      const modelMax = orientation.viewToModel( modelViewTransform, chartModel.width );
+      const modelRange = chartModel.getModelRange( orientation );
+
+      const modelMin = modelRange.min;
+      const modelMax = modelRange.max;
 
       assert && assert( modelMin < modelMax );
 
@@ -73,10 +75,10 @@ class TickMarkSet extends Path {
 
       for ( let n = nMin; n <= nMax + 1E-6; n++ ) {
         const modelPosition = n * spacing + options.origin;
-        const viewPosition = orientation.modelToView( modelViewTransform, modelPosition );
+        const viewPosition = chartModel.modelToView( orientation, modelPosition );
 
         if ( orientation === Orientation.HORIZONTAL ) {
-          const viewY = modelViewTransform.modelToViewY( options.value );
+          const viewY = chartModel.modelToView( orientation.opposite, options.value );
           shape.moveTo( viewPosition, viewY - options.extent / 2 );
           shape.lineTo( viewPosition, viewY + options.extent / 2 );
 
@@ -90,7 +92,7 @@ class TickMarkSet extends Path {
           used.add( modelPosition );
         }
         else {
-          const viewX = modelViewTransform.modelToViewX( options.value );
+          const viewX = chartModel.modelToView( orientation.opposite, options.value );
           shape.moveTo( viewX - options.extent / 2, viewPosition );
           shape.lineTo( viewX + options.extent / 2, viewPosition );
 

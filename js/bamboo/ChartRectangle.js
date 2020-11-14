@@ -10,7 +10,8 @@ import griddle from '../griddle.js';
 
 class ChartRectangle extends Rectangle {
   constructor( chartModel, options ) {
-    super( 0, 0, chartModel.width, chartModel.height, options );
+    super( 0, 0, 0, 0, options );
+    chartModel.link( () => this.setRect( 0, 0, chartModel.width, chartModel.height ) );
   }
 }
 

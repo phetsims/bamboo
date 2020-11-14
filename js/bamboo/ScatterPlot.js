@@ -18,9 +18,9 @@ class ScatterPlot extends Node {
 
     nodes.forEach( node => this.addChild( node ) );
 
-    chartModel.modelViewTransformProperty.link( modelViewTransform => {
+    chartModel.link( () => {
       for ( let i = 0; i < nodes.length; i++ ) {
-        nodes[ i ].center = modelViewTransform.modelToViewPosition( data[ i ] );
+        nodes[ i ].center = chartModel.modelToViewPosition( data[ i ] );
       }
     } );
   }

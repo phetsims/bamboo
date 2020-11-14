@@ -1,8 +1,11 @@
 // Copyright 2020, University of Colorado Boulder
 
-import Property from '../../../axon/js/Property.js';
+import Emitter from '../../../axon/js/Emitter.js';
+import Range from '../../../dot/js/Range.js';
+import Util from '../../../dot/js/Utils.js';
+import Vector2 from '../../../dot/js/Vector2.js';
 import merge from '../../../phet-core/js/merge.js';
-import ModelViewTransform2 from '../../../phetcommon/js/view/ModelViewTransform2.js';
+import Orientation from '../../../phet-core/js/Orientation.js';
 import griddle from '../griddle.js';
 
 /**
@@ -18,25 +21,84 @@ class ChartModel {
       height: 400,
 
       // must be invertible to back-compute model region, which may be used to compute gridlines?
-      modelViewTransform: ModelViewTransform2.createIdentity()
+      // modelViewTransform: ModelViewTransform2.createIdentity()
+
+      // TODO: allow specification of a nonlinear transform.  Set at the same time as range so they are in sync
+      modelXRange: new Range( -1, 1 ),
+      modelYRange: new Range( -1, 1 )
     }, options );
 
-    // Where data will be displayed in views
-    // this.viewArea = new Bounds2( 0, 0, 100, 100 );
-
-    // Possible to change dimensions, say, if a window or containing panel is resized.
-    // this.widthProperty = new NumberProperty( 400 );
-    // this.heightProperty = new NumberProperty( 400 );
-
-    // Use a reference and an Emitter so that we can mutate the modelViewTransform in-place
-    // for scrolling
     // TODO: Maybe this should be an arbitrary function in the x direction and in the y direction
     // TODO: So we can make log plots, etc., which would show up in the gridlines
-    this.modelViewTransformProperty = new Property( options.modelViewTransform );
+    this.transformChangedEmitter = new Emitter();
 
-    // TODO: Support mutable chart dimensions
+    // TODO: Support mutable chart dimensions, say if the chart is resized.
+
+    // @public (read-only)
     this.width = options.width;
     this.height = options.height;
+    this.modelXRange = options.modelXRange;
+    this.modelYRange = options.modelYRange;
+  }
+
+  // @public
+  link( listener ) {
+    this.transformChangedEmitter.addListener( listener );
+    listener();
+  }
+
+  // @public
+  modelToViewPosition( vector ) {
+    return new Vector2(
+      this.modelToView( Orientation.HORIZONTAL, vector.x ),
+      this.modelToView( Orientation.VERTICAL, vector.y )
+    );
+  }
+
+  // @public
+  modelToView( orientation, value ) {
+    assert && assert( orientation === Orientation.VERTICAL || orientation === Orientation.HORIZONTAL );
+    const modelRange = orientation === Orientation.HORIZONTAL ? this.modelXRange : this.modelYRange;
+    const viewDimension = orientation === Orientation.HORIZONTAL ? this.width : this.height;
+    return Util.linear( modelRange.min, modelRange.max, 0, viewDimension, value );
+  }
+
+  // @public
+  getModelRange( orientation ) {
+    assert && assert( orientation === Orientation.VERTICAL || orientation === Orientation.HORIZONTAL );
+    return orientation === Orientation.VERTICAL ? this.modelYRange : this.modelXRange;
+  }
+
+  // @public
+  setWidth( width ) {
+    if ( width !== this.width ) {
+      this.width = width;
+      this.transformChangedEmitter.emit();
+    }
+  }
+
+  // @public
+  setHeight( height ) {
+    if ( height !== this.height ) {
+      this.height = height;
+      this.transformChangedEmitter.emit();
+    }
+  }
+
+  // @public
+  setModelXRange( modelXRange ) {
+    if ( modelXRange !== this.modelXRange ) {
+      this.modelXRange = modelXRange;
+      this.transformChangedEmitter.emit();
+    }
+  }
+
+  // @public
+  setModelYRange( modelYRange ) {
+    if ( modelYRange !== this.modelYRange ) {
+      this.modelYRange = modelYRange;
+      this.transformChangedEmitter.emit();
+    }
   }
 }
 

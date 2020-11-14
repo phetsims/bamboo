@@ -25,8 +25,8 @@ class AxisNode extends ArrowNode {
 
     super( 0, 0, 0, 0, options );
 
-    chartModel.modelViewTransformProperty.link( modelViewTransform => {
-      const viewValue = orientation.opposite.modelToView( modelViewTransform, options.value );
+    chartModel.link( () => {
+      const viewValue = chartModel.modelToView( orientation.opposite, options.value );
 
       if ( orientation === Orientation.VERTICAL ) {
         this.setTailAndTip( viewValue, 0 - options.extension, viewValue, chartModel.height + options.extension );

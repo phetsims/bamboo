@@ -16,7 +16,6 @@ import TickMarkSet from '../bamboo/TickMarkSet.js';
 import griddle from '../griddle.js';
 
 /**
- *
  * @author Sam Reid (PhET Interactive Simulations)
  */
 

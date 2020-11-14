@@ -1,6 +1,5 @@
 // Copyright 2020, University of Colorado Boulder
 
-import Util from '../../../dot/js/Utils.js';  // TODO: wrong import
 import Bounds2 from '../../../dot/js/Bounds2.js';
 import Shape from '../../../kite/js/Shape.js';
 import merge from '../../../phet-core/js/merge.js';
@@ -52,31 +51,12 @@ class TickMarkSet extends Path {
 
     chartModel.link( () => {
 
-      const modelRange = chartModel.getModelRange( orientation );
-
-      const modelMin = modelRange.min;
-      const modelMax = modelRange.max;
-
-      assert && assert( modelMin < modelMax );
-
-      // compute the location of the grid lines
-      // find the center point in view coordinates
-
-      // n* spacing + origin = x
-      // n = (x-origin)/spacing.   Must be integer
-
-      const nMin = Util.roundSymmetric( ( modelMin - options.origin ) / spacing );
-      const nMax = Util.roundSymmetric( ( modelMax - options.origin ) / spacing );
-
       const shape = new Shape();
 
       const children = [];
       const used = new Set();
 
-      for ( let n = nMin; n <= nMax + 1E-6; n++ ) {
-        const modelPosition = n * spacing + options.origin;
-        const viewPosition = chartModel.modelToView( orientation, modelPosition );
-
+      chartModel.forEachSpacing( orientation, spacing, options.origin, ( modelPosition, viewPosition ) => {
         const tickBounds = new Bounds2( 0, 0, 0, 0 );
         if ( orientation === Orientation.HORIZONTAL ) {
           const viewY = chartModel.modelToView( orientation.opposite, options.value );
@@ -96,7 +76,7 @@ class TickMarkSet extends Path {
         options.positionLabel( label, tickBounds, orientation );
         children.push( label );
         used.add( modelPosition );
-      }
+      } );
 
       // empty cache of unused values
       const toRemove = [];

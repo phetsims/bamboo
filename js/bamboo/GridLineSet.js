@@ -1,6 +1,5 @@
 // Copyright 2020, University of Colorado Boulder
 
-import Util from '../../../dot/js/Utils.js';
 import Shape from '../../../kite/js/Shape.js';
 import merge from '../../../phet-core/js/merge.js';
 import Orientation from '../../../phet-core/js/Orientation.js';
@@ -31,28 +30,8 @@ class GridLineSet extends Path {
 
     chartModel.link( () => {
 
-      const modelRange = chartModel.getModelRange( orientation );
-
-      const modelMin = modelRange.min;
-      const modelMax = modelRange.max;
-
-      assert && assert( modelMin < modelMax );
-
-      // compute the location of the grid lines
-      // find the center point in view coordinates
-
-      // n* spacing + origin = x
-      // n = (x-origin)/spacing.   Must be integer
-
-      const nMin = Util.roundSymmetric( ( modelMin - options.origin ) / spacing );
-      const nMax = Util.roundSymmetric( ( modelMax - options.origin ) / spacing );
-
       const shape = new Shape();
-
-      for ( let n = nMin; n <= nMax + 1E-6; n++ ) {
-        const modelPosition = n * spacing + options.origin;
-        const viewPosition = chartModel.modelToView( orientation, modelPosition );
-
+      chartModel.forEachSpacing( orientation, spacing, options.origin, ( modelPosition, viewPosition ) => {
         if ( orientation === Orientation.HORIZONTAL ) {
           shape.moveTo( viewPosition, 0 );
           shape.lineTo( viewPosition, chartModel.height );
@@ -61,8 +40,7 @@ class GridLineSet extends Path {
           shape.moveTo( 0, viewPosition );
           shape.lineTo( chartModel.width, viewPosition );
         }
-      }
-
+      } );
       this.shape = shape;
     } );
 

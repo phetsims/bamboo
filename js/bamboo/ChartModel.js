@@ -39,6 +39,25 @@ class ChartModel {
     this.modelYRange = options.modelYRange;
   }
 
+  // @public - generates no garbage
+  forEachSpacing( orientation, spacing, origin, callback ) {
+
+    const modelRange = this.getModelRange( orientation );
+
+    // n* spacing + origin = x
+    // n = (x-origin)/spacing.   Must be integer
+    // TODO: Round to ceiling/floor?  Sometimes it is nice to have points go a step outside so in-grid tick labels don't
+    // flicker out while still in view
+    const nMin = Util.roundSymmetric( ( modelRange.min - origin ) / spacing );
+    const nMax = Util.roundSymmetric( ( modelRange.max - origin ) / spacing );
+
+    for ( let n = nMin; n <= nMax + 1E-6; n++ ) {
+      const modelPosition = n * spacing + origin;
+      const viewPosition = this.modelToView( orientation, modelPosition );
+      callback( modelPosition, viewPosition );
+    }
+  }
+
   // @public
   link( listener ) {
     this.transformChangedEmitter.addListener( listener );

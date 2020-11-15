@@ -20,7 +20,7 @@ import griddle from '../griddle.js';
  * @author Sam Reid (PhET Interactive Simulations)
  */
 
-class DemoHarmonicsChart extends Node {
+class DemoComponentsChart extends Node {
 
   constructor( options ) {
 
@@ -113,5 +113,5 @@ class DemoHarmonicsChart extends Node {
   }
 }
 
-griddle.register( 'DemoHarmonicsChart', DemoHarmonicsChart );
-export default DemoHarmonicsChart;
+griddle.register( 'DemoComponentsChart', DemoComponentsChart );
+export default DemoComponentsChart;

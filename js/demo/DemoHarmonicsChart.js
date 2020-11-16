@@ -94,11 +94,9 @@ class DemoHarmonicsChart extends Node {
       // Tick marks outside the chart
       new TickMarkSet( chartModel, Orientation.VERTICAL, 0.5, { edge: 'min' } ),
       new LabelSet( chartModel, Orientation.VERTICAL, 0.5, { edge: 'min' } ),
-      new TickMarkSet( chartModel, Orientation.HORIZONTAL, Math.PI / 8, {
-        edge: 'max' // TODO: should be min
-      } ),
+      new TickMarkSet( chartModel, Orientation.HORIZONTAL, Math.PI / 8, { edge: 'min' } ),
       new LabelSet( chartModel, Orientation.HORIZONTAL, Math.PI / 8, {
-        edge: 'max',
+        edge: 'min',
         createLabel: value => new Text( Math.abs( value ) < 1E-6 ? value.toFixed( 0 ) : value.toFixed( 2 ), {
           fontSize: 12
         } )

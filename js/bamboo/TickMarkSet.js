@@ -49,8 +49,8 @@ class TickMarkSet extends Path {
       chartModel.forEachSpacing( orientation, spacing, options.origin, options.clipped, ( modelPosition, viewPosition ) => {
         const tickBounds = new Bounds2( 0, 0, 0, 0 );
         if ( orientation === Orientation.HORIZONTAL ) {
-          const viewY = options.edge === 'min' ? 0 :
-                        options.edge === 'max' ? chartModel.height :
+          const viewY = options.edge === 'min' ? chartModel.height :
+                        options.edge === 'max' ? 0 :
                         chartModel.modelToView( orientation.opposite, options.value );
           shape.moveTo( viewPosition, viewY - options.extent / 2 );
           shape.lineTo( viewPosition, viewY + options.extent / 2 );

@@ -1,18 +1,16 @@
 // Copyright 2020, University of Colorado Boulder
 
 import Bounds2 from '../../../dot/js/Bounds2.js';
-import Shape from '../../../kite/js/Shape.js';
 import merge from '../../../phet-core/js/merge.js';
 import Orientation from '../../../phet-core/js/Orientation.js';
 import Path from '../../../scenery/js/nodes/Path.js';
+import Text from '../../../scenery/js/nodes/Text.js';
 import griddle from '../griddle.js';
 
 /**
- * Draws a set of lines within a graph.  For example, the minor horizontal lines.  Back-computes the model
- * locations given the view area.
  * @author Sam Reid (PhET Interactive Simulations)
  */
-class TickMarkSet extends Path {
+class LabelSet extends Path {
 
   /**
    * @param chartModel
@@ -25,12 +23,26 @@ class TickMarkSet extends Path {
       value: 0, // appear on the axis by default
       edge: null, // 'min' or 'max' put the ticks on that edge of the chart (takes precedence over value)
       origin: 0,
-      stroke: 'black',
-      lineWidth: 1,
+
+      // act as if there is a tick with this extent, for positioning the label relatively
       extent: 10,
 
       // determines whether the rounding is loose, see ChartModel
-      clipped: false
+      clipped: false,
+
+      // or return null if no label for that value
+      createLabel: value => new Text( value.toFixed( 1 ), { fontSize: 12 } ),
+      positionLabel: ( label, tickBounds, orientation ) => {
+        if ( orientation === Orientation.HORIZONTAL ) {
+
+          // ticks flow horizontally, so tick labels should be below
+          label.centerTop = tickBounds.centerBottom.plusXY( 0, 1 );
+        }
+        else {
+          label.rightCenter = tickBounds.leftCenter.plusXY( -1, 0 );
+        }
+        return label;
+      }
     }, options );
 
     if ( options.edge ) {
@@ -39,9 +51,10 @@ class TickMarkSet extends Path {
 
     super( null );
 
-    chartModel.link( () => {
+    // cache labels for quick reuse
+    const labelMap = new Map();
 
-      const shape = new Shape();
+    chartModel.link( () => {
 
       const children = [];
       const used = new Set();
@@ -52,23 +65,35 @@ class TickMarkSet extends Path {
           const viewY = options.edge === 'min' ? 0 :
                         options.edge === 'max' ? chartModel.height :
                         chartModel.modelToView( orientation.opposite, options.value );
-          shape.moveTo( viewPosition, viewY - options.extent / 2 );
-          shape.lineTo( viewPosition, viewY + options.extent / 2 );
           tickBounds.setMinMax( viewPosition, viewY - options.extent / 2, viewPosition, viewY + options.extent / 2 );
         }
         else {
           const viewX = options.edge === 'min' ? 0 :
                         options.edge === 'max' ? chartModel.width :
                         chartModel.modelToView( orientation.opposite, options.value );
-          shape.moveTo( viewX - options.extent / 2, viewPosition );
-          shape.lineTo( viewX + options.extent / 2, viewPosition );
           tickBounds.setMinMax( viewX - options.extent / 2, viewPosition, viewX + options.extent / 2, viewPosition );
         }
 
+        const label = labelMap.has( modelPosition ) ? labelMap.get( modelPosition ) :
+                      options.createLabel ? options.createLabel( modelPosition ) :
+                      null;
+        labelMap.set( modelPosition, label );
+        label && options.positionLabel( label, tickBounds, orientation );
+        label && children.push( label );
         used.add( modelPosition );
       } );
 
-      this.shape = shape;
+      // empty cache of unused values
+      const toRemove = [];
+      for ( const key of labelMap.keys() ) {
+        if ( !used.has( key ) ) {
+          toRemove.push( key );
+        }
+      }
+      toRemove.forEach( t => {
+        labelMap.delete( t );
+      } );
+
       this.children = children;
     } );
 
@@ -76,5 +101,5 @@ class TickMarkSet extends Path {
   }
 }
 
-griddle.register( 'TickMarkSet', TickMarkSet );
-export default TickMarkSet;
+griddle.register( 'LabelSet', LabelSet );
+export default LabelSet;

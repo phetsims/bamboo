@@ -11,6 +11,7 @@ import AxisNode from '../bamboo/AxisNode.js';
 import ChartModel from '../bamboo/ChartModel.js';
 import ChartRectangle from '../bamboo/ChartRectangle.js';
 import GridLineSet from '../bamboo/GridLineSet.js';
+import LabelSet from '../bamboo/LabelSet.js';
 import LinePlot from '../bamboo/LinePlot.js';
 import TickMarkSet from '../bamboo/TickMarkSet.js';
 import griddle from '../griddle.js';
@@ -92,8 +93,12 @@ class DemoHarmonicsChart extends Node {
 
       // Tick marks outside the chart
       new TickMarkSet( chartModel, Orientation.VERTICAL, 0.5, { edge: 'min' } ),
+      new LabelSet( chartModel, Orientation.VERTICAL, 0.5, { edge: 'min' } ),
       new TickMarkSet( chartModel, Orientation.HORIZONTAL, Math.PI / 8, {
-        edge: 'max', // TODO: should be min
+        edge: 'max' // TODO: should be min
+      } ),
+      new LabelSet( chartModel, Orientation.HORIZONTAL, Math.PI / 8, {
+        edge: 'max',
         createLabel: value => new Text( Math.abs( value ) < 1E-6 ? value.toFixed( 0 ) : value.toFixed( 2 ), {
           fontSize: 12
         } )

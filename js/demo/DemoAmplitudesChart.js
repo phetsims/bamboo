@@ -90,9 +90,9 @@ class DemoAmplitudesChart extends Node {
           createLabel: value => new Text( value.toFixed( 2 ), { fontSize: 12 } )
         } ),
 
-        new TickMarkSet( chartModel, Orientation.HORIZONTAL, Math.PI * 2, { edge: 'max' } ),
+        new TickMarkSet( chartModel, Orientation.HORIZONTAL, Math.PI * 2, { edge: 'min' } ),
         new LabelSet( chartModel, Orientation.HORIZONTAL, Math.PI * 2, {
-          edge: 'max', // TODO: should be min
+          edge: 'min',
           createLabel: value => new Text( ( value / Math.PI ).toFixed( 0 ) + MathSymbols.PI, { fontSize: 12 } )
         } )
       ]

@@ -20,6 +20,8 @@ class ChartModel {
   constructor( options ) {
 
     options = merge( {
+
+      // Dimensions of the chart in view coordinates
       width: 400,
       height: 400,
 

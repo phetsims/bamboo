@@ -13,8 +13,6 @@ import griddle from '../griddle.js';
  * locations given the view area.
  * @author Sam Reid (PhET Interactive Simulations)
  */
-
-// TODO: Shared code with GridLineSet
 class TickMarkSet extends Path {
 
   /**

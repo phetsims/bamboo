@@ -9,27 +9,26 @@ import Orientation from '../../../phet-core/js/Orientation.js';
 import griddle from '../griddle.js';
 
 /**
- *
+ * This defines an output rectangle where chart data will be rendered, and one transform for each axis.
  * @author Sam Reid (PhET Interactive Simulations)
  */
-
 class ChartModel {
+
+  /**
+   * @param [options]
+   */
   constructor( options ) {
 
     options = merge( {
       width: 400,
       height: 400,
 
-      // must be invertible to back-compute model region, which may be used to compute gridlines?
-      // modelViewTransform: ModelViewTransform2.createIdentity()
-
-      // TODO: allow specification of a nonlinear transform.  Set at the same time as range so they are in sync
+      // TODO: alternately, allow specification of a arbitrary nonlinear transform.  Set at the same time as range so
+      //  they are in sync. So we can make log plots, etc., which would show up in the gridlines and data sets, etc.
       modelXRange: new Range( -1, 1 ),
       modelYRange: new Range( -1, 1 )
     }, options );
 
-    // TODO: Maybe this should be an arbitrary function in the x direction and in the y direction
-    // TODO: So we can make log plots, etc., which would show up in the gridlines
     this.transformChangedEmitter = new Emitter();
 
     // @public (read-only)
@@ -67,14 +66,31 @@ class ChartModel {
     }
   }
 
-  // @public - called when the chart transform has changed, and right away for initialization
-  // TODO: we need unlink
+  /**
+   * Called when the chart transform has changed, and right away for initialization
+   * @param {function} listener
+   * @public
+   */
   link( listener ) {
     this.transformChangedEmitter.addListener( listener );
     listener();
   }
 
-  // @public
+  /**
+   * Remove a listener from the chart transforms
+   * @param listener
+   * @public
+   */
+  unlink( listener ) {
+    this.transformChangedEmitter.removeListener( listener );
+  }
+
+  /**
+   * Transforms a model coordinate to a view coordinate
+   * @param {Vector2} vector
+   * @returns {Vector2}
+   * @public
+   */
   modelToViewPosition( vector ) {
     return new Vector2(
       this.modelToView( Orientation.HORIZONTAL, vector.x ),
@@ -82,7 +98,13 @@ class ChartModel {
     );
   }
 
-  // @public
+  /**
+   * Transforms a model position {number} to a view position {number} for the specified Orientation
+   * @param {Orientation} orientation
+   * @param {number} value
+   * @returns {number}
+   * @public
+   */
   modelToView( orientation, value ) {
     assert && assert( orientation === Orientation.VERTICAL || orientation === Orientation.HORIZONTAL );
     const modelRange = orientation === Orientation.HORIZONTAL ? this.modelXRange : this.modelYRange;
@@ -94,13 +116,21 @@ class ChartModel {
            Util.linear( modelRange.max, modelRange.min, 0, viewDimension, value );
   }
 
-  // @public
+  /**
+   * @param {Orientation} orientation
+   * @returns {Range}
+   * @private
+   */
   getModelRange( orientation ) {
     assert && assert( orientation === Orientation.VERTICAL || orientation === Orientation.HORIZONTAL );
     return orientation === Orientation.VERTICAL ? this.modelYRange : this.modelXRange;
   }
 
-  // @public
+  /**
+   * Sets the width out the output region of the chart.
+   * @param {number} width
+   * @public
+   */
   setWidth( width ) {
     if ( width !== this.width ) {
       this.width = width;
@@ -108,7 +138,11 @@ class ChartModel {
     }
   }
 
-  // @public
+  /**
+   * Sets the height out the output region of the chart.
+   * @param {number} height
+   * @public
+   */
   setHeight( height ) {
     if ( height !== this.height ) {
       this.height = height;
@@ -116,17 +150,25 @@ class ChartModel {
     }
   }
 
-  // @public
+  /**
+   * Sets the Range for the x dimension for the model, this sets a linear coordinate transform in this dimension.
+   * @param {number} modelXRange
+   * @public
+   */
   setModelXRange( modelXRange ) {
-    if ( modelXRange !== this.modelXRange ) {
+    if ( !modelXRange.equals( this.modelXRange ) ) {
       this.modelXRange = modelXRange;
       this.transformChangedEmitter.emit();
     }
   }
 
-  // @public
+  /**
+   * Sets the Range for the y dimension for the model, this sets a linear coordinate transform in this dimension.
+   * @param {number} modelYRange
+   * @public
+   */
   setModelYRange( modelYRange ) {
-    if ( modelYRange !== this.modelYRange ) {
+    if ( !modelYRange.equals( this.modelYRange ) ) {
       this.modelYRange = modelYRange;
       this.transformChangedEmitter.emit();
     }

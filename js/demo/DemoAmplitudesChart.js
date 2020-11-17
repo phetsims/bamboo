@@ -37,9 +37,7 @@ class DemoAmplitudesChart extends Node {
       data.push( new Vector2( x, y ) );
     }
 
-    const chartModel = new ChartModel( {
-      width: 700,
-      height: 300,
+    const chartModel = new ChartModel( 700, 300, {
       modelXRange: new Range( 0, Math.PI * 24 ),
       modelYRange: new Range( 0, 0.14 )
     } );

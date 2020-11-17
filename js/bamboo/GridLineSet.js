@@ -29,23 +29,46 @@ class GridLineSet extends Path {
 
     super( null );
 
-    chartModel.link( () => {
+    // @private
+    this.chartModel = chartModel;
+    this.orientation = orientation;
+    this.spacing = spacing;
+    this.origin = options.origin;
+    this.clipped = options.clipped;
 
-      const shape = new Shape();
-      chartModel.forEachSpacing( orientation, spacing, options.origin, options.clipped, ( modelPosition, viewPosition ) => {
-        if ( orientation === Orientation.HORIZONTAL ) {
-          shape.moveTo( viewPosition, 0 );
-          shape.lineTo( viewPosition, chartModel.height );
-        }
-        else {
-          shape.moveTo( 0, viewPosition );
-          shape.lineTo( chartModel.width, viewPosition );
-        }
-      } );
-      this.shape = shape;
-    } );
+    // TODO: Dispose
+    chartModel.link( () => this.updateGridLineSet() );
 
     this.mutate( options );
+  }
+
+  /**
+   * @private
+   */
+  updateGridLineSet() {
+    const shape = new Shape();
+    this.chartModel.forEachSpacing( this.orientation, this.spacing, this.origin, this.clipped, ( modelPosition, viewPosition ) => {
+      if ( this.orientation === Orientation.HORIZONTAL ) {
+        shape.moveTo( viewPosition, 0 );
+        shape.lineTo( viewPosition, this.chartModel.height );
+      }
+      else {
+        shape.moveTo( 0, viewPosition );
+        shape.lineTo( this.chartModel.width, viewPosition );
+      }
+    } );
+    this.shape = shape;
+  }
+
+  /**
+   * @param {number} spacing
+   * @public
+   */
+  setSpacing( spacing ) {
+    if ( this.spacing !== spacing ) {
+      this.spacing = spacing;
+      this.updateGridLineSet();
+    }
   }
 }
 

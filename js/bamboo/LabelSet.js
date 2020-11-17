@@ -25,6 +25,8 @@ class LabelSet extends Path {
       origin: 0,
 
       // act as if there is a tick with this extent, for positioning the label relatively
+      // TODO: This seems critical to get right, if it is shared by TickMarkNode.  Also, is it odd to put this to 0 (or a small number)
+      // when you don't have ticks?
       extent: 10,
 
       // determines whether the rounding is loose, see ChartModel
@@ -51,53 +53,82 @@ class LabelSet extends Path {
 
     super( null );
 
+    // @private
+    this.chartModel = chartModel;
+    this.orientation = orientation;
+    this.spacing = spacing;
+    this.origin = options.origin;
+    this.extent = options.extent;
+    this.value = options.value;
+    this.clipped = options.clipped;
+    this.edge = options.edge;
+    this.createLabel = options.createLabel;
+    this.positionLabel = options.positionLabel;
+
     // cache labels for quick reuse
-    const labelMap = new Map();
+    this.labelMap = new Map();
 
-    chartModel.link( () => {
-
-      const children = [];
-      const used = new Set();
-
-      chartModel.forEachSpacing( orientation, spacing, options.origin, options.clipped, ( modelPosition, viewPosition ) => {
-        const tickBounds = new Bounds2( 0, 0, 0, 0 );
-        if ( orientation === Orientation.HORIZONTAL ) {
-          const viewY = options.edge === 'min' ? chartModel.height :
-                        options.edge === 'max' ? 0 :
-                        chartModel.modelToView( orientation.opposite, options.value );
-          tickBounds.setMinMax( viewPosition, viewY - options.extent / 2, viewPosition, viewY + options.extent / 2 );
-        }
-        else {
-          const viewX = options.edge === 'min' ? 0 :
-                        options.edge === 'max' ? chartModel.width :
-                        chartModel.modelToView( orientation.opposite, options.value );
-          tickBounds.setMinMax( viewX - options.extent / 2, viewPosition, viewX + options.extent / 2, viewPosition );
-        }
-
-        const label = labelMap.has( modelPosition ) ? labelMap.get( modelPosition ) :
-                      options.createLabel ? options.createLabel( modelPosition ) :
-                      null;
-        labelMap.set( modelPosition, label );
-        label && options.positionLabel( label, tickBounds, orientation );
-        label && children.push( label );
-        used.add( modelPosition );
-      } );
-
-      // empty cache of unused values
-      const toRemove = [];
-      for ( const key of labelMap.keys() ) {
-        if ( !used.has( key ) ) {
-          toRemove.push( key );
-        }
-      }
-      toRemove.forEach( t => {
-        labelMap.delete( t );
-      } );
-
-      this.children = children;
-    } );
+    // TODO: Dispose
+    chartModel.link( () => this.updateLabelSet() );
 
     this.mutate( options );
+  }
+
+  /**
+   * @param {number} spacing
+   * @public
+   */
+  setSpacing( spacing ) {
+    if ( this.spacing !== spacing ) {
+      this.spacing = spacing;
+      this.updateLabelSet();
+    }
+  }
+
+  /**
+   * @private
+   */
+  updateLabelSet() {
+    const children = [];
+    const used = new Set();
+
+    this.chartModel.forEachSpacing( this.orientation, this.spacing, this.origin, this.clipped, ( modelPosition, viewPosition ) => {
+      const tickBounds = new Bounds2( 0, 0, 0, 0 );
+      if ( this.orientation === Orientation.HORIZONTAL ) {
+        const viewY = this.edge === 'min' ? this.chartModel.height :
+                      this.edge === 'max' ? 0 :
+                      this.chartModel.modelToView( this.orientation.opposite, this.value );
+        tickBounds.setMinMax( viewPosition, viewY - this.extent / 2, viewPosition, viewY + this.extent / 2 );
+      }
+      else {
+        const viewX = this.edge === 'min' ? 0 :
+                      this.edge === 'max' ? this.chartModel.width :
+                      this.chartModel.modelToView( this.orientation.opposite, this.value );
+        tickBounds.setMinMax( viewX - this.extent / 2, viewPosition, viewX + this.extent / 2, viewPosition );
+      }
+
+      const label = this.labelMap.has( modelPosition ) ? this.labelMap.get( modelPosition ) :
+                    this.createLabel ? this.createLabel( modelPosition ) :
+                    null;
+      this.labelMap.set( modelPosition, label );
+      label && this.positionLabel( label, tickBounds, this.orientation );
+      label && children.push( label );
+      used.add( modelPosition );
+    } );
+
+    // empty cache of unused values
+    const toRemove = [];
+    for ( const key of this.labelMap.keys() ) {
+      if ( !used.has( key ) ) {
+        toRemove.push( key );
+      }
+    }
+    toRemove.forEach( t => {
+      this.labelMap.delete( t );
+    } );
+
+    this.children = children;
+
   }
 }
 

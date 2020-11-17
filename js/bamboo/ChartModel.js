@@ -15,27 +15,25 @@ import griddle from '../griddle.js';
 class ChartModel {
 
   /**
+   * @param {number} width - in view coordinates
+   * @param {number} height - in view coordinates
    * @param [options]
    */
-  constructor( options ) {
+  constructor( width, height, options ) {
 
     options = merge( {
-
-      // Dimensions of the chart in view coordinates
-      width: 400,
-      height: 400,
 
       // TODO: alternately, allow specification of a arbitrary nonlinear transform.  Set at the same time as range so
       //  they are in sync. So we can make log plots, etc., which would show up in the gridlines and data sets, etc.
       modelXRange: new Range( -1, 1 ),
-      modelYRange: new Range( -1, 1 )
+      modelYRange: new Range( -1, 1 ) // TODO: Should this be called "y"?  What about charts that show height as a function of time?
     }, options );
 
     this.transformChangedEmitter = new Emitter();
 
     // @public (read-only)
-    this.width = options.width;
-    this.height = options.height;
+    this.width = width;
+    this.height = height;
     this.modelXRange = options.modelXRange;
     this.modelYRange = options.modelYRange;
   }

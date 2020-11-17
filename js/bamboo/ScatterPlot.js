@@ -1,28 +1,45 @@
 // Copyright 2020, University of Colorado Boulder
 
-import Circle from '../../../scenery/js/nodes/Circle.js';
+import Shape from '../../../kite/js/Shape.js';
+import merge from '../../../phet-core/js/merge.js';
+import Path from '../../../scenery/js/nodes/Path.js';
 import griddle from '../griddle.js';
-import Node from '../../../scenery/js/nodes/Node.js';
 
 /**
  *
  * @author Sam Reid (PhET Interactive Simulations)
  */
 
-class ScatterPlot extends Node {
+class ScatterPlot extends Path {
 
   constructor( chartModel, data, options ) {
-    super();
+    options = merge( {
+      radius: 2
+    }, options );
+    super( null, options );
 
-    const nodes = data.map( () => new Circle( 2, { fill: 'blue' } ) );
+    // @private
+    this.chartModel = chartModel;
+    this.data = data;
+    this.radius = options.radius;
 
-    nodes.forEach( node => this.addChild( node ) );
+    chartModel.link( () => this.update() );
+  }
 
-    chartModel.link( () => {
-      for ( let i = 0; i < nodes.length; i++ ) {
-        nodes[ i ].center = chartModel.modelToViewPosition( data[ i ] );
+  // @public
+  // TODO: renders 2x/frame if a data point is added and the chart scrolls
+  update() {
+    const shape = new Shape();
+    for ( let i = 0; i < this.data.length; i++ ) {
+
+      // NaN or Infinite components draw nothing
+      if ( this.data[ i ].isFinite() ) {
+        const viewPoint = this.chartModel.modelToViewPosition( this.data[ i ] );
+        shape.moveToPoint( viewPoint );
+        shape.circle( viewPoint.x, viewPoint.y, this.radius );
       }
-    } );
+    }
+    this.shape = shape;
   }
 }
 

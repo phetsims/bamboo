@@ -15,8 +15,8 @@ import griddle from '../griddle.js';
 class GridLineSet extends Path {
 
   /**
-   * @param chartModel
-   * @param orientation
+   * @param {ChartModel} chartModel
+   * @param {Orientation} orientation - if the lines themselves are HORIZONTAL or VERTICAL.  TODO: is this backwards?
    * @param {number} spacing - in model coordinates
    * @param options
    */

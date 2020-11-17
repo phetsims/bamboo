@@ -99,6 +99,17 @@ class ChartModel {
   }
 
   /**
+   * Transforms a model delta {number} to a view delta {number} for the specified Orientation
+   * @param {Orientation} orientation
+   * @param {number} modelDelta
+   * @returns {number}
+   * @public
+   */
+  modelToViewDelta( orientation, modelDelta ) {
+    return this.modelToView( orientation, modelDelta ) - this.modelToView( orientation, 0 );
+  }
+
+  /**
    * Transforms a model position {number} to a view position {number} for the specified Orientation
    * @param {Orientation} orientation
    * @param {number} value
@@ -152,7 +163,7 @@ class ChartModel {
 
   /**
    * Sets the Range for the x dimension for the model, this sets a linear coordinate transform in this dimension.
-   * @param {number} modelXRange
+   * @param {Range} modelXRange
    * @public
    */
   setModelXRange( modelXRange ) {
@@ -164,7 +175,7 @@ class ChartModel {
 
   /**
    * Sets the Range for the y dimension for the model, this sets a linear coordinate transform in this dimension.
-   * @param {number} modelYRange
+   * @param {Range} modelYRange
    * @public
    */
   setModelYRange( modelYRange ) {

@@ -34,9 +34,7 @@ class DemoHarmonicsChart extends Node {
       return data;
     };
 
-    const chartModel = new ChartModel( {
-      width: 700,
-      height: 300,
+    const chartModel = new ChartModel( 700, 300, {
       modelXRange: new Range( -Math.PI / 8, Math.PI / 8 ),
       modelYRange: new Range( -4 / Math.PI, 4 / Math.PI )
     } );

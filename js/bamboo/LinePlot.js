@@ -1,13 +1,14 @@
 // Copyright 2020, University of Colorado Boulder
 
-import Shape from '../../../kite/js/Shape.js';
-import Path from '../../../scenery/js/nodes/Path.js';
-import griddle from '../griddle.js';
-
 /**
+ * TODO documentation
  *
  * @author Sam Reid (PhET Interactive Simulations)
  */
+
+import Shape from '../../../kite/js/Shape.js';
+import Path from '../../../scenery/js/nodes/Path.js';
+import griddle from '../griddle.js';
 
 class LinePlot extends Path {
 

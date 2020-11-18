@@ -1,15 +1,16 @@
 // Copyright 2020, University of Colorado Boulder
 
+/**
+ * Numerical, not categorical.
+ *
+ * @author Sam Reid (PhET Interactive Simulations)
+ */
+
 import Vector2 from '../../../dot/js/Vector2.js';
 import merge from '../../../phet-core/js/merge.js';
 import Line from '../../../scenery/js/nodes/Line.js';
 import griddle from '../griddle.js';
 import Node from '../../../scenery/js/nodes/Node.js';
-
-/**
- * Numerical, not categorical.
- * @author Sam Reid (PhET Interactive Simulations)
- */
 
 class BarPlot extends Node {
 

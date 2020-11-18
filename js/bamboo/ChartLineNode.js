@@ -1,12 +1,13 @@
 // Copyright 2020, University of Colorado Boulder
 
-import Line from '../../../scenery/js/nodes/Line.js';
-import griddle from '../griddle.js';
-
 /**
+ * TODO documentation
  *
  * @author Sam Reid (PhET Interactive Simulations)
  */
+
+import Line from '../../../scenery/js/nodes/Line.js';
+import griddle from '../griddle.js';
 
 class ChartLineNode extends Line {
 

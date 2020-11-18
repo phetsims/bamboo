@@ -1,5 +1,11 @@
 // Copyright 2020, University of Colorado Boulder
 
+/**
+ * This defines an output rectangle where chart data will be rendered, and one transform for each axis.
+ *
+ * @author Sam Reid (PhET Interactive Simulations)
+ */
+
 import Emitter from '../../../axon/js/Emitter.js';
 import Range from '../../../dot/js/Range.js';
 import Util from '../../../dot/js/Utils.js';
@@ -8,10 +14,6 @@ import merge from '../../../phet-core/js/merge.js';
 import Orientation from '../../../phet-core/js/Orientation.js';
 import griddle from '../griddle.js';
 
-/**
- * This defines an output rectangle where chart data will be rendered, and one transform for each axis.
- * @author Sam Reid (PhET Interactive Simulations)
- */
 class ChartModel {
 
   /**

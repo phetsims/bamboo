@@ -1,14 +1,15 @@
 // Copyright 2020, University of Colorado Boulder
 
+/**
+ * TODO documentation
+ *
+ * @author Sam Reid (PhET Interactive Simulations)
+ */
+
 import merge from '../../../phet-core/js/merge.js';
 import Orientation from '../../../phet-core/js/Orientation.js';
 import ArrowNode from '../../../scenery-phet/js/ArrowNode.js';
 import griddle from '../griddle.js';
-
-/**
- *
- * @author Sam Reid (PhET Interactive Simulations)
- */
 
 class AxisNode extends ArrowNode {
 

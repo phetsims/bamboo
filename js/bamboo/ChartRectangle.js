@@ -1,12 +1,13 @@
 // Copyright 2020, University of Colorado Boulder
 
-import Rectangle from '../../../scenery/js/nodes/Rectangle.js';
-import griddle from '../griddle.js';
-
 /**
+ * TODO documentation
  *
  * @author Sam Reid (PhET Interactive Simulations)
  */
+
+import Rectangle from '../../../scenery/js/nodes/Rectangle.js';
+import griddle from '../griddle.js';
 
 class ChartRectangle extends Rectangle {
   constructor( chartModel, options ) {

@@ -1,5 +1,11 @@
 // Copyright 2019-2020, University of Colorado Boulder
 
+/**
+ * TODO documentation
+ *
+ * @author Sam Reid (PhET Interactive Simulations)
+ */
+
 import Bounds2 from '../../../dot/js/Bounds2.js';
 import Enumeration from '../../../phet-core/js/Enumeration.js';
 import CanvasNode from '../../../scenery/js/nodes/CanvasNode.js';

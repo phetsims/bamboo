@@ -1,14 +1,15 @@
 // Copyright 2020, University of Colorado Boulder
 
+/**
+ * TODO documentation
+ *
+ * @author Sam Reid (PhET Interactive Simulations)
+ */
+
 import Shape from '../../../kite/js/Shape.js';
 import merge from '../../../phet-core/js/merge.js';
 import Path from '../../../scenery/js/nodes/Path.js';
 import griddle from '../griddle.js';
-
-/**
- *
- * @author Sam Reid (PhET Interactive Simulations)
- */
 
 class ScatterPlot extends Path {
 

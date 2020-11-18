@@ -74,12 +74,12 @@ class DemoHarmonicsChart extends Node {
         children: [
 
           // Minor grid lines
-          new GridLineSet( chartModel, Orientation.VERTICAL, 0.5, { stroke: 'lightGray' } ),
-          new GridLineSet( chartModel, Orientation.HORIZONTAL, Math.PI / 32, { stroke: 'lightGray' } ),
+          new GridLineSet( chartModel, Orientation.HORIZONTAL, 0.5, { stroke: 'lightGray' } ),
+          new GridLineSet( chartModel, Orientation.VERTICAL, Math.PI / 32, { stroke: 'lightGray' } ),
 
           // Axes nodes are clipped in the chart
-          new AxisNode( chartModel, Orientation.VERTICAL ),
           new AxisNode( chartModel, Orientation.HORIZONTAL ),
+          new AxisNode( chartModel, Orientation.VERTICAL ),
 
           // Some data
           new LinePlot( chartModel, createDataSet( -2, 2, 5 ), { stroke: 'red', lineWidth: 2 } ),

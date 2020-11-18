@@ -55,7 +55,7 @@ class DemoAmplitudesChart extends Node {
       children: [
 
         // Minor grid lines
-        new GridLineSet( chartModel, Orientation.HORIZONTAL, 0.05, { stroke: 'lightGray' } ),
+        new GridLineSet( chartModel, Orientation.VERTICAL, 0.05, { stroke: 'lightGray' } ),
 
         // Some data
         new BarPlot( chartModel, data, {

@@ -18,11 +18,11 @@ class LabelSet extends Path {
 
   /**
    * @param chartModel
-   * @param {Orientation} orientation - the progression of the ticks.  For instance HORIZONTAL has ticks at x=0,1,2, etc.
+   * @param {Orientation} axisOrientation - the progression of the ticks.  For instance HORIZONTAL has ticks at x=0,1,2, etc.
    * @param {number} spacing - in model coordinates
    * @param options
    */
-  constructor( chartModel, orientation, spacing, options ) {
+  constructor( chartModel, axisOrientation, spacing, options ) {
     options = merge( {
       value: 0, // appear on the axis by default
       edge: null, // 'min' or 'max' put the ticks on that edge of the chart (takes precedence over value)
@@ -38,8 +38,8 @@ class LabelSet extends Path {
 
       // or return null if no label for that value
       createLabel: value => new Text( Utils.toFixed( value, 1 ), { fontSize: 12 } ),
-      positionLabel: ( label, tickBounds, orientation ) => {
-        if ( orientation === Orientation.HORIZONTAL ) {
+      positionLabel: ( label, tickBounds, axisOrientation ) => {
+        if ( axisOrientation === Orientation.HORIZONTAL ) {
 
           // ticks flow horizontally, so tick labels should be below
           label.centerTop = tickBounds.centerBottom.plusXY( 0, 1 );
@@ -59,7 +59,7 @@ class LabelSet extends Path {
 
     // @private
     this.chartModel = chartModel;
-    this.orientation = orientation;
+    this.axisOrientation = axisOrientation;
     this.spacing = spacing;
     this.origin = options.origin;
     this.extent = options.extent;
@@ -96,18 +96,18 @@ class LabelSet extends Path {
     const children = [];
     const used = new Set();
 
-    this.chartModel.forEachSpacing( this.orientation, this.spacing, this.origin, this.clipped, ( modelPosition, viewPosition ) => {
+    this.chartModel.forEachSpacing( this.axisOrientation, this.spacing, this.origin, this.clipped, ( modelPosition, viewPosition ) => {
       const tickBounds = new Bounds2( 0, 0, 0, 0 );
-      if ( this.orientation === Orientation.HORIZONTAL ) {
+      if ( this.axisOrientation === Orientation.HORIZONTAL ) {
         const viewY = this.edge === 'min' ? this.chartModel.height :
                       this.edge === 'max' ? 0 :
-                      this.chartModel.modelToView( this.orientation.opposite, this.value );
+                      this.chartModel.modelToView( this.axisOrientation.opposite, this.value );
         tickBounds.setMinMax( viewPosition, viewY - this.extent / 2, viewPosition, viewY + this.extent / 2 );
       }
       else {
         const viewX = this.edge === 'min' ? 0 :
                       this.edge === 'max' ? this.chartModel.width :
-                      this.chartModel.modelToView( this.orientation.opposite, this.value );
+                      this.chartModel.modelToView( this.axisOrientation.opposite, this.value );
         tickBounds.setMinMax( viewX - this.extent / 2, viewPosition, viewX + this.extent / 2, viewPosition );
       }
 
@@ -115,7 +115,7 @@ class LabelSet extends Path {
                     this.createLabel ? this.createLabel( modelPosition ) :
                     null;
       this.labelMap.set( modelPosition, label );
-      label && this.positionLabel( label, tickBounds, this.orientation );
+      label && this.positionLabel( label, tickBounds, this.axisOrientation );
       label && children.push( label );
       used.add( modelPosition );
     } );

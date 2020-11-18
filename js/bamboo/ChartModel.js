@@ -41,16 +41,16 @@ class ChartModel {
   }
 
   /**
-   * @param {Orientation} orientation
+   * @param {Orientation} axisOrientation
    * @param {number} spacing - model separation
    * @param {number} origin - where one is guaranteed to land
    * @param {boolean} clipped - if something is clipped elsewhere, we allow slack so it doesn't disappear from view like a flicker
    * @param {function} callback
    * @public
    */
-  forEachSpacing( orientation, spacing, origin, clipped, callback ) {
+  forEachSpacing( axisOrientation, spacing, origin, clipped, callback ) {
 
-    const modelRange = this.getModelRange( orientation );
+    const modelRange = this.getModelRange( axisOrientation );
 
     // n* spacing + origin = x
     // n = (x-origin)/spacing, where n is an integer
@@ -63,7 +63,7 @@ class ChartModel {
 
     for ( let n = nMin; n <= nMax + 1E-6; n++ ) {
       const modelPosition = n * spacing + origin;
-      const viewPosition = this.modelToView( orientation, modelPosition );
+      const viewPosition = this.modelToView( axisOrientation, modelPosition );
       callback( modelPosition, viewPosition );
     }
   }
@@ -102,41 +102,41 @@ class ChartModel {
 
   /**
    * Transforms a model delta {number} to a view delta {number} for the specified Orientation
-   * @param {Orientation} orientation
+   * @param {Orientation} axisOrientation
    * @param {number} modelDelta
    * @returns {number}
    * @public
    */
-  modelToViewDelta( orientation, modelDelta ) {
-    return this.modelToView( orientation, modelDelta ) - this.modelToView( orientation, 0 );
+  modelToViewDelta( axisOrientation, modelDelta ) {
+    return this.modelToView( axisOrientation, modelDelta ) - this.modelToView( axisOrientation, 0 );
   }
 
   /**
    * Transforms a model position {number} to a view position {number} for the specified Orientation
-   * @param {Orientation} orientation
+   * @param {Orientation} axisOrientation
    * @param {number} value
    * @returns {number}
    * @public
    */
-  modelToView( orientation, value ) {
-    assert && assert( orientation === Orientation.VERTICAL || orientation === Orientation.HORIZONTAL );
-    const modelRange = orientation === Orientation.HORIZONTAL ? this.modelXRange : this.modelYRange;
-    const viewDimension = orientation === Orientation.HORIZONTAL ? this.width : this.height;
+  modelToView( axisOrientation, value ) {
+    assert && assert( axisOrientation === Orientation.VERTICAL || axisOrientation === Orientation.HORIZONTAL );
+    const modelRange = axisOrientation === Orientation.HORIZONTAL ? this.modelXRange : this.modelYRange;
+    const viewDimension = axisOrientation === Orientation.HORIZONTAL ? this.width : this.height;
 
     // For vertical, +y is usually up
-    return orientation === Orientation.HORIZONTAL ?
+    return axisOrientation === Orientation.HORIZONTAL ?
            Util.linear( modelRange.min, modelRange.max, 0, viewDimension, value ) :
            Util.linear( modelRange.max, modelRange.min, 0, viewDimension, value );
   }
 
   /**
-   * @param {Orientation} orientation
+   * @param {Orientation} axisOrientation
    * @returns {Range}
    * @private
    */
-  getModelRange( orientation ) {
-    assert && assert( orientation === Orientation.VERTICAL || orientation === Orientation.HORIZONTAL );
-    return orientation === Orientation.VERTICAL ? this.modelYRange : this.modelXRange;
+  getModelRange( axisOrientation ) {
+    assert && assert( axisOrientation === Orientation.VERTICAL || axisOrientation === Orientation.HORIZONTAL );
+    return axisOrientation === Orientation.VERTICAL ? this.modelYRange : this.modelXRange;
   }
 
   /**

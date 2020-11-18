@@ -17,11 +17,11 @@ class GridLineSet extends Path {
 
   /**
    * @param {ChartModel} chartModel
-   * @param {Orientation} orientation - if the lines themselves are HORIZONTAL or VERTICAL.  TODO: is this backwards?
+   * @param {Orientation} axisOrientation - grid lines that are drawn horizontally progress up the Orientation.VERTICAL axis
    * @param {number} spacing - in model coordinates
    * @param options
    */
-  constructor( chartModel, orientation, spacing, options ) {
+  constructor( chartModel, axisOrientation, spacing, options ) {
     options = merge( {
       origin: 0,
       stroke: 'black',
@@ -32,7 +32,7 @@ class GridLineSet extends Path {
 
     // @private
     this.chartModel = chartModel;
-    this.orientation = orientation;
+    this.axisOrientation = axisOrientation;
     this.spacing = spacing;
     this.origin = options.origin;
     this.clipped = options.clipped;
@@ -48,14 +48,14 @@ class GridLineSet extends Path {
    */
   updateGridLineSet() {
     const shape = new Shape();
-    this.chartModel.forEachSpacing( this.orientation, this.spacing, this.origin, this.clipped, ( modelPosition, viewPosition ) => {
-      if ( this.orientation === Orientation.HORIZONTAL ) {
-        shape.moveTo( viewPosition, 0 );
-        shape.lineTo( viewPosition, this.chartModel.height );
-      }
-      else {
+    this.chartModel.forEachSpacing( this.axisOrientation.opposite, this.spacing, this.origin, this.clipped, ( modelPosition, viewPosition ) => {
+      if ( this.axisOrientation === Orientation.HORIZONTAL ) {
         shape.moveTo( 0, viewPosition );
         shape.lineTo( this.chartModel.width, viewPosition );
+      }
+      else {
+        shape.moveTo( viewPosition, 0 );
+        shape.lineTo( viewPosition, this.chartModel.height );
       }
     } );
     this.shape = shape;

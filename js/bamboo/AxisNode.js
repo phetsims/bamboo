@@ -13,7 +13,7 @@ import griddle from '../griddle.js';
 
 class AxisNode extends ArrowNode {
 
-  constructor( chartModel, orientation, options ) {
+  constructor( chartModel, axisOrientation, options ) {
 
     options = merge( {
       value: 0, // by default the axis in on the 0, but you can put it somewhere else
@@ -27,9 +27,9 @@ class AxisNode extends ArrowNode {
     super( 0, 0, 0, 0, options );
 
     chartModel.link( () => {
-      const viewValue = chartModel.modelToView( orientation.opposite, options.value );
+      const viewValue = chartModel.modelToView( axisOrientation.opposite, options.value );
 
-      if ( orientation === Orientation.VERTICAL ) {
+      if ( axisOrientation === Orientation.VERTICAL ) {
         this.setTailAndTip( viewValue, 0 - options.extension, viewValue, chartModel.height + options.extension );
         this.setVisible( viewValue >= 0 && viewValue <= chartModel.width );
       }

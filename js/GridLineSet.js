@@ -20,7 +20,7 @@ class GridLineSet extends Path {
    * @param {Orientation} axisOrientation - axis along which successive grid lines appear.  For example,
    *                                      - grid lines that are drawn horizontally progress up the Orientation.VERTICAL axis
    * @param {number} spacing - in model coordinates
-   * @param options
+   * @param {Object} [options]
    */
   constructor( chartModel, axisOrientation, spacing, options ) {
     options = merge( {

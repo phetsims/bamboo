@@ -14,6 +14,11 @@ import Node from '../../scenery/js/nodes/Node.js';
 
 class BarPlot extends Node {
 
+  /**
+   * @param {ChartModel} chartModel
+   * @param {Vector2[]} data
+   * @param {Object} [options]
+   */
   constructor( chartModel, data, options ) {
     options = merge( {
       valueToColor: ( x, y ) => 'blue'

@@ -16,6 +16,10 @@ const PlotStyle = Enumeration.byKeys( [ 'SCATTER', 'LINE' ] );
 
 class CanvasLinePlot extends CanvasNode {
 
+  /**
+   * @param {ChartModel} chartModel
+   * @param {Vector2[][]} dataSets
+   */
   constructor( chartModel, dataSets ) {
 
     super( {

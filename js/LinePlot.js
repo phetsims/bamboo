@@ -12,6 +12,11 @@ import bamboo from './bamboo.js';
 
 class LinePlot extends Path {
 
+  /**
+   * @param {ChartModel} chartModel
+   * @param {Vector2[]} data
+   * @param {Object} [options]
+   */
   constructor( chartModel, data, options ) {
     super( null, options );
 

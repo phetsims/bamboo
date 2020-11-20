@@ -1,7 +1,7 @@
 // Copyright 2020, University of Colorado Boulder
 
 /**
- * Shows a line that depicts an axis.  This is typically bolder than any of the grid lines, and typically at x=0 or
+ * Shows a line that depicts an axis.  This is typically bolder than any grid line (if any), and typically at x=0 or
  * y=0, but those defaults can be overridden with options.  It has a double sided arrow, but those won't be shown if
  * this is added to the clipping area of a chart.
  *
@@ -15,6 +15,11 @@ import bamboo from './bamboo.js';
 
 class AxisNode extends ArrowNode {
 
+  /**
+   * @param {ChartModel} chartModel
+   * @param {Orientation} axisOrientation - which axis is represented
+   * @param {Object} [options]
+   */
   constructor( chartModel, axisOrientation, options ) {
 
     options = merge( {

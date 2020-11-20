@@ -17,10 +17,10 @@ import bamboo from './bamboo.js';
 class LabelSet extends Path {
 
   /**
-   * @param chartModel
+   * @param {ChartModel} chartModel
    * @param {Orientation} axisOrientation - the progression of the ticks.  For instance HORIZONTAL has ticks at x=0,1,2, etc.
    * @param {number} spacing - in model coordinates
-   * @param options
+   * @param {Object} [options]
    */
   constructor( chartModel, axisOrientation, spacing, options ) {
     options = merge( {

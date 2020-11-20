@@ -7,12 +7,8 @@
  */
 
 import Bounds2 from '../../dot/js/Bounds2.js';
-import Enumeration from '../../phet-core/js/Enumeration.js';
 import CanvasNode from '../../scenery/js/nodes/CanvasNode.js';
 import bamboo from './bamboo.js';
-
-// constants
-const PlotStyle = Enumeration.byKeys( [ 'SCATTER', 'LINE' ] );
 
 class CanvasLinePlot extends CanvasNode {
 
@@ -33,8 +29,7 @@ class CanvasLinePlot extends CanvasNode {
   }
 
   /**
-   * Used to redraw the CanvasNode. Use CanvasNode.invalidatePaint to signify that
-   * it is time to redraw the canvas.
+   * Used to redraw the CanvasNode. Use CanvasNode.invalidatePaint to signify that it is time to redraw the canvas.
    * @protected
    * @override
    *
@@ -56,9 +51,6 @@ class CanvasLinePlot extends CanvasNode {
     context.stroke();
   }
 }
-
-// @public (read-only)
-CanvasLinePlot.PlotStyle = PlotStyle;
 
 bamboo.register( 'CanvasLinePlot', CanvasLinePlot );
 export default CanvasLinePlot;

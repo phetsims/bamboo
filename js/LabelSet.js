@@ -6,13 +6,13 @@
  * @author Sam Reid (PhET Interactive Simulations)
  */
 
-import Bounds2 from '../../../dot/js/Bounds2.js';
-import Utils from '../../../dot/js/Utils.js';
-import merge from '../../../phet-core/js/merge.js';
-import Orientation from '../../../phet-core/js/Orientation.js';
-import Path from '../../../scenery/js/nodes/Path.js';
-import Text from '../../../scenery/js/nodes/Text.js';
-import bamboo from '../bamboo.js';
+import Bounds2 from '../../dot/js/Bounds2.js';
+import Utils from '../../dot/js/Utils.js';
+import merge from '../../phet-core/js/merge.js';
+import Orientation from '../../phet-core/js/Orientation.js';
+import Path from '../../scenery/js/nodes/Path.js';
+import Text from '../../scenery/js/nodes/Text.js';
+import bamboo from './bamboo.js';
 
 class LabelSet extends Path {
 

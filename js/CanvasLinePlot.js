@@ -6,10 +6,10 @@
  * @author Sam Reid (PhET Interactive Simulations)
  */
 
-import Bounds2 from '../../../dot/js/Bounds2.js';
-import Enumeration from '../../../phet-core/js/Enumeration.js';
-import CanvasNode from '../../../scenery/js/nodes/CanvasNode.js';
-import bamboo from '../bamboo.js';
+import Bounds2 from '../../dot/js/Bounds2.js';
+import Enumeration from '../../phet-core/js/Enumeration.js';
+import CanvasNode from '../../scenery/js/nodes/CanvasNode.js';
+import bamboo from './bamboo.js';
 
 // constants
 const PlotStyle = Enumeration.byKeys( [ 'SCATTER', 'LINE' ] );

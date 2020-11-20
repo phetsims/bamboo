@@ -7,13 +7,13 @@ import Orientation from '../../../phet-core/js/Orientation.js';
 import ZoomButtonGroup from '../../../scenery-phet/js/ZoomButtonGroup.js';
 import Node from '../../../scenery/js/nodes/Node.js';
 import Text from '../../../scenery/js/nodes/Text.js';
-import AxisNode from '../bamboo/AxisNode.js';
-import ChartModel from '../bamboo/ChartModel.js';
-import ChartRectangle from '../bamboo/ChartRectangle.js';
-import GridLineSet from '../bamboo/GridLineSet.js';
-import LabelSet from '../bamboo/LabelSet.js';
-import LinePlot from '../bamboo/LinePlot.js';
-import TickMarkSet from '../bamboo/TickMarkSet.js';
+import AxisNode from '../AxisNode.js';
+import ChartModel from '../ChartModel.js';
+import ChartRectangle from '../ChartRectangle.js';
+import GridLineSet from '../GridLineSet.js';
+import LabelSet from '../LabelSet.js';
+import LinePlot from '../LinePlot.js';
+import TickMarkSet from '../TickMarkSet.js';
 import bamboo from '../bamboo.js';
 
 /**

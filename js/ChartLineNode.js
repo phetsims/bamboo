@@ -6,8 +6,8 @@
  * @author Sam Reid (PhET Interactive Simulations)
  */
 
-import Line from '../../../scenery/js/nodes/Line.js';
-import bamboo from '../bamboo.js';
+import Line from '../../scenery/js/nodes/Line.js';
+import bamboo from './bamboo.js';
 
 class ChartLineNode extends Line {
 

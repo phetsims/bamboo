@@ -6,9 +6,9 @@
  * @author Sam Reid (PhET Interactive Simulations)
  */
 
-import Shape from '../../../kite/js/Shape.js';
-import Path from '../../../scenery/js/nodes/Path.js';
-import bamboo from '../bamboo.js';
+import Shape from '../../kite/js/Shape.js';
+import Path from '../../scenery/js/nodes/Path.js';
+import bamboo from './bamboo.js';
 
 class LinePlot extends Path {
 

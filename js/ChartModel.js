@@ -6,13 +6,13 @@
  * @author Sam Reid (PhET Interactive Simulations)
  */
 
-import Emitter from '../../../axon/js/Emitter.js';
-import Range from '../../../dot/js/Range.js';
-import Util from '../../../dot/js/Utils.js';
-import Vector2 from '../../../dot/js/Vector2.js';
-import merge from '../../../phet-core/js/merge.js';
-import Orientation from '../../../phet-core/js/Orientation.js';
-import bamboo from '../bamboo.js';
+import Emitter from '../../axon/js/Emitter.js';
+import Range from '../../dot/js/Range.js';
+import Util from '../../dot/js/Utils.js';
+import Vector2 from '../../dot/js/Vector2.js';
+import merge from '../../phet-core/js/merge.js';
+import Orientation from '../../phet-core/js/Orientation.js';
+import bamboo from './bamboo.js';
 
 class ChartModel {
 

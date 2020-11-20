@@ -6,12 +6,12 @@
  * @author Sam Reid (PhET Interactive Simulations)
  */
 
-import Bounds2 from '../../../dot/js/Bounds2.js';
-import Shape from '../../../kite/js/Shape.js';
-import merge from '../../../phet-core/js/merge.js';
-import Orientation from '../../../phet-core/js/Orientation.js';
-import Path from '../../../scenery/js/nodes/Path.js';
-import bamboo from '../bamboo.js';
+import Bounds2 from '../../dot/js/Bounds2.js';
+import Shape from '../../kite/js/Shape.js';
+import merge from '../../phet-core/js/merge.js';
+import Orientation from '../../phet-core/js/Orientation.js';
+import Path from '../../scenery/js/nodes/Path.js';
+import bamboo from './bamboo.js';
 
 class TickMarkSet extends Path {
 

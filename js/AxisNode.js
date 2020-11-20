@@ -6,10 +6,10 @@
  * @author Sam Reid (PhET Interactive Simulations)
  */
 
-import merge from '../../../phet-core/js/merge.js';
-import Orientation from '../../../phet-core/js/Orientation.js';
-import ArrowNode from '../../../scenery-phet/js/ArrowNode.js';
-import bamboo from '../bamboo.js';
+import merge from '../../phet-core/js/merge.js';
+import Orientation from '../../phet-core/js/Orientation.js';
+import ArrowNode from '../../scenery-phet/js/ArrowNode.js';
+import bamboo from './bamboo.js';
 
 class AxisNode extends ArrowNode {
 

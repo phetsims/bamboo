@@ -6,11 +6,11 @@
  * @author Sam Reid (PhET Interactive Simulations)
  */
 
-import Vector2 from '../../../dot/js/Vector2.js';
-import merge from '../../../phet-core/js/merge.js';
-import Line from '../../../scenery/js/nodes/Line.js';
-import bamboo from '../bamboo.js';
-import Node from '../../../scenery/js/nodes/Node.js';
+import Vector2 from '../../dot/js/Vector2.js';
+import merge from '../../phet-core/js/merge.js';
+import Line from '../../scenery/js/nodes/Line.js';
+import bamboo from './bamboo.js';
+import Node from '../../scenery/js/nodes/Node.js';
 
 class BarPlot extends Node {
 

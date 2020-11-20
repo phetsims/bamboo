@@ -1,7 +1,7 @@
 // Copyright 2019-2020, University of Colorado Boulder
 
 /**
- * TODO documentation
+ * Renders data with lineTo, using a canvas for performance.
  *
  * @author Sam Reid (PhET Interactive Simulations)
  */

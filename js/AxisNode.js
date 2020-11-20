@@ -1,7 +1,9 @@
 // Copyright 2020, University of Colorado Boulder
 
 /**
- * TODO documentation
+ * Shows a line that depicts an axis.  This is typically bolder than any of the grid lines, and typically at x=0 or
+ * y=0, but those defaults can be overridden with options.  It has a double sided arrow, but those won't be shown if
+ * this is added to the clipping area of a chart.
  *
  * @author Sam Reid (PhET Interactive Simulations)
  */

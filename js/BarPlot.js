@@ -1,7 +1,7 @@
 // Copyright 2020, University of Colorado Boulder
 
 /**
- * Numerical, not categorical.
+ * Shows bars for numerical data (where the x-value of the bar is a number). Does not support categorical data.
  *
  * @author Sam Reid (PhET Interactive Simulations)
  */

@@ -1,7 +1,7 @@
 // Copyright 2020, University of Colorado Boulder
 
 /**
- * TODO documentation
+ * Shows the background and border for a chart, and updates when the chart dimensions change.
  *
  * @author Sam Reid (PhET Interactive Simulations)
  */

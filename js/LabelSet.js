@@ -1,7 +1,7 @@
 // Copyright 2020, University of Colorado Boulder
 
 /**
- * TODO documentation
+ * Shows a set of labels within or next to a chart.
  *
  * @author Sam Reid (PhET Interactive Simulations)
  */

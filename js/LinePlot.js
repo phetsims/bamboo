@@ -1,7 +1,7 @@
 // Copyright 2020, University of Colorado Boulder
 
 /**
- * TODO documentation
+ * Renders a dataset of Vector2[] using Path lineTo.
  *
  * @author Sam Reid (PhET Interactive Simulations)
  */

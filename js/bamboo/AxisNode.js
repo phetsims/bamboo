@@ -9,7 +9,7 @@
 import merge from '../../../phet-core/js/merge.js';
 import Orientation from '../../../phet-core/js/Orientation.js';
 import ArrowNode from '../../../scenery-phet/js/ArrowNode.js';
-import griddle from '../griddle.js';
+import bamboo from '../bamboo.js';
 
 class AxisNode extends ArrowNode {
 
@@ -41,5 +41,5 @@ class AxisNode extends ArrowNode {
   }
 }
 
-griddle.register( 'AxisNode', AxisNode );
+bamboo.register( 'AxisNode', AxisNode );
 export default AxisNode;

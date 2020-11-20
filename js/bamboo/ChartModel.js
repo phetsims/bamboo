@@ -12,7 +12,7 @@ import Util from '../../../dot/js/Utils.js';
 import Vector2 from '../../../dot/js/Vector2.js';
 import merge from '../../../phet-core/js/merge.js';
 import Orientation from '../../../phet-core/js/Orientation.js';
-import griddle from '../griddle.js';
+import bamboo from '../bamboo.js';
 
 class ChartModel {
 
@@ -188,5 +188,5 @@ class ChartModel {
   }
 }
 
-griddle.register( 'ChartModel', ChartModel );
+bamboo.register( 'ChartModel', ChartModel );
 export default ChartModel;

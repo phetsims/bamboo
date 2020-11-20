@@ -14,7 +14,7 @@ import GridLineSet from '../bamboo/GridLineSet.js';
 import LabelSet from '../bamboo/LabelSet.js';
 import LinePlot from '../bamboo/LinePlot.js';
 import TickMarkSet from '../bamboo/TickMarkSet.js';
-import griddle from '../griddle.js';
+import bamboo from '../bamboo.js';
 
 /**
  * @author Sam Reid (PhET Interactive Simulations)
@@ -108,5 +108,5 @@ class DemoHarmonicsChart extends Node {
   }
 }
 
-griddle.register( 'DemoHarmonicsChart', DemoHarmonicsChart );
+bamboo.register( 'DemoHarmonicsChart', DemoHarmonicsChart );
 export default DemoHarmonicsChart;

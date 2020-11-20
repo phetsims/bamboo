@@ -12,7 +12,7 @@ import merge from '../../../phet-core/js/merge.js';
 import Orientation from '../../../phet-core/js/Orientation.js';
 import Path from '../../../scenery/js/nodes/Path.js';
 import Text from '../../../scenery/js/nodes/Text.js';
-import griddle from '../griddle.js';
+import bamboo from '../bamboo.js';
 
 class LabelSet extends Path {
 
@@ -136,5 +136,5 @@ class LabelSet extends Path {
   }
 }
 
-griddle.register( 'LabelSet', LabelSet );
+bamboo.register( 'LabelSet', LabelSet );
 export default LabelSet;

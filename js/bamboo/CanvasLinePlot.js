@@ -9,7 +9,7 @@
 import Bounds2 from '../../../dot/js/Bounds2.js';
 import Enumeration from '../../../phet-core/js/Enumeration.js';
 import CanvasNode from '../../../scenery/js/nodes/CanvasNode.js';
-import griddle from '../griddle.js';
+import bamboo from '../bamboo.js';
 
 // constants
 const PlotStyle = Enumeration.byKeys( [ 'SCATTER', 'LINE' ] );
@@ -56,5 +56,5 @@ class CanvasLinePlot extends CanvasNode {
 // @public (read-only)
 CanvasLinePlot.PlotStyle = PlotStyle;
 
-griddle.register( 'CanvasLinePlot', CanvasLinePlot );
+bamboo.register( 'CanvasLinePlot', CanvasLinePlot );
 export default CanvasLinePlot;

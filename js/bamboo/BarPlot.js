@@ -9,7 +9,7 @@
 import Vector2 from '../../../dot/js/Vector2.js';
 import merge from '../../../phet-core/js/merge.js';
 import Line from '../../../scenery/js/nodes/Line.js';
-import griddle from '../griddle.js';
+import bamboo from '../bamboo.js';
 import Node from '../../../scenery/js/nodes/Node.js';
 
 class BarPlot extends Node {
@@ -35,5 +35,5 @@ class BarPlot extends Node {
   }
 }
 
-griddle.register( 'BarPlot', BarPlot );
+bamboo.register( 'BarPlot', BarPlot );
 export default BarPlot;

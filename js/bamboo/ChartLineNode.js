@@ -7,7 +7,7 @@
  */
 
 import Line from '../../../scenery/js/nodes/Line.js';
-import griddle from '../griddle.js';
+import bamboo from '../bamboo.js';
 
 class ChartLineNode extends Line {
 
@@ -25,5 +25,5 @@ class ChartLineNode extends Line {
   }
 }
 
-griddle.register( 'ChartLineNode', ChartLineNode );
+bamboo.register( 'ChartLineNode', ChartLineNode );
 export default ChartLineNode;

@@ -8,7 +8,7 @@
 
 import Shape from '../../../kite/js/Shape.js';
 import Path from '../../../scenery/js/nodes/Path.js';
-import griddle from '../griddle.js';
+import bamboo from '../bamboo.js';
 
 class LinePlot extends Path {
 
@@ -47,5 +47,5 @@ class LinePlot extends Path {
   }
 }
 
-griddle.register( 'LinePlot', LinePlot );
+bamboo.register( 'LinePlot', LinePlot );
 export default LinePlot;

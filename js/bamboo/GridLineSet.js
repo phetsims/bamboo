@@ -11,7 +11,7 @@ import Shape from '../../../kite/js/Shape.js';
 import merge from '../../../phet-core/js/merge.js';
 import Orientation from '../../../phet-core/js/Orientation.js';
 import Path from '../../../scenery/js/nodes/Path.js';
-import griddle from '../griddle.js';
+import bamboo from '../bamboo.js';
 
 class GridLineSet extends Path {
 
@@ -74,5 +74,5 @@ class GridLineSet extends Path {
   }
 }
 
-griddle.register( 'GridLineSet', GridLineSet );
+bamboo.register( 'GridLineSet', GridLineSet );
 export default GridLineSet;

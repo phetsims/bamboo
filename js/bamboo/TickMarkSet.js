@@ -11,7 +11,7 @@ import Shape from '../../../kite/js/Shape.js';
 import merge from '../../../phet-core/js/merge.js';
 import Orientation from '../../../phet-core/js/Orientation.js';
 import Path from '../../../scenery/js/nodes/Path.js';
-import griddle from '../griddle.js';
+import bamboo from '../bamboo.js';
 
 class TickMarkSet extends Path {
 
@@ -77,5 +77,5 @@ class TickMarkSet extends Path {
   }
 }
 
-griddle.register( 'TickMarkSet', TickMarkSet );
+bamboo.register( 'TickMarkSet', TickMarkSet );
 export default TickMarkSet;

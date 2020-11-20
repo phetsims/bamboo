@@ -7,7 +7,7 @@
  */
 
 import Rectangle from '../../../scenery/js/nodes/Rectangle.js';
-import griddle from '../griddle.js';
+import bamboo from '../bamboo.js';
 
 class ChartRectangle extends Rectangle {
   constructor( chartModel, options ) {
@@ -16,5 +16,5 @@ class ChartRectangle extends Rectangle {
   }
 }
 
-griddle.register( 'ChartRectangle', ChartRectangle );
+bamboo.register( 'ChartRectangle', ChartRectangle );
 export default ChartRectangle;

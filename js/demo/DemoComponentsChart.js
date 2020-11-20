@@ -14,7 +14,7 @@ import ChartRectangle from '../bamboo/ChartRectangle.js';
 import GridLineSet from '../bamboo/GridLineSet.js';
 import LabelSet from '../bamboo/LabelSet.js';
 import TickMarkSet from '../bamboo/TickMarkSet.js';
-import griddle from '../griddle.js';
+import bamboo from '../bamboo.js';
 
 /**
  *
@@ -113,5 +113,5 @@ class DemoComponentsChart extends Node {
   }
 }
 
-griddle.register( 'DemoComponentsChart', DemoComponentsChart );
+bamboo.register( 'DemoComponentsChart', DemoComponentsChart );
 export default DemoComponentsChart;

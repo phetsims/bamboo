@@ -15,7 +15,7 @@ import ChartRectangle from '../bamboo/ChartRectangle.js';
 import GridLineSet from '../bamboo/GridLineSet.js';
 import LabelSet from '../bamboo/LabelSet.js';
 import TickMarkSet from '../bamboo/TickMarkSet.js';
-import griddle from '../griddle.js';
+import bamboo from '../bamboo.js';
 
 /**
  *
@@ -107,5 +107,5 @@ class DemoAmplitudesChart extends Node {
   }
 }
 
-griddle.register( 'DemoAmplitudesChart', DemoAmplitudesChart );
+bamboo.register( 'DemoAmplitudesChart', DemoAmplitudesChart );
 export default DemoAmplitudesChart;

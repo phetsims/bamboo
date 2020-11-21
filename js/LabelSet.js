@@ -90,6 +90,7 @@ class LabelSet extends Path {
   }
 
   /**
+   * Updates the labels when range or spacing has changed.
    * @private
    */
   updateLabelSet() {
@@ -132,7 +133,6 @@ class LabelSet extends Path {
     } );
 
     this.children = children;
-
   }
 }
 

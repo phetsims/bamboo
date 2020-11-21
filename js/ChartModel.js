@@ -80,7 +80,7 @@ class ChartModel {
 
   /**
    * Remove a listener from the chart transforms
-   * @param listener
+   * @param {function} listener
    * @public
    */
   unlink( listener ) {

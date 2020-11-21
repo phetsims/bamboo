@@ -70,7 +70,6 @@ class DemoComponentsChart extends Node {
     }
 
     // Anything you want clipped goes in here
-    // TODO: Or we could clip each child instead of having one clipped node?
     this.children = [
 
       // Background

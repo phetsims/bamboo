@@ -48,7 +48,6 @@ class DemoHarmonicsChart extends Node {
 
     const zoomLevelProperty = new NumberProperty( 1, { range: new Range( 1, 4 ) } );
 
-    // TODO: Should this be part of the "chart" or not?
     const zoomButtonGroup = new ZoomButtonGroup( zoomLevelProperty, {
       orientation: 'horizontal',
       left: chartRectangle.right + 10,
@@ -62,7 +61,6 @@ class DemoHarmonicsChart extends Node {
     } );
 
     // Anything you want clipped goes in here
-    // TODO: Or we could clip each child instead of having one clipped node?
     this.children = [
 
       // Background

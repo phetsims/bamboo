@@ -35,7 +35,7 @@ class DemoComponentsChart extends Node {
       return data;
     };
 
-    const chartModel = new ChartModel( 700,300,{
+    const chartModel = new ChartModel( 700, 300, {
       modelXRange: new Range( -Math.PI / 8, Math.PI / 8 ),
       modelYRange: new Range( -4 / Math.PI, 4 / Math.PI )
     } );
@@ -49,7 +49,6 @@ class DemoComponentsChart extends Node {
 
     const zoomLevelProperty = new NumberProperty( 1, { range: new Range( 1, 4 ) } );
 
-    // TODO: Should this be part of the "chart" or not?
     const zoomButtonGroup = new ZoomButtonGroup( zoomLevelProperty, {
       orientation: 'horizontal',
       left: chartRectangle.right + 10,

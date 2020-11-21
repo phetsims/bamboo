@@ -24,9 +24,6 @@ class ChartModel {
   constructor( width, height, options ) {
 
     options = merge( {
-
-      // TODO: alternately, allow specification of a arbitrary nonlinear transform.  Set at the same time as range so
-      //  they are in sync. So we can make log plots, etc., which would show up in the gridlines and data sets, etc.
       modelXRange: new Range( -1, 1 ),
       modelYRange: new Range( -1, 1 ) // TODO: Should this be called "y"?  What about charts that show height as a function of time?
     }, options );

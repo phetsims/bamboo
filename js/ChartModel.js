@@ -24,8 +24,12 @@ class ChartModel {
   constructor( width, height, options ) {
 
     options = merge( {
+
+      // The horizontal axis is referred to as the "x" axis, though it may be used to depict another dimension, such as "time"
       modelXRange: new Range( -1, 1 ),
-      modelYRange: new Range( -1, 1 ) // TODO: Should this be called "y"?  What about charts that show height as a function of time?
+
+      // The vertical axis is referred to as the "y" axis, though it may be used to depict another dimension such as "width"
+      modelYRange: new Range( -1, 1 )
     }, options );
 
     this.transformChangedEmitter = new Emitter();

@@ -38,10 +38,12 @@ class GridLineSet extends Path {
     this.origin = options.origin;
     this.clipped = options.clipped;
 
-    // TODO: Dispose
-    chartModel.link( () => this.updateGridLineSet() );
+    const update = () => this.updateGridLineSet();
+    chartModel.link( update );
 
     this.mutate( options );
+
+    this.disposeGridLineSet = () => chartModel.unlink( update );
   }
 
   /**
@@ -71,6 +73,12 @@ class GridLineSet extends Path {
       this.spacing = spacing;
       this.updateGridLineSet();
     }
+  }
+
+  // @public
+  dispose() {
+    this.disposeGridLineSet();
+    super.dispose();
   }
 }
 

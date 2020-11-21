@@ -72,10 +72,12 @@ class LabelSet extends Path {
     // cache labels for quick reuse
     this.labelMap = new Map();
 
-    // TODO: Dispose
-    chartModel.link( () => this.updateLabelSet() );
+    const update = () => this.updateLabelSet();
+    chartModel.link( update );
 
     this.mutate( options );
+
+    this.disposeLabelSet = () => chartModel.unlink( update );
   }
 
   /**
@@ -133,6 +135,12 @@ class LabelSet extends Path {
     } );
 
     this.children = children;
+  }
+
+  // @public
+  dispose() {
+    this.disposeLabelSet();
+    super.dispose();
   }
 }
 

@@ -33,7 +33,6 @@ class DemoAmplitudesChart extends Node {
       const arg = x - Math.PI * 12;
       const c = 10;
       const y = 0.13 * Math.exp( -arg * arg / 2 / c / c );
-      console.log( x, y );
       data.push( new Vector2( x, y ) );
     }
 

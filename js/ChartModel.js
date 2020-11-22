@@ -27,9 +27,11 @@ class ChartModel {
 
       // The horizontal axis is referred to as the "x" axis, though it may be used to depict another dimension, such as "time"
       modelXRange: new Range( -1, 1 ),
+      xScale: x => x,
 
       // The vertical axis is referred to as the "y" axis, though it may be used to depict another dimension such as "width"
-      modelYRange: new Range( -1, 1 )
+      modelYRange: new Range( -1, 1 ),
+      yScale: y => y
     }, options );
 
     this.transformChangedEmitter = new Emitter();
@@ -39,6 +41,10 @@ class ChartModel {
     this.height = height;
     this.modelXRange = options.modelXRange;
     this.modelYRange = options.modelYRange;
+
+    // @private
+    this.xScale = options.xScale;
+    this.yScale = options.yScale;
   }
 
   /**
@@ -123,11 +129,20 @@ class ChartModel {
     assert && assert( axisOrientation === Orientation.VERTICAL || axisOrientation === Orientation.HORIZONTAL );
     const modelRange = axisOrientation === Orientation.HORIZONTAL ? this.modelXRange : this.modelYRange;
     const viewDimension = axisOrientation === Orientation.HORIZONTAL ? this.width : this.height;
+    const scale = axisOrientation === Orientation.HORIZONTAL ? this.xScale : this.yScale;
+
+    // for a log plot, we need to choose a scale factor that takes
+
+
+    let scaledValue = scale( value );
+    if ( isNaN( scaledValue ) || !Number.isFinite( scaledValue ) ) {
+      scaledValue = value;
+    }
 
     // For vertical, +y is usually up
     return axisOrientation === Orientation.HORIZONTAL ?
-           Util.linear( modelRange.min, modelRange.max, 0, viewDimension, value ) :
-           Util.linear( modelRange.max, modelRange.min, 0, viewDimension, value );
+           Util.linear( scale( modelRange.min ), scale( modelRange.max ), 0, viewDimension, scaledValue ) :
+           Util.linear( scale( modelRange.max ), scale( modelRange.min ), 0, viewDimension, scaledValue );
   }
 
   /**
@@ -184,6 +199,30 @@ class ChartModel {
   setModelYRange( modelYRange ) {
     if ( !modelYRange.equals( this.modelYRange ) ) {
       this.modelYRange = modelYRange;
+      this.transformChangedEmitter.emit();
+    }
+  }
+
+  /**
+   * Change the scaling for the y-axis.
+   * @param {function} yScale
+   * @public
+   */
+  setYScale( yScale ) {
+    if ( this.yScale !== yScale ) {
+      this.yScale = yScale;
+      this.transformChangedEmitter.emit();
+    }
+  }
+
+  /**
+   * Change the scaling for the x-axis.
+   * @param {function} xScale
+   * @public
+   */
+  setXScale( xScale ) {
+    if ( this.xScale !== xScale ) {
+      this.xScale = xScale;
       this.transformChangedEmitter.emit();
     }
   }

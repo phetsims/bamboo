@@ -15,6 +15,7 @@ import bamboo from '../bamboo.js';
 import DemoAmplitudesChart from './DemoAmplitudesChart.js';
 import DemoComponentsChart from './DemoComponentsChart.js';
 import DemoHarmonicsChart from './DemoHarmonicsChart.js';
+import DemoLogPlot from './DemoLogPlot.js';
 import DemoScatterPlot from './DemoScatterPlot.js';
 
 // constants - this is a hack to enable components to animate from the animation loop
@@ -43,6 +44,11 @@ class BambooDemoScreenView extends DemosScreenView {
       },
       {
         label: 'ComponentsChart', createNode: layoutBounds => new DemoComponentsChart( {
+          center: layoutBounds.center
+        } )
+      },
+      {
+        label: 'LogPlot', createNode: layoutBounds => new DemoLogPlot( {
           center: layoutBounds.center
         } )
       },

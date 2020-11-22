@@ -33,7 +33,7 @@ class BambooDemoScreenView extends DemosScreenView {
        * {function(Bounds2): Node} createNode - creates the scene graph for the demo
        */
       {
-        label: 'ChartNode', createNode: layoutBounds => new DemoScatterPlot( {
+        label: 'ScatterPlot', createNode: layoutBounds => new DemoScatterPlot( {
           center: layoutBounds.center
         } )
       },

@@ -9,9 +9,12 @@ import Node from '../../../scenery/js/nodes/Node.js';
 import VBox from '../../../scenery/js/nodes/VBox.js';
 import HSlider from '../../../sun/js/HSlider.js';
 import AxisNode from '../AxisNode.js';
+import BarPlot from '../BarPlot.js';
 import ChartModel from '../ChartModel.js';
 import ChartRectangle from '../ChartRectangle.js';
 import GridLineSet from '../GridLineSet.js';
+import LabelSet from '../LabelSet.js';
+import LinePlot from '../LinePlot.js';
 import ScatterPlot from '../ScatterPlot.js';
 import TickMarkSet from '../TickMarkSet.js';
 import bamboo from '../bamboo.js';
@@ -26,7 +29,7 @@ class DemoScatterPlot extends VBox {
   constructor( options ) {
 
     const data = [];
-    for ( let i = -1; i < 1; i += 0.01 ) {
+    for ( let i = -3; i < 3; i += 0.01 ) {
       phet.joist.random.nextDouble() < 0.3 && data.push( new Vector2( i, Math.sin( i * 2 ) ) );
     }
 
@@ -59,12 +62,14 @@ class DemoScatterPlot extends VBox {
         new TickMarkSet( chartModel, Orientation.VERTICAL, 0.2, { clipped: true } ),
 
         // Some data
-        // new BarPlot( chartModel, data ),
-        // new LinePlot( chartModel, data, {
-        //   stroke: 'red',
-        //   lineWidth: 2
-        // } ),
-        new ScatterPlot( chartModel, data )
+        new BarPlot( chartModel, data, { opacity: 0.2 } ),
+        new LinePlot( chartModel, data, {
+          stroke: 'red',
+          lineWidth: 2
+        } ),
+        new ScatterPlot( chartModel, data, {
+          fill: 'blue'
+        } )
       ]
     } );
 
@@ -83,7 +88,9 @@ class DemoScatterPlot extends VBox {
 
         // Tick marks outside the chart
         new TickMarkSet( chartModel, Orientation.VERTICAL, 0.2, { edge: 'min' } ),
-        new TickMarkSet( chartModel, Orientation.HORIZONTAL, 0.2, { edge: 'min' } )
+        new TickMarkSet( chartModel, Orientation.HORIZONTAL, 0.2, { edge: 'min' } ),
+        new LabelSet( chartModel, Orientation.VERTICAL, 0.2, { edge: 'min' } ),
+        new LabelSet( chartModel, Orientation.HORIZONTAL, 0.2, { edge: 'min' } )
       ]
     } );
 

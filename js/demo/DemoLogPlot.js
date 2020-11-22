@@ -99,12 +99,10 @@ class DemoLogPlot extends VBox {
     const linear = x => x;
     const logProperty = new Property( linear );
     const controls = new VerticalAquaRadioButtonGroup( logProperty, [
-      { node: new Text( 'linear', { fontSize: 22 } ), value: linear },
-      { node: new Text( 'log', { fontSize: 22 } ), value: Math.log },
-      { node: new Text( 'log1p', { fontSize: 22 } ), value: Math.log1p },
-      { node: new Text( 'log2', { fontSize: 22 } ), value: Math.log2 },
-      { node: new Text( 'log10', { fontSize: 22 } ), value: Math.log10 },
-      { node: new Text( 'sin', { fontSize: 22 } ), value: Math.sin }
+      { node: new Text( 'linear', { fontSize: 14 } ), value: linear },
+      { node: new Text( 'log', { fontSize: 14 } ), value: Math.log },
+      { node: new Text( 'log10', { fontSize: 14 } ), value: Math.log10 },
+      { node: new Text( 'sin', { fontSize: 14 } ), value: Math.sin }
     ] );
     logProperty.link( type => chartModel.setYScale( type ) );
 

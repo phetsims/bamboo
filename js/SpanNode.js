@@ -5,8 +5,6 @@
  * distance between gridlines.
  *
  * @author Sam Reid (PhET Interactive Simulations)
- *
- * TODO: move to bamboo, see https://github.com/phetsims/bamboo/issues/6
  */
 
 import ArrowNode from '../../scenery-phet/js/ArrowNode.js';

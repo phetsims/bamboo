@@ -13,7 +13,7 @@ import ArrowNode from '../../scenery-phet/js/ArrowNode.js';
 import Line from '../../scenery/js/nodes/Line.js';
 import Node from '../../scenery/js/nodes/Node.js';
 import VBox from '../../scenery/js/nodes/VBox.js';
-import griddle from './griddle.js';
+import bamboo from './bamboo.js';
 
 class SpanNode extends Node {
 
@@ -54,5 +54,5 @@ class SpanNode extends Node {
   }
 }
 
-griddle.register( 'SpanNode', SpanNode );
+bamboo.register( 'SpanNode', SpanNode );
 export default SpanNode;

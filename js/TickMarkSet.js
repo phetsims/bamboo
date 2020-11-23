@@ -12,6 +12,7 @@ import merge from '../../phet-core/js/merge.js';
 import Orientation from '../../phet-core/js/Orientation.js';
 import Path from '../../scenery/js/nodes/Path.js';
 import bamboo from './bamboo.js';
+import ClippingType from './ClippingType.js';
 
 class TickMarkSet extends Path {
 
@@ -31,7 +32,7 @@ class TickMarkSet extends Path {
       extent: 10,
 
       // determines whether the rounding is loose, see ChartModel
-      clipped: false
+      clippingType: ClippingType.STRICT
     }, options );
 
     if ( options.edge ) {
@@ -47,7 +48,7 @@ class TickMarkSet extends Path {
       const children = [];
       const used = new Set();
 
-      chartModel.forEachSpacing( axisOrientation, spacing, options.origin, options.clipped, ( modelPosition, viewPosition ) => {
+      chartModel.forEachSpacing( axisOrientation, spacing, options.origin, options.clippingType, ( modelPosition, viewPosition ) => {
         const tickBounds = new Bounds2( 0, 0, 0, 0 );
         if ( axisOrientation === Orientation.HORIZONTAL ) {
           const viewY = options.edge === 'min' ? chartModel.height :

@@ -12,6 +12,7 @@ import AxisNode from '../AxisNode.js';
 import BarPlot from '../BarPlot.js';
 import ChartModel from '../ChartModel.js';
 import ChartRectangle from '../ChartRectangle.js';
+import ClippingType from '../ClippingType.js';
 import GridLineSet from '../GridLineSet.js';
 import LabelSet from '../LabelSet.js';
 import LinePlot from '../LinePlot.js';
@@ -49,17 +50,10 @@ class DemoScatterPlot extends VBox {
     const chartClip = new Node( {
       clipArea: chartRectangle.getShape(),
       children: [
-        // Minor grid lines
-        new GridLineSet( chartModel, Orientation.HORIZONTAL, 0.1, { stroke: 'lightGray' } ),
-        new GridLineSet( chartModel, Orientation.VERTICAL, 0.1, { stroke: 'lightGray' } ),
-
-        // Major grid lines
-        new GridLineSet( chartModel, Orientation.HORIZONTAL, 0.2, { stroke: 'darkGray', clipped: true } ),
-        new GridLineSet( chartModel, Orientation.VERTICAL, 0.2, { stroke: 'darkGray', clipped: true } ),
 
         // Tick labels along the axes
-        new TickMarkSet( chartModel, Orientation.HORIZONTAL, 0.2, { clipped: true } ),
-        new TickMarkSet( chartModel, Orientation.VERTICAL, 0.2, { clipped: true } ),
+        new TickMarkSet( chartModel, Orientation.HORIZONTAL, 0.2, { clippingType: ClippingType.LOOSE } ),
+        new TickMarkSet( chartModel, Orientation.VERTICAL, 0.2, { clippingType: ClippingType.LOOSE } ),
 
         // Some data
         new BarPlot( chartModel, data, { opacity: 0.2 } ),
@@ -81,6 +75,14 @@ class DemoScatterPlot extends VBox {
 
         // Clipped contents
         chartClip,
+
+        // Minor grid lines
+        new GridLineSet( chartModel, Orientation.HORIZONTAL, 0.1, { stroke: 'red' } ),
+        new GridLineSet( chartModel, Orientation.VERTICAL, 0.1, { stroke: 'red' } ),
+
+        // Major grid lines
+        new GridLineSet( chartModel, Orientation.HORIZONTAL, 0.2, { stroke: 'blue' } ),
+        new GridLineSet( chartModel, Orientation.VERTICAL, 0.2, { stroke: 'blue' } ),
 
         // axes nodes not clipped
         new AxisNode( chartModel, Orientation.VERTICAL ),

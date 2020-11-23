@@ -13,6 +13,7 @@ import Vector2 from '../../dot/js/Vector2.js';
 import merge from '../../phet-core/js/merge.js';
 import Orientation from '../../phet-core/js/Orientation.js';
 import bamboo from './bamboo.js';
+import ClippingType from './ClippingType.js';
 
 class ChartModel {
 
@@ -51,20 +52,21 @@ class ChartModel {
    * @param {Orientation} axisOrientation
    * @param {number} spacing - model separation
    * @param {number} origin - where one is guaranteed to land
-   * @param {boolean} clipped - if something is clipped elsewhere, we allow slack so it doesn't disappear from view like a flicker
+   * @param {ClippingType} clippingType - if something is clipped elsewhere, we allow slack so it doesn't disappear from view like a flicker
    * @param {function} callback
    * @public
    */
-  forEachSpacing( axisOrientation, spacing, origin, clipped, callback ) {
+  forEachSpacing( axisOrientation, spacing, origin, clippingType, callback ) {
 
     const modelRange = this.getModelRange( axisOrientation );
 
     // n* spacing + origin = x
     // n = (x-origin)/spacing, where n is an integer
-    const nMin = clipped ?
+    // TODO: Factor out
+    const nMin = clippingType === ClippingType.LENIENT ?
                  Util.roundSymmetric( ( modelRange.min - origin ) / spacing ) :
                  Math.ceil( ( modelRange.min - origin ) / spacing );
-    const nMax = clipped ?
+    const nMax = clippingType === ClippingType.LENIENT ?
                  Util.roundSymmetric( ( modelRange.max - origin ) / spacing ) :
                  Math.floor( ( modelRange.max - origin ) / spacing );
 

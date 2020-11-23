@@ -13,6 +13,7 @@ import Orientation from '../../phet-core/js/Orientation.js';
 import Path from '../../scenery/js/nodes/Path.js';
 import Text from '../../scenery/js/nodes/Text.js';
 import bamboo from './bamboo.js';
+import ClippingType from './ClippingType.js';
 
 class LabelSet extends Path {
 
@@ -34,7 +35,7 @@ class LabelSet extends Path {
       extent: 10,
 
       // determines whether the rounding is loose, see ChartModel
-      clipped: false,
+      clippingType: ClippingType.STRICT,
 
       // or return null if no label for that value
       createLabel: value => new Text( Utils.toFixed( value, 1 ), { fontSize: 12 } ),
@@ -64,7 +65,7 @@ class LabelSet extends Path {
     this.origin = options.origin;
     this.extent = options.extent;
     this.value = options.value;
-    this.clipped = options.clipped;
+    this.clippingType = options.clippingType;
     this.edge = options.edge;
     this.createLabel = options.createLabel;
     this.positionLabel = options.positionLabel;
@@ -99,7 +100,7 @@ class LabelSet extends Path {
     const children = [];
     const used = new Set();
 
-    this.chartModel.forEachSpacing( this.axisOrientation, this.spacing, this.origin, this.clipped, ( modelPosition, viewPosition ) => {
+    this.chartModel.forEachSpacing( this.axisOrientation, this.spacing, this.origin, this.clippingType, ( modelPosition, viewPosition ) => {
       const tickBounds = new Bounds2( 0, 0, 0, 0 );
       if ( this.axisOrientation === Orientation.HORIZONTAL ) {
         const viewY = this.edge === 'min' ? this.chartModel.height :

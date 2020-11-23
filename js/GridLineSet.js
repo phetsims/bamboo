@@ -12,6 +12,7 @@ import merge from '../../phet-core/js/merge.js';
 import Orientation from '../../phet-core/js/Orientation.js';
 import Path from '../../scenery/js/nodes/Path.js';
 import bamboo from './bamboo.js';
+import ClippingType from './ClippingType.js';
 
 class GridLineSet extends Path {
 
@@ -26,7 +27,7 @@ class GridLineSet extends Path {
     options = merge( {
       origin: 0,
       stroke: 'black',
-      clipped: false
+      clippingType: ClippingType.STRICT
     }, options );
 
     super( null );
@@ -51,7 +52,7 @@ class GridLineSet extends Path {
    */
   updateGridLineSet() {
     const shape = new Shape();
-    this.chartModel.forEachSpacing( this.axisOrientation, this.spacing, this.origin, this.clipped, ( modelPosition, viewPosition ) => {
+    this.chartModel.forEachSpacing( this.axisOrientation, this.spacing, this.origin, this.clippingType, ( modelPosition, viewPosition ) => {
       if ( this.axisOrientation === Orientation.VERTICAL ) {
         shape.moveTo( 0, viewPosition );
         shape.lineTo( this.chartModel.width, viewPosition );

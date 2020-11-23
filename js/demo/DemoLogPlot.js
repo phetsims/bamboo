@@ -12,6 +12,7 @@ import AxisNode from '../AxisNode.js';
 import BarPlot from '../BarPlot.js';
 import ChartModel from '../ChartModel.js';
 import ChartRectangle from '../ChartRectangle.js';
+import ClippingType from '../ClippingType.js';
 import GridLineSet from '../GridLineSet.js';
 import LabelSet from '../LabelSet.js';
 import LinePlot from '../LinePlot.js';
@@ -52,12 +53,12 @@ class DemoLogPlot extends VBox {
       children: [
 
         // Major grid lines
-        new GridLineSet( chartModel, Orientation.HORIZONTAL, 2, { stroke: 'darkGray', clipped: true } ),
-        new GridLineSet( chartModel, Orientation.VERTICAL, 5000, { stroke: 'darkGray', clipped: true } ),
+        new GridLineSet( chartModel, Orientation.HORIZONTAL, 2, { stroke: 'darkGray', clippingType: ClippingType.LOOSE } ),
+        new GridLineSet( chartModel, Orientation.VERTICAL, 5000, { stroke: 'darkGray', clippingType: ClippingType.LOOSE } ),
 
         // Tick labels along the axes
-        new TickMarkSet( chartModel, Orientation.HORIZONTAL, 2, { clipped: true } ),
-        new TickMarkSet( chartModel, Orientation.VERTICAL, 5000, { clipped: true } ),
+        new TickMarkSet( chartModel, Orientation.HORIZONTAL, 2, { clippingType: ClippingType.LOOSE } ),
+        new TickMarkSet( chartModel, Orientation.VERTICAL, 5000, { clippingType: ClippingType.LOOSE } ),
 
         // Some data
         new BarPlot( chartModel, data, {

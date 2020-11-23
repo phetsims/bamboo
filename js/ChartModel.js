@@ -49,6 +49,24 @@ class ChartModel {
   }
 
   /**
+   * Solve for spaced value.
+   * n * spacing + origin = x
+   * n = (x-origin)/spacing, where n is an integer
+   * @param {number} value
+   * @param {ClippingType} clippingType
+   * @param {number} origin
+   * @param {number} spacing
+   * @param {function} round - rounding type for strict
+   * @returns {number}
+   * @private
+   */
+  static getValueForSpacing( value, clippingType, origin, spacing, round ) {
+    return clippingType === ClippingType.LENIENT ?
+           Util.roundSymmetric( ( value - origin ) / spacing ) :
+           round( ( value - origin ) / spacing );
+  }
+
+  /**
    * @param {Orientation} axisOrientation
    * @param {number} spacing - model separation
    * @param {number} origin - where one is guaranteed to land
@@ -60,15 +78,8 @@ class ChartModel {
 
     const modelRange = this.getModelRange( axisOrientation );
 
-    // n* spacing + origin = x
-    // n = (x-origin)/spacing, where n is an integer
-    // TODO: Factor out
-    const nMin = clippingType === ClippingType.LENIENT ?
-                 Util.roundSymmetric( ( modelRange.min - origin ) / spacing ) :
-                 Math.ceil( ( modelRange.min - origin ) / spacing );
-    const nMax = clippingType === ClippingType.LENIENT ?
-                 Util.roundSymmetric( ( modelRange.max - origin ) / spacing ) :
-                 Math.floor( ( modelRange.max - origin ) / spacing );
+    const nMin = ChartModel.getValueForSpacing( modelRange.min, clippingType, origin, spacing, Math.ceil );
+    const nMax = ChartModel.getValueForSpacing( modelRange.max, clippingType, origin, spacing, Math.floor );
 
     for ( let n = nMin; n <= nMax + 1E-6; n++ ) {
       const modelPosition = n * spacing + origin;

@@ -77,12 +77,12 @@ class DemoScatterPlot extends VBox {
         chartClip,
 
         // Minor grid lines
-        new GridLineSet( chartModel, Orientation.HORIZONTAL, 0.1, { stroke: 'red' } ),
-        new GridLineSet( chartModel, Orientation.VERTICAL, 0.1, { stroke: 'red' } ),
+        new GridLineSet( chartModel, Orientation.HORIZONTAL, 0.1, { stroke: 'lightGray' } ),
+        new GridLineSet( chartModel, Orientation.VERTICAL, 0.1, { stroke: 'lightGray' } ),
 
         // Major grid lines
-        new GridLineSet( chartModel, Orientation.HORIZONTAL, 0.2, { stroke: 'blue' } ),
-        new GridLineSet( chartModel, Orientation.VERTICAL, 0.2, { stroke: 'blue' } ),
+        new GridLineSet( chartModel, Orientation.HORIZONTAL, 0.2, { stroke: 'black' } ),
+        new GridLineSet( chartModel, Orientation.VERTICAL, 0.2, { stroke: 'black' } ),
 
         // axes nodes not clipped
         new AxisNode( chartModel, Orientation.VERTICAL ),

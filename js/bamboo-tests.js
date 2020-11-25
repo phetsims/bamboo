@@ -1,7 +1,7 @@
 // Copyright 2018-2020, University of Colorado Boulder
 
 /**
- * Unit tests for griddle.
+ * Unit tests for bamboo
  *
  * @author Sam Reid (PhET Interactive Simulations)
  */

@@ -41,37 +41,67 @@ class TickMarkSet extends Path {
 
     super( null );
 
-    chartModel.link( () => {
+    // @private
+    this.chartModel = chartModel;
+    this.axisOrientation = axisOrientation;
+    this.spacing = spacing;
+    this.value = options.value;
+    this.edge = options.edge;
+    this.origin = options.origin;
+    this.extent = options.extent;
+    this.clippingType = options.clippingType;
 
-      const shape = new Shape();
+    const listener = () => this.updateTickMarkSet();
+    chartModel.link( listener );
 
-      const children = [];
-
-      chartModel.forEachSpacing( axisOrientation, spacing, options.origin, options.clippingType, ( modelPosition, viewPosition ) => {
-        const tickBounds = new Bounds2( 0, 0, 0, 0 );
-        if ( axisOrientation === Orientation.HORIZONTAL ) {
-          const viewY = options.edge === 'min' ? chartModel.height :
-                        options.edge === 'max' ? 0 :
-                        chartModel.modelToView( axisOrientation.opposite, options.value );
-          shape.moveTo( viewPosition, viewY - options.extent / 2 );
-          shape.lineTo( viewPosition, viewY + options.extent / 2 );
-          tickBounds.setMinMax( viewPosition, viewY - options.extent / 2, viewPosition, viewY + options.extent / 2 );
-        }
-        else {
-          const viewX = options.edge === 'min' ? 0 :
-                        options.edge === 'max' ? chartModel.width :
-                        chartModel.modelToView( axisOrientation.opposite, options.value );
-          shape.moveTo( viewX - options.extent / 2, viewPosition );
-          shape.lineTo( viewX + options.extent / 2, viewPosition );
-          tickBounds.setMinMax( viewX - options.extent / 2, viewPosition, viewX + options.extent / 2, viewPosition );
-        }
-      } );
-
-      this.shape = shape;
-      this.children = children;
-    } );
+    // @private
+    this.disposeTickMarkSet = () => chartModel.unlink( listener );
 
     this.mutate( options );
+  }
+
+  /**
+   * @param {number} spacing
+   * @public
+   */
+  setSpacing( spacing ) {
+    if ( spacing !== this.spacing ) {
+      this.spacing = spacing;
+      this.updateTickMarkSet();
+    }
+  }
+
+  // @private
+  updateTickMarkSet() {
+    const shape = new Shape();
+
+    this.chartModel.forEachSpacing( this.axisOrientation, this.spacing, this.origin, this.clippingType, ( modelPosition, viewPosition ) => {
+      const tickBounds = new Bounds2( 0, 0, 0, 0 );
+      if ( this.axisOrientation === Orientation.HORIZONTAL ) {
+        const viewY = this.edge === 'min' ? this.chartModel.height :
+                      this.edge === 'max' ? 0 :
+                      this.chartModel.modelToView( this.axisOrientation.opposite, this.value );
+        shape.moveTo( viewPosition, viewY - this.extent / 2 );
+        shape.lineTo( viewPosition, viewY + this.extent / 2 );
+        tickBounds.setMinMax( viewPosition, viewY - this.extent / 2, viewPosition, viewY + this.extent / 2 );
+      }
+      else {
+        const viewX = this.edge === 'min' ? 0 :
+                      this.edge === 'max' ? this.chartModel.width :
+                      this.chartModel.modelToView( this.axisOrientation.opposite, this.value );
+        shape.moveTo( viewX - this.extent / 2, viewPosition );
+        shape.lineTo( viewX + this.extent / 2, viewPosition );
+        tickBounds.setMinMax( viewX - this.extent / 2, viewPosition, viewX + this.extent / 2, viewPosition );
+      }
+    } );
+
+    this.shape = shape;
+  }
+
+  // @public
+  dispose() {
+    this.disposeTickMarkSet();
+    super.dispose();
   }
 }
 

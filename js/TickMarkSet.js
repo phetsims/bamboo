@@ -46,7 +46,6 @@ class TickMarkSet extends Path {
       const shape = new Shape();
 
       const children = [];
-      const used = new Set();
 
       chartModel.forEachSpacing( axisOrientation, spacing, options.origin, options.clippingType, ( modelPosition, viewPosition ) => {
         const tickBounds = new Bounds2( 0, 0, 0, 0 );
@@ -66,8 +65,6 @@ class TickMarkSet extends Path {
           shape.lineTo( viewX + options.extent / 2, viewPosition );
           tickBounds.setMinMax( viewX - options.extent / 2, viewPosition, viewX + options.extent / 2, viewPosition );
         }
-
-        used.add( modelPosition );
       } );
 
       this.shape = shape;

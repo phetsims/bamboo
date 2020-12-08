@@ -70,7 +70,7 @@ class LabelSet extends Path {
     this.createLabel = options.createLabel;
     this.positionLabel = options.positionLabel;
 
-    // cache labels for quick reuse
+    // @private cache labels for quick reuse
     this.labelMap = new Map();
 
     const update = () => this.updateLabelSet();
@@ -136,6 +136,17 @@ class LabelSet extends Path {
     } );
 
     this.children = children;
+  }
+
+  /**
+   * Clears the cache and updates the label set. Use this if you need to have new labels for values that are in
+   * the cache. For example, if your createLabel function had logic to switch between numeric (e.g. 2) and
+   * symbolic labels (e.g. '2L').
+   * @public
+   */
+  invalidateLabelSet() {
+    this.labelMap.clear();
+    this.updateLabelSet();
   }
 
   // @public

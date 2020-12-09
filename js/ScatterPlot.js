@@ -15,10 +15,10 @@ class ScatterPlot extends Path {
 
   /**
    * @param {ChartModel} chartModel
-   * @param {Vector2[]} points
+   * @param {Vector2[]} dataSet
    * @param {Object} [options]
    */
-  constructor( chartModel, points, options ) {
+  constructor( chartModel, dataSet, options ) {
 
     options = merge( {
       radius: 2
@@ -28,7 +28,7 @@ class ScatterPlot extends Path {
 
     // @private
     this.chartModel = chartModel;
-    this.points = points;
+    this.dataSet = dataSet;
     this.radius = options.radius;
 
     const update = () => this.update();
@@ -41,12 +41,12 @@ class ScatterPlot extends Path {
   }
 
   /**
-   * Sets points and redraws the plot.
-   * @param {Vector2[]} points
+   * Sets dataSet and redraws the plot.
+   * @param {Vector2[]} dataSet
    * @public
    */
-  setPoints( points ) {
-    this.points = points;
+  setDataSet( dataSet ) {
+    this.dataSet = dataSet;
     this.update();
   }
 
@@ -56,11 +56,11 @@ class ScatterPlot extends Path {
    */
   update() {
     const shape = new Shape();
-    for ( let i = 0; i < this.points.length; i++ ) {
+    for ( let i = 0; i < this.dataSet.length; i++ ) {
 
       // NaN or Infinite components draw nothing
-      if ( this.points[ i ].isFinite() ) {
-        const viewPoint = this.chartModel.modelToViewPosition( this.points[ i ] );
+      if ( this.dataSet[ i ].isFinite() ) {
+        const viewPoint = this.chartModel.modelToViewPosition( this.dataSet[ i ] );
         shape.moveToPoint( viewPoint );
         shape.circle( viewPoint.x, viewPoint.y, this.radius );
       }

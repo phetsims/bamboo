@@ -16,10 +16,10 @@ class BarPlot extends Node {
 
   /**
    * @param {ChartModel} chartModel
-   * @param {Vector2[]} points
+   * @param {Vector2[]} dataSet
    * @param {Object} [options]
    */
-  constructor( chartModel, points, options ) {
+  constructor( chartModel, dataSet, options ) {
 
     options = merge( {
 
@@ -31,11 +31,11 @@ class BarPlot extends Node {
 
     // @private
     this.chartModel = chartModel;
-    this.points = points;
+    this.dataSet = dataSet;
     this.pointToColor = options.pointToColor;
 
     // @private {Line[]}
-    this.lines = points.map( () => new Line( 0, 0, 0, 0, { lineWidth: 10 } ) );
+    this.lines = dataSet.map( () => new Line( 0, 0, 0, 0, { lineWidth: 10 } ) );
     this.lines.forEach( node => this.addChild( node ) );
 
     const update = () => this.update();
@@ -48,12 +48,12 @@ class BarPlot extends Node {
   }
 
   /**
-   * Sets points and redraws the plot.
-   * @param {Vector2[]} points
+   * Sets dataSet and redraws the plot.
+   * @param {Vector2[]} dataSet
    * @public
    */
-  setPoints( points ) {
-    this.points = points;
+  setDataSet( dataSet ) {
+    this.dataSet = dataSet;
     this.update();
   }
 
@@ -62,10 +62,10 @@ class BarPlot extends Node {
    */
   update() {
     for ( let i = 0; i < this.lines.length; i++ ) {
-      const tail = this.chartModel.modelToViewPosition( new Vector2( this.points[ i ].x, 0 ) );
-      const tip = this.chartModel.modelToViewPosition( this.points[ i ] );
+      const tail = this.chartModel.modelToViewPosition( new Vector2( this.dataSet[ i ].x, 0 ) );
+      const tip = this.chartModel.modelToViewPosition( this.dataSet[ i ] );
       this.lines[ i ].setLine( tail.x, tail.y, tip.x, tip.y );
-      this.lines[ i ].stroke = this.pointToColor( this.points[ i ] );
+      this.lines[ i ].stroke = this.pointToColor( this.dataSet[ i ] );
     }
   }
 

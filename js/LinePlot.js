@@ -32,6 +32,16 @@ class LinePlot extends Path {
     this.disposeLinePlot = () => chartModel.unlink( update );
   }
 
+  /**
+   * Sets data and redraws the plot.
+   * @param {Vector2[]} data
+   * @public
+   */
+  setData( data ) {
+    this.data = data;
+    this.update();
+  }
+
   // TODO: renders 2x/frame if a data point is added and the chart scrolls
   /**
    * @public

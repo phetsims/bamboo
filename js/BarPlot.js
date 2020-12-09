@@ -44,6 +44,16 @@ class BarPlot extends Node {
   }
 
   /**
+   * Sets data and redraws the plot.
+   * @param {Vector2[]} data
+   * @public
+   */
+  setData( data ) {
+    this.data = data;
+    this.update();
+  }
+
+  /**
    * @public
    */
   update() {

@@ -24,6 +24,7 @@ class GridLineSet extends Path {
    * @param {Object} [options]
    */
   constructor( chartModel, axisOrientation, spacing, options ) {
+
     options = merge( {
       origin: 0,
       stroke: 'black',
@@ -37,13 +38,14 @@ class GridLineSet extends Path {
     this.axisOrientation = axisOrientation;
     this.spacing = spacing;
     this.origin = options.origin;
-    this.clipped = options.clipped;
+    this.clipped = options.clipped; //TODO this is not used - should it be options.clippingType?
 
     const update = () => this.updateGridLineSet();
     chartModel.link( update );
 
     this.mutate( options );
 
+    // @private
     this.disposeGridLineSet = () => chartModel.unlink( update );
   }
 

@@ -35,8 +35,8 @@ class BarPlot extends Node {
     this.vectorToColor = options.vectorToColor;
 
     // @private {Line[]}
-    this.nodes = data.map( () => new Line( 0, 0, 0, 0, { lineWidth: 10 } ) );
-    this.nodes.forEach( node => this.addChild( node ) );
+    this.lines = data.map( () => new Line( 0, 0, 0, 0, { lineWidth: 10 } ) );
+    this.lines.forEach( node => this.addChild( node ) );
 
     const update = () => this.update();
     chartModel.link( update );
@@ -61,11 +61,11 @@ class BarPlot extends Node {
    * @public
    */
   update() {
-    for ( let i = 0; i < this.nodes.length; i++ ) {
+    for ( let i = 0; i < this.lines.length; i++ ) {
       const tail = this.chartModel.modelToViewPosition( new Vector2( this.data[ i ].x, 0 ) );
       const tip = this.chartModel.modelToViewPosition( this.data[ i ] );
-      this.nodes[ i ].setLine( tail.x, tail.y, tip.x, tip.y );
-      this.nodes[ i ].stroke = this.vectorToColor( this.data[ i ] );
+      this.lines[ i ].setLine( tail.x, tail.y, tip.x, tip.y );
+      this.lines[ i ].stroke = this.vectorToColor( this.data[ i ] );
     }
   }
 

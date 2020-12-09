@@ -58,8 +58,8 @@ class DemoAmplitudesChart extends Node {
 
         // Some data
         new BarPlot( chartModel, data, {
-          valueToColor: ( x, y ) => {
-            const c = Utils.linear( 0, 24 * Math.PI, 0, 240, x );
+          vectorToColor: vector => {
+            const c = Utils.linear( 0, 24 * Math.PI, 0, 240, vector.x );
             return new Color( c, c, c );
           }
         } )

@@ -22,7 +22,9 @@ class BarPlot extends Node {
   constructor( chartModel, data, options ) {
 
     options = merge( {
-      valueToColor: ( x, y ) => 'blue'
+
+      // {function(vector:Vector2):ColorDef} maps an element of {Vector2[]} data to a color
+      vectorToColor: vector => 'blue'
     }, options );
 
     super( options );
@@ -30,7 +32,9 @@ class BarPlot extends Node {
     // @private
     this.chartModel = chartModel;
     this.data = data;
-    this.valueToColor = options.valueToColor;
+    this.vectorToColor = options.vectorToColor;
+
+    // @private {Line[]}
     this.nodes = data.map( () => new Line( 0, 0, 0, 0, { lineWidth: 10 } ) );
     this.nodes.forEach( node => this.addChild( node ) );
 
@@ -61,7 +65,7 @@ class BarPlot extends Node {
       const tail = this.chartModel.modelToViewPosition( new Vector2( this.data[ i ].x, 0 ) );
       const tip = this.chartModel.modelToViewPosition( this.data[ i ] );
       this.nodes[ i ].setLine( tail.x, tail.y, tip.x, tip.y );
-      this.nodes[ i ].stroke = this.valueToColor( this.data[ i ].x, this.data[ i ].y );
+      this.nodes[ i ].stroke = this.vectorToColor( this.data[ i ] );
     }
   }
 

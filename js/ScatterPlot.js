@@ -28,7 +28,11 @@ class ScatterPlot extends Path {
 
     // @private
     this.chartModel = chartModel;
+
+    // @public if you change this directly, you are responsible for calling update
     this.dataSet = dataSet;
+
+    // @private
     this.radius = options.radius;
 
     const update = () => this.update();

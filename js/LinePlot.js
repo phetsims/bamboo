@@ -23,6 +23,8 @@ class LinePlot extends Path {
 
     // @private
     this.chartModel = chartModel;
+
+    // @public if you change this directly, you are responsible for calling update
     this.dataSet = dataSet;
 
     const update = () => this.update();

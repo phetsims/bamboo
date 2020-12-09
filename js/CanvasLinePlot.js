@@ -27,8 +27,10 @@ class CanvasLinePlot extends CanvasNode {
     super( options );
 
     // @private
-    this.dataSets = dataSets;
     this.chartModel = chartModel;
+
+    // @public if you change this directly, you are responsible for calling update
+    this.dataSets = dataSets;
 
     const update = () => this.update();
     chartModel.link( update );

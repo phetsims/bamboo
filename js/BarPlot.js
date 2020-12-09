@@ -16,26 +16,26 @@ class BarPlot extends Node {
 
   /**
    * @param {ChartModel} chartModel
-   * @param {Vector2[]} data
+   * @param {Vector2[]} points
    * @param {Object} [options]
    */
-  constructor( chartModel, data, options ) {
+  constructor( chartModel, points, options ) {
 
     options = merge( {
 
-      // {function(vector:Vector2):ColorDef} maps an element of {Vector2[]} data to a color
-      vectorToColor: vector => 'blue'
+      // {function(vector:Vector2):ColorDef} maps a {Vector2} point to a color
+      pointToColor: point => 'blue'
     }, options );
 
     super( options );
 
     // @private
     this.chartModel = chartModel;
-    this.data = data;
-    this.vectorToColor = options.vectorToColor;
+    this.points = points;
+    this.pointToColor = options.pointToColor;
 
     // @private {Line[]}
-    this.lines = data.map( () => new Line( 0, 0, 0, 0, { lineWidth: 10 } ) );
+    this.lines = points.map( () => new Line( 0, 0, 0, 0, { lineWidth: 10 } ) );
     this.lines.forEach( node => this.addChild( node ) );
 
     const update = () => this.update();
@@ -48,12 +48,12 @@ class BarPlot extends Node {
   }
 
   /**
-   * Sets data and redraws the plot.
-   * @param {Vector2[]} data
+   * Sets points and redraws the plot.
+   * @param {Vector2[]} points
    * @public
    */
-  setData( data ) {
-    this.data = data;
+  setPoints( points ) {
+    this.points = points;
     this.update();
   }
 
@@ -62,10 +62,10 @@ class BarPlot extends Node {
    */
   update() {
     for ( let i = 0; i < this.lines.length; i++ ) {
-      const tail = this.chartModel.modelToViewPosition( new Vector2( this.data[ i ].x, 0 ) );
-      const tip = this.chartModel.modelToViewPosition( this.data[ i ] );
+      const tail = this.chartModel.modelToViewPosition( new Vector2( this.points[ i ].x, 0 ) );
+      const tip = this.chartModel.modelToViewPosition( this.points[ i ] );
       this.lines[ i ].setLine( tail.x, tail.y, tip.x, tip.y );
-      this.lines[ i ].stroke = this.vectorToColor( this.data[ i ] );
+      this.lines[ i ].stroke = this.pointToColor( this.points[ i ] );
     }
   }
 

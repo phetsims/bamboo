@@ -14,16 +14,16 @@ class LinePlot extends Path {
 
   /**
    * @param {ChartModel} chartModel
-   * @param {Vector2[]} data
+   * @param {Vector2[]} points
    * @param {Object} [options]
    */
-  constructor( chartModel, data, options ) {
+  constructor( chartModel, points, options ) {
 
     super( null, options );
 
     // @private
     this.chartModel = chartModel;
-    this.data = data;
+    this.points = points;
 
     const update = () => this.update();
     chartModel.link( update );
@@ -33,27 +33,27 @@ class LinePlot extends Path {
   }
 
   /**
-   * Sets data and redraws the plot.
-   * @param {Vector2[]} data
+   * Sets points and redraws the plot.
+   * @param {Vector2[]} points
    * @public
    */
-  setData( data ) {
-    this.data = data;
+  setPoints( points ) {
+    this.points = points;
     this.update();
   }
 
-  // TODO: renders 2x/frame if a data point is added and the chart scrolls
+  // TODO: renders 2x/frame if a point is added and the chart scrolls
   /**
    * @public
    */
   update() {
     const shape = new Shape();
     let moveToNextPoint = true;
-    for ( let i = 0; i < this.data.length; i++ ) {
+    for ( let i = 0; i < this.points.length; i++ ) {
 
       // NaN or Infinite components "pen up" and stop drawing
-      if ( this.data[ i ].isFinite() ) {
-        const viewPoint = this.chartModel.modelToViewPosition( this.data[ i ] );
+      if ( this.points[ i ].isFinite() ) {
+        const viewPoint = this.chartModel.modelToViewPosition( this.points[ i ] );
         if ( moveToNextPoint ) {
           shape.moveToPoint( viewPoint );
           moveToNextPoint = false;

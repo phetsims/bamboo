@@ -28,11 +28,11 @@ class DemoComponentsChart extends Node {
     super();
 
     const createDataSet = ( min, max, frequency, offset, delta = 0.005 ) => {
-      const data = [];
+      const dataSet = [];
       for ( let x = min; x <= max; x += delta ) {
-        data.push( new Vector2( x, Math.sin( x * frequency + offset ) ) );
+        dataSet.push( new Vector2( x, Math.sin( x * frequency + offset ) ) );
       }
-      return data;
+      return dataSet;
     };
 
     const chartModel = new ChartModel( 700, 300, {

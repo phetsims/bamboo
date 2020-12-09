@@ -29,9 +29,9 @@ class DemoScatterPlot extends VBox {
 
   constructor( options ) {
 
-    const data = [];
+    const dataSet = [];
     for ( let i = -3; i < 3; i += 0.01 ) {
-      phet.joist.random.nextDouble() < 0.3 && data.push( new Vector2( i, Math.sin( i * 2 ) ) );
+      phet.joist.random.nextDouble() < 0.3 && dataSet.push( new Vector2( i, Math.sin( i * 2 ) ) );
     }
 
     const chartModel = new ChartModel( 600, 400, {
@@ -56,12 +56,12 @@ class DemoScatterPlot extends VBox {
         new TickMarkSet( chartModel, Orientation.VERTICAL, 0.2, { clippingType: ClippingType.LOOSE } ),
 
         // Some data
-        new BarPlot( chartModel, data, { opacity: 0.2 } ),
-        new LinePlot( chartModel, data, {
+        new BarPlot( chartModel, dataSet, { opacity: 0.2 } ),
+        new LinePlot( chartModel, dataSet, {
           stroke: 'red',
           lineWidth: 2
         } ),
-        new ScatterPlot( chartModel, data, {
+        new ScatterPlot( chartModel, dataSet, {
           fill: 'blue'
         } )
       ]

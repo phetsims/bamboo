@@ -27,13 +27,13 @@ class DemoAmplitudesChart extends Node {
   constructor( options ) {
     super();
 
-    const data = [];
+    const dataSet = [];
     for ( let i = 0; i <= 24; i++ ) {
       const x = Math.PI * i;
       const arg = x - Math.PI * 12;
       const c = 10;
       const y = 0.13 * Math.exp( -arg * arg / 2 / c / c );
-      data.push( new Vector2( x, y ) );
+      dataSet.push( new Vector2( x, y ) );
     }
 
     const chartModel = new ChartModel( 700, 300, {
@@ -57,7 +57,7 @@ class DemoAmplitudesChart extends Node {
         new GridLineSet( chartModel, Orientation.VERTICAL, 0.05, { stroke: 'lightGray' } ),
 
         // Some data
-        new BarPlot( chartModel, data, {
+        new BarPlot( chartModel, dataSet, {
           pointToColor: point => {
             const c = Utils.linear( 0, 24 * Math.PI, 0, 240, point.x );
             return new Color( c, c, c );

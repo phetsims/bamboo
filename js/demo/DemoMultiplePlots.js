@@ -1,5 +1,11 @@
 // Copyright 2020, University of Colorado Boulder
 
+/**
+ * Demonstrates multiple types of plots.
+ *
+ * @author Sam Reid (PhET Interactive Simulations)
+ */
+
 import Property from '../../../axon/js/Property.js';
 import Range from '../../../dot/js/Range.js';
 import Vector2 from '../../../dot/js/Vector2.js';
@@ -20,12 +26,7 @@ import ScatterPlot from '../ScatterPlot.js';
 import TickMarkSet from '../TickMarkSet.js';
 import bamboo from '../bamboo.js';
 
-/**
- *
- * @author Sam Reid (PhET Interactive Simulations)
- */
-
-class DemoLogPlot extends VBox {
+class DemoMultiplePlots extends VBox {
 
   constructor( options ) {
 
@@ -118,5 +119,5 @@ class DemoLogPlot extends VBox {
   }
 }
 
-bamboo.register( 'DemoLogPlot', DemoLogPlot );
-export default DemoLogPlot;
+bamboo.register( 'DemoMultiplePlots', DemoMultiplePlots );
+export default DemoMultiplePlots;

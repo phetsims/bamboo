@@ -1,5 +1,11 @@
 // Copyright 2020, University of Colorado Boulder
 
+/**
+ * Demonstrates LinePlot.
+ *
+ * @author Sam Reid (PhET Interactive Simulations)
+ */
+
 import NumberProperty from '../../../axon/js/NumberProperty.js';
 import Range from '../../../dot/js/Range.js';
 import Vector2 from '../../../dot/js/Vector2.js';
@@ -8,29 +14,24 @@ import ZoomButtonGroup from '../../../scenery-phet/js/ZoomButtonGroup.js';
 import Node from '../../../scenery/js/nodes/Node.js';
 import Text from '../../../scenery/js/nodes/Text.js';
 import AxisNode from '../AxisNode.js';
-import CanvasLinePlot from '../CanvasLinePlot.js';
 import ChartModel from '../ChartModel.js';
 import ChartRectangle from '../ChartRectangle.js';
 import GridLineSet from '../GridLineSet.js';
 import LabelSet from '../LabelSet.js';
+import LinePlot from '../LinePlot.js';
 import TickMarkSet from '../TickMarkSet.js';
 import bamboo from '../bamboo.js';
 
-/**
- *
- * @author Sam Reid (PhET Interactive Simulations)
- */
-
-class DemoComponentsChart extends Node {
+class DemoLinePlot extends Node {
 
   constructor( options ) {
 
     super();
 
-    const createDataSet = ( min, max, frequency, offset, delta = 0.005 ) => {
+    const createDataSet = ( min, max, frequency, delta = 0.005 ) => {
       const dataSet = [];
       for ( let x = min; x <= max; x += delta ) {
-        dataSet.push( new Vector2( x, Math.sin( x * frequency + offset ) ) );
+        dataSet.push( new Vector2( x, Math.sin( x * frequency ) ) );
       }
       return dataSet;
     };
@@ -61,14 +62,6 @@ class DemoComponentsChart extends Node {
                                  zoomLevel === 4 ? new Range( -Math.PI / 2, Math.PI / 2 ) : null );
     } );
 
-    const dataSets = [];
-
-    for ( let i = 0; i < 500; i++ ) {
-      // plots.push( new LinePlot( chartModel, createDataSet( -2, 2, 5 + i / 10 + phet.joist.random.nextDouble() / 10, phet.joist.random.nextDouble() * 2 ), { stroke: 'red', lineWidth: 2 } ) )
-      const d = createDataSet( -2, 2, 5 + i / 10 + phet.joist.random.nextDouble() / 10, phet.joist.random.nextDouble() * 2 );
-      dataSets.push( d );
-    }
-
     // Anything you want clipped goes in here
     this.children = [
 
@@ -89,12 +82,16 @@ class DemoComponentsChart extends Node {
           new AxisNode( chartModel, Orientation.VERTICAL ),
 
           // Some data
-          new CanvasLinePlot( chartModel, dataSets )
+          new LinePlot( chartModel, createDataSet( -2, 2, 5 ), { stroke: 'red', lineWidth: 2 } ),
+          new LinePlot( chartModel, createDataSet( -2, 2, 10 ), { stroke: 'green', lineWidth: 2 } ),
+          new LinePlot( chartModel, createDataSet( -2, 2, 20 ), { stroke: 'blue', lineWidth: 2 } ),
+          new LinePlot( chartModel, createDataSet( -2, 2, 30 ), { stroke: 'orange', lineWidth: 2 } )
         ]
       } ),
 
       // Tick marks outside the chart
       new TickMarkSet( chartModel, Orientation.VERTICAL, 0.5, { edge: 'min' } ),
+      new LabelSet( chartModel, Orientation.VERTICAL, 0.5, { edge: 'min' } ),
       new TickMarkSet( chartModel, Orientation.HORIZONTAL, Math.PI / 8, { edge: 'min' } ),
       new LabelSet( chartModel, Orientation.HORIZONTAL, Math.PI / 8, {
         edge: 'min',
@@ -111,5 +108,5 @@ class DemoComponentsChart extends Node {
   }
 }
 
-bamboo.register( 'DemoComponentsChart', DemoComponentsChart );
-export default DemoComponentsChart;
+bamboo.register( 'DemoLinePlot', DemoLinePlot );
+export default DemoLinePlot;

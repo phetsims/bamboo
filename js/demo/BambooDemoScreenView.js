@@ -12,10 +12,10 @@ import Emitter from '../../../axon/js/Emitter.js';
 import sceneryPhetQueryParameters from '../../../scenery-phet/js/sceneryPhetQueryParameters.js';
 import DemosScreenView from '../../../sun/js/demo/DemosScreenView.js';
 import bamboo from '../bamboo.js';
-import DemoAmplitudesChart from './DemoAmplitudesChart.js';
-import DemoComponentsChart from './DemoComponentsChart.js';
-import DemoHarmonicsChart from './DemoHarmonicsChart.js';
-import DemoLogPlot from './DemoLogPlot.js';
+import DemoBarPlot from './DemoBarPlot.js';
+import DemoCanvasLinePlot from './DemoCanvasLinePlot.js';
+import DemoLinePlot from './DemoLinePlot.js';
+import DemoMultiplePlots from './DemoMultiplePlots.js';
 import DemoScatterPlot from './DemoScatterPlot.js';
 
 // constants - this is a hack to enable components to animate from the animation loop
@@ -38,22 +38,22 @@ class BambooDemoScreenView extends DemosScreenView {
         } )
       },
       {
-        label: 'HarmonicsChart', createNode: layoutBounds => new DemoHarmonicsChart( {
+        label: 'LinePlot', createNode: layoutBounds => new DemoLinePlot( {
           center: layoutBounds.center
         } )
       },
       {
-        label: 'ComponentsChart', createNode: layoutBounds => new DemoComponentsChart( {
+        label: 'CanvasLinePlot', createNode: layoutBounds => new DemoCanvasLinePlot( {
           center: layoutBounds.center
         } )
       },
       {
-        label: 'LogPlot', createNode: layoutBounds => new DemoLogPlot( {
+        label: 'MultiplePlots', createNode: layoutBounds => new DemoMultiplePlots( {
           center: layoutBounds.center
         } )
       },
       {
-        label: 'AmplitudesChart', createNode: layoutBounds => new DemoAmplitudesChart( {
+        label: 'BarPlot', createNode: layoutBounds => new DemoBarPlot( {
           center: layoutBounds.center
         } )
       }

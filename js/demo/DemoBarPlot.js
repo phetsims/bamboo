@@ -1,5 +1,11 @@
 // Copyright 2020, University of Colorado Boulder
 
+/**
+ * Demonstrates a BarPlot.
+ *
+ * @author Sam Reid (PhET Interactive Simulations)
+ */
+
 import Range from '../../../dot/js/Range.js';
 import Utils from '../../../dot/js/Utils.js';
 import Vector2 from '../../../dot/js/Vector2.js';
@@ -17,12 +23,7 @@ import LabelSet from '../LabelSet.js';
 import TickMarkSet from '../TickMarkSet.js';
 import bamboo from '../bamboo.js';
 
-/**
- *
- * @author Sam Reid (PhET Interactive Simulations)
- */
-
-class DemoAmplitudesChart extends Node {
+class DemoBarPlot extends Node {
 
   constructor( options ) {
     super();
@@ -106,5 +107,5 @@ class DemoAmplitudesChart extends Node {
   }
 }
 
-bamboo.register( 'DemoAmplitudesChart', DemoAmplitudesChart );
-export default DemoAmplitudesChart;
+bamboo.register( 'DemoBarPlot', DemoBarPlot );
+export default DemoBarPlot;

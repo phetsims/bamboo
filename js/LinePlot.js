@@ -18,16 +18,24 @@ class LinePlot extends Path {
    * @param {Object} [options]
    */
   constructor( chartModel, data, options ) {
+
     super( null, options );
 
     // @private
     this.chartModel = chartModel;
     this.data = data;
-    chartModel.link( () => this.update() );
+
+    const update = () => this.update();
+    chartModel.link( update );
+
+    // @private
+    this.disposeLinePlot = () => chartModel.unlink( update );
   }
 
-  // @public
   // TODO: renders 2x/frame if a data point is added and the chart scrolls
+  /**
+   * @public
+   */
   update() {
     const shape = new Shape();
     let moveToNextPoint = true;
@@ -49,6 +57,15 @@ class LinePlot extends Path {
       }
     }
     this.shape = shape;
+  }
+
+  /**
+   * @public
+   * @override
+   */
+  dispose() {
+    this.disposeLinePlot();
+    super.dispose();
   }
 }
 

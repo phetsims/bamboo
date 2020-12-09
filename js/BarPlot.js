@@ -20,23 +20,48 @@ class BarPlot extends Node {
    * @param {Object} [options]
    */
   constructor( chartModel, data, options ) {
+
     options = merge( {
       valueToColor: ( x, y ) => 'blue'
     }, options );
+
     super( options );
 
-    const nodes = data.map( () => new Line( 0, 0, 0, 0, { lineWidth: 10 } ) );
+    // @private
+    this.chartModel = chartModel;
+    this.data = data;
+    this.valueToColor = options.valueToColor;
+    this.nodes = data.map( () => new Line( 0, 0, 0, 0, { lineWidth: 10 } ) );
+    this.nodes.forEach( node => this.addChild( node ) );
 
-    nodes.forEach( node => this.addChild( node ) );
+    const update = () => this.update();
+    chartModel.link( update );
 
-    chartModel.link( () => {
-      for ( let i = 0; i < nodes.length; i++ ) {
-        const tail = chartModel.modelToViewPosition( new Vector2( data[ i ].x, 0 ) );
-        const tip = chartModel.modelToViewPosition( data[ i ] );
-        nodes[ i ].setLine( tail.x, tail.y, tip.x, tip.y );
-        nodes[ i ].stroke = options.valueToColor( data[ i ].x, data[ i ].y );
-      }
-    } );
+    // @private
+    this.disposeBarPlot = () => {
+      chartModel.unlink( update );
+    };
+  }
+
+  /**
+   * @public
+   */
+  update() {
+    for ( let i = 0; i < this.nodes.length; i++ ) {
+      const tail = this.chartModel.modelToViewPosition( new Vector2( this.data[ i ].x, 0 ) );
+      const tip = this.chartModel.modelToViewPosition( this.data[ i ] );
+      this.nodes[ i ].setLine( tail.x, tail.y, tip.x, tip.y );
+      this.nodes[ i ].stroke = this.valueToColor( this.data[ i ].x, this.data[ i ].y );
+    }
+  }
+
+  /**
+   * @public
+   * @override
+   */
+  dispose() {
+    this.disposeBarPlot();
+    super.dispose();
   }
 }
 

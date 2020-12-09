@@ -19,9 +19,11 @@ class ScatterPlot extends Path {
    * @param {Object} [options]
    */
   constructor( chartModel, data, options ) {
+
     options = merge( {
       radius: 2
     }, options );
+
     super( null, options );
 
     // @private
@@ -29,11 +31,19 @@ class ScatterPlot extends Path {
     this.data = data;
     this.radius = options.radius;
 
-    chartModel.link( () => this.update() );
+    const update = () => this.update();
+    chartModel.link( update );
+
+    // @private
+    this.disposeScatterPlot = () => {
+      chartModel.unlink( update );
+    };
   }
 
-  // @public
   // TODO: renders 2x/frame if a data point is added and the chart scrolls
+  /**
+   * @public
+   */
   update() {
     const shape = new Shape();
     for ( let i = 0; i < this.data.length; i++ ) {
@@ -46,6 +56,15 @@ class ScatterPlot extends Path {
       }
     }
     this.shape = shape;
+  }
+
+  /**
+   * @public
+   * @override
+   */
+  dispose() {
+    this.disposeScatterPlot();
+    super.dispose();
   }
 }
 

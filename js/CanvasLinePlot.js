@@ -1,7 +1,7 @@
 // Copyright 2019-2020, University of Colorado Boulder
 
 /**
- * Renders data with lineTo, using a canvas for performance.
+ * CanvasLinePlot renders line plots of one or more data sets using Canvas, for performance.
  *
  * @author Sam Reid (PhET Interactive Simulations)
  */
@@ -15,17 +15,43 @@ class CanvasLinePlot extends CanvasNode {
   /**
    * @param {ChartModel} chartModel
    * @param {Vector2[][]} dataSets
+   * @param {Object} [options]
    */
-  constructor( chartModel, dataSets ) {
+  constructor( chartModel, dataSets, options ) {
 
-    super( {
-      canvasBounds: new Bounds2( 0, 0, chartModel.width, chartModel.height )
-    } );
+    options = options || {};
 
+    assert && assert( !options.canvasBounds, 'CanvasLinePlot sets canvasBounds' );
+    options.canvasBounds = new Bounds2( 0, 0, chartModel.width, chartModel.height );
+
+    super( options );
+
+    // @private
     this.dataSets = dataSets;
     this.chartModel = chartModel;
 
-    chartModel.link( () => this.invalidatePaint() );
+    const update = () => this.update();
+    chartModel.link( update );
+
+    // @private
+    this.disposeCanvasLinePlot = () => {
+      chartModel.link( update );
+    };
+  }
+
+  /**
+   * Sets the data sets and redraws the chart.
+   * @param {Vector2[][]}dataSets
+   * @public
+   */
+  setDataSets( dataSets ) {
+    this.dataSets = dataSets;
+    this.update();
+  }
+
+  // @public
+  update() {
+    this.invalidatePaint();
   }
 
   /**
@@ -49,6 +75,15 @@ class CanvasLinePlot extends CanvasNode {
     } );
 
     context.stroke();
+  }
+
+  /**
+   * @public
+   * @override
+   */
+  dispose() {
+    this.disposeCanvasLinePlot();
+    super.dispose();
   }
 }
 

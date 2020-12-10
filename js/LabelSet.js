@@ -53,6 +53,7 @@ class LabelSet extends Path {
       }
     }, options );
 
+    assert && assert( !options.children, 'LabelSet sets children in updateLabelSet' );
     if ( options.edge ) {
       assert && assert( options.value === 0, 'value and edge are mutually exclusive' );
     }

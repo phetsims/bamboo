@@ -38,7 +38,7 @@ class GridLineSet extends Path {
     this.axisOrientation = axisOrientation;
     this.spacing = spacing;
     this.origin = options.origin;
-    this.clipped = options.clipped; //TODO this is not used - should it be options.clippingType?
+    this.clippingType = options.clippingType;
 
     const update = () => this.updateGridLineSet();
     chartModel.link( update );

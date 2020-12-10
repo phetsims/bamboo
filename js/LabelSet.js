@@ -24,6 +24,7 @@ class LabelSet extends Path {
    * @param {Object} [options]
    */
   constructor( chartModel, axisOrientation, spacing, options ) {
+
     options = merge( {
       value: 0, // appear on the axis by default
       edge: null, // 'min' or 'max' put the ticks on that edge of the chart (takes precedence over value)

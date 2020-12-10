@@ -21,6 +21,7 @@ class ScatterPlot extends Path {
   constructor( chartModel, dataSet, options ) {
 
     options = merge( {
+      fill: 'black',
       radius: 2
     }, options );
 

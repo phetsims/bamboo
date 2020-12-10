@@ -7,6 +7,7 @@
  */
 
 import Shape from '../../kite/js/Shape.js';
+import merge from '../../phet-core/js/merge.js';
 import Path from '../../scenery/js/nodes/Path.js';
 import bamboo from './bamboo.js';
 
@@ -18,6 +19,10 @@ class LinePlot extends Path {
    * @param {Object} [options]
    */
   constructor( chartModel, dataSet, options ) {
+
+    options = merge( {
+      stroke: 'black'
+    }, options );
 
     super( null, options );
 

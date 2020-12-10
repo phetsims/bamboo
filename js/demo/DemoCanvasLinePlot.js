@@ -78,7 +78,8 @@ class DemoCanvasLinePlot extends Node {
 
       // Clipped contents
       new Node( {
-        clipArea: chartRectangle.getShape(), // TODO: what if the chart area changes, then clip needs to change
+        // TODO https://github.com/phetsims/bamboo/issues/15 what if the chart area changes, then clip needs to change
+        clipArea: chartRectangle.getShape(),
         children: [
 
           // Minor grid lines

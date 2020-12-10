@@ -51,7 +51,7 @@ class LinePlot extends Path {
     this.update();
   }
 
-  // TODO: renders 2x/frame if a point is added and the chart scrolls
+  // TODO https://github.com/phetsims/bamboo/issues/14 renders 2x/frame if a point is added and the chart scrolls
   /**
    * @public
    */

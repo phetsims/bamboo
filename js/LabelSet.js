@@ -31,8 +31,8 @@ class LabelSet extends Path {
       origin: 0,
 
       // act as if there is a tick with this extent, for positioning the label relatively
-      // TODO: This seems critical to get right, if it is shared by TickMarkNode.  Also, is it odd to put this to 0 (or a small number)
-      // when you don't have ticks?
+      // TODO https://github.com/phetsims/bamboo/issues/13 This seems critical to get right, if it is shared by
+      //   TickMarkNode.  Also, is it odd to put this to 0 (or a small number) when you don't have ticks?
       extent: 10,
 
       // determines whether the rounding is loose, see ChartModel

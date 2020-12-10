@@ -17,8 +17,33 @@ class ChartRectangle extends Rectangle {
    * @param {Object} [options]
    */
   constructor( chartModel, options ) {
+
     super( 0, 0, 0, 0, options );
-    chartModel.link( () => this.setRect( 0, 0, chartModel.width, chartModel.height ) );
+
+    // @private
+    this.chartModel = chartModel;
+
+    const update = () => this.updateChartRectangle();
+    chartModel.link( update );
+
+    // @private
+    this.disposeChartRectangle = () => {
+      chartModel.unlink( update );
+    };
+  }
+
+  // @private
+  updateChartRectangle() {
+    this.setRect( 0, 0, this.chartModel.width, this.chartModel.height );
+  }
+
+  /**
+   * @public
+   * @override
+   */
+  dispose() {
+    this.disposeChartRectangle();
+    super.dispose();
   }
 }
 

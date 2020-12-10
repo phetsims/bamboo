@@ -24,7 +24,7 @@ class BarPlot extends Node {
     options = merge( {
 
       // {function(vector:Vector2):ColorDef} maps a {Vector2} point to a color
-      pointToColor: point => 'blue'
+      pointToColor: point => 'black'
     }, options );
 
     super( options );

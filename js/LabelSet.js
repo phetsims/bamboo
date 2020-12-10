@@ -57,7 +57,7 @@ class LabelSet extends Path {
       assert && assert( options.value === 0, 'value and edge are mutually exclusive' );
     }
 
-    super( null );
+    super( null, options );
 
     // @private
     this.chartModel = chartModel;
@@ -76,8 +76,6 @@ class LabelSet extends Path {
 
     const update = () => this.updateLabelSet();
     chartModel.link( update );
-
-    this.mutate( options );
 
     // @private
     this.disposeLabelSet = () => chartModel.unlink( update );

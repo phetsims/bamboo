@@ -33,7 +33,7 @@ class GridLineSet extends Path {
       stroke: 'black'
     }, options );
 
-    super( null );
+    super( null, options );
 
     // @private
     this.chartModel = chartModel;
@@ -44,8 +44,6 @@ class GridLineSet extends Path {
 
     const update = () => this.updateGridLineSet();
     chartModel.link( update );
-
-    this.mutate( options );
 
     // @private
     this.disposeGridLineSet = () => chartModel.unlink( update );

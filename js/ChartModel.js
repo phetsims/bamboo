@@ -50,6 +50,13 @@ class ChartModel {
   }
 
   /**
+   * @public
+   */
+  dispose() {
+    this.transformChangedEmitter.dispose();
+  }
+
+  /**
    * Solve for spaced value.
    * n * spacing + origin = x
    * n = (x-origin)/spacing, where n is an integer

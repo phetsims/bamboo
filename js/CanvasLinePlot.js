@@ -36,9 +36,7 @@ class CanvasLinePlot extends CanvasNode {
     chartModel.link( update );
 
     // @private
-    this.disposeCanvasLinePlot = () => {
-      chartModel.link( update );
-    };
+    this.disposeCanvasLinePlot = () => chartModel.link( update );
   }
 
   /**

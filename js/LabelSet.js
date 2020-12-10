@@ -79,6 +79,7 @@ class LabelSet extends Path {
 
     this.mutate( options );
 
+    // @private
     this.disposeLabelSet = () => chartModel.unlink( update );
   }
 
@@ -150,7 +151,10 @@ class LabelSet extends Path {
     this.updateLabelSet();
   }
 
-  // @public
+  /**
+   * @public
+   * @override
+   */
   dispose() {
     this.disposeLabelSet();
     super.dispose();

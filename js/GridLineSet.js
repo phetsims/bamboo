@@ -27,8 +27,10 @@ class GridLineSet extends Path {
 
     options = merge( {
       origin: 0,
-      stroke: 'black',
-      clippingType: ClippingType.STRICT
+      clippingType: ClippingType.STRICT,
+
+      // Path options
+      stroke: 'black'
     }, options );
 
     super( null );
@@ -78,7 +80,10 @@ class GridLineSet extends Path {
     }
   }
 
-  // @public
+  /**
+   * @public
+   * @override
+   */
   dispose() {
     this.disposeGridLineSet();
     super.dispose();

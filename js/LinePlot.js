@@ -21,6 +21,8 @@ class LinePlot extends Path {
   constructor( chartModel, dataSet, options ) {
 
     options = merge( {
+
+      // Path options
       stroke: 'black'
     }, options );
 

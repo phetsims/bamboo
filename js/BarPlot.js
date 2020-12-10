@@ -46,9 +46,7 @@ class BarPlot extends Node {
     chartModel.link( update );
 
     // @private
-    this.disposeBarPlot = () => {
-      chartModel.unlink( update );
-    };
+    this.disposeBarPlot = () => chartModel.unlink( update );
   }
 
   /**

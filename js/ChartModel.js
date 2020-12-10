@@ -35,6 +35,7 @@ class ChartModel {
       yScale: y => y
     }, options );
 
+    // @public
     this.transformChangedEmitter = new Emitter();
 
     // @public (read-only)

@@ -1,8 +1,8 @@
 // Copyright 2019-2020, University of Colorado Boulder
 
 /**
- * Shows an double headed arrow arrow pointing to parallel bars, and a text label.  Shown under a chart to indicate the
- * distance between gridlines.
+ * SpanNode shows a double-headed arrow pointing to parallel bars, and a text label. It is shown under a chart to
+ * indicate the distance between gridlines.
  *
  * @author Sam Reid (PhET Interactive Simulations)
  */

@@ -52,11 +52,11 @@ class TickMarkSet extends Path {
     this.extent = options.extent;
     this.clippingType = options.clippingType;
 
-    const listener = () => this.updateTickMarkSet();
-    chartModel.link( listener );
+    const update = () => this.updateTickMarkSet();
+    chartModel.link( update );
 
     // @private
-    this.disposeTickMarkSet = () => chartModel.unlink( listener );
+    this.disposeTickMarkSet = () => chartModel.unlink( update );
 
     this.mutate( options );
   }
@@ -99,7 +99,10 @@ class TickMarkSet extends Path {
     this.shape = shape;
   }
 
-  // @public
+  /**
+   * @public
+   * @override
+   */
   dispose() {
     this.disposeTickMarkSet();
     super.dispose();

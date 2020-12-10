@@ -21,8 +21,10 @@ class ScatterPlot extends Path {
   constructor( chartModel, dataSet, options ) {
 
     options = merge( {
-      fill: 'black',
-      radius: 2
+      radius: 2,
+
+      // Path options
+      fill: 'black'
     }, options );
 
     super( null, options );
@@ -40,9 +42,7 @@ class ScatterPlot extends Path {
     chartModel.link( update );
 
     // @private
-    this.disposeScatterPlot = () => {
-      chartModel.unlink( update );
-    };
+    this.disposeScatterPlot = () => chartModel.unlink( update );
   }
 
   /**

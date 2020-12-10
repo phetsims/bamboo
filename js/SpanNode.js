@@ -21,7 +21,6 @@ class SpanNode extends Node {
    * @param {Object} [options]
    */
   constructor( scaleIndicatorTextNode, width, options ) {
-    super();
 
     // Create double-headed arrow with bars to show the time between gridlines
     const createBar = centerX => new Line( 0, 0, 0, 6, { stroke: 'white', centerX: centerX } );
@@ -46,9 +45,11 @@ class SpanNode extends Node {
       spacing: -2,
       children: [ arrowWithBars, scaleIndicatorTextNode ]
     } );
-    this.children = [ arrowNode, lengthScaleIndicatorNode ];
 
-    this.mutate( options );
+    assert && assert( !options.children, 'SpanNode sets children' );
+    options.children = [ arrowNode, lengthScaleIndicatorNode ];
+
+    super( options );
   }
 }
 

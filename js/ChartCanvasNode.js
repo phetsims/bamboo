@@ -1,7 +1,8 @@
 // Copyright 2019-2020, University of Colorado Boulder
 
 /**
- * CanvasLinePlot renders line plots of one or more data sets using Canvas, for performance.
+ * ChartCanvasNode renders to a canvas. It is usually preferable to use the other scenery Node-based
+ * renderers, but this one can be necessary for performance-critical charts.
  *
  * @author Sam Reid (PhET Interactive Simulations)
  */
@@ -10,18 +11,18 @@ import Bounds2 from '../../dot/js/Bounds2.js';
 import CanvasNode from '../../scenery/js/nodes/CanvasNode.js';
 import bamboo from './bamboo.js';
 
-class CanvasLinePlot extends CanvasNode {
+class ChartCanvasNode extends CanvasNode {
 
   /**
    * @param {ChartModel} chartModel
-   * @param {Vector2[][]} dataSets
+   * @param {CanvasPainter[]} painters
    * @param {Object} [options]
    */
-  constructor( chartModel, dataSets, options ) {
+  constructor( chartModel, painters, options ) {
 
     options = options || {};
 
-    assert && assert( !options.canvasBounds, 'CanvasLinePlot sets canvasBounds' );
+    assert && assert( !options.canvasBounds, 'ChartCanvasNode sets canvasBounds' );
     options.canvasBounds = new Bounds2( 0, 0, chartModel.width, chartModel.height );
 
     super( options );
@@ -30,24 +31,24 @@ class CanvasLinePlot extends CanvasNode {
     this.chartModel = chartModel;
 
     // @public if you change this directly, you are responsible for calling update
-    this.dataSets = dataSets;
+    this.painters = painters;
 
     const update = () => this.update();
     chartModel.link( update );
 
     // @private
-    this.disposeCanvasLinePlot = () => {
+    this.disposeChartCanvasLinePlot = () => {
       chartModel.link( update );
     };
   }
 
   /**
    * Sets the data sets and redraws the chart.
-   * @param {Vector2[][]}dataSets
+   * @param {CanvasPainter} painters
    * @public
    */
-  setDataSets( dataSets ) {
-    this.dataSets = dataSets;
+  setPainters( painters ) {
+    this.painters = painters;
     this.update();
   }
 
@@ -64,19 +65,7 @@ class CanvasLinePlot extends CanvasNode {
    * @param {CanvasRenderingContext2D} context
    */
   paintCanvas( context ) {
-    context.beginPath();
-    context.strokeStyle = 'black';
-    context.lineWidth = 0.1;
-
-    this.dataSets.forEach( dataSet => {
-      for ( let i = 0; i < dataSet.length; i++ ) {
-        const point = this.chartModel.modelToViewPosition( dataSet[ i ] );
-        i === 0 && context.moveTo( point.x, point.y );
-        i !== 0 && context.lineTo( point.x, point.y );
-      }
-    } );
-
-    context.stroke();
+    this.painters.forEach( painter => painter.paintCanvas( context ) );
   }
 
   /**
@@ -84,10 +73,10 @@ class CanvasLinePlot extends CanvasNode {
    * @override
    */
   dispose() {
-    this.disposeCanvasLinePlot();
+    this.disposeChartCanvasLinePlot();
     super.dispose();
   }
 }
 
-bamboo.register( 'CanvasLinePlot', CanvasLinePlot );
-export default CanvasLinePlot;
+bamboo.register( 'ChartCanvasNode', ChartCanvasNode );
+export default ChartCanvasNode;

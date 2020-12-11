@@ -13,7 +13,7 @@ import sceneryPhetQueryParameters from '../../../scenery-phet/js/sceneryPhetQuer
 import DemosScreenView from '../../../sun/js/demo/DemosScreenView.js';
 import bamboo from '../bamboo.js';
 import DemoBarPlot from './DemoBarPlot.js';
-import DemoCanvasLinePlot from './DemoCanvasLinePlot.js';
+import DemoChartCanvasNode from './DemoChartCanvasNode.js';
 import DemoLinePlot from './DemoLinePlot.js';
 import DemoMultiplePlots from './DemoMultiplePlots.js';
 import DemoScatterPlot from './DemoScatterPlot.js';
@@ -43,7 +43,7 @@ class BambooDemoScreenView extends DemosScreenView {
         } )
       },
       {
-        label: 'CanvasLinePlot', createNode: layoutBounds => new DemoCanvasLinePlot( {
+        label: 'ChartCanvasLinePlot', createNode: layoutBounds => new DemoChartCanvasNode( {
           center: layoutBounds.center
         } )
       },

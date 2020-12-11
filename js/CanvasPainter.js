@@ -1,13 +1,13 @@
 // Copyright 2020, University of Colorado Boulder
 
-import bamboo from './bamboo.js';
-
 /**
- * Performs an operation on a canvas context.  Typically this would render something, but some implementations
- * may just change the context state (such as transform or stroke).
+ * CanvasPainter is the abstract base class for bamboo components that use the Canvas API. Typically this would
+ * render something, but some implementations may just change the context state (such as transform or stroke).
  *
  * @author Sam Reid (PhET Interactive Simulations)
  */
+
+import bamboo from './bamboo.js';
 
 class CanvasPainter {
 

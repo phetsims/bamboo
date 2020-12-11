@@ -40,7 +40,7 @@ class TickMarkSet extends Path {
       assert && assert( options.value === 0, 'value and edge are mutually exclusive' );
     }
 
-    super( null );
+    super( null, options );
 
     // @private
     this.chartModel = chartModel;
@@ -52,13 +52,11 @@ class TickMarkSet extends Path {
     this.extent = options.extent;
     this.clippingType = options.clippingType;
 
-    const listener = () => this.updateTickMarkSet();
-    chartModel.link( listener );
+    const update = () => this.updateTickMarkSet();
+    chartModel.link( update );
 
     // @private
-    this.disposeTickMarkSet = () => chartModel.unlink( listener );
-
-    this.mutate( options );
+    this.disposeTickMarkSet = () => chartModel.unlink( update );
   }
 
   /**
@@ -99,7 +97,10 @@ class TickMarkSet extends Path {
     this.shape = shape;
   }
 
-  // @public
+  /**
+   * @public
+   * @override
+   */
   dispose() {
     this.disposeTickMarkSet();
     super.dispose();

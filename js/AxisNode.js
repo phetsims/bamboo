@@ -25,6 +25,8 @@ class AxisNode extends ArrowNode {
     options = merge( {
       value: 0, // by default the axis in on the 0, but you can put it somewhere else
       extension: 20, // in view coordinates, how far the axis goes past the edge of the chart
+
+      // ArrowNode options
       doubleHead: true,
       headHeight: 10,
       headWidth: 10,
@@ -33,18 +35,40 @@ class AxisNode extends ArrowNode {
 
     super( 0, 0, 0, 0, options );
 
-    chartModel.link( () => {
-      const viewValue = chartModel.modelToView( axisOrientation.opposite, options.value );
+    // @private
+    this.chartModel = chartModel;
+    this.axisOrientation = axisOrientation;
+    this.value = options.value;
+    this.extension = options.extension;
 
-      if ( axisOrientation === Orientation.VERTICAL ) {
-        this.setTailAndTip( viewValue, 0 - options.extension, viewValue, chartModel.height + options.extension );
-        this.setVisible( viewValue >= 0 && viewValue <= chartModel.width );
-      }
-      else {
-        this.setTailAndTip( 0 - options.extension, viewValue, chartModel.width + options.extension, viewValue );
-        this.setVisible( viewValue >= 0 && viewValue <= chartModel.height );
-      }
-    } );
+    const update = () => this.updateAxisNode();
+    chartModel.link( update );
+
+    // @private
+    this.disposeAxisNode = () => chartModel.unlink( update );
+  }
+
+  // @private
+  updateAxisNode() {
+    const viewValue = this.chartModel.modelToView( this.axisOrientation.opposite, this.value );
+
+    if ( this.axisOrientation === Orientation.VERTICAL ) {
+      this.setTailAndTip( viewValue, 0 - this.extension, viewValue, this.chartModel.height + this.extension );
+      this.setVisible( viewValue >= 0 && viewValue <= this.chartModel.width );
+    }
+    else {
+      this.setTailAndTip( 0 - this.extension, viewValue, this.chartModel.width + this.extension, viewValue );
+      this.setVisible( viewValue >= 0 && viewValue <= this.chartModel.height );
+    }
+  }
+
+  /**
+   * @public
+   * @override
+   */
+  dispose() {
+    this.disposeAxisNode();
+    super.dispose();
   }
 }
 

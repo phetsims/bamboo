@@ -43,7 +43,7 @@ class ChartCanvasNode extends CanvasNode {
   }
 
   /**
-   * Sets the data sets and redraws the chart.
+   * Sets the painters and redraws the chart.
    * @param {CanvasPainter} painters
    * @public
    */

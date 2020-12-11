@@ -27,11 +27,13 @@ class GridLineSet extends Path {
 
     options = merge( {
       origin: 0,
-      stroke: 'black',
-      clippingType: ClippingType.STRICT
+      clippingType: ClippingType.STRICT,
+
+      // Path options
+      stroke: 'black'
     }, options );
 
-    super( null );
+    super( null, options );
 
     // @private
     this.chartModel = chartModel;
@@ -42,8 +44,6 @@ class GridLineSet extends Path {
 
     const update = () => this.updateGridLineSet();
     chartModel.link( update );
-
-    this.mutate( options );
 
     // @private
     this.disposeGridLineSet = () => chartModel.unlink( update );
@@ -78,7 +78,10 @@ class GridLineSet extends Path {
     }
   }
 
-  // @public
+  /**
+   * @public
+   * @override
+   */
   dispose() {
     this.disposeGridLineSet();
     super.dispose();

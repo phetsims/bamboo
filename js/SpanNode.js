@@ -1,8 +1,8 @@
 // Copyright 2019-2020, University of Colorado Boulder
 
 /**
- * Shows an double headed arrow arrow pointing to parallel bars, and a text label.  Shown under a chart to indicate the
- * distance between gridlines.
+ * SpanNode shows a double-headed arrow pointing to parallel bars, and a text label. It is shown under a chart to
+ * indicate the distance between gridlines.
  *
  * @author Sam Reid (PhET Interactive Simulations)
  */
@@ -21,7 +21,6 @@ class SpanNode extends Node {
    * @param {Object} [options]
    */
   constructor( scaleIndicatorTextNode, width, options ) {
-    super();
 
     // Create double-headed arrow with bars to show the time between gridlines
     const createBar = centerX => new Line( 0, 0, 0, 6, { stroke: 'white', centerX: centerX } );
@@ -46,9 +45,11 @@ class SpanNode extends Node {
       spacing: -2,
       children: [ arrowWithBars, scaleIndicatorTextNode ]
     } );
-    this.children = [ arrowNode, lengthScaleIndicatorNode ];
 
-    this.mutate( options );
+    assert && assert( !options.children, 'SpanNode sets children' );
+    options.children = [ arrowNode, lengthScaleIndicatorNode ];
+
+    super( options );
   }
 }
 

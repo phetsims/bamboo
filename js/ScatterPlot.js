@@ -21,8 +21,10 @@ class ScatterPlot extends Path {
   constructor( chartModel, dataSet, options ) {
 
     options = merge( {
-      fill: 'black',
-      radius: 2
+      radius: 2,
+
+      // Path options
+      fill: 'black'
     }, options );
 
     super( null, options );
@@ -40,9 +42,7 @@ class ScatterPlot extends Path {
     chartModel.link( update );
 
     // @private
-    this.disposeScatterPlot = () => {
-      chartModel.unlink( update );
-    };
+    this.disposeScatterPlot = () => chartModel.unlink( update );
   }
 
   /**
@@ -55,7 +55,7 @@ class ScatterPlot extends Path {
     this.update();
   }
 
-  // TODO: renders 2x/frame if a point is added and the chart scrolls
+  // TODO https://github.com/phetsims/bamboo/issues/14 renders 2x/frame if a point is added and the chart scrolls
   /**
    * @public
    */

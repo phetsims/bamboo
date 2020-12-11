@@ -36,8 +36,8 @@ class ChartTransform {
       yScale: y => y
     }, options );
 
-    // @public
-    this.transformChangedEmitter = new Emitter();
+    // @public fires when some aspect of this transform changes
+    this.changedEmitter = new Emitter();
 
     // @public (read-only)
     this.width = width;
@@ -54,7 +54,7 @@ class ChartTransform {
    * @public
    */
   dispose() {
-    this.transformChangedEmitter.dispose();
+    this.changedEmitter.dispose();
   }
 
   /**
@@ -98,22 +98,22 @@ class ChartTransform {
   }
 
   /**
-   * Called when the chart transform has changed, and right away for initialization
+   * Adds a listener that is called immediately, and when some aspect of the transform has changed.
    * @param {function} listener
    * @public
    */
   link( listener ) {
-    this.transformChangedEmitter.addListener( listener );
+    this.changedEmitter.addListener( listener );
     listener();
   }
 
   /**
-   * Remove a listener from the chart transforms
+   * Removes a listener.
    * @param {function} listener
    * @public
    */
   unlink( listener ) {
-    this.transformChangedEmitter.removeListener( listener );
+    this.changedEmitter.removeListener( listener );
   }
 
   /**
@@ -185,7 +185,7 @@ class ChartTransform {
   setWidth( width ) {
     if ( width !== this.width ) {
       this.width = width;
-      this.transformChangedEmitter.emit();
+      this.changedEmitter.emit();
     }
   }
 
@@ -197,7 +197,7 @@ class ChartTransform {
   setHeight( height ) {
     if ( height !== this.height ) {
       this.height = height;
-      this.transformChangedEmitter.emit();
+      this.changedEmitter.emit();
     }
   }
 
@@ -209,7 +209,7 @@ class ChartTransform {
   setModelXRange( modelXRange ) {
     if ( !modelXRange.equals( this.modelXRange ) ) {
       this.modelXRange = modelXRange;
-      this.transformChangedEmitter.emit();
+      this.changedEmitter.emit();
     }
   }
 
@@ -221,7 +221,7 @@ class ChartTransform {
   setModelYRange( modelYRange ) {
     if ( !modelYRange.equals( this.modelYRange ) ) {
       this.modelYRange = modelYRange;
-      this.transformChangedEmitter.emit();
+      this.changedEmitter.emit();
     }
   }
 
@@ -233,7 +233,7 @@ class ChartTransform {
   setYScale( yScale ) {
     if ( this.yScale !== yScale ) {
       this.yScale = yScale;
-      this.transformChangedEmitter.emit();
+      this.changedEmitter.emit();
     }
   }
 
@@ -245,7 +245,7 @@ class ChartTransform {
   setXScale( xScale ) {
     if ( this.xScale !== xScale ) {
       this.xScale = xScale;
-      this.transformChangedEmitter.emit();
+      this.changedEmitter.emit();
     }
   }
 }

@@ -38,11 +38,15 @@ class ScatterPlot extends Path {
     // @private
     this.radius = options.radius;
 
-    const update = () => this.update();
-    chartTransform.link( update );
+    // Initialize
+    this.update();
+
+    // Update when the transform changes.
+    const changedListener = () => this.update();
+    chartTransform.changedEmitter.addListener( changedListener );
 
     // @private
-    this.disposeScatterPlot = () => chartTransform.unlink( update );
+    this.disposeScatterPlot = () => chartTransform.changedEmitter.removeListener( changedListener );
   }
 
   /**

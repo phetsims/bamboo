@@ -42,28 +42,33 @@ class GridLineSet extends Path {
     this.origin = options.origin;
     this.clippingType = options.clippingType;
 
-    const update = () => this.updateGridLineSet();
-    chartTransform.link( update );
+    // Initialize
+    this.update();
+
+    // Update when the transform changes.
+    const changedListener = () => this.update();
+    chartTransform.changedEmitter.addListener( changedListener );
 
     // @private
-    this.disposeGridLineSet = () => chartTransform.unlink( update );
+    this.disposeGridLineSet = () => chartTransform.changedEmitter.removeListener( changedListener );
   }
 
   /**
    * @private
    */
-  updateGridLineSet() {
+  update() {
     const shape = new Shape();
-    this.chartTransform.forEachSpacing( this.axisOrientation, this.spacing, this.origin, this.clippingType, ( modelPosition, viewPosition ) => {
-      if ( this.axisOrientation === Orientation.VERTICAL ) {
-        shape.moveTo( 0, viewPosition );
-        shape.lineTo( this.chartTransform.width, viewPosition );
-      }
-      else {
-        shape.moveTo( viewPosition, 0 );
-        shape.lineTo( viewPosition, this.chartTransform.height );
-      }
-    } );
+    this.chartTransform.forEachSpacing( this.axisOrientation, this.spacing, this.origin, this.clippingType,
+      ( modelPosition, viewPosition ) => {
+        if ( this.axisOrientation === Orientation.VERTICAL ) {
+          shape.moveTo( 0, viewPosition );
+          shape.lineTo( this.chartTransform.width, viewPosition );
+        }
+        else {
+          shape.moveTo( viewPosition, 0 );
+          shape.lineTo( viewPosition, this.chartTransform.height );
+        }
+      } );
     this.shape = shape;
   }
 
@@ -74,7 +79,7 @@ class GridLineSet extends Path {
   setSpacing( spacing ) {
     if ( this.spacing !== spacing ) {
       this.spacing = spacing;
-      this.updateGridLineSet();
+      this.update();
     }
   }
 

@@ -41,15 +41,19 @@ class AxisNode extends ArrowNode {
     this.value = options.value;
     this.extension = options.extension;
 
-    const update = () => this.updateAxisNode();
-    chartTransform.link( update );
+    // Initialize
+    this.update();
+
+    // Update when the transform changes.
+    const changedListener = () => this.update();
+    chartTransform.changedEmitter.addListener( changedListener );
 
     // @private
-    this.disposeAxisNode = () => chartTransform.unlink( update );
+    this.disposeAxisNode = () => chartTransform.changedEmitter.removeListener( changedListener );
   }
 
   // @private
-  updateAxisNode() {
+  update() {
     const viewValue = this.chartTransform.modelToView( this.axisOrientation.opposite, this.value );
 
     if ( this.axisOrientation === Orientation.VERTICAL ) {

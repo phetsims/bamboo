@@ -42,11 +42,15 @@ class BarPlot extends Node {
     this.lines = dataSet.map( () => new Line( 0, 0, 0, 0, { lineWidth: 10 } ) );
     this.lines.forEach( node => this.addChild( node ) );
 
-    const update = () => this.update();
-    chartTransform.link( update );
+    // Initialize
+    this.update();
+
+    // Update when the transform changes.
+    const changedListener = () => this.update();
+    chartTransform.changedEmitter.addListener( changedListener );
 
     // @private
-    this.disposeBarPlot = () => chartTransform.unlink( update );
+    this.disposeBarPlot = () => chartTransform.changedEmitter.removeListener( changedListener );
   }
 
   /**

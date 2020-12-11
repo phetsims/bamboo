@@ -34,11 +34,15 @@ class LinePlot extends Path {
     // @public if you change this directly, you are responsible for calling update
     this.dataSet = dataSet;
 
-    const update = () => this.update();
-    chartTransform.link( update );
+    // Initialize
+    this.update();
+
+    // Update when the transform changes.
+    const changedListener = () => this.update();
+    chartTransform.changedEmitter.addListener( changedListener );
 
     // @private
-    this.disposeLinePlot = () => chartTransform.unlink( update );
+    this.disposeLinePlot = () => chartTransform.changedEmitter.removeListener( changedListener );
   }
 
   /**

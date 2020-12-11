@@ -33,11 +33,15 @@ class ChartCanvasNode extends CanvasNode {
     // @public if you change this directly, you are responsible for calling update
     this.painters = painters;
 
-    const update = () => this.update();
-    chartTransform.link( update );
+    // Initialize
+    this.update();
+
+    // Update when the transform changes.
+    const changedListener = () => this.update();
+    chartTransform.changedEmitter.addListener( changedListener );
 
     // @private
-    this.disposeChartCanvasLinePlot = () => chartTransform.unlink( update );
+    this.disposeChartCanvasLinePlot = () => chartTransform.changedEmitter.removeListener( changedListener );
   }
 
   /**

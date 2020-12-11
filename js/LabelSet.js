@@ -75,11 +75,15 @@ class LabelSet extends Path {
     // @private cache labels for quick reuse
     this.labelMap = new Map();
 
-    const update = () => this.updateLabelSet();
-    chartTransform.link( update );
+    // Initialize
+    this.update();
+
+    // Update when the transform changes.
+    const changedListener = () => this.update();
+    chartTransform.changedEmitter.addListener( changedListener );
 
     // @private
-    this.disposeLabelSet = () => chartTransform.unlink( update );
+    this.disposeLabelSet = () => chartTransform.changedEmitter.removeListener( changedListener );
   }
 
   /**
@@ -89,7 +93,7 @@ class LabelSet extends Path {
   setSpacing( spacing ) {
     if ( this.spacing !== spacing ) {
       this.spacing = spacing;
-      this.updateLabelSet();
+      this.update();
     }
   }
 
@@ -97,7 +101,7 @@ class LabelSet extends Path {
    * Updates the labels when range or spacing has changed.
    * @private
    */
-  updateLabelSet() {
+  update() {
     const children = [];
     const used = new Set();
 
@@ -147,7 +151,7 @@ class LabelSet extends Path {
    */
   invalidateLabelSet() {
     this.labelMap.clear();
-    this.updateLabelSet();
+    this.update();
   }
 
   /**

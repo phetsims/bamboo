@@ -98,25 +98,6 @@ class ChartTransform {
   }
 
   /**
-   * Adds a listener that is called immediately, and when some aspect of the transform has changed.
-   * @param {function} listener
-   * @public
-   */
-  link( listener ) {
-    this.changedEmitter.addListener( listener );
-    listener();
-  }
-
-  /**
-   * Removes a listener.
-   * @param {function} listener
-   * @public
-   */
-  unlink( listener ) {
-    this.changedEmitter.removeListener( listener );
-  }
-
-  /**
    * Transforms a model coordinate to a view coordinate
    * @param {Vector2} vector
    * @returns {Vector2}

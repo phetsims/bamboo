@@ -23,15 +23,19 @@ class ChartRectangle extends Rectangle {
     // @private
     this.chartTransform = chartTransform;
 
-    const update = () => this.updateChartRectangle();
-    chartTransform.link( update );
+    // Initialize
+    this.update();
+
+    // Update when the transform changes.
+    const changedListener = () => this.update();
+    chartTransform.changedEmitter.addListener( changedListener );
 
     // @private
-    this.disposeChartRectangle = () => chartTransform.unlink( update );
+    this.disposeChartRectangle = () => chartTransform.changedEmitter.removeListener( changedListener );
   }
 
   // @private
-  updateChartRectangle() {
+  update() {
     this.setRect( 0, 0, this.chartTransform.width, this.chartTransform.height );
   }
 

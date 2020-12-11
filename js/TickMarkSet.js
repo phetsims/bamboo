@@ -52,11 +52,15 @@ class TickMarkSet extends Path {
     this.extent = options.extent;
     this.clippingType = options.clippingType;
 
-    const update = () => this.updateTickMarkSet();
-    chartTransform.link( update );
+    // Initialize
+    this.update();
+
+    // Update when the transform changes.
+    const changedListener = () => this.update();
+    chartTransform.changedEmitter.addListener( changedListener );
 
     // @private
-    this.disposeTickMarkSet = () => chartTransform.unlink( update );
+    this.disposeTickMarkSet = () => chartTransform.changedEmitter.removeListener( changedListener );
   }
 
   /**
@@ -66,12 +70,12 @@ class TickMarkSet extends Path {
   setSpacing( spacing ) {
     if ( spacing !== this.spacing ) {
       this.spacing = spacing;
-      this.updateTickMarkSet();
+      this.update();
     }
   }
 
   // @private
-  updateTickMarkSet() {
+  update() {
     const shape = new Shape();
 
     this.chartTransform.forEachSpacing( this.axisOrientation, this.spacing, this.origin, this.clippingType, ( modelPosition, viewPosition ) => {

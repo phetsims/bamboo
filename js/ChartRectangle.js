@@ -27,9 +27,7 @@ class ChartRectangle extends Rectangle {
     chartModel.link( update );
 
     // @private
-    this.disposeChartRectangle = () => {
-      chartModel.unlink( update );
-    };
+    this.disposeChartRectangle = () => chartModel.unlink( update );
   }
 
   // @private

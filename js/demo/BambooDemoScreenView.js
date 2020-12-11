@@ -43,7 +43,7 @@ class BambooDemoScreenView extends DemosScreenView {
         } )
       },
       {
-        label: 'ChartCanvasLinePlot', createNode: layoutBounds => new DemoChartCanvasNode( {
+        label: 'ChartCanvasNode', createNode: layoutBounds => new DemoChartCanvasNode( {
           center: layoutBounds.center
         } )
       },

@@ -7,11 +7,12 @@
  * @author Sam Reid (PhET Interactive Simulations)
  */
 
+import Property from '../../axon/js/Property.js';
 import merge from '../../phet-core/js/merge.js';
 import bamboo from './bamboo.js';
 import CanvasPainter from './CanvasPainter.js';
 
-class ChartCanvasLinePlot extends CanvasPainter {
+class CanvasLinePlot extends CanvasPainter {
 
   /**
    * @param {ChartTransform} chartTransform
@@ -21,7 +22,7 @@ class ChartCanvasLinePlot extends CanvasPainter {
   constructor( chartTransform, dataSet, options ) {
 
     options = merge( {
-      stroke: 'black',
+      stroke: 'black', // {ColorDef}
       lineWidth: 1
     }, options );
 
@@ -54,7 +55,7 @@ class ChartCanvasLinePlot extends CanvasPainter {
    */
   paintCanvas( context ) {
     context.beginPath();
-    context.strokeStyle = this.stroke;
+    context.strokeStyle = ( this.stroke instanceof Property ) ? this.stroke.value : this.stroke;
     context.lineWidth = this.lineWidth;
 
     for ( let i = 0; i < this.dataSet.length; i++ ) {
@@ -66,5 +67,5 @@ class ChartCanvasLinePlot extends CanvasPainter {
   }
 }
 
-bamboo.register( 'ChartCanvasLinePlot', ChartCanvasLinePlot );
-export default ChartCanvasLinePlot;
+bamboo.register( 'CanvasLinePlot', CanvasLinePlot );
+export default CanvasLinePlot;

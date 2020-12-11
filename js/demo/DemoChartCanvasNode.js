@@ -15,7 +15,7 @@ import Node from '../../../scenery/js/nodes/Node.js';
 import Text from '../../../scenery/js/nodes/Text.js';
 import AxisNode from '../AxisNode.js';
 import ChartCanvasNode from '../ChartCanvasNode.js';
-import ChartCanvasLinePlot from '../ChartCanvasLinePlot.js';
+import CanvasLinePlot from '../CanvasLinePlot.js';
 import ChartTransform from '../ChartTransform.js';
 import ChartRectangle from '../ChartRectangle.js';
 import GridLineSet from '../GridLineSet.js';
@@ -69,7 +69,7 @@ class DemoChartCanvasNode extends Node {
 
     for ( let i = 0; i < 20; i++ ) {
       const d = createDataSet( -2, 2, 5 + i / 10 + phet.joist.random.nextDouble() / 10, phet.joist.random.nextDouble() * 2 );
-      painters.push( new ChartCanvasLinePlot( chartTransform, d, {
+      painters.push( new CanvasLinePlot( chartTransform, d, {
         stroke: colors[ i % colors.length ],
         lineWidth: i % 4 + 1
       } ) );

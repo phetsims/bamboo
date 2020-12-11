@@ -16,7 +16,7 @@ import Text from '../../../scenery/js/nodes/Text.js';
 import AxisNode from '../AxisNode.js';
 import ChartCanvasNode from '../ChartCanvasNode.js';
 import ChartCanvasLinePlot from '../ChartCanvasLinePlot.js';
-import ChartModel from '../ChartModel.js';
+import ChartTransform from '../ChartTransform.js';
 import ChartRectangle from '../ChartRectangle.js';
 import GridLineSet from '../GridLineSet.js';
 import LabelSet from '../LabelSet.js';
@@ -37,12 +37,12 @@ class DemoChartCanvasNode extends Node {
       return dataSet;
     };
 
-    const chartModel = new ChartModel( 700, 300, {
+    const chartTransform = new ChartTransform( 700, 300, {
       modelXRange: new Range( -Math.PI / 8, Math.PI / 8 ),
       modelYRange: new Range( -4 / Math.PI, 4 / Math.PI )
     } );
 
-    const chartRectangle = new ChartRectangle( chartModel, {
+    const chartRectangle = new ChartRectangle( chartTransform, {
       fill: 'white',
       stroke: 'black',
       cornerXRadius: 6,
@@ -57,10 +57,10 @@ class DemoChartCanvasNode extends Node {
       bottom: chartRectangle.bottom
     } );
     zoomLevelProperty.link( zoomLevel => {
-      chartModel.setModelXRange( zoomLevel === 1 ? new Range( -Math.PI / 8, Math.PI / 8 ) :
-                                 zoomLevel === 2 ? new Range( -Math.PI / 4, Math.PI / 4 ) :
-                                 zoomLevel === 3 ? new Range( -Math.PI / 3, Math.PI / 3 ) :
-                                 zoomLevel === 4 ? new Range( -Math.PI / 2, Math.PI / 2 ) : null );
+      chartTransform.setModelXRange( zoomLevel === 1 ? new Range( -Math.PI / 8, Math.PI / 8 ) :
+                                     zoomLevel === 2 ? new Range( -Math.PI / 4, Math.PI / 4 ) :
+                                     zoomLevel === 3 ? new Range( -Math.PI / 3, Math.PI / 3 ) :
+                                     zoomLevel === 4 ? new Range( -Math.PI / 2, Math.PI / 2 ) : null );
     } );
 
     const painters = [];
@@ -69,7 +69,7 @@ class DemoChartCanvasNode extends Node {
 
     for ( let i = 0; i < 20; i++ ) {
       const d = createDataSet( -2, 2, 5 + i / 10 + phet.joist.random.nextDouble() / 10, phet.joist.random.nextDouble() * 2 );
-      painters.push( new ChartCanvasLinePlot( chartModel, d, {
+      painters.push( new ChartCanvasLinePlot( chartTransform, d, {
         stroke: colors[ i % colors.length ],
         lineWidth: i % 4 + 1
       } ) );
@@ -88,22 +88,22 @@ class DemoChartCanvasNode extends Node {
         children: [
 
           // Minor grid lines
-          new GridLineSet( chartModel, Orientation.HORIZONTAL, Math.PI / 32, { stroke: 'lightGray' } ),
-          new GridLineSet( chartModel, Orientation.VERTICAL, 0.5, { stroke: 'lightGray' } ),
+          new GridLineSet( chartTransform, Orientation.HORIZONTAL, Math.PI / 32, { stroke: 'lightGray' } ),
+          new GridLineSet( chartTransform, Orientation.VERTICAL, 0.5, { stroke: 'lightGray' } ),
 
           // Axes nodes are clipped in the chart
-          new AxisNode( chartModel, Orientation.HORIZONTAL ),
-          new AxisNode( chartModel, Orientation.VERTICAL ),
+          new AxisNode( chartTransform, Orientation.HORIZONTAL ),
+          new AxisNode( chartTransform, Orientation.VERTICAL ),
 
           // Some data
-          new ChartCanvasNode( chartModel, painters )
+          new ChartCanvasNode( chartTransform, painters )
         ]
       } ),
 
       // Tick marks outside the chart
-      new TickMarkSet( chartModel, Orientation.VERTICAL, 0.5, { edge: 'min' } ),
-      new TickMarkSet( chartModel, Orientation.HORIZONTAL, Math.PI / 8, { edge: 'min' } ),
-      new LabelSet( chartModel, Orientation.HORIZONTAL, Math.PI / 8, {
+      new TickMarkSet( chartTransform, Orientation.VERTICAL, 0.5, { edge: 'min' } ),
+      new TickMarkSet( chartTransform, Orientation.HORIZONTAL, Math.PI / 8, { edge: 'min' } ),
+      new LabelSet( chartTransform, Orientation.HORIZONTAL, Math.PI / 8, {
         edge: 'min',
         createLabel: value => new Text( Math.abs( value ) < 1E-6 ? value.toFixed( 0 ) : value.toFixed( 2 ), {
           fontSize: 12

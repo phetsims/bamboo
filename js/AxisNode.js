@@ -16,11 +16,11 @@ import bamboo from './bamboo.js';
 class AxisNode extends ArrowNode {
 
   /**
-   * @param {ChartModel} chartModel
+   * @param {ChartTransform} chartTransform
    * @param {Orientation} axisOrientation - which axis is represented
    * @param {Object} [options]
    */
-  constructor( chartModel, axisOrientation, options ) {
+  constructor( chartTransform, axisOrientation, options ) {
 
     options = merge( {
       value: 0, // by default the axis in on the 0, but you can put it somewhere else
@@ -36,29 +36,29 @@ class AxisNode extends ArrowNode {
     super( 0, 0, 0, 0, options );
 
     // @private
-    this.chartModel = chartModel;
+    this.chartTransform = chartTransform;
     this.axisOrientation = axisOrientation;
     this.value = options.value;
     this.extension = options.extension;
 
     const update = () => this.updateAxisNode();
-    chartModel.link( update );
+    chartTransform.link( update );
 
     // @private
-    this.disposeAxisNode = () => chartModel.unlink( update );
+    this.disposeAxisNode = () => chartTransform.unlink( update );
   }
 
   // @private
   updateAxisNode() {
-    const viewValue = this.chartModel.modelToView( this.axisOrientation.opposite, this.value );
+    const viewValue = this.chartTransform.modelToView( this.axisOrientation.opposite, this.value );
 
     if ( this.axisOrientation === Orientation.VERTICAL ) {
-      this.setTailAndTip( viewValue, 0 - this.extension, viewValue, this.chartModel.height + this.extension );
-      this.setVisible( viewValue >= 0 && viewValue <= this.chartModel.width );
+      this.setTailAndTip( viewValue, 0 - this.extension, viewValue, this.chartTransform.height + this.extension );
+      this.setVisible( viewValue >= 0 && viewValue <= this.chartTransform.width );
     }
     else {
-      this.setTailAndTip( 0 - this.extension, viewValue, this.chartModel.width + this.extension, viewValue );
-      this.setVisible( viewValue >= 0 && viewValue <= this.chartModel.height );
+      this.setTailAndTip( 0 - this.extension, viewValue, this.chartTransform.width + this.extension, viewValue );
+      this.setVisible( viewValue >= 0 && viewValue <= this.chartTransform.height );
     }
   }
 

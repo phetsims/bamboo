@@ -1,7 +1,8 @@
 // Copyright 2020, University of Colorado Boulder
 
 /**
- * This defines an output rectangle where chart data will be rendered, and one transform for each axis.
+ * ChartTransform defines the chart dimensions in model and view coordinate frames, and provides transform methods
+ * for moving between those coordinate frames.
  *
  * @author Sam Reid (PhET Interactive Simulations)
  */
@@ -15,7 +16,7 @@ import Orientation from '../../phet-core/js/Orientation.js';
 import bamboo from './bamboo.js';
 import ClippingType from './ClippingType.js';
 
-class ChartModel {
+class ChartTransform {
 
   /**
    * @param {number} width - in view coordinates
@@ -86,8 +87,8 @@ class ChartModel {
 
     const modelRange = this.getModelRange( axisOrientation );
 
-    const nMin = ChartModel.getValueForSpacing( modelRange.min, clippingType, origin, spacing, Math.ceil );
-    const nMax = ChartModel.getValueForSpacing( modelRange.max, clippingType, origin, spacing, Math.floor );
+    const nMin = ChartTransform.getValueForSpacing( modelRange.min, clippingType, origin, spacing, Math.ceil );
+    const nMax = ChartTransform.getValueForSpacing( modelRange.max, clippingType, origin, spacing, Math.floor );
 
     for ( let n = nMin; n <= nMax + 1E-6; n++ ) {
       const modelPosition = n * spacing + origin;
@@ -249,5 +250,5 @@ class ChartModel {
   }
 }
 
-bamboo.register( 'ChartModel', ChartModel );
-export default ChartModel;
+bamboo.register( 'ChartTransform', ChartTransform );
+export default ChartTransform;

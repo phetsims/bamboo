@@ -17,13 +17,13 @@ import ClippingType from './ClippingType.js';
 class GridLineSet extends Path {
 
   /**
-   * @param {ChartModel} chartModel
+   * @param {ChartTransform} chartTransform
    * @param {Orientation} axisOrientation - axis along which successive grid lines appear.  For example,
    *                                      - grid lines that are drawn horizontally progress up the Orientation.VERTICAL axis
    * @param {number} spacing - in model coordinates
    * @param {Object} [options]
    */
-  constructor( chartModel, axisOrientation, spacing, options ) {
+  constructor( chartTransform, axisOrientation, spacing, options ) {
 
     options = merge( {
       origin: 0,
@@ -36,17 +36,17 @@ class GridLineSet extends Path {
     super( null, options );
 
     // @private
-    this.chartModel = chartModel;
+    this.chartTransform = chartTransform;
     this.axisOrientation = axisOrientation;
     this.spacing = spacing;
     this.origin = options.origin;
     this.clippingType = options.clippingType;
 
     const update = () => this.updateGridLineSet();
-    chartModel.link( update );
+    chartTransform.link( update );
 
     // @private
-    this.disposeGridLineSet = () => chartModel.unlink( update );
+    this.disposeGridLineSet = () => chartTransform.unlink( update );
   }
 
   /**
@@ -54,14 +54,14 @@ class GridLineSet extends Path {
    */
   updateGridLineSet() {
     const shape = new Shape();
-    this.chartModel.forEachSpacing( this.axisOrientation, this.spacing, this.origin, this.clippingType, ( modelPosition, viewPosition ) => {
+    this.chartTransform.forEachSpacing( this.axisOrientation, this.spacing, this.origin, this.clippingType, ( modelPosition, viewPosition ) => {
       if ( this.axisOrientation === Orientation.VERTICAL ) {
         shape.moveTo( 0, viewPosition );
-        shape.lineTo( this.chartModel.width, viewPosition );
+        shape.lineTo( this.chartTransform.width, viewPosition );
       }
       else {
         shape.moveTo( viewPosition, 0 );
-        shape.lineTo( viewPosition, this.chartModel.height );
+        shape.lineTo( viewPosition, this.chartTransform.height );
       }
     } );
     this.shape = shape;

@@ -14,30 +14,30 @@ import bamboo from './bamboo.js';
 class ChartCanvasNode extends CanvasNode {
 
   /**
-   * @param {ChartModel} chartModel
+   * @param {ChartTransform} chartTransform
    * @param {CanvasPainter[]} painters
    * @param {Object} [options]
    */
-  constructor( chartModel, painters, options ) {
+  constructor( chartTransform, painters, options ) {
 
     options = options || {};
 
     assert && assert( !options.canvasBounds, 'ChartCanvasNode sets canvasBounds' );
-    options.canvasBounds = new Bounds2( 0, 0, chartModel.width, chartModel.height );
+    options.canvasBounds = new Bounds2( 0, 0, chartTransform.width, chartTransform.height );
 
     super( options );
 
     // @private
-    this.chartModel = chartModel;
+    this.chartTransform = chartTransform;
 
     // @public if you change this directly, you are responsible for calling update
     this.painters = painters;
 
     const update = () => this.update();
-    chartModel.link( update );
+    chartTransform.link( update );
 
     // @private
-    this.disposeChartCanvasLinePlot = () => chartModel.unlink( update );
+    this.disposeChartCanvasLinePlot = () => chartTransform.unlink( update );
   }
 
   /**

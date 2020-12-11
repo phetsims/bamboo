@@ -14,11 +14,11 @@ import bamboo from './bamboo.js';
 class LinePlot extends Path {
 
   /**
-   * @param {ChartModel} chartModel
+   * @param {ChartTransform} chartTransform
    * @param {Vector2[]} dataSet
    * @param {Object} [options]
    */
-  constructor( chartModel, dataSet, options ) {
+  constructor( chartTransform, dataSet, options ) {
 
     options = merge( {
 
@@ -29,16 +29,16 @@ class LinePlot extends Path {
     super( null, options );
 
     // @private
-    this.chartModel = chartModel;
+    this.chartTransform = chartTransform;
 
     // @public if you change this directly, you are responsible for calling update
     this.dataSet = dataSet;
 
     const update = () => this.update();
-    chartModel.link( update );
+    chartTransform.link( update );
 
     // @private
-    this.disposeLinePlot = () => chartModel.unlink( update );
+    this.disposeLinePlot = () => chartTransform.unlink( update );
   }
 
   /**
@@ -62,7 +62,7 @@ class LinePlot extends Path {
 
       // NaN or Infinite components "pen up" and stop drawing
       if ( this.dataSet[ i ].isFinite() ) {
-        const viewPoint = this.chartModel.modelToViewPosition( this.dataSet[ i ] );
+        const viewPoint = this.chartTransform.modelToViewPosition( this.dataSet[ i ] );
         if ( moveToNextPoint ) {
           shape.moveToPoint( viewPoint );
           moveToNextPoint = false;

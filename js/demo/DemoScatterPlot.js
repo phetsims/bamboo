@@ -10,7 +10,7 @@ import VBox from '../../../scenery/js/nodes/VBox.js';
 import HSlider from '../../../sun/js/HSlider.js';
 import AxisNode from '../AxisNode.js';
 import BarPlot from '../BarPlot.js';
-import ChartModel from '../ChartModel.js';
+import ChartTransform from '../ChartTransform.js';
 import ChartRectangle from '../ChartRectangle.js';
 import ClippingType from '../ClippingType.js';
 import GridLineSet from '../GridLineSet.js';
@@ -34,12 +34,12 @@ class DemoScatterPlot extends VBox {
       phet.joist.random.nextDouble() < 0.3 && dataSet.push( new Vector2( i, Math.sin( i * 2 ) ) );
     }
 
-    const chartModel = new ChartModel( 600, 400, {
+    const chartTransform = new ChartTransform( 600, 400, {
       modelXRange: new Range( -1, 1 ),
       modelYRange: new Range( -1, 1 )
     } );
 
-    const chartRectangle = new ChartRectangle( chartModel, {
+    const chartRectangle = new ChartRectangle( chartTransform, {
       fill: 'white',
       stroke: 'black',
       cornerXRadius: 6,
@@ -52,16 +52,16 @@ class DemoScatterPlot extends VBox {
       children: [
 
         // Tick labels along the axes
-        new TickMarkSet( chartModel, Orientation.HORIZONTAL, 0.2, { clippingType: ClippingType.LOOSE } ),
-        new TickMarkSet( chartModel, Orientation.VERTICAL, 0.2, { clippingType: ClippingType.LOOSE } ),
+        new TickMarkSet( chartTransform, Orientation.HORIZONTAL, 0.2, { clippingType: ClippingType.LOOSE } ),
+        new TickMarkSet( chartTransform, Orientation.VERTICAL, 0.2, { clippingType: ClippingType.LOOSE } ),
 
         // Some data
-        new BarPlot( chartModel, dataSet, { opacity: 0.2 } ),
-        new LinePlot( chartModel, dataSet, {
+        new BarPlot( chartTransform, dataSet, { opacity: 0.2 } ),
+        new LinePlot( chartTransform, dataSet, {
           stroke: 'red',
           lineWidth: 2
         } ),
-        new ScatterPlot( chartModel, dataSet, {
+        new ScatterPlot( chartTransform, dataSet, {
           fill: 'blue'
         } )
       ]
@@ -77,28 +77,28 @@ class DemoScatterPlot extends VBox {
         chartClip,
 
         // Minor grid lines
-        new GridLineSet( chartModel, Orientation.HORIZONTAL, 0.1, { stroke: 'lightGray' } ),
-        new GridLineSet( chartModel, Orientation.VERTICAL, 0.1, { stroke: 'lightGray' } ),
+        new GridLineSet( chartTransform, Orientation.HORIZONTAL, 0.1, { stroke: 'lightGray' } ),
+        new GridLineSet( chartTransform, Orientation.VERTICAL, 0.1, { stroke: 'lightGray' } ),
 
         // Major grid lines
-        new GridLineSet( chartModel, Orientation.HORIZONTAL, 0.2, { stroke: 'black' } ),
-        new GridLineSet( chartModel, Orientation.VERTICAL, 0.2, { stroke: 'black' } ),
+        new GridLineSet( chartTransform, Orientation.HORIZONTAL, 0.2, { stroke: 'black' } ),
+        new GridLineSet( chartTransform, Orientation.VERTICAL, 0.2, { stroke: 'black' } ),
 
         // axes nodes not clipped
-        new AxisNode( chartModel, Orientation.VERTICAL ),
-        new AxisNode( chartModel, Orientation.HORIZONTAL ),
+        new AxisNode( chartTransform, Orientation.VERTICAL ),
+        new AxisNode( chartTransform, Orientation.HORIZONTAL ),
 
         // Tick marks outside the chart
-        new TickMarkSet( chartModel, Orientation.VERTICAL, 0.2, { edge: 'min' } ),
-        new TickMarkSet( chartModel, Orientation.HORIZONTAL, 0.2, { edge: 'min' } ),
-        new LabelSet( chartModel, Orientation.VERTICAL, 0.2, { edge: 'min' } ),
-        new LabelSet( chartModel, Orientation.HORIZONTAL, 0.2, { edge: 'min' } )
+        new TickMarkSet( chartTransform, Orientation.VERTICAL, 0.2, { edge: 'min' } ),
+        new TickMarkSet( chartTransform, Orientation.HORIZONTAL, 0.2, { edge: 'min' } ),
+        new LabelSet( chartTransform, Orientation.VERTICAL, 0.2, { edge: 'min' } ),
+        new LabelSet( chartTransform, Orientation.HORIZONTAL, 0.2, { edge: 'min' } )
       ]
     } );
 
     // Controls
     const centerXProperty = new NumberProperty( 0 );
-    centerXProperty.link( centerX => chartModel.setModelXRange( new Range( -1 - centerX, 1 - centerX ) ) );
+    centerXProperty.link( centerX => chartTransform.setModelXRange( new Range( -1 - centerX, 1 - centerX ) ) );
     const controls = new HSlider( centerXProperty, new Range( -1.25, 1.25 ), {
       trackSize: new Dimension2( 500, 5 )
     } );

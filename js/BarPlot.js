@@ -15,11 +15,11 @@ import Node from '../../scenery/js/nodes/Node.js';
 class BarPlot extends Node {
 
   /**
-   * @param {ChartModel} chartModel
+   * @param {ChartTransform} chartTransform
    * @param {Vector2[]} dataSet
    * @param {Object} [options]
    */
-  constructor( chartModel, dataSet, options ) {
+  constructor( chartTransform, dataSet, options ) {
 
     options = merge( {
 
@@ -30,7 +30,7 @@ class BarPlot extends Node {
     super( options );
 
     // @private
-    this.chartModel = chartModel;
+    this.chartTransform = chartTransform;
 
     // @public if you change this directly, you are responsible for calling update
     this.dataSet = dataSet;
@@ -43,10 +43,10 @@ class BarPlot extends Node {
     this.lines.forEach( node => this.addChild( node ) );
 
     const update = () => this.update();
-    chartModel.link( update );
+    chartTransform.link( update );
 
     // @private
-    this.disposeBarPlot = () => chartModel.unlink( update );
+    this.disposeBarPlot = () => chartTransform.unlink( update );
   }
 
   /**
@@ -64,8 +64,8 @@ class BarPlot extends Node {
    */
   update() {
     for ( let i = 0; i < this.lines.length; i++ ) {
-      const tail = this.chartModel.modelToViewPosition( new Vector2( this.dataSet[ i ].x, 0 ) );
-      const tip = this.chartModel.modelToViewPosition( this.dataSet[ i ] );
+      const tail = this.chartTransform.modelToViewPosition( new Vector2( this.dataSet[ i ].x, 0 ) );
+      const tip = this.chartTransform.modelToViewPosition( this.dataSet[ i ] );
       this.lines[ i ].setLine( tail.x, tail.y, tip.x, tip.y );
       this.lines[ i ].stroke = this.pointToColor( this.dataSet[ i ] );
     }

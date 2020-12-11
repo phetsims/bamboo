@@ -1,7 +1,7 @@
 // Copyright 2020, University of Colorado Boulder
 
 /**
- * QUnit tests for ChartModel
+ * QUnit tests for ChartTransform
  *
  * @author Sam Reid (PhET Interactive Simulations)
  */

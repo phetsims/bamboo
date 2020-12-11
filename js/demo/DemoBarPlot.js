@@ -16,7 +16,7 @@ import Text from '../../../scenery/js/nodes/Text.js';
 import VBox from '../../../scenery/js/nodes/VBox.js';
 import Color from '../../../scenery/js/util/Color.js';
 import BarPlot from '../BarPlot.js';
-import ChartModel from '../ChartModel.js';
+import ChartTransform from '../ChartTransform.js';
 import ChartRectangle from '../ChartRectangle.js';
 import GridLineSet from '../GridLineSet.js';
 import LabelSet from '../LabelSet.js';
@@ -37,12 +37,12 @@ class DemoBarPlot extends Node {
       dataSet.push( new Vector2( x, y ) );
     }
 
-    const chartModel = new ChartModel( 700, 300, {
+    const chartTransform = new ChartTransform( 700, 300, {
       modelXRange: new Range( 0, Math.PI * 24 ),
       modelYRange: new Range( 0, 0.14 )
     } );
 
-    const chartRectangle = new ChartRectangle( chartModel, {
+    const chartRectangle = new ChartRectangle( chartTransform, {
       fill: 'white',
       stroke: 'black',
       cornerXRadius: 6,
@@ -55,10 +55,10 @@ class DemoBarPlot extends Node {
       children: [
 
         // Minor grid lines
-        new GridLineSet( chartModel, Orientation.VERTICAL, 0.05, { stroke: 'lightGray' } ),
+        new GridLineSet( chartTransform, Orientation.VERTICAL, 0.05, { stroke: 'lightGray' } ),
 
         // Some data
-        new BarPlot( chartModel, dataSet, {
+        new BarPlot( chartTransform, dataSet, {
           pointToColor: point => {
             const c = Utils.linear( 0, 24 * Math.PI, 0, 240, point.x );
             return new Color( c, c, c );
@@ -77,20 +77,20 @@ class DemoBarPlot extends Node {
         chartClip,
 
         // Minor ticks on the y-axis
-        new TickMarkSet( chartModel, Orientation.VERTICAL, 0.01, {
+        new TickMarkSet( chartTransform, Orientation.VERTICAL, 0.01, {
           stroke: 'darkGray',
           edge: 'min'
         } ),
 
         // Major ticks on the y-axis
-        new TickMarkSet( chartModel, Orientation.VERTICAL, 0.05, { edge: 'min' } ),
-        new LabelSet( chartModel, Orientation.VERTICAL, 0.05, {
+        new TickMarkSet( chartTransform, Orientation.VERTICAL, 0.05, { edge: 'min' } ),
+        new LabelSet( chartTransform, Orientation.VERTICAL, 0.05, {
           edge: 'min',
           createLabel: value => new Text( value.toFixed( 2 ), { fontSize: 12 } )
         } ),
 
-        new TickMarkSet( chartModel, Orientation.HORIZONTAL, Math.PI * 2, { edge: 'min' } ),
-        new LabelSet( chartModel, Orientation.HORIZONTAL, Math.PI * 2, {
+        new TickMarkSet( chartTransform, Orientation.HORIZONTAL, Math.PI * 2, { edge: 'min' } ),
+        new LabelSet( chartTransform, Orientation.HORIZONTAL, Math.PI * 2, {
           edge: 'min',
           createLabel: value => new Text( ( value / Math.PI ).toFixed( 0 ) + MathSymbols.PI, { fontSize: 12 } )
         } )

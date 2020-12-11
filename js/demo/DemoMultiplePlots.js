@@ -16,7 +16,7 @@ import VBox from '../../../scenery/js/nodes/VBox.js';
 import VerticalAquaRadioButtonGroup from '../../../sun/js/VerticalAquaRadioButtonGroup.js';
 import AxisNode from '../AxisNode.js';
 import BarPlot from '../BarPlot.js';
-import ChartModel from '../ChartModel.js';
+import ChartTransform from '../ChartTransform.js';
 import ChartRectangle from '../ChartRectangle.js';
 import ClippingType from '../ClippingType.js';
 import GridLineSet from '../GridLineSet.js';
@@ -35,13 +35,13 @@ class DemoMultiplePlots extends VBox {
       dataSet.push( new Vector2( x, Math.exp( x ) + phet.joist.random.nextDouble() * 1000 ) );
     }
 
-    const chartModel = new ChartModel( 600, 400, {
+    const chartTransform = new ChartTransform( 600, 400, {
       modelXRange: new Range( 2, 10 ),
       modelYRange: new Range( Math.exp( 2 ), Math.exp( 10 ) ),
       yScale: Math.log
     } );
 
-    const chartRectangle = new ChartRectangle( chartModel, {
+    const chartRectangle = new ChartRectangle( chartTransform, {
       fill: 'white',
       stroke: 'black',
       cornerXRadius: 6,
@@ -54,22 +54,22 @@ class DemoMultiplePlots extends VBox {
       children: [
 
         // Major grid lines
-        new GridLineSet( chartModel, Orientation.HORIZONTAL, 2, { stroke: 'darkGray', clippingType: ClippingType.LOOSE } ),
-        new GridLineSet( chartModel, Orientation.VERTICAL, 5000, { stroke: 'darkGray', clippingType: ClippingType.LOOSE } ),
+        new GridLineSet( chartTransform, Orientation.HORIZONTAL, 2, { stroke: 'darkGray', clippingType: ClippingType.LOOSE } ),
+        new GridLineSet( chartTransform, Orientation.VERTICAL, 5000, { stroke: 'darkGray', clippingType: ClippingType.LOOSE } ),
 
         // Tick labels along the axes
-        new TickMarkSet( chartModel, Orientation.HORIZONTAL, 2, { clippingType: ClippingType.LOOSE } ),
-        new TickMarkSet( chartModel, Orientation.VERTICAL, 5000, { clippingType: ClippingType.LOOSE } ),
+        new TickMarkSet( chartTransform, Orientation.HORIZONTAL, 2, { clippingType: ClippingType.LOOSE } ),
+        new TickMarkSet( chartTransform, Orientation.VERTICAL, 5000, { clippingType: ClippingType.LOOSE } ),
 
         // Some data
-        new BarPlot( chartModel, dataSet, {
+        new BarPlot( chartTransform, dataSet, {
           opacity: 0.1
         } ),
-        new LinePlot( chartModel, dataSet, {
+        new LinePlot( chartTransform, dataSet, {
           stroke: 'red',
           lineWidth: 2
         } ),
-        new ScatterPlot( chartModel, dataSet, {
+        new ScatterPlot( chartTransform, dataSet, {
           fill: 'blue',
           radius: 3
         } )
@@ -86,15 +86,15 @@ class DemoMultiplePlots extends VBox {
         chartClip,
 
         // axes nodes not clipped
-        new AxisNode( chartModel, Orientation.VERTICAL ),
-        new AxisNode( chartModel, Orientation.HORIZONTAL ),
+        new AxisNode( chartTransform, Orientation.VERTICAL ),
+        new AxisNode( chartTransform, Orientation.HORIZONTAL ),
 
         // Tick marks outside the chart
-        new TickMarkSet( chartModel, Orientation.HORIZONTAL, 2, { edge: 'min' } ),
-        new LabelSet( chartModel, Orientation.HORIZONTAL, 2, { edge: 'min' } ),
+        new TickMarkSet( chartTransform, Orientation.HORIZONTAL, 2, { edge: 'min' } ),
+        new LabelSet( chartTransform, Orientation.HORIZONTAL, 2, { edge: 'min' } ),
 
-        new TickMarkSet( chartModel, Orientation.VERTICAL, 5000, { edge: 'min' } ),
-        new LabelSet( chartModel, Orientation.VERTICAL, 5000, { edge: 'min' } )
+        new TickMarkSet( chartTransform, Orientation.VERTICAL, 5000, { edge: 'min' } ),
+        new LabelSet( chartTransform, Orientation.VERTICAL, 5000, { edge: 'min' } )
       ]
     } );
 
@@ -106,7 +106,7 @@ class DemoMultiplePlots extends VBox {
       { node: new Text( 'log10', { fontSize: 14 } ), value: Math.log10 },
       { node: new Text( 'sin', { fontSize: 14 } ), value: Math.sin }
     ] );
-    logProperty.link( type => chartModel.setYScale( type ) );
+    logProperty.link( type => chartTransform.setYScale( type ) );
 
     // Controls
     super( {

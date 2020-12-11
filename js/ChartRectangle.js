@@ -13,26 +13,26 @@ import bamboo from './bamboo.js';
 class ChartRectangle extends Rectangle {
 
   /**
-   * @param {ChartModel} chartModel
+   * @param {ChartTransform} chartTransform
    * @param {Object} [options]
    */
-  constructor( chartModel, options ) {
+  constructor( chartTransform, options ) {
 
     super( 0, 0, 0, 0, options );
 
     // @private
-    this.chartModel = chartModel;
+    this.chartTransform = chartTransform;
 
     const update = () => this.updateChartRectangle();
-    chartModel.link( update );
+    chartTransform.link( update );
 
     // @private
-    this.disposeChartRectangle = () => chartModel.unlink( update );
+    this.disposeChartRectangle = () => chartTransform.unlink( update );
   }
 
   // @private
   updateChartRectangle() {
-    this.setRect( 0, 0, this.chartModel.width, this.chartModel.height );
+    this.setRect( 0, 0, this.chartTransform.width, this.chartTransform.height );
   }
 
   /**

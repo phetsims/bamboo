@@ -14,11 +14,11 @@ import bamboo from './bamboo.js';
 class ScatterPlot extends Path {
 
   /**
-   * @param {ChartModel} chartModel
+   * @param {ChartTransform} chartTransform
    * @param {Vector2[]} dataSet
    * @param {Object} [options]
    */
-  constructor( chartModel, dataSet, options ) {
+  constructor( chartTransform, dataSet, options ) {
 
     options = merge( {
       radius: 2,
@@ -30,7 +30,7 @@ class ScatterPlot extends Path {
     super( null, options );
 
     // @private
-    this.chartModel = chartModel;
+    this.chartTransform = chartTransform;
 
     // @public if you change this directly, you are responsible for calling update
     this.dataSet = dataSet;
@@ -39,10 +39,10 @@ class ScatterPlot extends Path {
     this.radius = options.radius;
 
     const update = () => this.update();
-    chartModel.link( update );
+    chartTransform.link( update );
 
     // @private
-    this.disposeScatterPlot = () => chartModel.unlink( update );
+    this.disposeScatterPlot = () => chartTransform.unlink( update );
   }
 
   /**
@@ -65,7 +65,7 @@ class ScatterPlot extends Path {
 
       // NaN or Infinite components draw nothing
       if ( this.dataSet[ i ].isFinite() ) {
-        const viewPoint = this.chartModel.modelToViewPosition( this.dataSet[ i ] );
+        const viewPoint = this.chartTransform.modelToViewPosition( this.dataSet[ i ] );
         shape.moveToPoint( viewPoint );
         shape.circle( viewPoint.x, viewPoint.y, this.radius );
       }

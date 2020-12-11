@@ -18,12 +18,12 @@ import ClippingType from './ClippingType.js';
 class LabelSet extends Path {
 
   /**
-   * @param {ChartModel} chartModel
+   * @param {ChartTransform} chartTransform
    * @param {Orientation} axisOrientation - the progression of the ticks.  For instance HORIZONTAL has ticks at x=0,1,2, etc.
    * @param {number} spacing - in model coordinates
    * @param {Object} [options]
    */
-  constructor( chartModel, axisOrientation, spacing, options ) {
+  constructor( chartTransform, axisOrientation, spacing, options ) {
 
     options = merge( {
       value: 0, // appear on the axis by default
@@ -35,7 +35,7 @@ class LabelSet extends Path {
       //   TickMarkNode.  Also, is it odd to put this to 0 (or a small number) when you don't have ticks?
       extent: 10,
 
-      // determines whether the rounding is loose, see ChartModel
+      // determines whether the rounding is loose, see ChartTransform
       clippingType: ClippingType.STRICT,
 
       // or return null if no label for that value
@@ -61,7 +61,7 @@ class LabelSet extends Path {
     super( null, options );
 
     // @private
-    this.chartModel = chartModel;
+    this.chartTransform = chartTransform;
     this.axisOrientation = axisOrientation;
     this.spacing = spacing;
     this.origin = options.origin;
@@ -76,10 +76,10 @@ class LabelSet extends Path {
     this.labelMap = new Map();
 
     const update = () => this.updateLabelSet();
-    chartModel.link( update );
+    chartTransform.link( update );
 
     // @private
-    this.disposeLabelSet = () => chartModel.unlink( update );
+    this.disposeLabelSet = () => chartTransform.unlink( update );
   }
 
   /**
@@ -101,18 +101,18 @@ class LabelSet extends Path {
     const children = [];
     const used = new Set();
 
-    this.chartModel.forEachSpacing( this.axisOrientation, this.spacing, this.origin, this.clippingType, ( modelPosition, viewPosition ) => {
+    this.chartTransform.forEachSpacing( this.axisOrientation, this.spacing, this.origin, this.clippingType, ( modelPosition, viewPosition ) => {
       const tickBounds = new Bounds2( 0, 0, 0, 0 );
       if ( this.axisOrientation === Orientation.HORIZONTAL ) {
-        const viewY = this.edge === 'min' ? this.chartModel.height :
+        const viewY = this.edge === 'min' ? this.chartTransform.height :
                       this.edge === 'max' ? 0 :
-                      this.chartModel.modelToView( this.axisOrientation.opposite, this.value );
+                      this.chartTransform.modelToView( this.axisOrientation.opposite, this.value );
         tickBounds.setMinMax( viewPosition, viewY - this.extent / 2, viewPosition, viewY + this.extent / 2 );
       }
       else {
         const viewX = this.edge === 'min' ? 0 :
-                      this.edge === 'max' ? this.chartModel.width :
-                      this.chartModel.modelToView( this.axisOrientation.opposite, this.value );
+                      this.edge === 'max' ? this.chartTransform.width :
+                      this.chartTransform.modelToView( this.axisOrientation.opposite, this.value );
         tickBounds.setMinMax( viewX - this.extent / 2, viewPosition, viewX + this.extent / 2, viewPosition );
       }
 

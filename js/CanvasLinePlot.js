@@ -21,9 +21,12 @@ class CanvasLinePlot extends CanvasPainter {
   constructor( chartTransform, dataSet, options ) {
 
     options = merge( {
-      stroke: 'black', // {ColorDef}
+      stroke: 'black',
       lineWidth: 1
     }, options );
+
+    //TODO https://github.com/phetsims/bamboo/issues/16 add support for ColorDef
+    assert && assert( typeof options.stroke === 'string', 'stroke must be a CSS string' );
 
     super();
 
@@ -54,6 +57,9 @@ class CanvasLinePlot extends CanvasPainter {
    */
   paintCanvas( context ) {
     context.beginPath();
+
+    //TODO https://github.com/phetsims/bamboo/issues/16 add support for ColorDef
+    assert && assert( typeof this.stroke === 'string', 'stroke must be a CSS string' );
     context.strokeStyle = this.stroke;
     context.lineWidth = this.lineWidth;
 

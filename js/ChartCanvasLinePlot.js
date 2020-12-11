@@ -32,12 +32,14 @@ class ChartCanvasLinePlot extends CanvasPainter {
 
     // @public if you change this directly, you are responsible for calling update on the corresponding ChartCanvasNode
     this.dataSet = dataSet;
+
+    // @public
     this.stroke = options.stroke;
     this.lineWidth = options.lineWidth;
   }
 
   /**
-   * Sets dataSet. You are responsible for calling update on the ChartCanvasNode
+   * Sets dataSet. You are responsible for calling update on the associated ChartCanvasNode.
    * @param {Vector2[]} dataSet
    * @public
    */
@@ -45,7 +47,11 @@ class ChartCanvasLinePlot extends CanvasPainter {
     this.dataSet = dataSet;
   }
 
-  // @public
+  /**
+   * Intended to be called by ChartCanvasNode.
+   * @param {CanvasRenderingContext2D} context
+   * @public
+   */
   paintCanvas( context ) {
     context.beginPath();
     context.strokeStyle = this.stroke;
@@ -57,15 +63,6 @@ class ChartCanvasLinePlot extends CanvasPainter {
       i !== 0 && context.lineTo( point.x, point.y );
     }
     context.stroke();
-  }
-
-  /**
-   * @public
-   * @override
-   */
-  dispose() {
-    this.disposeLinePlot();
-    super.dispose();
   }
 }
 

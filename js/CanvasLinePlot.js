@@ -7,7 +7,6 @@
  * @author Sam Reid (PhET Interactive Simulations)
  */
 
-import Property from '../../axon/js/Property.js';
 import merge from '../../phet-core/js/merge.js';
 import bamboo from './bamboo.js';
 import CanvasPainter from './CanvasPainter.js';
@@ -55,7 +54,7 @@ class CanvasLinePlot extends CanvasPainter {
    */
   paintCanvas( context ) {
     context.beginPath();
-    context.strokeStyle = ( this.stroke instanceof Property ) ? this.stroke.value : this.stroke;
+    context.strokeStyle = this.stroke;
     context.lineWidth = this.lineWidth;
 
     for ( let i = 0; i < this.dataSet.length; i++ ) {

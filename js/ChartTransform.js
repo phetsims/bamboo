@@ -154,9 +154,6 @@ class ChartTransform {
     const viewDimension = axisOrientation === Orientation.HORIZONTAL ? this.width : this.height;
     const scale = axisOrientation === Orientation.HORIZONTAL ? this.xScale : this.yScale;
 
-    // for a log plot, we need to choose a scale factor that takes
-
-
     let scaledValue = scale( value );
     if ( isNaN( scaledValue ) || !Number.isFinite( scaledValue ) ) {
       scaledValue = value;

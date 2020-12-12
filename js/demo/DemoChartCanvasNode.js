@@ -7,12 +7,14 @@
  */
 
 import NumberProperty from '../../../axon/js/NumberProperty.js';
+import Property from '../../../axon/js/Property.js';
 import Range from '../../../dot/js/Range.js';
 import Vector2 from '../../../dot/js/Vector2.js';
 import Orientation from '../../../phet-core/js/Orientation.js';
 import ZoomButtonGroup from '../../../scenery-phet/js/ZoomButtonGroup.js';
 import Node from '../../../scenery/js/nodes/Node.js';
 import Text from '../../../scenery/js/nodes/Text.js';
+import Color from '../../../scenery/js/util/Color.js';
 import AxisNode from '../AxisNode.js';
 import ChartCanvasNode from '../ChartCanvasNode.js';
 import CanvasLinePlot from '../CanvasLinePlot.js';
@@ -25,7 +27,7 @@ import bamboo from '../bamboo.js';
 
 class DemoChartCanvasNode extends Node {
 
-  constructor( options ) {
+  constructor( emitter, options ) {
 
     super();
 
@@ -65,17 +67,31 @@ class DemoChartCanvasNode extends Node {
 
     const painters = [];
 
-    const colors = [ 'red', 'blue', 'green', 'violet', 'pink', 'yellow' ];
+    const p = new Property( new Color( 128, 128, 128 ) );
 
-    for ( let i = 0; i < 20; i++ ) {
+    const colors = [ 'red', 'blue', 'green',
+      'violet', new Color( 'pink' ), new Property( null ), p
+    ];
+
+    for ( let i = 0; i < colors.length; i++ ) {
       const d = createDataSet( -2, 2, 5 + i / 10 + phet.joist.random.nextDouble() / 10, phet.joist.random.nextDouble() * 2 );
       painters.push( new CanvasLinePlot( chartTransform, d, {
         stroke: colors[ i % colors.length ],
-        lineWidth: i % 4 + 1
+        lineWidth: i
       } ) );
     }
 
     // Anything you want clipped goes in here
+    const chartCanvasNode = new ChartCanvasNode( chartTransform, painters );
+
+    let time = 0;
+    emitter.addListener( dt => {
+      time += dt;
+      const a = 255 * Math.sin( time * 4 );
+      p.set( new Color( a, a / 2, a / 4 ) );
+      chartCanvasNode.update();
+    } );
+
     this.children = [
 
       // Background
@@ -96,7 +112,7 @@ class DemoChartCanvasNode extends Node {
           new AxisNode( chartTransform, Orientation.VERTICAL ),
 
           // Some data
-          new ChartCanvasNode( chartTransform, painters )
+          chartCanvasNode
         ]
       } ),
 

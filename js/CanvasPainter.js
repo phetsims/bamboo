@@ -18,6 +18,9 @@ class CanvasPainter {
 
     // @public {boolean} - if changed, you should probably invalidate the parent ChartCanvasNode
     this.visible = options.visible;
+
+    // @protected {boolean}
+    this.isDisposed = false;
   }
 
   // @public @abstract - override to paint or change the canvas context state.  Only called if this.visible is true

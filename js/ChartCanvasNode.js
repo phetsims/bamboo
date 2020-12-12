@@ -67,7 +67,11 @@ class ChartCanvasNode extends CanvasNode {
    * @param {CanvasRenderingContext2D} context
    */
   paintCanvas( context ) {
-    this.painters.forEach( painter => painter.paintCanvas( context ) );
+    this.painters.forEach( painter => {
+      if ( painter.visible ) {
+        painter.paintCanvas( context );
+      }
+    } );
   }
 
   /**

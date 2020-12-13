@@ -100,17 +100,6 @@ class ChartTransform {
   }
 
   /**
-   * Transforms a model delta {number} to a view delta {number} for the axis that corresponds to Orientation.
-   * @param {Orientation} axisOrientation
-   * @param {number} modelDelta
-   * @returns {number}
-   * @public
-   */
-  modelToViewDelta( axisOrientation, modelDelta ) {
-    return this.modelToView( axisOrientation, modelDelta ) - this.modelToView( axisOrientation, 0 );
-  }
-
-  /**
    * Transforms a model coordinate {number} to a view coordinate {number} for the x axis.
    * @param {number} value
    * @returns {number}
@@ -154,6 +143,37 @@ class ChartTransform {
     return axisOrientation === Orientation.HORIZONTAL ?
            Util.linear( scale( modelRange.min ), scale( modelRange.max ), 0, viewDimension, scaledValue ) :
            Util.linear( scale( modelRange.max ), scale( modelRange.min ), 0, viewDimension, scaledValue );
+  }
+
+  /**
+   * Transforms a model delta {number} to a view delta {number} for the x axis.
+   * @param {number} dx
+   * @returns {number}
+   * @public
+   */
+  modelToViewDeltaX( dx ) {
+    return this.modelToViewDelta( Orientation.HORIZONTAL, dx );
+  }
+
+  /**
+   * Transforms a model delta {number} to a view delta {number} for the y axis.
+   * @param {number} dy
+   * @returns {number}
+   * @public
+   */
+  modelToViewDeltaY( dy ) {
+    return this.modelToViewDelta( Orientation.VERTICAL, dy );
+  }
+
+  /**
+   * Transforms a model delta {number} to a view delta {number} for the axis that corresponds to Orientation.
+   * @param {Orientation} axisOrientation
+   * @param {number} modelDelta
+   * @returns {number}
+   * @public
+   */
+  modelToViewDelta( axisOrientation, modelDelta ) {
+    return this.modelToView( axisOrientation, modelDelta ) - this.modelToView( axisOrientation, 0 );
   }
 
   /**

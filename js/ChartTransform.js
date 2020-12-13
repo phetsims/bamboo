@@ -29,11 +29,11 @@ class ChartTransform {
 
       // The horizontal axis is referred to as the "x" axis, though it may be used to depict another dimension, such as "time"
       modelXRange: new Range( -1, 1 ),
-      xScale: x => x, // {function(number):number}
+      xScale: x => x, // {function(number):number} model-to-view scaling function for the x axis
 
       // The vertical axis is referred to as the "y" axis, though it may be used to depict another dimension such as "width"
       modelYRange: new Range( -1, 1 ),
-      yScale: y => y // {function(number):number}
+      yScale: y => y // {function(number):number} model-to-view scaling function for the y axis
     }, options );
 
     // Validate because xScale and yScale are not typically functions in other PhET APIs.
@@ -157,7 +157,7 @@ class ChartTransform {
   }
 
   /**
-   * Sets the width out the output region of the chart.
+   * Sets the view width.
    * @param {number} width
    * @public
    */
@@ -169,7 +169,7 @@ class ChartTransform {
   }
 
   /**
-   * Sets the height out the output region of the chart.
+   * Sets the view height.
    * @param {number} height
    * @public
    */
@@ -181,7 +181,7 @@ class ChartTransform {
   }
 
   /**
-   * Sets the Range for the x dimension for the model, this sets a linear coordinate transform in this dimension.
+   * Sets the Range for the model's x dimension.
    * @param {Range} modelXRange
    * @public
    */
@@ -193,7 +193,7 @@ class ChartTransform {
   }
 
   /**
-   * Sets the Range for the y dimension for the model, this sets a linear coordinate transform in this dimension.
+   * Sets the Range for the model's y dimension.
    * @param {Range} modelYRange
    * @public
    */
@@ -205,7 +205,7 @@ class ChartTransform {
   }
 
   /**
-   * Sets the scaling function for the x-axis.
+   * Sets the model-to-view scaling function for the x-axis.
    * @param {function(number):number} xScale
    * @public
    */
@@ -218,7 +218,7 @@ class ChartTransform {
   }
 
   /**
-   * Sets the scaling function for the y-axis.
+   * Sets the model-to-view scaling function for the y-axis.
    * @param {function(number):number} yScale
    * @public
    */

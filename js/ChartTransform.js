@@ -62,24 +62,6 @@ class ChartTransform {
   }
 
   /**
-   * Solve for spaced value.
-   * n * spacing + origin = x
-   * n = (x-origin)/spacing, where n is an integer
-   * @param {number} value
-   * @param {ClippingType} clippingType
-   * @param {number} origin
-   * @param {number} spacing
-   * @param {function} round - rounding type for strict
-   * @returns {number}
-   * @private
-   */
-  static getValueForSpacing( value, clippingType, origin, spacing, round ) {
-    return clippingType === ClippingType.LENIENT ?
-           Util.roundSymmetric( ( value - origin ) / spacing ) :
-           round( ( value - origin ) / spacing );
-  }
-
-  /**
    * TODO https://github.com/phetsims/bamboo/issues/18 document this method.
    * @param {Orientation} axisOrientation
    * @param {number} spacing - model separation
@@ -94,8 +76,8 @@ class ChartTransform {
       `invalid axisOrientation: ${axisOrientation}` );
     const modelRange = ( axisOrientation === Orientation.HORIZONTAL ) ? this.modelXRange : this.modelYRange;
 
-    const nMin = ChartTransform.getValueForSpacing( modelRange.min, clippingType, origin, spacing, Math.ceil );
-    const nMax = ChartTransform.getValueForSpacing( modelRange.max, clippingType, origin, spacing, Math.floor );
+    const nMin = getValueForSpacing( modelRange.min, clippingType, origin, spacing, Math.ceil );
+    const nMax = getValueForSpacing( modelRange.max, clippingType, origin, spacing, Math.floor );
 
     for ( let n = nMin; n <= nMax + 1E-6; n++ ) {
       const modelPosition = n * spacing + origin;
@@ -247,6 +229,23 @@ class ChartTransform {
       this.changedEmitter.emit();
     }
   }
+}
+
+/**
+ * Solve for spaced value.
+ * n * spacing + origin = x
+ * n = (x-origin)/spacing, where n is an integer
+ * @param {number} value
+ * @param {ClippingType} clippingType
+ * @param {number} origin
+ * @param {number} spacing
+ * @param {function} round - rounding type for strict
+ * @returns {number}
+ */
+function getValueForSpacing( value, clippingType, origin, spacing, round ) {
+  return clippingType === ClippingType.LENIENT ?
+         Util.roundSymmetric( ( value - origin ) / spacing ) :
+         round( ( value - origin ) / spacing );
 }
 
 bamboo.register( 'ChartTransform', ChartTransform );

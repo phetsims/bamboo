@@ -73,8 +73,7 @@ class ChartTransform {
    */
   forEachSpacing( axisOrientation, spacing, origin, clippingType, callback ) {
 
-    assert && assert( axisOrientation === Orientation.HORIZONTAL || axisOrientation === Orientation.VERTICAL,
-      `invalid axisOrientation: ${axisOrientation}` );
+    assert && assert( Orientation.includes( axisOrientation ), `invalid axisOrientation: ${axisOrientation}` );
     const modelRange = ( axisOrientation === Orientation.HORIZONTAL ) ? this.modelXRange : this.modelYRange;
 
     const nMin = getValueForSpacing( modelRange.min, clippingType, origin, spacing, Math.ceil );
@@ -128,8 +127,7 @@ class ChartTransform {
    * @public
    */
   modelToView( axisOrientation, value ) {
-    assert && assert( axisOrientation === Orientation.HORIZONTAL || axisOrientation === Orientation.VERTICAL,
-      `invalid axisOrientation: ${axisOrientation}` );
+    assert && assert( Orientation.includes( axisOrientation ), `invalid axisOrientation: ${axisOrientation}` );
 
     const modelRange = axisOrientation === Orientation.HORIZONTAL ? this.modelXRange : this.modelYRange;
     const viewDimension = axisOrientation === Orientation.HORIZONTAL ? this.viewWidth : this.viewHeight;

@@ -34,7 +34,9 @@ class DemoScatterPlot extends VBox {
       phet.joist.random.nextDouble() < 0.3 && dataSet.push( new Vector2( i, Math.sin( i * 2 ) ) );
     }
 
-    const chartTransform = new ChartTransform( 600, 400, {
+    const chartTransform = new ChartTransform( {
+      viewWidth: 600,
+      viewHeight: 400,
       modelXRange: new Range( -1, 1 ),
       modelYRange: new Range( -1, 1 )
     } );

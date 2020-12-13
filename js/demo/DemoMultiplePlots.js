@@ -35,7 +35,9 @@ class DemoMultiplePlots extends VBox {
       dataSet.push( new Vector2( x, Math.exp( x ) + phet.joist.random.nextDouble() * 1000 ) );
     }
 
-    const chartTransform = new ChartTransform( 600, 400, {
+    const chartTransform = new ChartTransform( {
+      viewWidth: 600,
+      viewHeight: 400,
       modelXRange: new Range( 2, 10 ),
       modelYRange: new Range( Math.exp( 2 ), Math.exp( 10 ) ),
       yScale: Math.log

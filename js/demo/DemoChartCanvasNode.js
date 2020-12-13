@@ -39,7 +39,9 @@ class DemoChartCanvasNode extends Node {
       return dataSet;
     };
 
-    const chartTransform = new ChartTransform( 700, 300, {
+    const chartTransform = new ChartTransform( {
+      viewWidth: 700,
+      viewHeight: 300,
       modelXRange: new Range( -Math.PI / 8, Math.PI / 8 ),
       modelYRange: new Range( -4 / Math.PI, 4 / Math.PI )
     } );

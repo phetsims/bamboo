@@ -37,7 +37,9 @@ class DemoBarPlot extends Node {
       dataSet.push( new Vector2( x, y ) );
     }
 
-    const chartTransform = new ChartTransform( 700, 300, {
+    const chartTransform = new ChartTransform( {
+      viewWidth: 700,
+      viewHeight: 300,
       modelXRange: new Range( 0, Math.PI * 24 ),
       modelYRange: new Range( 0, 0.14 )
     } );

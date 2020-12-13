@@ -19,20 +19,20 @@ import ClippingType from './ClippingType.js';
 class ChartTransform {
 
   /**
-   * @param {number} viewWidth - in view coordinates
-   * @param {number} viewHeight - in view coordinates
    * @param [options]
    */
-  constructor( viewWidth, viewHeight, options ) {
+  constructor( options ) {
 
     options = merge( {
 
       // The horizontal axis is referred to as the "x" axis, though it may be used to depict another dimension, such as "time"
-      modelXRange: new Range( -1, 1 ),
+      viewWidth: 100, // {number} width in view coordinates
+      modelXRange: new Range( -1, 1 ), // {Range} range of the x axis, in model coordinates
       xScale: x => x, // {function(number):number} model-to-view scaling function for the x axis
 
       // The vertical axis is referred to as the "y" axis, though it may be used to depict another dimension such as "width"
-      modelYRange: new Range( -1, 1 ),
+      viewHeight: 100, // {number} height in view coordinates
+      modelYRange: new Range( -1, 1 ), // {Range} range of the y axis, in model coordinates
       yScale: y => y // {function(number):number} model-to-view scaling function for the y axis
     }, options );
 
@@ -44,8 +44,8 @@ class ChartTransform {
     this.changedEmitter = new Emitter();
 
     // @public (read-only)
-    this.viewWidth = viewWidth;
-    this.viewHeight = viewHeight;
+    this.viewWidth = options.viewWidth;
+    this.viewHeight = options.viewHeight;
     this.modelXRange = options.modelXRange;
     this.modelYRange = options.modelYRange;
 

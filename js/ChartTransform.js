@@ -87,7 +87,7 @@ class ChartTransform {
   }
 
   /**
-   * Transforms a model coordinate to a view coordinate
+   * Transforms a model position to a view position.
    * @param {Vector2} vector
    * @returns {Vector2}
    * @public
@@ -100,7 +100,7 @@ class ChartTransform {
   }
 
   /**
-   * Transforms a model delta {number} to a view delta {number} for the specified Orientation
+   * Transforms a model delta {number} to a view delta {number} for the axis that corresponds to Orientation.
    * @param {Orientation} axisOrientation
    * @param {number} modelDelta
    * @returns {number}
@@ -131,7 +131,7 @@ class ChartTransform {
   }
 
   /**
-   * Transforms a model coordinate {number} to a view coordinate {number} for the specified Orientation
+   * Transforms a model coordinate {number} to a view coordinate {number} for the axis that corresponds to Orientation.
    * @param {Orientation} axisOrientation
    * @param {number} value
    * @returns {number}

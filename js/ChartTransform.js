@@ -62,12 +62,13 @@ class ChartTransform {
   }
 
   /**
-   * TODO https://github.com/phetsims/bamboo/issues/18 document this method.
+   * For the axis that corresponds to Orientation, iterates over the range and performs an operation (specified by
+   * callback) at regular intervals (specified by spacing).
    * @param {Orientation} axisOrientation
-   * @param {number} spacing - model separation
-   * @param {number} origin - where one is guaranteed to land
+   * @param {number} spacing - the spacing (delta) between operations, in model coordinates
+   * @param {number} origin - the origin for the operation, in model coordinates. The operation is guaranteed to occur at this position.
    * @param {ClippingType} clippingType - if something is clipped elsewhere, we allow slack so it doesn't disappear from view like a flicker
-   * @param {function} callback
+   * @param {function(modelPosition:Vector2, viewPosition:Vector2)} callback
    * @public
    */
   forEachSpacing( axisOrientation, spacing, origin, clippingType, callback ) {

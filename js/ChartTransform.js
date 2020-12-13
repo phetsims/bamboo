@@ -80,6 +80,7 @@ class ChartTransform {
   }
 
   /**
+   * TODO https://github.com/phetsims/bamboo/issues/18 document this method.
    * @param {Orientation} axisOrientation
    * @param {number} spacing - model separation
    * @param {number} origin - where one is guaranteed to land
@@ -89,7 +90,9 @@ class ChartTransform {
    */
   forEachSpacing( axisOrientation, spacing, origin, clippingType, callback ) {
 
-    const modelRange = this.getModelRange( axisOrientation );
+    assert && assert( axisOrientation === Orientation.HORIZONTAL || axisOrientation === Orientation.VERTICAL,
+      `invalid axisOrientation: ${axisOrientation}` );
+    const modelRange = ( axisOrientation === Orientation.HORIZONTAL ) ? this.modelXRange : this.modelYRange;
 
     const nMin = ChartTransform.getValueForSpacing( modelRange.min, clippingType, origin, spacing, Math.ceil );
     const nMax = ChartTransform.getValueForSpacing( modelRange.max, clippingType, origin, spacing, Math.floor );
@@ -153,7 +156,9 @@ class ChartTransform {
    * @public
    */
   modelToView( axisOrientation, value ) {
-    assert && assert( axisOrientation === Orientation.VERTICAL || axisOrientation === Orientation.HORIZONTAL );
+    assert && assert( axisOrientation === Orientation.HORIZONTAL || axisOrientation === Orientation.VERTICAL,
+      `invalid axisOrientation: ${axisOrientation}` );
+
     const modelRange = axisOrientation === Orientation.HORIZONTAL ? this.modelXRange : this.modelYRange;
     const viewDimension = axisOrientation === Orientation.HORIZONTAL ? this.width : this.height;
     const scale = axisOrientation === Orientation.HORIZONTAL ? this.xScale : this.yScale;
@@ -167,16 +172,6 @@ class ChartTransform {
     return axisOrientation === Orientation.HORIZONTAL ?
            Util.linear( scale( modelRange.min ), scale( modelRange.max ), 0, viewDimension, scaledValue ) :
            Util.linear( scale( modelRange.max ), scale( modelRange.min ), 0, viewDimension, scaledValue );
-  }
-
-  /**
-   * @param {Orientation} axisOrientation
-   * @returns {Range}
-   * @private
-   */
-  getModelRange( axisOrientation ) {
-    assert && assert( axisOrientation === Orientation.VERTICAL || axisOrientation === Orientation.HORIZONTAL );
-    return axisOrientation === Orientation.VERTICAL ? this.modelYRange : this.modelXRange;
   }
 
   /**

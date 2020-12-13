@@ -29,12 +29,16 @@ class ChartTransform {
 
       // The horizontal axis is referred to as the "x" axis, though it may be used to depict another dimension, such as "time"
       modelXRange: new Range( -1, 1 ),
-      xScale: x => x,
+      xScale: x => x, // {function(number):number}
 
       // The vertical axis is referred to as the "y" axis, though it may be used to depict another dimension such as "width"
       modelYRange: new Range( -1, 1 ),
-      yScale: y => y
+      yScale: y => y // {function(number):number}
     }, options );
+
+    // Validate because xScale and yScale are not typically functions in other PhET APIs.
+    assert && assert( typeof options.xScale === 'function', 'xScale must be a function' );
+    assert && assert( typeof options.yScale === 'function', 'yScale must be a function' );
 
     // @public fires when some aspect of this transform changes
     this.changedEmitter = new Emitter();
@@ -224,25 +228,27 @@ class ChartTransform {
   }
 
   /**
-   * Change the scaling for the y-axis.
-   * @param {function} yScale
+   * Sets the scaling function for the x-axis.
+   * @param {function(number):number} xScale
    * @public
    */
-  setYScale( yScale ) {
-    if ( this.yScale !== yScale ) {
-      this.yScale = yScale;
+  setXScale( xScale ) {
+    assert && assert( typeof xScale === 'function', 'xScale must be a function' );
+    if ( this.xScale !== xScale ) {
+      this.xScale = xScale;
       this.changedEmitter.emit();
     }
   }
 
   /**
-   * Change the scaling for the x-axis.
-   * @param {function} xScale
+   * Sets the scaling function for the y-axis.
+   * @param {function(number):number} yScale
    * @public
    */
-  setXScale( xScale ) {
-    if ( this.xScale !== xScale ) {
-      this.xScale = xScale;
+  setYScale( yScale ) {
+    assert && assert( typeof yScale === 'function', 'yScale must be a function' );
+    if ( this.yScale !== yScale ) {
+      this.yScale = yScale;
       this.changedEmitter.emit();
     }
   }

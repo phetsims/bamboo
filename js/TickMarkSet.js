@@ -81,7 +81,7 @@ class TickMarkSet extends Path {
     this.chartTransform.forEachSpacing( this.axisOrientation, this.spacing, this.origin, this.clippingType, ( modelPosition, viewPosition ) => {
       const tickBounds = new Bounds2( 0, 0, 0, 0 );
       if ( this.axisOrientation === Orientation.HORIZONTAL ) {
-        const viewY = this.edge === 'min' ? this.chartTransform.height :
+        const viewY = this.edge === 'min' ? this.chartTransform.viewHeight :
                       this.edge === 'max' ? 0 :
                       this.chartTransform.modelToView( this.axisOrientation.opposite, this.value );
         shape.moveTo( viewPosition, viewY - this.extent / 2 );
@@ -90,7 +90,7 @@ class TickMarkSet extends Path {
       }
       else {
         const viewX = this.edge === 'min' ? 0 :
-                      this.edge === 'max' ? this.chartTransform.width :
+                      this.edge === 'max' ? this.chartTransform.viewWidth :
                       this.chartTransform.modelToView( this.axisOrientation.opposite, this.value );
         shape.moveTo( viewX - this.extent / 2, viewPosition );
         shape.lineTo( viewX + this.extent / 2, viewPosition );

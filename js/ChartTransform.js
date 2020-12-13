@@ -19,11 +19,11 @@ import ClippingType from './ClippingType.js';
 class ChartTransform {
 
   /**
-   * @param {number} width - in view coordinates
-   * @param {number} height - in view coordinates
+   * @param {number} viewWidth - in view coordinates
+   * @param {number} viewHeight - in view coordinates
    * @param [options]
    */
-  constructor( width, height, options ) {
+  constructor( viewWidth, viewHeight, options ) {
 
     options = merge( {
 
@@ -44,8 +44,8 @@ class ChartTransform {
     this.changedEmitter = new Emitter();
 
     // @public (read-only)
-    this.width = width;
-    this.height = height;
+    this.viewWidth = viewWidth;
+    this.viewHeight = viewHeight;
     this.modelXRange = options.modelXRange;
     this.modelYRange = options.modelYRange;
 
@@ -142,7 +142,7 @@ class ChartTransform {
       `invalid axisOrientation: ${axisOrientation}` );
 
     const modelRange = axisOrientation === Orientation.HORIZONTAL ? this.modelXRange : this.modelYRange;
-    const viewDimension = axisOrientation === Orientation.HORIZONTAL ? this.width : this.height;
+    const viewDimension = axisOrientation === Orientation.HORIZONTAL ? this.viewWidth : this.viewHeight;
     const scale = axisOrientation === Orientation.HORIZONTAL ? this.xScale : this.yScale;
 
     let scaledValue = scale( value );
@@ -158,24 +158,24 @@ class ChartTransform {
 
   /**
    * Sets the view width.
-   * @param {number} width
+   * @param {number} viewWidth
    * @public
    */
-  setWidth( width ) {
-    if ( width !== this.width ) {
-      this.width = width;
+  setViewWidth( viewWidth ) {
+    if ( viewWidth !== this.viewWidth ) {
+      this.viewWidth = viewWidth;
       this.changedEmitter.emit();
     }
   }
 
   /**
    * Sets the view height.
-   * @param {number} height
+   * @param {number} viewHeight
    * @public
    */
-  setHeight( height ) {
-    if ( height !== this.height ) {
-      this.height = height;
+  setViewHeight( viewHeight ) {
+    if ( viewHeight !== this.viewHeight ) {
+      this.viewHeight = viewHeight;
       this.changedEmitter.emit();
     }
   }

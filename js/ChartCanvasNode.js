@@ -23,7 +23,7 @@ class ChartCanvasNode extends CanvasNode {
     options = options || {};
 
     assert && assert( !options.canvasBounds, 'ChartCanvasNode sets canvasBounds' );
-    options.canvasBounds = new Bounds2( 0, 0, chartTransform.width, chartTransform.height );
+    options.canvasBounds = new Bounds2( 0, 0, chartTransform.viewWidth, chartTransform.viewHeight );
 
     super( options );
 

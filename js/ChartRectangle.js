@@ -36,7 +36,7 @@ class ChartRectangle extends Rectangle {
 
   // @private
   update() {
-    this.setRect( 0, 0, this.chartTransform.width, this.chartTransform.height );
+    this.setRect( 0, 0, this.chartTransform.viewWidth, this.chartTransform.viewHeight );
   }
 
   /**

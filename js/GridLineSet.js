@@ -62,11 +62,11 @@ class GridLineSet extends Path {
       ( modelPosition, viewPosition ) => {
         if ( this.axisOrientation === Orientation.VERTICAL ) {
           shape.moveTo( 0, viewPosition );
-          shape.lineTo( this.chartTransform.width, viewPosition );
+          shape.lineTo( this.chartTransform.viewWidth, viewPosition );
         }
         else {
           shape.moveTo( viewPosition, 0 );
-          shape.lineTo( viewPosition, this.chartTransform.height );
+          shape.lineTo( viewPosition, this.chartTransform.viewHeight );
         }
       } );
     this.shape = shape;

@@ -57,12 +57,12 @@ class AxisNode extends ArrowNode {
     const viewValue = this.chartTransform.modelToView( this.axisOrientation.opposite, this.value );
 
     if ( this.axisOrientation === Orientation.VERTICAL ) {
-      this.setTailAndTip( viewValue, 0 - this.extension, viewValue, this.chartTransform.height + this.extension );
-      this.setVisible( viewValue >= 0 && viewValue <= this.chartTransform.width );
+      this.setTailAndTip( viewValue, 0 - this.extension, viewValue, this.chartTransform.viewHeight + this.extension );
+      this.setVisible( viewValue >= 0 && viewValue <= this.chartTransform.viewWidth );
     }
     else {
-      this.setTailAndTip( 0 - this.extension, viewValue, this.chartTransform.width + this.extension, viewValue );
-      this.setVisible( viewValue >= 0 && viewValue <= this.chartTransform.height );
+      this.setTailAndTip( 0 - this.extension, viewValue, this.chartTransform.viewWidth + this.extension, viewValue );
+      this.setVisible( viewValue >= 0 && viewValue <= this.chartTransform.viewHeight );
     }
   }
 

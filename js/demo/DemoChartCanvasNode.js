@@ -11,7 +11,7 @@ import Property from '../../../axon/js/Property.js';
 import Range from '../../../dot/js/Range.js';
 import Vector2 from '../../../dot/js/Vector2.js';
 import Orientation from '../../../phet-core/js/Orientation.js';
-import ZoomButtonGroup from '../../../scenery-phet/js/ZoomButtonGroup.js';
+import PlusMinusZoomButtonGroup from '../../../scenery-phet/js/PlusMinusZoomButtonGroup.js';
 import Node from '../../../scenery/js/nodes/Node.js';
 import Text from '../../../scenery/js/nodes/Text.js';
 import Color from '../../../scenery/js/util/Color.js';
@@ -55,7 +55,7 @@ class DemoChartCanvasNode extends Node {
 
     const zoomLevelProperty = new NumberProperty( 1, { range: new Range( 1, 4 ) } );
 
-    const zoomButtonGroup = new ZoomButtonGroup( zoomLevelProperty, {
+    const zoomButtonGroup = new PlusMinusZoomButtonGroup( zoomLevelProperty, {
       orientation: 'horizontal',
       left: chartRectangle.right + 10,
       bottom: chartRectangle.bottom

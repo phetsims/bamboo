@@ -17,15 +17,15 @@ class SpanNode extends Node {
 
   /**
    * @param {Node} scaleIndicatorTextNode
-   * @param {number} width
+   * @param {number} viewWidth
    * @param {Object} [options]
    */
-  constructor( scaleIndicatorTextNode, width, options ) {
+  constructor( scaleIndicatorTextNode, viewWidth, options ) {
 
     // Create double-headed arrow with bars to show the time between gridlines
     const createBar = centerX => new Line( 0, 0, 0, 6, { stroke: 'white', centerX: centerX } );
     const leftBar = createBar( 0 );
-    const rightBar = createBar( width );
+    const rightBar = createBar( viewWidth );
     const arrowNode = new ArrowNode( leftBar.right + 1, leftBar.centerY, rightBar.left - 1, rightBar.centerY, {
       fill: 'white',
       stroke: 'white',

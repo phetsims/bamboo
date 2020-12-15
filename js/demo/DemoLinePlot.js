@@ -9,7 +9,10 @@
 import NumberProperty from '../../../axon/js/NumberProperty.js';
 import Range from '../../../dot/js/Range.js';
 import Vector2 from '../../../dot/js/Vector2.js';
+import SpanNode from '../../../bamboo/js/SpanNode.js';
 import Orientation from '../../../phet-core/js/Orientation.js';
+import MathSymbols from '../../../scenery-phet/js/MathSymbols.js';
+import PhetFont from '../../../scenery-phet/js/PhetFont.js';
 import PlusMinusZoomButtonGroup from '../../../scenery-phet/js/PlusMinusZoomButtonGroup.js';
 import Node from '../../../scenery/js/nodes/Node.js';
 import Text from '../../../scenery/js/nodes/Text.js';
@@ -69,6 +72,14 @@ class DemoLinePlot extends Node {
 
       // Background
       chartRectangle,
+
+      // span that shows PI/8, at bottom-left of chart
+      new SpanNode( chartTransform, Orientation.HORIZONTAL, Math.PI / 8, new Text( `${MathSymbols.PI}/8`, {
+        font: new PhetFont( 14 )
+      } ), {
+        left: chartRectangle.left,
+        top: chartRectangle.bottom + 25
+      } ),
 
       // Clipped contents
       new Node( {

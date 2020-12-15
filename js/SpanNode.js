@@ -7,49 +7,125 @@
  * @author Sam Reid (PhET Interactive Simulations)
  */
 
+import merge from '../../phet-core/js/merge.js';
+import Orientation from '../../phet-core/js/Orientation.js';
 import ArrowNode from '../../scenery-phet/js/ArrowNode.js';
+import LayoutBox from '../../scenery/js/nodes/LayoutBox.js';
 import Line from '../../scenery/js/nodes/Line.js';
 import Node from '../../scenery/js/nodes/Node.js';
-import VBox from '../../scenery/js/nodes/VBox.js';
 import bamboo from './bamboo.js';
+import ChartTransform from './ChartTransform.js';
 
-class SpanNode extends Node {
+//TODO https://github.com/phetsims/bamboo/issues/19 VBox only works for Orientation.HORIZONTAL
+class SpanNode extends LayoutBox {
 
   /**
-   * @param {Node} scaleIndicatorTextNode
-   * @param {number} viewWidth
+   * @param {ChartTransform} chartTransform
+   * @param {Orientation} axisOrientation
+   * @param {number} delta - in model coordinates
+   * @param {Node} labelNode
    * @param {Object} [options]
    */
-  constructor( scaleIndicatorTextNode, viewWidth, options ) {
+  constructor( chartTransform, axisOrientation, delta, labelNode, options ) {
 
-    // Create double-headed arrow with bars to show the time between gridlines
-    const createBar = centerX => new Line( 0, 0, 0, 6, { stroke: 'white', centerX: centerX } );
-    const leftBar = createBar( 0 );
-    const rightBar = createBar( viewWidth );
-    const arrowNode = new ArrowNode( leftBar.right + 1, leftBar.centerY, rightBar.left - 1, rightBar.centerY, {
-      fill: 'white',
-      stroke: 'white',
-      doubleHead: true,
-      headHeight: 3,
-      headWidth: 3.5,
-      tailWidth: 0.5
-    } );
-    const arrowWithBars = new Node( {
-      children: [ leftBar, rightBar, arrowNode ]
-    } );
+    assert && assert( chartTransform instanceof ChartTransform, 'invalid chartTransform' );
+    assert && assert( Orientation.includes( axisOrientation ), 'invalid axisOrientation' );
+    assert && assert( typeof delta === 'number', 'invalid delta' );
+    assert && assert( labelNode instanceof Node, 'invalid labelNode' );
 
-    // Prevent the scale indicator text from being wider than the corresponding arrow
-    scaleIndicatorTextNode.maxWidth = arrowWithBars.width;
+    //TODO https://github.com/phetsims/bamboo/issues/19 support Orientation.VERTICAL
+    assert && assert( axisOrientation !== Orientation.VERTICAL, 'Orientation.VERTICAL is not yet supported' );
 
-    const lengthScaleIndicatorNode = new VBox( {
-      spacing: -2,
-      children: [ arrowWithBars, scaleIndicatorTextNode ]
-    } );
+    options = merge( {
+      color: 'black',
+      spacing: -2 // between arrow and labelNode
+    }, options );
 
     assert && assert( !options.children, 'SpanNode sets children' );
-    options.children = [ arrowNode, lengthScaleIndicatorNode ];
+    assert && assert( !options.orientation, 'SpanNode sets orientation' );
+    options.orientation = ( axisOrientation === Orientation.HORIZONTAL ) ? 'vertical' : 'horizontal';
 
-    super( options );
+    super();
+
+    // @private
+    this.chartTransform = chartTransform;
+    this.axisOrientation = axisOrientation;
+    this.delta = delta;
+    this.labelNode = labelNode;
+    this.color = options.color;
+    this.spacing = options.spacing;
+    this.viewWidth = 0;
+
+    // Initialize
+    this.update();
+
+    // mutate after initializing, so that transform options work correctly
+    this.mutate( options );
+
+    // Update when the range of the associated axis changes.
+    const changedListener = () => this.update();
+    chartTransform.changedEmitter.addListener( changedListener );
+
+    // @private
+    this.disposeSpanNode = () => chartTransform.changedEmitter.removeListener( changedListener );
+  }
+
+  /**
+   * Sets delta and updates.
+   * @param {number} delta - in model coordinates
+   * @public
+   */
+  setDelta( delta ) {
+    if ( delta !== this.delta ) {
+      this.delta = delta;
+      this.update();
+    }
+  }
+
+  // @private
+  update() {
+
+    const viewWidth = this.chartTransform.modelToViewDelta( this.axisOrientation, this.delta );
+
+    //TODO https://github.com/phetsims/bamboo/issues/19 ChartTransform notifies if anything changes, how to know when to update?
+    // If the view width changes a 'noticeable amount', then update.
+    if ( Math.abs( viewWidth - this.viewWidth ) > 0.25 ) {
+      this.viewWidth = viewWidth;
+
+      //TODO https://github.com/phetsims/bamboo/issues/19 arrow code only works for axisOrientation === Orientation.HORIZONTAL
+      //TODO https://github.com/phetsims/bamboo/issues/19 parameterize length of lines at ends of arrow
+      //TODO https://github.com/phetsims/bamboo/issues/19 parameterize ArrowNode options
+      // Create double-headed arrow with bars at to show modelDelta
+      const createBar = centerX => new Line( 0, 0, 0, 6, { stroke: this.color, centerX: centerX } );
+      const leftBar = createBar( 0 );
+      const rightBar = createBar( viewWidth );
+      const arrowNode = new ArrowNode( leftBar.right + 1, leftBar.centerY, rightBar.left - 1, rightBar.centerY, {
+        fill: this.color,
+        stroke: this.color,
+        doubleHead: true,
+        headHeight: 3,
+        headWidth: 3.5,
+        tailWidth: 0.5
+      } );
+      const arrowWithBars = new Node( {
+        children: [ leftBar, rightBar, arrowNode ]
+      } );
+
+      //TODO https://github.com/phetsims/bamboo/issues/19 maxWidth only works for axisOrientation === Orientation.HORIZONTAL
+      // Prevent labelNode from being wider than arrowWithBars
+      this.labelNode.maxWidth = arrowWithBars.width;
+
+      this.children = [ arrowWithBars, this.labelNode ];
+    }
+  }
+
+  /**
+   * @public
+   * @override
+   */
+  dispose() {
+    this.disposeSpanNode();
+    super.dispose();
   }
 }
 

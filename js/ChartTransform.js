@@ -73,9 +73,7 @@ class ChartTransform {
    */
   forEachSpacing( axisOrientation, spacing, origin, clippingType, callback ) {
 
-    assert && assert( Orientation.includes( axisOrientation ), `invalid axisOrientation: ${axisOrientation}` );
-    const modelRange = ( axisOrientation === Orientation.HORIZONTAL ) ? this.modelXRange : this.modelYRange;
-
+    const modelRange = this.getModelRange( axisOrientation );
     const nMin = getValueForSpacing( modelRange.min, clippingType, origin, spacing, Math.ceil );
     const nMax = getValueForSpacing( modelRange.max, clippingType, origin, spacing, Math.floor );
 
@@ -221,6 +219,17 @@ class ChartTransform {
       this.modelYRange = modelYRange;
       this.changedEmitter.emit();
     }
+  }
+
+  /**
+   * Gets the model range for the axis that corresponds to Orientation.
+   * @param {Orientation} axisOrientation
+   * @returns {Object.modelXRange|Object.modelYRange}
+   * @public
+   */
+  getModelRange( axisOrientation ) {
+    assert && assert( Orientation.includes( axisOrientation ), `invalid axisOrientation: ${axisOrientation}` );
+    return ( axisOrientation === Orientation.HORIZONTAL ) ? this.modelXRange : this.modelYRange;
   }
 
   /**

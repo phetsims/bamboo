@@ -48,7 +48,7 @@ class CanvasLinePlot extends CanvasPainter {
 
     this.setStroke( options.stroke );
 
-    // @public
+    // @public if you change this directly, you are responsible for calling update on the corresponding ChartCanvasNode
     this.lineWidth = options.lineWidth;
   }
 

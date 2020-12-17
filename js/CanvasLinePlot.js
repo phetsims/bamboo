@@ -37,13 +37,13 @@ class CanvasLinePlot extends CanvasPainter {
     // @private
     this._stroke = null;
 
-    // @private {string} - cache values of CSS so they don't need to be recomputed at each paint
+    // @private {string|null} - cache values of CSS so they don't need to be recomputed at each paint
     this._strokeCSS = null;
 
     // @private
-    this.colorListener = () => {
-      this._strokeCSS = ColorDef.toCSS( this._stroke );
-      assert && assert( this._strokeCSS === null || typeof this._strokeCSS === 'string' );
+    this.colorListener = stroke => {
+      this._strokeCSS = ColorDef.toCSS( stroke );
+      assert && assert( typeof this._strokeCSS === 'string' || this._strokeCSS === null );
     };
 
     this.setStroke( options.stroke );
@@ -55,9 +55,11 @@ class CanvasLinePlot extends CanvasPainter {
   // @public - Sets the stroke. You are responsible for calling update on the associated ChartCanvasNode(s).
   setStroke( stroke ) {
     assert && assert( ColorDef.isColorDef( stroke ), 'must be a ColorDef' );
-    ColorDef.unlink( this._stroke, this.colorListener );
-    this._stroke = stroke;
-    ColorDef.link( this._stroke, this.colorListener ); // caches the new color CSS
+    if ( stroke !== this._stroke ) {
+      ColorDef.unlink( this._stroke, this.colorListener );
+      this._stroke = stroke;
+      ColorDef.link( this._stroke, this.colorListener ); // caches the new color CSS
+    }
   }
 
   // @public - see setStroke()
@@ -87,7 +89,7 @@ class CanvasLinePlot extends CanvasPainter {
    * @public
    */
   paintCanvas( context ) {
-    assert && assert( this._strokeCSS === null || typeof this._strokeCSS === 'string', 'stroke must be a CSS string or null' );
+    assert && assert( typeof this._strokeCSS === 'string' || this._strokeCSS === null, 'stroke must be a CSS string or null' );
     if ( this._strokeCSS !== null ) {
       context.beginPath();
       context.strokeStyle = this._strokeCSS;

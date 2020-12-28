@@ -95,10 +95,23 @@ class CanvasLinePlot extends CanvasPainter {
       context.strokeStyle = this._strokeCSS;
       context.lineWidth = this.lineWidth;
 
+      let moveToNextPoint = true;
       for ( let i = 0; i < this.dataSet.length; i++ ) {
-        const point = this.chartTransform.modelToViewPosition( this.dataSet[ i ] );
-        i === 0 && context.moveTo( point.x, point.y );
-        i !== 0 && context.lineTo( point.x, point.y );
+
+        // NaN or Infinite components "pen up" and stop drawing
+        if ( this.dataSet[ i ].isFinite() ) {
+          const viewPoint = this.chartTransform.modelToViewPosition( this.dataSet[ i ] );
+          if ( moveToNextPoint ) {
+            context.moveTo( viewPoint.x, viewPoint.y );
+            moveToNextPoint = false;
+          }
+          else {
+            context.lineTo( viewPoint.x, viewPoint.y );
+          }
+        }
+        else {
+          moveToNextPoint = true;
+        }
       }
       context.stroke();
     }

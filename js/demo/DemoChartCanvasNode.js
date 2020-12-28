@@ -34,7 +34,10 @@ class DemoChartCanvasNode extends Node {
     const createDataSet = ( min, max, frequency, offset, delta = 0.005 ) => {
       const dataSet = [];
       for ( let x = min; x <= max; x += delta ) {
-        dataSet.push( new Vector2( x, Math.sin( x * frequency + offset ) ) );
+
+        // Test holes in the data
+        const y = Math.abs( x ) < 0.1 && x < 0 ? NaN : Math.sin( x * frequency + offset );
+        dataSet.push( new Vector2( x, y ) );
       }
       return dataSet;
     };

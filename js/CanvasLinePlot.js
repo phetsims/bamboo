@@ -2,7 +2,7 @@
 
 /**
  * Renders a dataset of Vector2[] on a canvas. Typically it is preferable to use LinePlot, but this alternative
- * is provided for cases where canvas must be used for performance.
+ * is provided for cases where canvas must be used for performance. Like LinePlot, non-finite values are skipped.
  *
  * @author Sam Reid (PhET Interactive Simulations)
  */

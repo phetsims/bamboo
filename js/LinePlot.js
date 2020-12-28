@@ -1,7 +1,7 @@
 // Copyright 2020, University of Colorado Boulder
 
 /**
- * Renders a dataset of Vector2[] using Path lineTo.
+ * Renders a dataset of Vector2[] using Path lineTo. Non-finite values are skipped.
  *
  * @author Sam Reid (PhET Interactive Simulations)
  */

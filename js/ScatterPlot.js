@@ -50,7 +50,8 @@ class ScatterPlot extends Path {
   }
 
   /**
-   * Sets dataSet and redraws the plot.
+   * Sets the dataSet and redraws the plot. If instead the dataSet array is mutated, it is the client responsibility to
+   * call `update` or make sure `update` is called elsewhere (say, if the chart scrolls in that frame).
    * @param {Vector2[]} dataSet
    * @public
    */
@@ -59,8 +60,8 @@ class ScatterPlot extends Path {
     this.update();
   }
 
-  // TODO https://github.com/phetsims/bamboo/issues/14 renders 2x/frame if a point is added and the chart scrolls
   /**
+   * Recomputes the rendered shape.
    * @public
    */
   update() {

@@ -13,6 +13,7 @@ import Orientation from '../../phet-core/js/Orientation.js';
 import Path from '../../scenery/js/nodes/Path.js';
 import Text from '../../scenery/js/nodes/Text.js';
 import bamboo from './bamboo.js';
+import BambooConstants from './BambooConstants.js';
 import ClippingType from './ClippingType.js';
 
 class LabelSet extends Path {
@@ -30,10 +31,8 @@ class LabelSet extends Path {
       edge: null, // 'min' or 'max' put the ticks on that edge of the chart (takes precedence over value)
       origin: 0,
 
-      // act as if there is a tick with this extent, for positioning the label relatively
-      // TODO https://github.com/phetsims/bamboo/issues/13 This seems critical to get right, if it is shared by
-      //   TickMarkNode.  Also, is it odd to put this to 0 (or a small number) when you don't have ticks?
-      extent: 10,
+      // act as if there is a corresponding tick with this extent, for positioning the label relatively
+      extent: BambooConstants.DEFAULT_LABEL_EXTENT,
 
       // determines whether the rounding is loose, see ChartTransform
       clippingType: ClippingType.STRICT,

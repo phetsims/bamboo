@@ -12,6 +12,7 @@ import merge from '../../phet-core/js/merge.js';
 import Orientation from '../../phet-core/js/Orientation.js';
 import Path from '../../scenery/js/nodes/Path.js';
 import bamboo from './bamboo.js';
+import BambooConstants from './BambooConstants.js';
 import ClippingType from './ClippingType.js';
 
 class TickMarkSet extends Path {
@@ -30,7 +31,7 @@ class TickMarkSet extends Path {
       origin: 0,
       stroke: 'black',
       lineWidth: 1,
-      extent: 10,
+      extent: BambooConstants.DEFAULT_LABEL_EXTENT,
 
       // determines whether the rounding is loose, see ChartTransform
       clippingType: ClippingType.STRICT

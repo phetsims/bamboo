@@ -1,8 +1,9 @@
 // Copyright 2020, University of Colorado Boulder
 
 /**
- * Renders a dataset of Vector2[] on a canvas. Typically it is preferable to use LinePlot, but this alternative
- * is provided for cases where canvas must be used for performance. Like LinePlot, non-finite values are skipped.
+ * CanvasLinePlot renders a dataset of Vector2[] on a canvas that is managed by a ChartCanvasNode.
+ * Typically it is preferable to use LinePlot, but this alternative is provided for cases where canvas must be
+ * used for performance. Like LinePlot, non-finite values are skipped, and allow you to create gaps in a plot.
  *
  * @author Sam Reid (PhET Interactive Simulations)
  */

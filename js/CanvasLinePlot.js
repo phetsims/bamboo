@@ -1,9 +1,9 @@
 // Copyright 2020, University of Colorado Boulder
 
 /**
- * CanvasLinePlot renders a dataset of Vector2[] on a canvas that is managed by a ChartCanvasNode.
+ * CanvasLinePlot renders a {Array<Vector2|null>} dataSet on a canvas that is managed by a ChartCanvasNode.
  * Typically it is preferable to use LinePlot, but this alternative is provided for cases where canvas must be
- * used for performance. Like LinePlot, non-finite values are skipped, and allow you to create gaps in a plot.
+ * used for performance. Like LinePlot, null values are skipped, and allow you to create gaps in a plot.
  *
  * @author Sam Reid (PhET Interactive Simulations)
  */
@@ -17,7 +17,7 @@ class CanvasLinePlot extends CanvasPainter {
 
   /**
    * @param {ChartTransform} chartTransform
-   * @param {Vector2[]} dataSet
+   * @param {Array<Vector2|null>} dataSet
    * @param {Object} [options]
    */
   constructor( chartTransform, dataSet, options ) {
@@ -99,8 +99,10 @@ class CanvasLinePlot extends CanvasPainter {
       let moveToNextPoint = true;
       for ( let i = 0; i < this.dataSet.length; i++ ) {
 
-        // NaN or Infinite components "pen up" and stop drawing
-        if ( this.dataSet[ i ].isFinite() ) {
+        assert && assert( this.dataSet[ i ] === null || this.dataSet[ i ].isFinite(), 'data points must be finite Vector2 or null' );
+
+        // Draw a line segment to the next non-null value. Null values result in a gap (via move) in the plot.
+        if ( this.dataSet[ i ] ) {
           const viewPoint = this.chartTransform.modelToViewPosition( this.dataSet[ i ] );
           if ( moveToNextPoint ) {
             context.moveTo( viewPoint.x, viewPoint.y );

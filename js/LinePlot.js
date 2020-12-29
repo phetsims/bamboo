@@ -1,11 +1,11 @@
 // Copyright 2020, University of Colorado Boulder
 
 /**
- * LinePlot renders a dataset of {Vector2[]} by connecting the points with line segments.
+ * LinePlot renders a {Array<Vector2|null>} dataSet by connecting the points with line segments.
  *
- * Non-finite values are skipped and allow you to create gaps in a plot. Examples:
+ * Null values are skipped and allow you to create gaps in a plot. Examples:
  * dataset [ (0,0), (0,1), (0,2), (0,3) ] => 3 lines segments, connecting consecutive points
- * dataset [ (0,0), (0,1), (0, NaN), (0,2), (0,3) ] => 2 lines segments, connecting the first 2 and last 2 points
+ * dataset [ (0,0), (0,1), null, (0,2), (0,3) ] => 2 lines segments, connecting the first 2 and last 2 points
  *
  * @author Sam Reid (PhET Interactive Simulations)
  */
@@ -69,9 +69,10 @@ class LinePlot extends Path {
     let moveToNextPoint = true;
     for ( let i = 0; i < this.dataSet.length; i++ ) {
 
-      // A non-finite value results in a gap in the plot. Instead of drawing a line to the next finite value,
-      // we will *move* to the next finite value.
-      if ( this.dataSet[ i ].isFinite() ) {
+      assert && assert( this.dataSet[ i ] === null || this.dataSet[ i ].isFinite(), 'data points must be finite Vector2 or null' );
+
+      // Draw a line segment to the next non-null value. Null values result in a gap (via move) in the plot.
+      if ( this.dataSet[ i ] ) {
         const viewPoint = this.chartTransform.modelToViewPosition( this.dataSet[ i ] );
         if ( moveToNextPoint ) {
           shape.moveToPoint( viewPoint );

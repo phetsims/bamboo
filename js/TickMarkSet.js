@@ -111,7 +111,7 @@ class TickMarkSet extends Path {
   }
 }
 
-// @public, static
+// @public @static
 TickMarkSet.DEFAULT_EXTENT = 10;
 
 bamboo.register( 'TickMarkSet', TickMarkSet );

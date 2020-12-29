@@ -13,8 +13,8 @@ import Orientation from '../../phet-core/js/Orientation.js';
 import Path from '../../scenery/js/nodes/Path.js';
 import Text from '../../scenery/js/nodes/Text.js';
 import bamboo from './bamboo.js';
-import BambooConstants from './BambooConstants.js';
 import ClippingType from './ClippingType.js';
+import TickMarkSet from './TickMarkSet.js';
 
 class LabelSet extends Path {
 
@@ -32,7 +32,7 @@ class LabelSet extends Path {
       origin: 0,
 
       // act as if there is a corresponding tick with this extent, for positioning the label relatively
-      extent: BambooConstants.DEFAULT_LABEL_EXTENT,
+      extent: TickMarkSet.DEFAULT_EXTENT,
 
       // determines whether the rounding is loose, see ChartTransform
       clippingType: ClippingType.STRICT,

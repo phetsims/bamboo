@@ -4,6 +4,7 @@
  * CanvasLinePlot renders a {Array<Vector2|null>} dataSet on a canvas that is managed by a ChartCanvasNode.
  * Typically it is preferable to use LinePlot, but this alternative is provided for cases where canvas must be
  * used for performance. Like LinePlot, null values are skipped, and allow you to create gaps in a plot.
+ * @see LinePlot
  *
  * @author Sam Reid (PhET Interactive Simulations)
  */

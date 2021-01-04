@@ -100,11 +100,12 @@ class CanvasLinePlot extends CanvasPainter {
       let moveToNextPoint = true;
       for ( let i = 0; i < this.dataSet.length; i++ ) {
 
-        assert && assert( this.dataSet[ i ] === null || this.dataSet[ i ].isFinite(), 'data points must be finite Vector2 or null' );
+        const dataPoint = this.dataSet[ i ];
+        assert && assert( dataPoint === null || dataPoint.isFinite(), 'data points must be finite Vector2 or null' );
 
         // Draw a line segment to the next non-null value. Null values result in a gap (via move) in the plot.
-        if ( this.dataSet[ i ] ) {
-          const viewPoint = this.chartTransform.modelToViewPosition( this.dataSet[ i ] );
+        if ( dataPoint ) {
+          const viewPoint = this.chartTransform.modelToViewPosition( dataPoint );
           if ( moveToNextPoint ) {
             context.moveTo( viewPoint.x, viewPoint.y );
             moveToNextPoint = false;

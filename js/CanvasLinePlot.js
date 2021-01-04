@@ -98,7 +98,10 @@ class CanvasLinePlot extends CanvasPainter {
       context.lineWidth = this.lineWidth;
 
       let moveToNextPoint = true;
-      for ( let i = 0; i < this.dataSet.length; i++ ) {
+
+      // Only access the data set length once for performance
+      const length = this.dataSet.length;
+      for ( let i = 0; i < length; i++ ) {
 
         const dataPoint = this.dataSet[ i ];
         assert && assert( dataPoint === null || dataPoint.isFinite(), 'data points must be finite Vector2 or null' );

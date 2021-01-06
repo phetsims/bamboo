@@ -11,6 +11,7 @@
 
 import merge from '../../phet-core/js/merge.js';
 import PaintColorProperty from '../../scenery/js/util/PaintColorProperty.js';
+import PaintDef from '../../scenery/js/util/PaintDef.js';
 import bamboo from './bamboo.js';
 import CanvasPainter from './CanvasPainter.js';
 
@@ -37,15 +38,24 @@ class CanvasLinePlot extends CanvasPainter {
     this.dataSet = dataSet;
 
     // @private
-    this.strokePaintColorProperty = new PaintColorProperty( options.stroke );
+    this.strokePaintColorProperty = new PaintColorProperty( options.stroke, {
+
+      // So that Property instances (not their values) are not compared to each other using .equals()
+      useDeepEquality: false
+    } );
 
     // @public if you change this directly, you are responsible for calling update on the corresponding ChartCanvasNode
     this.lineWidth = options.lineWidth;
   }
 
-  // @public - Sets the stroke. You are responsible for calling update on the associated ChartCanvasNode(s).
+  /**
+   * Sets the stroke.
+   * @param {PaintDef} stroke - see PaintColorProperty. If you call setStroke or change the value of a Property-like PaintDef
+   *                          - then you are responsible for calling update on the associated ChartCanvasNode(s).
+   * @public
+   */
   setStroke( stroke ) {
-    this.strokePaintColorProperty.value = stroke;
+    this.strokePaintColorProperty.setPaint( stroke );
   }
 
   // @public - see setStroke()
@@ -76,7 +86,7 @@ class CanvasLinePlot extends CanvasPainter {
    */
   paintCanvas( context ) {
     context.beginPath();
-    context.strokeStyle = this.strokePaintColorProperty.value.toCSS();
+    context.strokeStyle = PaintDef.toColor( this.strokePaintColorProperty.getPaint() ).toCSS();
     context.lineWidth = this.lineWidth;
 
     let moveToNextPoint = true;

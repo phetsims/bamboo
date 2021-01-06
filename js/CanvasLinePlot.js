@@ -10,7 +10,7 @@
  */
 
 import merge from '../../phet-core/js/merge.js';
-import ColorDef from '../../scenery/js/util/ColorDef.js';
+import PaintColorProperty from '../../scenery/js/util/PaintColorProperty.js';
 import bamboo from './bamboo.js';
 import CanvasPainter from './CanvasPainter.js';
 
@@ -37,18 +37,7 @@ class CanvasLinePlot extends CanvasPainter {
     this.dataSet = dataSet;
 
     // @private
-    this._stroke = null;
-
-    // @private {string|null} - cache values of CSS so they don't need to be recomputed at each paint
-    this._strokeCSS = null;
-
-    // @private
-    this.colorListener = stroke => {
-      this._strokeCSS = ColorDef.toCSS( stroke );
-      assert && assert( typeof this._strokeCSS === 'string' || this._strokeCSS === null );
-    };
-
-    this.setStroke( options.stroke );
+    this.strokePaintColorProperty = new PaintColorProperty( options.stroke );
 
     // @public if you change this directly, you are responsible for calling update on the corresponding ChartCanvasNode
     this.lineWidth = options.lineWidth;
@@ -56,12 +45,7 @@ class CanvasLinePlot extends CanvasPainter {
 
   // @public - Sets the stroke. You are responsible for calling update on the associated ChartCanvasNode(s).
   setStroke( stroke ) {
-    assert && assert( ColorDef.isColorDef( stroke ), 'must be a ColorDef' );
-    if ( stroke !== this._stroke ) {
-      ColorDef.unlink( this._stroke, this.colorListener );
-      this._stroke = stroke;
-      ColorDef.link( this._stroke, this.colorListener ); // caches the new color CSS
-    }
+    this.strokePaintColorProperty.value = stroke;
   }
 
   // @public - see setStroke()
@@ -72,7 +56,7 @@ class CanvasLinePlot extends CanvasPainter {
   // @public
   dispose() {
     assert && assert( !this.isDisposed, 'already disposed' );
-    ColorDef.unlink( this._stroke, this.colorListener );
+    this.strokePaintColorProperty.dispose();
     this.isDisposed = true;
   }
 
@@ -91,38 +75,35 @@ class CanvasLinePlot extends CanvasPainter {
    * @public
    */
   paintCanvas( context ) {
-    assert && assert( typeof this._strokeCSS === 'string' || this._strokeCSS === null, 'stroke must be a CSS string or null' );
-    if ( this._strokeCSS !== null ) {
-      context.beginPath();
-      context.strokeStyle = this._strokeCSS;
-      context.lineWidth = this.lineWidth;
+    context.beginPath();
+    context.strokeStyle = this.strokePaintColorProperty.value.toCSS();
+    context.lineWidth = this.lineWidth;
 
-      let moveToNextPoint = true;
+    let moveToNextPoint = true;
 
-      // Only access the data set length once for performance
-      const length = this.dataSet.length;
-      for ( let i = 0; i < length; i++ ) {
+    // Only access the data set length once for performance
+    const length = this.dataSet.length;
+    for ( let i = 0; i < length; i++ ) {
 
-        const dataPoint = this.dataSet[ i ];
-        assert && assert( dataPoint === null || dataPoint.isFinite(), 'data points must be finite Vector2 or null' );
+      const dataPoint = this.dataSet[ i ];
+      assert && assert( dataPoint === null || dataPoint.isFinite(), 'data points must be finite Vector2 or null' );
 
-        // Draw a line segment to the next non-null value. Null values result in a gap (via move) in the plot.
-        if ( dataPoint ) {
-          const viewPoint = this.chartTransform.modelToViewPosition( dataPoint );
-          if ( moveToNextPoint ) {
-            context.moveTo( viewPoint.x, viewPoint.y );
-            moveToNextPoint = false;
-          }
-          else {
-            context.lineTo( viewPoint.x, viewPoint.y );
-          }
+      // Draw a line segment to the next non-null value. Null values result in a gap (via move) in the plot.
+      if ( dataPoint ) {
+        const viewPoint = this.chartTransform.modelToViewPosition( dataPoint );
+        if ( moveToNextPoint ) {
+          context.moveTo( viewPoint.x, viewPoint.y );
+          moveToNextPoint = false;
         }
         else {
-          moveToNextPoint = true;
+          context.lineTo( viewPoint.x, viewPoint.y );
         }
       }
-      context.stroke();
+      else {
+        moveToNextPoint = true;
+      }
     }
+    context.stroke();
   }
 }
 

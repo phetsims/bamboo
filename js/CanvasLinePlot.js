@@ -25,7 +25,7 @@ class CanvasLinePlot extends CanvasPainter {
   constructor( chartTransform, dataSet, options ) {
 
     options = merge( {
-      stroke: 'black', // {ColorDef}
+      stroke: 'black', // {PaintDef}
       lineWidth: 1
     }, options );
 

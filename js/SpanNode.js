@@ -16,6 +16,9 @@ import Node from '../../scenery/js/nodes/Node.js';
 import bamboo from './bamboo.js';
 import ChartTransform from './ChartTransform.js';
 
+// Same as the value in Node's validateBounds
+const notificationThreshold = 1e-13;
+
 //TODO https://github.com/phetsims/bamboo/issues/19 VBox only works for Orientation.HORIZONTAL
 class SpanNode extends LayoutBox {
 
@@ -87,9 +90,8 @@ class SpanNode extends LayoutBox {
 
     const viewWidth = this.chartTransform.modelToViewDelta( this.axisOrientation, this.delta );
 
-    //TODO https://github.com/phetsims/bamboo/issues/19 ChartTransform notifies if anything changes, how to know when to update?
     // If the view width changes a 'noticeable amount', then update.
-    if ( Math.abs( viewWidth - this.viewWidth ) > 0.25 ) {
+    if ( Math.abs( viewWidth - this.viewWidth ) > notificationThreshold ) {
       this.viewWidth = viewWidth;
 
       //TODO https://github.com/phetsims/bamboo/issues/19 arrow code only works for axisOrientation === Orientation.HORIZONTAL

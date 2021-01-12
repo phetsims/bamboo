@@ -10,8 +10,7 @@
  */
 
 import merge from '../../phet-core/js/merge.js';
-import PaintColorProperty from '../../scenery/js/util/PaintColorProperty.js';
-import PaintDef from '../../scenery/js/util/PaintDef.js';
+import Color from '../../scenery/js/util/Color.js';
 import bamboo from './bamboo.js';
 import CanvasPainter from './CanvasPainter.js';
 
@@ -25,7 +24,7 @@ class CanvasLinePlot extends CanvasPainter {
   constructor( chartTransform, dataSet, options ) {
 
     options = merge( {
-      stroke: 'black', // {PaintDef}
+      stroke: 'black', // {Color|string|null}
       lineWidth: 1
     }, options );
 
@@ -37,25 +36,22 @@ class CanvasLinePlot extends CanvasPainter {
     // @public if you change this directly, you are responsible for calling update on the corresponding ChartCanvasNode
     this.dataSet = dataSet;
 
-    // @private
-    this.strokePaintColorProperty = new PaintColorProperty( options.stroke, {
-
-      // So that Property instances (not their values) are not compared to each other using .equals()
-      useDeepEquality: false
-    } );
-
     // @public if you change this directly, you are responsible for calling update on the corresponding ChartCanvasNode
     this.lineWidth = options.lineWidth;
+
+    // @private - CSS for rendering the stroke
+    this.strokeCSS = null; // updated in setStroke
+    this.setStroke( options.stroke );
   }
 
   /**
    * Sets the stroke.
-   * @param {PaintDef} stroke - see PaintColorProperty. If you call setStroke or change the value of a Property-like PaintDef
-   *                          - then you are responsible for calling update on the associated ChartCanvasNode(s).
+   * @param {Color|string|null} stroke - If you call setStroke, you are responsible for calling update on the associated ChartCanvasNode(s).
    * @public
    */
   setStroke( stroke ) {
-    this.strokePaintColorProperty.setPaint( stroke );
+    assert && assert( stroke instanceof Color || (typeof stroke === 'string' && Color.isCSSColorString( stroke )) || stroke === null, 'invalid stroke' );
+    this.strokeCSS = stroke instanceof Color ? stroke.toCSS() : stroke;
   }
 
   // @public - see setStroke()
@@ -66,7 +62,6 @@ class CanvasLinePlot extends CanvasPainter {
   // @public
   dispose() {
     assert && assert( !this.isDisposed, 'already disposed' );
-    this.strokePaintColorProperty.dispose();
     this.isDisposed = true;
   }
 
@@ -86,34 +81,37 @@ class CanvasLinePlot extends CanvasPainter {
    */
   paintCanvas( context ) {
     context.beginPath();
-    context.strokeStyle = PaintDef.toColor( this.strokePaintColorProperty.getPaint() ).toCSS();
-    context.lineWidth = this.lineWidth;
 
-    let moveToNextPoint = true;
+    if ( this.strokeCSS ) {
+      context.strokeStyle = this.strokeCSS;
+      context.lineWidth = this.lineWidth;
 
-    // Only access the data set length once for performance
-    const length = this.dataSet.length;
-    for ( let i = 0; i < length; i++ ) {
+      let moveToNextPoint = true;
 
-      const dataPoint = this.dataSet[ i ];
-      assert && assert( dataPoint === null || dataPoint.isFinite(), 'data points must be finite Vector2 or null' );
+      // Only access the data set length once for performance
+      const length = this.dataSet.length;
+      for ( let i = 0; i < length; i++ ) {
 
-      // Draw a line segment to the next non-null value. Null values result in a gap (via move) in the plot.
-      if ( dataPoint ) {
-        const viewPoint = this.chartTransform.modelToViewPosition( dataPoint );
-        if ( moveToNextPoint ) {
-          context.moveTo( viewPoint.x, viewPoint.y );
-          moveToNextPoint = false;
+        const dataPoint = this.dataSet[ i ];
+        assert && assert( dataPoint === null || dataPoint.isFinite(), 'data points must be finite Vector2 or null' );
+
+        // Draw a line segment to the next non-null value. Null values result in a gap (via move) in the plot.
+        if ( dataPoint ) {
+          const viewPoint = this.chartTransform.modelToViewPosition( dataPoint );
+          if ( moveToNextPoint ) {
+            context.moveTo( viewPoint.x, viewPoint.y );
+            moveToNextPoint = false;
+          }
+          else {
+            context.lineTo( viewPoint.x, viewPoint.y );
+          }
         }
         else {
-          context.lineTo( viewPoint.x, viewPoint.y );
+          moveToNextPoint = true;
         }
       }
-      else {
-        moveToNextPoint = true;
-      }
+      context.stroke();
     }
-    context.stroke();
   }
 }
 

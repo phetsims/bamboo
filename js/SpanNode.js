@@ -95,12 +95,12 @@ class SpanNode extends LayoutBox {
       this.viewWidth = viewWidth;
 
       //TODO https://github.com/phetsims/bamboo/issues/21 support Orientation.VERTICAL
-      //TODO https://github.com/phetsims/bamboo/issues/19 parameterize length of lines at ends of arrow
-      //TODO https://github.com/phetsims/bamboo/issues/19 parameterize ArrowNode options
+      //TODO https://github.com/phetsims/bamboo/issues/22 parameterize length of lines at ends of arrow
       // Create double-headed arrow with bars at to show modelDelta
       const createBar = centerX => new Line( 0, 0, 0, 6, { stroke: this.color, centerX: centerX } );
       const leftBar = createBar( 0 );
       const rightBar = createBar( viewWidth );
+      //TODO https://github.com/phetsims/bamboo/issues/22 parameterize ArrowNode options
       const arrowNode = new ArrowNode( leftBar.right + 1, leftBar.centerY, rightBar.left - 1, rightBar.centerY, {
         fill: this.color,
         stroke: this.color,

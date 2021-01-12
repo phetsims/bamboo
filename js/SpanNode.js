@@ -36,7 +36,7 @@ class SpanNode extends LayoutBox {
     assert && assert( typeof delta === 'number', 'invalid delta' );
     assert && assert( labelNode instanceof Node, 'invalid labelNode' );
 
-    //TODO https://github.com/phetsims/bamboo/issues/19 support Orientation.VERTICAL
+    //TODO https://github.com/phetsims/bamboo/issues/21 support Orientation.VERTICAL
     assert && assert( axisOrientation !== Orientation.VERTICAL, 'Orientation.VERTICAL is not yet supported' );
 
     options = merge( {
@@ -94,7 +94,7 @@ class SpanNode extends LayoutBox {
     if ( Math.abs( viewWidth - this.viewWidth ) > notificationThreshold ) {
       this.viewWidth = viewWidth;
 
-      //TODO https://github.com/phetsims/bamboo/issues/19 arrow code only works for axisOrientation === Orientation.HORIZONTAL
+      //TODO https://github.com/phetsims/bamboo/issues/21 support Orientation.VERTICAL
       //TODO https://github.com/phetsims/bamboo/issues/19 parameterize length of lines at ends of arrow
       //TODO https://github.com/phetsims/bamboo/issues/19 parameterize ArrowNode options
       // Create double-headed arrow with bars at to show modelDelta
@@ -113,7 +113,7 @@ class SpanNode extends LayoutBox {
         children: [ leftBar, rightBar, arrowNode ]
       } );
 
-      //TODO https://github.com/phetsims/bamboo/issues/19 maxWidth only works for axisOrientation === Orientation.HORIZONTAL
+      //TODO https://github.com/phetsims/bamboo/issues/21 support Orientation.VERTICAL
       // Prevent labelNode from being wider than arrowWithBars
       this.labelNode.maxWidth = arrowWithBars.width;
 

@@ -7,7 +7,6 @@
  */
 
 import NumberProperty from '../../../axon/js/NumberProperty.js';
-import Property from '../../../axon/js/Property.js';
 import Range from '../../../dot/js/Range.js';
 import Vector2 from '../../../dot/js/Vector2.js';
 import Orientation from '../../../phet-core/js/Orientation.js';
@@ -71,19 +70,17 @@ class DemoChartCanvasNode extends Node {
     } );
 
     const painters = [];
+    const colors = [ 'red', 'blue', 'green', 'violet', 'pink', null, 'blue' ];
 
-    const p = new Property( new Color( 128, 128, 128 ) );
-
-    const colors = [ 'red', 'blue', 'green',
-      'violet', new Color( 'pink' ), new Property( null ), p
-    ];
-
+    const canvasLinePlots = [];
     for ( let i = 0; i < colors.length; i++ ) {
       const d = createDataSet( -2, 2, 5 + i / 10 + phet.joist.random.nextDouble() / 10, phet.joist.random.nextDouble() * 2 );
-      painters.push( new CanvasLinePlot( chartTransform, d, {
+      const canvasLinePlot = new CanvasLinePlot( chartTransform, d, {
         stroke: colors[ i % colors.length ],
         lineWidth: i
-      } ) );
+      } );
+      canvasLinePlots.push( canvasLinePlot );
+      painters.push( canvasLinePlot );
     }
 
     // Anything you want clipped goes in here
@@ -93,7 +90,7 @@ class DemoChartCanvasNode extends Node {
     emitter.addListener( dt => {
       time += dt;
       const a = 255 * Math.sin( time * 4 );
-      p.set( new Color( a, a / 2, a / 4 ) );
+      canvasLinePlots[ canvasLinePlots.length - 1 ].stroke = new Color( a, a / 2, a / 4 );
       chartCanvasNode.update();
     } );
 

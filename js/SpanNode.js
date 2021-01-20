@@ -36,18 +36,34 @@ class SpanNode extends LayoutBox {
     assert && assert( typeof delta === 'number', 'invalid delta' );
     assert && assert( labelNode instanceof Node, 'invalid labelNode' );
 
+    if ( assert && options && options.arrowNodeOptions ) {
+      assert && assert( !options.arrowNodeOptions.hasOwnProperty( 'stroke' ), 'Stroke not supported for inner arrow, use fill' );
+      assert && assert( !options.arrowNodeOptions.hasOwnProperty( 'lineWidth' ), 'lineWidth not supported for inner arrow, use fill' );
+    }
+
     //TODO https://github.com/phetsims/bamboo/issues/21 support Orientation.VERTICAL
     assert && assert( axisOrientation !== Orientation.VERTICAL, 'Orientation.VERTICAL is not yet supported' );
 
     options = merge( {
       color: 'black',
-      spacing: -2, // between arrow and labelNode
-      outerLineLength: 6 // length of the bars at the ends of each arrow
+      spacing: -2, // between arrow and labelNode (option passed to supertype LayoutBox)
+      outerLineLength: 6, // length of the bars at the ends of each arrow
+      arrowNodeOptions: {
+        doubleHead: true,
+        headHeight: 4.5,
+        headWidth: 5,
+        tailWidth: 1.5,
+        lineWidth: 0, // Not supported since it throws off the dimensions, use fill instead
+        stroke: null // Not supported since it throws off the dimensions, use fill instead
+      }
     }, options );
 
     assert && assert( !options.children, 'SpanNode sets children' );
     assert && assert( !options.orientation, 'SpanNode sets orientation' );
     options.orientation = ( axisOrientation === Orientation.HORIZONTAL ) ? 'vertical' : 'horizontal';
+
+    // Arrow node color options default to the color of the SpanNode, but can be overridden independently
+    options.arrowNodeOptions.fill = options.arrowNodeOptions.fill || options.color;
 
     super();
 
@@ -59,6 +75,7 @@ class SpanNode extends LayoutBox {
     this.color = options.color;
     this.outerLineLength = options.outerLineLength;
     this.viewWidth = 0;
+    this.arrowNodeOptions = options.arrowNodeOptions;
 
     // Initialize
     this.update();
@@ -96,24 +113,24 @@ class SpanNode extends LayoutBox {
       this.viewWidth = viewWidth;
 
       //TODO https://github.com/phetsims/bamboo/issues/21 support Orientation.VERTICAL
+
       // Create double-headed arrow with bars at to show modelDelta
       const createBar = centerX => new Line( 0, 0, 0, this.outerLineLength, { stroke: this.color, centerX: centerX } );
       const leftBar = createBar( 0 );
       const rightBar = createBar( viewWidth );
-      //TODO https://github.com/phetsims/bamboo/issues/22 parameterize ArrowNode options
-      const arrowNode = new ArrowNode( leftBar.right + 1, leftBar.centerY, rightBar.left - 1, rightBar.centerY, {
-        fill: this.color,
-        stroke: this.color,
-        doubleHead: true,
-        headHeight: 3,
-        headWidth: 3.5,
-        tailWidth: 0.5
-      } );
+      const arrowNode = new ArrowNode(
+        leftBar.right,
+        leftBar.centerY,
+        rightBar.left,
+        rightBar.centerY,
+        this.arrowNodeOptions
+      );
       const arrowWithBars = new Node( {
         children: [ leftBar, rightBar, arrowNode ]
       } );
 
       //TODO https://github.com/phetsims/bamboo/issues/21 support Orientation.VERTICAL
+
       // Prevent labelNode from being wider than arrowWithBars
       this.labelNode.maxWidth = arrowWithBars.width;
 

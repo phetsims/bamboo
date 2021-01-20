@@ -57,7 +57,6 @@ class SpanNode extends LayoutBox {
     this.delta = delta;
     this.labelNode = labelNode;
     this.color = options.color;
-    this.spacing = options.spacing; // TODO: unused?
     this.outerLineLength = options.outerLineLength;
     this.viewWidth = 0;
 

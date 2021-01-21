@@ -1,7 +1,7 @@
 // Copyright 2020, University of Colorado Boulder
 
 /**
- * LinePlot renders a {Array<Vector2|null>} dataSet by connecting the points with line segments.
+ * LinePlot renders a {Array.<Vector2|null>} dataSet by connecting the points with line segments.
  *
  * Null values are skipped and allow you to create gaps in a plot. Examples:
  * dataset [ (0,0), (0,1), (0,2), (0,3) ] => 3 lines segments, connecting consecutive points

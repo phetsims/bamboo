@@ -1,7 +1,7 @@
 // Copyright 2020, University of Colorado Boulder
 
 /**
- * CanvasLinePlot renders a {Array<Vector2|null>} dataSet on a canvas that is managed by a ChartCanvasNode.
+ * CanvasLinePlot renders a {Array.<Vector2|null>} dataSet on a canvas that is managed by a ChartCanvasNode.
  * Typically it is preferable to use LinePlot, but this alternative is provided for cases where canvas must be
  * used for performance. Like LinePlot, null values are skipped, and allow you to create gaps in a plot.
  * @see LinePlot
@@ -18,7 +18,7 @@ class CanvasLinePlot extends CanvasPainter {
 
   /**
    * @param {ChartTransform} chartTransform
-   * @param {Array<Vector2|null>} dataSet
+   * @param {Array.<Vector2|null>} dataSet
    * @param {Object} [options]
    */
   constructor( chartTransform, dataSet, options ) {

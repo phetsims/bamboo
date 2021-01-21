@@ -114,7 +114,7 @@ class SpanNode extends LayoutBox {
 
       //TODO https://github.com/phetsims/bamboo/issues/21 support Orientation.VERTICAL
 
-      // Create double-headed arrow with bars at to show modelDelta
+      // Create double-headed arrow with perpendicular lines at ends to show modelDelta
       const createBar = centerX => new Line( 0, 0, 0, this.outerLineLength, { stroke: this.color, centerX: centerX } );
       const leftBar = createBar( 0 );
       const rightBar = createBar( viewWidth );

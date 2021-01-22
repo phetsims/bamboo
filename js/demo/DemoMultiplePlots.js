@@ -7,6 +7,7 @@
  */
 
 import Property from '../../../axon/js/Property.js';
+import dotRandom from '../../../dot/js/dotRandom.js';
 import Range from '../../../dot/js/Range.js';
 import Vector2 from '../../../dot/js/Vector2.js';
 import Orientation from '../../../phet-core/js/Orientation.js';
@@ -32,7 +33,7 @@ class DemoMultiplePlots extends VBox {
 
     const dataSet = [];
     for ( let x = 2; x < 10; x += 0.1 ) {
-      dataSet.push( new Vector2( x, Math.exp( x ) + phet.joist.random.nextDouble() * 1000 ) );
+      dataSet.push( new Vector2( x, Math.exp( x ) + dotRandom.nextDouble() * 1000 ) );
     }
 
     const chartTransform = new ChartTransform( {

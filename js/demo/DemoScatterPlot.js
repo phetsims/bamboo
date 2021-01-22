@@ -2,6 +2,7 @@
 
 import NumberProperty from '../../../axon/js/NumberProperty.js';
 import Dimension2 from '../../../dot/js/Dimension2.js';
+import dotRandom from '../../../dot/js/dotRandom.js';
 import Range from '../../../dot/js/Range.js';
 import Vector2 from '../../../dot/js/Vector2.js';
 import Orientation from '../../../phet-core/js/Orientation.js';
@@ -31,7 +32,7 @@ class DemoScatterPlot extends VBox {
 
     const dataSet = [];
     for ( let i = -3; i < 3; i += 0.01 ) {
-      phet.joist.random.nextDouble() < 0.3 && dataSet.push( new Vector2( i, Math.sin( i * 2 ) ) );
+      dotRandom.nextDouble() < 0.3 && dataSet.push( new Vector2( i, Math.sin( i * 2 ) ) );
     }
 
     const chartTransform = new ChartTransform( {

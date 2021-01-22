@@ -7,6 +7,7 @@
  */
 
 import NumberProperty from '../../../axon/js/NumberProperty.js';
+import dotRandom from '../../../dot/js/dotRandom.js';
 import Range from '../../../dot/js/Range.js';
 import Vector2 from '../../../dot/js/Vector2.js';
 import Orientation from '../../../phet-core/js/Orientation.js';
@@ -74,7 +75,7 @@ class DemoChartCanvasNode extends Node {
 
     const canvasLinePlots = [];
     for ( let i = 0; i < colors.length; i++ ) {
-      const d = createDataSet( -2, 2, 5 + i / 10 + phet.joist.random.nextDouble() / 10, phet.joist.random.nextDouble() * 2 );
+      const d = createDataSet( -2, 2, 5 + i / 10 + dotRandom.nextDouble() / 10, dotRandom.nextDouble() * 2 );
       const canvasLinePlot = new CanvasLinePlot( chartTransform, d, {
         stroke: colors[ i % colors.length ],
         lineWidth: i

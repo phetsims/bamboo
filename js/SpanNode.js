@@ -36,11 +36,6 @@ class SpanNode extends LayoutBox {
     assert && assert( typeof delta === 'number', 'invalid delta' );
     assert && assert( labelNode instanceof Node, 'invalid labelNode' );
 
-    if ( assert && options && options.arrowNodeOptions ) {
-      assert && assert( !options.arrowNodeOptions.hasOwnProperty( 'stroke' ), 'Stroke not supported for inner arrow, use fill' );
-      assert && assert( !options.arrowNodeOptions.hasOwnProperty( 'lineWidth' ), 'lineWidth not supported for inner arrow, use fill' );
-    }
-
     //TODO https://github.com/phetsims/bamboo/issues/21 support Orientation.VERTICAL
     assert && assert( axisOrientation !== Orientation.VERTICAL, 'Orientation.VERTICAL is not yet supported' );
 
@@ -53,13 +48,13 @@ class SpanNode extends LayoutBox {
         headHeight: 4.5,
         headWidth: 5,
         tailWidth: 1.5,
-        lineWidth: 0, // Not supported since it throws off the dimensions, use fill instead
         stroke: null // Not supported since it throws off the dimensions, use fill instead
       }
     }, options );
 
     assert && assert( !options.children, 'SpanNode sets children' );
     assert && assert( !options.orientation, 'SpanNode sets orientation' );
+    assert && assert( options.arrowNodeOptions.stroke === null, 'SpanNode sets arrowNodeOptions.stroke' );
     options.orientation = ( axisOrientation === Orientation.HORIZONTAL ) ? 'vertical' : 'horizontal';
 
     // Arrow node color options default to the color of the SpanNode, but can be overridden independently

@@ -91,10 +91,18 @@ class ChartTransform {
    * @public
    */
   modelToViewPosition( vector ) {
-    return new Vector2(
-      this.modelToView( Orientation.HORIZONTAL, vector.x ),
-      this.modelToView( Orientation.VERTICAL, vector.y )
-    );
+    return this.modelToViewXY( vector.x, vector.y );
+  }
+
+  /**
+   * Transforms model x,y coordinates to a view position.
+   * @param {number} x
+   * @param {number} y
+   * @returns {Vector2}
+   * @public
+   */
+  modelToViewXY( x, y ) {
+    return new Vector2( this.modelToViewX( x ), this.modelToViewY( y ) );
   }
 
   /**

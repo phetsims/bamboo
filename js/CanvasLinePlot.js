@@ -50,7 +50,7 @@ class CanvasLinePlot extends CanvasPainter {
    * @public
    */
   setStroke( stroke ) {
-    assert && assert( stroke instanceof Color || (typeof stroke === 'string' && Color.isCSSColorString( stroke )) || stroke === null, 'invalid stroke' );
+    assert && assert( stroke instanceof Color || ( typeof stroke === 'string' && Color.isCSSColorString( stroke ) ) || stroke === null, 'invalid stroke' );
     this.strokeCSS = stroke instanceof Color ? stroke.toCSS() : stroke;
   }
 

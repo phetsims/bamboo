@@ -16,7 +16,7 @@ class StraightLinePlot extends Line {
 
   /**
    * @param chartTransform
-   * @param {number} m - the slope, use Infinity or -Infinity for infinite/undefined slope (vertical line)
+   * @param {number} m - the slope, use Infinity or -Infinity for infinite (aka undefined) slope, a vertical line
    * @param {number} b - the y-intercept
    * @param options
    */
@@ -93,7 +93,7 @@ class StraightLinePlot extends Line {
 
     if ( this._m === Infinity || this._m === -Infinity ) {
 
-      // slope is infinite/undefined, draw a vertical line
+      // slope is infinite, draw a vertical line
       const modelX = 0;
       const modelMinY = this.chartTransform.modelYRange.min;
       const modelMaxY = this.chartTransform.modelYRange.max;

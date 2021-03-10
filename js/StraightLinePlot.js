@@ -93,12 +93,12 @@ class StraightLinePlot extends Line {
 
     if ( this._m === Infinity || this._m === -Infinity ) {
 
-      // slope is infinite, draw a vertical line
+      // Slope is infinite, draw a vertical line.
       const modelX = 0;
       const modelMinY = this.chartTransform.modelYRange.min;
       const modelMaxY = this.chartTransform.modelYRange.max;
 
-      // Convert to view coordinates
+      // Convert to view coordinates.
       const viewX = this.chartTransform.modelToViewX( modelX );
       const viewMinY = this.chartTransform.modelToViewY( modelMinY );
       const viewMaxY = this.chartTransform.modelToViewY( modelMaxY );
@@ -107,13 +107,13 @@ class StraightLinePlot extends Line {
     }
     else {
 
-      // Determine the endpoints, in model coordinates
+      // Determine the endpoints, in model coordinates.
       const modelMinX = this.chartTransform.modelXRange.min;
       const modelMinY = this.solve( modelMinX );
       const modelMaxX = this.chartTransform.modelXRange.max;
       const modelMaxY = this.solve( modelMaxX );
 
-      // Convert to view coordinates
+      // Convert to view coordinates.
       const viewMinX = this.chartTransform.modelToViewX( modelMinX );
       const viewMinY = this.chartTransform.modelToViewY( modelMinY );
       const viewMaxX = this.chartTransform.modelToViewX( modelMaxX );

@@ -98,6 +98,7 @@ class StraightLinePlot extends Line {
       const modelMinY = this.chartTransform.modelYRange.min;
       const modelMaxY = this.chartTransform.modelYRange.max;
 
+      // Convert to view coordinates
       const viewX = this.chartTransform.modelToViewX( modelX );
       const viewMinY = this.chartTransform.modelToViewY( modelMinY );
       const viewMaxY = this.chartTransform.modelToViewY( modelMaxY );

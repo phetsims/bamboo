@@ -2,6 +2,8 @@
 
 /**
  * StraightLinePlot plots a straight line, described by y = mx + b.
+ * This was created for the Google Group discussion in
+ * https://groups.google.com/g/developing-interactive-simulations-in-html5/c/k9P78WZivJ4.
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */

@@ -93,7 +93,7 @@ class StraightLinePlot extends Line {
 
     if ( this._m === Infinity || this._m === -Infinity ) {
 
-      // slope is undefined, draw a vertical line
+      // slope is infinite/undefined, draw a vertical line
       const modelX = 0;
       const modelMinY = this.chartTransform.modelYRange.min;
       const modelMaxY = this.chartTransform.modelYRange.max;

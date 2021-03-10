@@ -16,7 +16,7 @@ class StraightLinePlot extends Line {
 
   /**
    * @param chartTransform
-   * @param {number} m - the slope, use Infinity for undefined slope (vertical line)
+   * @param {number} m - the slope, use Infinity for infinite/undefined slope (vertical line)
    * @param {number} b - the y-intercept
    * @param options
    */

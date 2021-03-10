@@ -17,6 +17,7 @@ import DemoChartCanvasNode from './DemoChartCanvasNode.js';
 import DemoLinePlot from './DemoLinePlot.js';
 import DemoMultiplePlots from './DemoMultiplePlots.js';
 import DemoScatterPlot from './DemoScatterPlot.js';
+import DemoStraightLinePlot from './DemoStraightLinePlot.js';
 
 // constants - this is a hack to enable components to animate from the animation loop
 const emitter = new Emitter( { parameters: [ { valueType: 'number' } ] } );
@@ -33,27 +34,38 @@ class BambooDemoScreenView extends DemosScreenView {
        * {function(Bounds2): Node} createNode - creates the scene graph for the demo
        */
       {
-        label: 'ScatterPlot', createNode: layoutBounds => new DemoScatterPlot( {
+        label: 'ScatterPlot',
+        createNode: layoutBounds => new DemoScatterPlot( {
           center: layoutBounds.center
         } )
       },
       {
-        label: 'LinePlot', createNode: layoutBounds => new DemoLinePlot( {
+        label: 'LinePlot',
+        createNode: layoutBounds => new DemoLinePlot( {
           center: layoutBounds.center
         } )
       },
       {
-        label: 'ChartCanvasNode', createNode: layoutBounds => new DemoChartCanvasNode( emitter, {
+        label: 'ChartCanvasNode',
+        createNode: layoutBounds => new DemoChartCanvasNode( emitter, {
           center: layoutBounds.center
         } )
       },
       {
-        label: 'MultiplePlots', createNode: layoutBounds => new DemoMultiplePlots( {
+        label: 'MultiplePlots',
+        createNode: layoutBounds => new DemoMultiplePlots( {
           center: layoutBounds.center
         } )
       },
       {
-        label: 'BarPlot', createNode: layoutBounds => new DemoBarPlot( {
+        label: 'BarPlot',
+        createNode: layoutBounds => new DemoBarPlot( {
+          center: layoutBounds.center
+        } )
+      },
+      {
+        label: 'StraightLinePlot',
+        createNode: layoutBounds => new DemoStraightLinePlot( {
           center: layoutBounds.center
         } )
       }

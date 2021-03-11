@@ -1,7 +1,7 @@
 // Copyright 2021, University of Colorado Boulder
 
 /**
- * StraightLinePlot plots a straight line, described by y = mx + b.
+ * LinearEquationPlot plots a straight line, described by y = mx + b.
  * This was created for the Google Group discussion in
  * https://groups.google.com/g/developing-interactive-simulations-in-html5/c/k9P78WZivJ4.
  *
@@ -12,7 +12,7 @@ import merge from '../../phet-core/js/merge.js';
 import Line from '../../scenery/js/nodes/Line.js';
 import bamboo from './bamboo.js';
 
-class StraightLinePlot extends Line {
+class LinearEquationPlot extends Line {
 
   /**
    * @param chartTransform
@@ -133,5 +133,5 @@ class StraightLinePlot extends Line {
   }
 }
 
-bamboo.register( 'StraightLinePlot', StraightLinePlot );
-export default StraightLinePlot;
+bamboo.register( 'LinearEquationPlot', LinearEquationPlot );
+export default LinearEquationPlot;

@@ -1,7 +1,7 @@
 // Copyright 2021, University of Colorado Boulder
 
 /**
- * Demonstrates StraightLinePlot.
+ * Demonstrates LinearEquationPlot.
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */
@@ -26,10 +26,10 @@ import ChartRectangle from '../ChartRectangle.js';
 import ChartTransform from '../ChartTransform.js';
 import GridLineSet from '../GridLineSet.js';
 import LabelSet from '../LabelSet.js';
-import StraightLinePlot from '../StraightLinePlot.js';
+import LinearEquationPlot from '../LinearEquationPlot.js';
 import TickMarkSet from '../TickMarkSet.js';
 
-class DemoStraightLinePlot extends Node {
+class DemoLinearEquationPlot extends Node {
 
   /**
    * @param {Object} [options]
@@ -123,7 +123,7 @@ class DemoStraightLinePlot extends Node {
       stroke: 'black'
     } );
 
-    const straightLinePlot = new StraightLinePlot( chartTransform, 1, 1, {
+    const straightLinePlot = new LinearEquationPlot( chartTransform, 1, 1, {
       stroke: 'red',
       lineWidth: 2
     } );
@@ -198,7 +198,7 @@ class DemoStraightLinePlot extends Node {
       ]
     } );
 
-    assert && assert( !options.children, 'DemoStraightLinePlot sets children' );
+    assert && assert( !options.children, 'DemoLinearEquationPlot sets children' );
     options.children = [
       new HBox( {
         excludeInvisibleChildrenFromBounds: false,
@@ -219,5 +219,5 @@ class DemoStraightLinePlot extends Node {
   }
 }
 
-bamboo.register( 'DemoStraightLinePlot', DemoStraightLinePlot );
-export default DemoStraightLinePlot;
+bamboo.register( 'DemoLinearEquationPlot', DemoLinearEquationPlot );
+export default DemoLinearEquationPlot;

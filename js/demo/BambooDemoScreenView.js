@@ -17,7 +17,7 @@ import DemoChartCanvasNode from './DemoChartCanvasNode.js';
 import DemoLinePlot from './DemoLinePlot.js';
 import DemoMultiplePlots from './DemoMultiplePlots.js';
 import DemoScatterPlot from './DemoScatterPlot.js';
-import DemoStraightLinePlot from './DemoStraightLinePlot.js';
+import DemoLinearEquationPlot from './DemoLinearEquationPlot.js';
 
 // constants - this is a hack to enable components to animate from the animation loop
 const emitter = new Emitter( { parameters: [ { valueType: 'number' } ] } );
@@ -64,8 +64,8 @@ class BambooDemoScreenView extends DemosScreenView {
         } )
       },
       {
-        label: 'StraightLinePlot',
-        createNode: layoutBounds => new DemoStraightLinePlot( {
+        label: 'LinearEquationPlot',
+        createNode: layoutBounds => new DemoLinearEquationPlot( {
           center: layoutBounds.center
         } )
       }

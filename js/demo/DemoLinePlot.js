@@ -61,10 +61,12 @@ class DemoLinePlot extends Node {
       bottom: chartRectangle.bottom
     } );
     zoomLevelProperty.link( zoomLevel => {
-      chartTransform.setModelXRange( zoomLevel === 1 ? new Range( -Math.PI / 8, Math.PI / 8 ) :
-                                     zoomLevel === 2 ? new Range( -Math.PI / 4, Math.PI / 4 ) :
-                                     zoomLevel === 3 ? new Range( -Math.PI / 3, Math.PI / 3 ) :
-                                     zoomLevel === 4 ? new Range( -Math.PI / 2, Math.PI / 2 ) : null );
+      chartTransform.setModelXRange(
+        zoomLevel === 1 ? new Range( -Math.PI / 8, Math.PI / 8 ) :
+        zoomLevel === 2 ? new Range( -Math.PI / 4, Math.PI / 4 ) :
+        zoomLevel === 3 ? new Range( -Math.PI / 3, Math.PI / 3 ) :
+        zoomLevel === 4 ? new Range( -Math.PI / 2, Math.PI / 2 ) : null
+      );
     } );
 
     // Anything you want clipped goes in here

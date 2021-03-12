@@ -17,7 +17,7 @@ const simOptions = {
   }
 };
 
-simLauncher.launch( function() {
+simLauncher.launch( () => {
   new Sim( bambooStrings.bamboo.title, [
     new Screen( () => {return {};}, () => new BambooDemoScreenView(), {
         name: 'Bamboo Demo',

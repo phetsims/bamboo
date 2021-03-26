@@ -7,9 +7,10 @@
  */
 
 import NumberProperty from '../../../axon/js/NumberProperty.js';
-import Range from '../../../dot/js/Range.js';
-import Vector2 from '../../../dot/js/Vector2.js';
 import SpanNode from '../../../bamboo/js/SpanNode.js';
+import Range from '../../../dot/js/Range.js';
+import Utils from '../../../dot/js/Utils.js';
+import Vector2 from '../../../dot/js/Vector2.js';
 import Orientation from '../../../phet-core/js/Orientation.js';
 import MathSymbols from '../../../scenery-phet/js/MathSymbols.js';
 import PhetFont from '../../../scenery-phet/js/PhetFont.js';
@@ -17,13 +18,13 @@ import PlusMinusZoomButtonGroup from '../../../scenery-phet/js/PlusMinusZoomButt
 import Node from '../../../scenery/js/nodes/Node.js';
 import Text from '../../../scenery/js/nodes/Text.js';
 import AxisNode from '../AxisNode.js';
-import ChartTransform from '../ChartTransform.js';
+import bamboo from '../bamboo.js';
 import ChartRectangle from '../ChartRectangle.js';
+import ChartTransform from '../ChartTransform.js';
 import GridLineSet from '../GridLineSet.js';
 import LabelSet from '../LabelSet.js';
 import LinePlot from '../LinePlot.js';
 import TickMarkSet from '../TickMarkSet.js';
-import bamboo from '../bamboo.js';
 
 class DemoLinePlot extends Node {
 
@@ -111,7 +112,7 @@ class DemoLinePlot extends Node {
       new TickMarkSet( chartTransform, Orientation.HORIZONTAL, Math.PI / 8, { edge: 'min' } ),
       new LabelSet( chartTransform, Orientation.HORIZONTAL, Math.PI / 8, {
         edge: 'min',
-        createLabel: value => new Text( Math.abs( value ) < 1E-6 ? value.toFixed( 0 ) : value.toFixed( 2 ), {
+        createLabel: value => new Text( Math.abs( value ) < 1E-6 ? Utils.toFixed( value, 0 ) : Utils.toFixed( value, 2 ), {
           fontSize: 12
         } )
       } ),

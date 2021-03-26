@@ -15,13 +15,13 @@ import Node from '../../../scenery/js/nodes/Node.js';
 import Text from '../../../scenery/js/nodes/Text.js';
 import VBox from '../../../scenery/js/nodes/VBox.js';
 import Color from '../../../scenery/js/util/Color.js';
+import bamboo from '../bamboo.js';
 import BarPlot from '../BarPlot.js';
-import ChartTransform from '../ChartTransform.js';
 import ChartRectangle from '../ChartRectangle.js';
+import ChartTransform from '../ChartTransform.js';
 import GridLineSet from '../GridLineSet.js';
 import LabelSet from '../LabelSet.js';
 import TickMarkSet from '../TickMarkSet.js';
-import bamboo from '../bamboo.js';
 
 class DemoBarPlot extends Node {
 
@@ -88,13 +88,13 @@ class DemoBarPlot extends Node {
         new TickMarkSet( chartTransform, Orientation.VERTICAL, 0.05, { edge: 'min' } ),
         new LabelSet( chartTransform, Orientation.VERTICAL, 0.05, {
           edge: 'min',
-          createLabel: value => new Text( value.toFixed( 2 ), { fontSize: 12 } )
+          createLabel: value => new Text( Utils.toFixed( value, 2 ), { fontSize: 12 } )
         } ),
 
         new TickMarkSet( chartTransform, Orientation.HORIZONTAL, Math.PI * 2, { edge: 'min' } ),
         new LabelSet( chartTransform, Orientation.HORIZONTAL, Math.PI * 2, {
           edge: 'min',
-          createLabel: value => new Text( ( value / Math.PI ).toFixed( 0 ) + MathSymbols.PI, { fontSize: 12 } )
+          createLabel: value => new Text( Utils.toFixed( value / Math.PI, 0 ) + MathSymbols.PI, { fontSize: 12 } )
         } )
       ]
     } );

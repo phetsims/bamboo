@@ -9,6 +9,7 @@
 import NumberProperty from '../../../axon/js/NumberProperty.js';
 import dotRandom from '../../../dot/js/dotRandom.js';
 import Range from '../../../dot/js/Range.js';
+import Utils from '../../../dot/js/Utils.js';
 import Vector2 from '../../../dot/js/Vector2.js';
 import Orientation from '../../../phet-core/js/Orientation.js';
 import PlusMinusZoomButtonGroup from '../../../scenery-phet/js/PlusMinusZoomButtonGroup.js';
@@ -16,14 +17,14 @@ import Node from '../../../scenery/js/nodes/Node.js';
 import Text from '../../../scenery/js/nodes/Text.js';
 import Color from '../../../scenery/js/util/Color.js';
 import AxisNode from '../AxisNode.js';
-import ChartCanvasNode from '../ChartCanvasNode.js';
+import bamboo from '../bamboo.js';
 import CanvasLinePlot from '../CanvasLinePlot.js';
-import ChartTransform from '../ChartTransform.js';
+import ChartCanvasNode from '../ChartCanvasNode.js';
 import ChartRectangle from '../ChartRectangle.js';
+import ChartTransform from '../ChartTransform.js';
 import GridLineSet from '../GridLineSet.js';
 import LabelSet from '../LabelSet.js';
 import TickMarkSet from '../TickMarkSet.js';
-import bamboo from '../bamboo.js';
 
 class DemoChartCanvasNode extends Node {
 
@@ -124,7 +125,7 @@ class DemoChartCanvasNode extends Node {
       new TickMarkSet( chartTransform, Orientation.HORIZONTAL, Math.PI / 8, { edge: 'min' } ),
       new LabelSet( chartTransform, Orientation.HORIZONTAL, Math.PI / 8, {
         edge: 'min',
-        createLabel: value => new Text( Math.abs( value ) < 1E-6 ? value.toFixed( 0 ) : value.toFixed( 2 ), {
+        createLabel: value => new Text( Math.abs( value ) < 1E-6 ? Utils.toFixed( value, 0 ) : Utils.toFixed( value, 2 ), {
           fontSize: 12
         } )
       } ),

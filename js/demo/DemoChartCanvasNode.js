@@ -1,7 +1,7 @@
 // Copyright 2020, University of Colorado Boulder
 
 /**
- * Demonstrates a ChartCanvasNode.
+ * Demonstrates a ChartCanvasNode.  One of the data sets demonstrates missing data and color mutation.
  *
  * @author Sam Reid (PhET Interactive Simulations)
  */
@@ -32,12 +32,13 @@ class DemoChartCanvasNode extends Node {
 
     super();
 
-    const createDataSet = ( min, max, frequency, offset, delta = 0.005 ) => {
+    const createDataSet = ( min, max, frequency, offset, delta, missingData = false ) => {
       const dataSet = [];
       for ( let x = min; x <= max; x += delta ) {
 
         // Test holes in the data
-        const data = ( Math.abs( x ) < 0.1 && x < 0 ) ? null : new Vector2( x, Math.sin( x * frequency + offset ) );
+        const data = ( missingData && Math.abs( x ) < 0.1 && x < 0 ) ? null :
+                     new Vector2( x, Math.sin( x * frequency + offset ) );
         dataSet.push( data );
       }
       return dataSet;
@@ -76,7 +77,7 @@ class DemoChartCanvasNode extends Node {
 
     const canvasLinePlots = [];
     for ( let i = 0; i < colors.length; i++ ) {
-      const d = createDataSet( -2, 2, 5 + i / 10 + dotRandom.nextDouble() / 10, dotRandom.nextDouble() * 2 );
+      const d = createDataSet( -2, 2, 5 + i / 10 + dotRandom.nextDouble() / 10, dotRandom.nextDouble() * 2, 0.005, i === colors.length - 1 );
       const canvasLinePlot = new CanvasLinePlot( chartTransform, d, {
         stroke: colors[ i % colors.length ],
         lineWidth: i

@@ -46,7 +46,7 @@ class ChartCanvasNode extends CanvasNode {
 
   /**
    * Sets the painters and redraws the chart.
-   * @param {CanvasPainter} painters
+   * @param {CanvasPainter[]} painters
    * @public
    */
   setPainters( painters ) {

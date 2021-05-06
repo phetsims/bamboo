@@ -8,9 +8,10 @@
 
 import Vector2 from '../../dot/js/Vector2.js';
 import merge from '../../phet-core/js/merge.js';
-import Line from '../../scenery/js/nodes/Line.js';
-import bamboo from './bamboo.js';
 import Node from '../../scenery/js/nodes/Node.js';
+import Paintable from '../../scenery/js/nodes/Paintable.js';
+import Rectangle from '../../scenery/js/nodes/Rectangle.js';
+import bamboo from './bamboo.js';
 
 class BarPlot extends Node {
 
@@ -23,8 +24,11 @@ class BarPlot extends Node {
 
     options = merge( {
 
-      // {function(vector:Vector2):ColorDef} maps a {Vector2} point to a color
-      pointToColor: point => 'black'
+      // {number} - width in view coordinates of each bar in the plot
+      barWidth: 10,
+
+      // {function(vector:Vector2):ColorDef} maps a {Vector2} point to an object containing Paintable options
+      pointToPaintableFields: point => { return { fill: 'black' }; } // eslint-disable-line bad-text
     }, options );
 
     super( options );
@@ -36,10 +40,13 @@ class BarPlot extends Node {
     this.dataSet = dataSet;
 
     // @private
-    this.pointToColor = options.pointToColor;
+    this.barWidth = options.barWidth;
 
-    // @private {Line[]}
-    this.lines = [];
+    // @private
+    this.pointToPaintableFields = options.pointToPaintableFields;
+
+    // @private {Rectangle[]}
+    this.rectangles = [];
     this.setDataSet( dataSet );
 
     // Update when the transform changes.
@@ -56,12 +63,12 @@ class BarPlot extends Node {
    * @public
    */
   setDataSet( dataSet ) {
-    this.lines.forEach( line => this.removeChild( line ) );
+    this.rectangles.forEach( rectangle => this.removeChild( rectangle ) );
 
     this.dataSet = dataSet;
 
-    this.lines = dataSet.map( () => new Line( 0, 0, 0, 0, { lineWidth: 10 } ) );
-    this.lines.forEach( line => this.addChild( line ) );
+    this.rectangles = dataSet.map( () => new Rectangle( 0, 0, 0, 0 ) );
+    this.rectangles.forEach( rectangle => this.addChild( rectangle ) );
 
     this.update();
   }
@@ -70,11 +77,25 @@ class BarPlot extends Node {
    * @public
    */
   update() {
-    for ( let i = 0; i < this.lines.length; i++ ) {
+    for ( let i = 0; i < this.rectangles.length; i++ ) {
       const tail = this.chartTransform.modelToViewPosition( new Vector2( this.dataSet[ i ].x, 0 ) );
       const tip = this.chartTransform.modelToViewPosition( this.dataSet[ i ] );
-      this.lines[ i ].setLine( tail.x, tail.y, tip.x, tip.y );
-      this.lines[ i ].stroke = this.pointToColor( this.dataSet[ i ] );
+
+      // rectangles cannot have negative height, construct the rectangle then move its 'tail' to the origin
+      // if it extends in the -y direction in view coordinates
+      const rectHeight = tip.y - tail.y;
+      this.rectangles[ i ].setRect( tail.x - this.barWidth / 2, tail.y, this.barWidth, Math.abs( rectHeight ) );
+      if ( rectHeight < 0 ) {
+        this.rectangles[ i ].bottom = this.chartTransform.modelToViewY( 0 );
+      }
+
+      const providedOptions = this.pointToPaintableFields( this.dataSet[ i ] );
+      assert && assert(
+        Object.keys( providedOptions ).filter( key => !Object.keys( Paintable.DEFAULT_OPTIONS ).includes( key ) ).length === 0,
+        'options contain keys that could be dangerous for mutate'
+      );
+
+      this.rectangles[ i ].mutate( providedOptions );
     }
   }
 

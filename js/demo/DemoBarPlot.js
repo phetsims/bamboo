@@ -59,9 +59,9 @@ class DemoBarPlot extends Node {
 
     // Anything you want clipped goes in here
     const barPlot = new BarPlot( chartTransform, dataSet, {
-      pointToColor: point => {
+      pointToPaintableFields: point => {
         const c = Utils.linear( 0, 24 * Math.PI, 0, 240, point.x );
-        return new Color( c, c, c );
+        return { fill: new Color( c, c, c ) };
       }
     } );
 

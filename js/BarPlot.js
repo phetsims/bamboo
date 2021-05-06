@@ -39,11 +39,8 @@ class BarPlot extends Node {
     this.pointToColor = options.pointToColor;
 
     // @private {Line[]}
-    this.lines = dataSet.map( () => new Line( 0, 0, 0, 0, { lineWidth: 10 } ) );
-    this.lines.forEach( node => this.addChild( node ) );
-
-    // Initialize
-    this.update();
+    this.lines = [];
+    this.setDataSet( dataSet );
 
     // Update when the transform changes.
     const changedListener = () => this.update();
@@ -59,7 +56,13 @@ class BarPlot extends Node {
    * @public
    */
   setDataSet( dataSet ) {
+    this.lines.forEach( line => this.removeChild( line ) );
+
     this.dataSet = dataSet;
+
+    this.lines = dataSet.map( () => new Line( 0, 0, 0, 0, { lineWidth: 10 } ) );
+    this.lines.forEach( line => this.addChild( line ) );
+
     this.update();
   }
 

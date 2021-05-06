@@ -6,6 +6,7 @@
  * @author Sam Reid (PhET Interactive Simulations)
  */
 
+import dotRandom from '../../../dot/js/dotRandom.js';
 import Range from '../../../dot/js/Range.js';
 import Utils from '../../../dot/js/Utils.js';
 import Vector2 from '../../../dot/js/Vector2.js';
@@ -15,6 +16,7 @@ import Node from '../../../scenery/js/nodes/Node.js';
 import Text from '../../../scenery/js/nodes/Text.js';
 import VBox from '../../../scenery/js/nodes/VBox.js';
 import Color from '../../../scenery/js/util/Color.js';
+import TextPushButton from '../../../sun/js/buttons/TextPushButton.js';
 import bamboo from '../bamboo.js';
 import BarPlot from '../BarPlot.js';
 import ChartRectangle from '../ChartRectangle.js';
@@ -28,14 +30,18 @@ class DemoBarPlot extends Node {
   constructor( options ) {
     super();
 
-    const dataSet = [];
-    for ( let i = 0; i <= 24; i++ ) {
-      const x = Math.PI * i;
-      const arg = x - Math.PI * 12;
-      const c = 10;
-      const y = 0.13 * Math.exp( -arg * arg / 2 / c / c );
-      dataSet.push( new Vector2( x, y ) );
-    }
+    const createDataSet = ( randomX, randomY ) => {
+      const dataSet = [];
+      for ( let i = 0; i <= 24; i++ ) {
+        const x = Math.PI * i;
+        const arg = x - Math.PI * 12;
+        const c = 10;
+        const y = 0.13 * Math.exp( -arg * arg / 2 / c / c );
+        dataSet.push( new Vector2( x + randomX * dotRandom.nextDouble(), y + randomY * dotRandom.nextDouble() ) );
+      }
+      return dataSet;
+    };
+    const dataSet = createDataSet( 0, 0 );
 
     const chartTransform = new ChartTransform( {
       viewWidth: 700,
@@ -52,6 +58,13 @@ class DemoBarPlot extends Node {
     } );
 
     // Anything you want clipped goes in here
+    const barPlot = new BarPlot( chartTransform, dataSet, {
+      pointToColor: point => {
+        const c = Utils.linear( 0, 24 * Math.PI, 0, 240, point.x );
+        return new Color( c, c, c );
+      }
+    } );
+
     const chartClip = new Node( {
       clipArea: chartRectangle.getShape(),
       children: [
@@ -60,12 +73,7 @@ class DemoBarPlot extends Node {
         new GridLineSet( chartTransform, Orientation.VERTICAL, 0.05, { stroke: 'lightGray' } ),
 
         // Some data
-        new BarPlot( chartTransform, dataSet, {
-          pointToColor: point => {
-            const c = Utils.linear( 0, 24 * Math.PI, 0, 240, point.x );
-            return new Color( c, c, c );
-          }
-        } )
+        barPlot
       ]
     } );
 
@@ -99,10 +107,18 @@ class DemoBarPlot extends Node {
       ]
     } );
 
+    const randomDataSetButton = new TextPushButton( 'Random Data Set', {
+      listener: () => {
+        barPlot.setDataSet( createDataSet( 2, 0.1 ) );
+      }
+    } );
+
     this.children = [
       new VBox( {
+        align: 'left',
         resize: false,
-        children: [ chartNode ]
+        spacing: 20,
+        children: [ chartNode, randomDataSetButton ]
       } )
     ];
     this.mutate( options );

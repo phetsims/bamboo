@@ -84,13 +84,10 @@ class BarPlot extends Node {
       const tail = this.chartTransform.modelToViewPosition( new Vector2( this.dataSet[ i ].x, 0 ) );
       const tip = this.chartTransform.modelToViewPosition( this.dataSet[ i ] );
 
-      // rectangles cannot have negative height, construct the rectangle then move its 'tail' to the origin
-      // if it extends in the -y direction in view coordinates
+      // rectangles cannot have negative height, determine the bottom so its "tail" is at the origin
       const rectHeight = tip.y - tail.y;
-      this.rectangles[ i ].setRect( tail.x - this.barWidth / 2, tail.y, this.barWidth, Math.abs( rectHeight ) );
-      if ( rectHeight < 0 ) {
-        this.rectangles[ i ].bottom = this.chartTransform.modelToViewY( 0 );
-      }
+      const bottom = Math.min( tail.y, tip.y );
+      this.rectangles[ i ].setRect( tail.x - this.barWidth / 2, bottom, this.barWidth, Math.abs( rectHeight ) );
 
       const providedOptions = this.pointToPaintableFields( this.dataSet[ i ] );
       assert && assert(

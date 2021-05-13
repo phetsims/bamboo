@@ -13,6 +13,9 @@ import Paintable from '../../scenery/js/nodes/Paintable.js';
 import Rectangle from '../../scenery/js/nodes/Rectangle.js';
 import bamboo from './bamboo.js';
 
+// constants
+const DEFAULT_PAINTABLE_OPTIONS = { fill: 'black' };
+
 class BarPlot extends Node {
 
   /**
@@ -28,7 +31,7 @@ class BarPlot extends Node {
       barWidth: 10,
 
       // {function(vector:Vector2):ColorDef} maps a {Vector2} point to an object containing Paintable options
-      pointToPaintableFields: point => { return { fill: 'black' }; } // eslint-disable-line bad-text
+      pointToPaintableFields: point => DEFAULT_PAINTABLE_OPTIONS
     }, options );
 
     super( options );

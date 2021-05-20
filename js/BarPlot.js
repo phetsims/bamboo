@@ -1,4 +1,4 @@
-// Copyright 2020, University of Colorado Boulder
+// Copyright 2020-2021, University of Colorado Boulder
 
 /**
  * Shows bars for numerical data (where the x-value of the bar is a number). Does not support categorical data.

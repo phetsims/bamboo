@@ -1,4 +1,4 @@
-// Copyright 2020, University of Colorado Boulder
+// Copyright 2020-2021, University of Colorado Boulder
 
 /**
  * Demonstrates a ChartCanvasNode.  One of the data sets demonstrates missing data and color mutation.

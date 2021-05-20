@@ -1,4 +1,4 @@
-// Copyright 2020, University of Colorado Boulder
+// Copyright 2020-2021, University of Colorado Boulder
 
 import NumberProperty from '../../../axon/js/NumberProperty.js';
 import Dimension2 from '../../../dot/js/Dimension2.js';

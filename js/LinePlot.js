@@ -1,4 +1,4 @@
-// Copyright 2020, University of Colorado Boulder
+// Copyright 2020-2021, University of Colorado Boulder
 
 /**
  * LinePlot renders a {Array.<Vector2|null>} dataSet by connecting the points with line segments.

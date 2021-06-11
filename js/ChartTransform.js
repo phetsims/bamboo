@@ -151,10 +151,10 @@ class ChartTransform {
   }
 
   /**
-   * The reverse of modelToView
-   * @param axisOrientation
-   * @param value
-   * @returns {*}
+   * Converts a scalar value from view coordinates to model coordinates, along the specified axis.  The inverse of modelToView.
+   * @param {Orientation} axisOrientation
+   * @param {number} value
+   * @returns {number}
    * @public
    */
   viewToModel( axisOrientation, value ) {

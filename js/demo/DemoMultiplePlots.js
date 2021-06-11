@@ -117,12 +117,6 @@ class DemoMultiplePlots extends VBox {
           range: new Range( 0, Number.POSITIVE_INFINITY ),
           domain: new Range( 0, Number.POSITIVE_INFINITY )
         } )
-      },
-      {
-        node: new Text( 'log10', { fontSize: 14 } ), value: new Transform1( Math.log10, x => Math.pow( 10, x ), {
-          range: new Range( 0, Number.POSITIVE_INFINITY ),
-          domain: new Range( 0, Number.POSITIVE_INFINITY )
-        } )
       }
     ] );
     transformProperty.link( type => chartTransform.setYTransform( type ) );

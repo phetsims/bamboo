@@ -46,7 +46,7 @@ class DemoMultiplePlots extends VBox {
       modelXRange: new Range( 2, 10 ),
       modelYRange: new Range( Math.exp( 2 ), Math.exp( 10 ) ),
       yScale: new Transform1( Math.log, Math.exp, {
-        domain: new Range( 1E-6, Number.POSITIVE_INFINITY ),
+        domain: new Range( 0, Number.POSITIVE_INFINITY ),
         range: new Range( 0, Number.POSITIVE_INFINITY )
       } )
     } );

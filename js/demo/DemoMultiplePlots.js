@@ -109,8 +109,8 @@ class DemoMultiplePlots extends VBox {
     } );
 
     const linear = new Transform1( x => x, x => x );
-    const logProperty = new Property( linear );
-    const controls = new VerticalAquaRadioButtonGroup( logProperty, [
+    const transformProperty = new Property( linear );
+    const controls = new VerticalAquaRadioButtonGroup( transformProperty, [
       { node: new Text( 'linear', { fontSize: 14 } ), value: linear },
       {
         node: new Text( 'log', { fontSize: 14 } ), value: new Transform1( Math.log, Math.exp, {
@@ -125,7 +125,7 @@ class DemoMultiplePlots extends VBox {
         } )
       }
     ] );
-    logProperty.link( type => chartTransform.setYTransform( type ) );
+    transformProperty.link( type => chartTransform.setYTransform( type ) );
 
     const readout = new Text( 'Press/Drag to show point', {
       fontSize: 30,

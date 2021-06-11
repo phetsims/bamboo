@@ -9,6 +9,7 @@
 
 import Emitter from '../../axon/js/Emitter.js';
 import Range from '../../dot/js/Range.js';
+import Transform1 from '../../dot/js/Transform1.js';
 import Util from '../../dot/js/Utils.js';
 import Vector2 from '../../dot/js/Vector2.js';
 import merge from '../../phet-core/js/merge.js';
@@ -28,17 +29,16 @@ class ChartTransform {
       // The horizontal axis is referred to as the "x" axis, though it may be used to depict another dimension, such as "time"
       viewWidth: 100, // {number} width in view coordinates
       modelXRange: new Range( -1, 1 ), // {Range} range of the x axis, in model coordinates
-      xScale: x => x, // {function(number):number} model-to-view scaling function for the x axis
+      xTransform: new Transform1( x => x, x => x ), // {Transform1} model-to-view scaling function for the x axis
 
       // The vertical axis is referred to as the "y" axis, though it may be used to depict another dimension such as "width"
       viewHeight: 100, // {number} height in view coordinates
       modelYRange: new Range( -1, 1 ), // {Range} range of the y axis, in model coordinates
-      yScale: y => y // {function(number):number} model-to-view scaling function for the y axis
+      yTransform: new Transform1( x => x, x => x ) // {Transform1} model-to-view scaling function for the y axis
     }, options );
 
-    // Validate because xScale and yScale are not typically functions in other PhET APIs.
-    assert && assert( typeof options.xScale === 'function', 'xScale must be a function' );
-    assert && assert( typeof options.yScale === 'function', 'yScale must be a function' );
+    assert && assert( options.xTransform instanceof Transform1, 'xTransform must be of type Transform' );
+    assert && assert( options.yTransform instanceof Transform1, 'yTransform must be of type Transform' );
 
     // @public fires when some aspect of this transform changes
     this.changedEmitter = new Emitter();
@@ -50,8 +50,8 @@ class ChartTransform {
     this.modelYRange = options.modelYRange;
 
     // @private
-    this.xScale = options.xScale;
-    this.yScale = options.yScale;
+    this.xTransform = options.xTransform;
+    this.yTransform = options.yTransform;
   }
 
   /**
@@ -137,17 +137,39 @@ class ChartTransform {
 
     const modelRange = axisOrientation === Orientation.HORIZONTAL ? this.modelXRange : this.modelYRange;
     const viewDimension = axisOrientation === Orientation.HORIZONTAL ? this.viewWidth : this.viewHeight;
-    const scale = axisOrientation === Orientation.HORIZONTAL ? this.xScale : this.yScale;
+    const transform = axisOrientation === Orientation.HORIZONTAL ? this.xTransform : this.yTransform;
 
-    let scaledValue = scale( value );
-    if ( isNaN( scaledValue ) || !Number.isFinite( scaledValue ) ) {
-      scaledValue = value;
+    let transformedValue = transform.evaluate( value );
+    if ( isNaN( transformedValue ) || !Number.isFinite( transformedValue ) ) {
+      transformedValue = value;
     }
 
     // For vertical, +y is usually up
     return axisOrientation === Orientation.HORIZONTAL ?
-           Util.linear( scale( modelRange.min ), scale( modelRange.max ), 0, viewDimension, scaledValue ) :
-           Util.linear( scale( modelRange.max ), scale( modelRange.min ), 0, viewDimension, scaledValue );
+           Util.linear( transform.evaluate( modelRange.min ), transform.evaluate( modelRange.max ), 0, viewDimension, transformedValue ) :
+           Util.linear( transform.evaluate( modelRange.max ), transform.evaluate( modelRange.min ), 0, viewDimension, transformedValue );
+  }
+
+  /**
+   * The reverse of modelToView
+   * @param axisOrientation
+   * @param value
+   * @returns {*}
+   * @public
+   */
+  viewToModel( axisOrientation, value ) {
+    assert && assert( Orientation.includes( axisOrientation ), `invalid axisOrientation: ${axisOrientation}` );
+
+    const modelRange = axisOrientation === Orientation.HORIZONTAL ? this.modelXRange : this.modelYRange;
+    const viewDimension = axisOrientation === Orientation.HORIZONTAL ? this.viewWidth : this.viewHeight;
+    const transform = axisOrientation === Orientation.HORIZONTAL ? this.xTransform : this.yTransform;
+
+    // For vertical, +y is usually up
+    const out = axisOrientation === Orientation.HORIZONTAL ?
+                Util.linear( 0, viewDimension, transform.evaluate( modelRange.min ), transform.evaluate( modelRange.max ), value ) :
+                Util.linear( 0, viewDimension, transform.evaluate( modelRange.max ), transform.evaluate( modelRange.min ), value );
+
+    return transform.inverse( out );
   }
 
   /**
@@ -242,28 +264,41 @@ class ChartTransform {
 
   /**
    * Sets the model-to-view scaling function for the x-axis.
-   * @param {function(number):number} xScale
+   * @param {function(number):number} xTransform
    * @public
    */
-  setXScale( xScale ) {
-    assert && assert( typeof xScale === 'function', 'xScale must be a function' );
-    if ( this.xScale !== xScale ) {
-      this.xScale = xScale;
+  setXTransform( xTransform ) {
+    assert && assert( xTransform instanceof Transform1, 'xTransform must be a Transform1' );
+    if ( this.xTransform !== xTransform ) {
+      this.xTransform = xTransform;
       this.changedEmitter.emit();
     }
   }
 
   /**
    * Sets the model-to-view scaling function for the y-axis.
-   * @param {function(number):number} yScale
+   * @param {function(number):number} yTransform
    * @public
    */
-  setYScale( yScale ) {
-    assert && assert( typeof yScale === 'function', 'yScale must be a function' );
-    if ( this.yScale !== yScale ) {
-      this.yScale = yScale;
+  setYTransform( yTransform ) {
+    assert && assert( yTransform instanceof Transform1, 'yTransform must be a Transform1' );
+    if ( this.yTransform !== yTransform ) {
+      this.yTransform = yTransform;
       this.changedEmitter.emit();
     }
+  }
+
+  /**
+   * Convert a view point to the corresponding model point.
+   * @param {Vector2} pt
+   * @returns {Vector2}
+   * @public
+   */
+  viewToModelPoint( pt ) {
+    return new Vector2(
+      this.viewToModel( Orientation.HORIZONTAL, pt.x ),
+      this.viewToModel( Orientation.VERTICAL, pt.y )
+    );
   }
 }
 

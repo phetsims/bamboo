@@ -9,8 +9,12 @@
 import Property from '../../../axon/js/Property.js';
 import dotRandom from '../../../dot/js/dotRandom.js';
 import Range from '../../../dot/js/Range.js';
+import Utils from '../../../dot/js/Utils.js';
+import Transform1 from '../../../dot/js/Transform1.js';
 import Vector2 from '../../../dot/js/Vector2.js';
 import Orientation from '../../../phet-core/js/Orientation.js';
+import DragListener from '../../../scenery/js/listeners/DragListener.js';
+import HBox from '../../../scenery/js/nodes/HBox.js';
 import Node from '../../../scenery/js/nodes/Node.js';
 import Text from '../../../scenery/js/nodes/Text.js';
 import VBox from '../../../scenery/js/nodes/VBox.js';
@@ -41,7 +45,10 @@ class DemoMultiplePlots extends VBox {
       viewHeight: 400,
       modelXRange: new Range( 2, 10 ),
       modelYRange: new Range( Math.exp( 2 ), Math.exp( 10 ) ),
-      yScale: Math.log
+      yScale: new Transform1( Math.log, Math.exp, {
+        domain: new Range( 1E-6, Number.POSITIVE_INFINITY ),
+        range: new Range( 0, Number.POSITIVE_INFINITY )
+      } )
     } );
 
     const chartRectangle = new ChartRectangle( chartTransform, {
@@ -101,21 +108,51 @@ class DemoMultiplePlots extends VBox {
       ]
     } );
 
-    const linear = x => x;
+    const linear = new Transform1( x => x, x => x );
     const logProperty = new Property( linear );
     const controls = new VerticalAquaRadioButtonGroup( logProperty, [
       { node: new Text( 'linear', { fontSize: 14 } ), value: linear },
-      { node: new Text( 'log', { fontSize: 14 } ), value: Math.log },
-      { node: new Text( 'log10', { fontSize: 14 } ), value: Math.log10 },
-      { node: new Text( 'sin', { fontSize: 14 } ), value: Math.sin }
+      {
+        node: new Text( 'log', { fontSize: 14 } ), value: new Transform1( Math.log, Math.exp, {
+          range: new Range( 0, Number.POSITIVE_INFINITY ),
+          domain: new Range( 0, Number.POSITIVE_INFINITY )
+        } )
+      },
+      {
+        node: new Text( 'log10', { fontSize: 14 } ), value: new Transform1( Math.log10, x => Math.pow( 10, x ), {
+          range: new Range( 0, Number.POSITIVE_INFINITY ),
+          domain: new Range( 0, Number.POSITIVE_INFINITY )
+        } )
+      }
     ] );
-    logProperty.link( type => chartTransform.setYScale( type ) );
+    logProperty.link( type => chartTransform.setYTransform( type ) );
+
+    const readout = new Text( 'Press/Drag to show point', {
+      fontSize: 30,
+      fill: 'black'
+    } );
+
+    const update = event => {
+
+      const point = event.pointer.point;
+      const parentPoint = chartRectangle.globalToParentPoint( point );
+      const modelPt = chartTransform.viewToModelPoint( parentPoint );
+
+      readout.text = `x: ${Utils.toFixed( modelPt.x, 1 )}, y: ${Utils.toFixed( modelPt.y, 1 )}`;
+    };
+    chartRectangle.addInputListener( new DragListener( {
+      press: update,
+      drag: update
+    } ) );
 
     // Controls
     super( {
       resize: false,
       spacing: 20,
-      children: [ chartNode, controls ]
+      children: [
+        chartNode,
+        new HBox( { spacing: 100, children: [ controls, readout ] } )
+      ]
     } );
 
     this.mutate( options );

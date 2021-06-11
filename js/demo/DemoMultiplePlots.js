@@ -7,6 +7,7 @@
  */
 
 import Property from '../../../axon/js/Property.js';
+import Bounds2 from '../../../dot/js/Bounds2.js';
 import dotRandom from '../../../dot/js/dotRandom.js';
 import Range from '../../../dot/js/Range.js';
 import Utils from '../../../dot/js/Utils.js';
@@ -44,7 +45,7 @@ class DemoMultiplePlots extends VBox {
       viewWidth: 600,
       viewHeight: 400,
       modelXRange: new Range( 2, 10 ),
-      modelYRange: new Range( Math.exp( 2 ), Math.exp( 10 ) ),
+      modelYRange: new Range( 1, 22000 ),
       yScale: new Transform1( Math.log, Math.exp, {
         domain: new Range( 0, Number.POSITIVE_INFINITY ),
         range: new Range( 0, Number.POSITIVE_INFINITY )
@@ -130,7 +131,8 @@ class DemoMultiplePlots extends VBox {
 
       const point = event.pointer.point;
       const parentPoint = chartRectangle.globalToParentPoint( point );
-      const modelPt = chartTransform.viewToModelPoint( parentPoint );
+      const constrainedParentPoint = new Bounds2( 0, 0, chartTransform.viewWidth, chartTransform.viewHeight ).closestPointTo( parentPoint );
+      const modelPt = chartTransform.viewToModelPoint( constrainedParentPoint );
 
       readout.text = `x: ${Utils.toFixed( modelPt.x, 1 )}, y: ${Utils.toFixed( modelPt.y, 1 )}`;
     };

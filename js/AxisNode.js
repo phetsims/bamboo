@@ -23,7 +23,7 @@ class AxisNode extends ArrowNode {
   constructor( chartTransform, axisOrientation, options ) {
 
     options = merge( {
-      value: 0, // by default the axis at 0, but you can put it somewhere else
+      value: 0, // by default the axis is at 0, but you can put it somewhere else
       extension: 20, // in view coordinates, how far the axis goes past the edge of the ChartRectangle
 
       // ArrowNode options

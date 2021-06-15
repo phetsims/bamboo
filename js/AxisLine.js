@@ -21,7 +21,7 @@ class AxisLine extends Line {
   constructor( chartTransform, axisOrientation, options ) {
 
     options = merge( {
-      value: 0, // by default the axis in at 0, but you can put it somewhere else
+      value: 0, // by default the axis is at 0, but you can put it somewhere else
       extension: 0, // in view coordinates, how far the axis goes past the edge of the ChartRectangle
       stroke: 'black',
       lineWidth: 2

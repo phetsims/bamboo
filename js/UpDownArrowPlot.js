@@ -14,7 +14,6 @@ import Paintable from '../../scenery/js/nodes/Paintable.js';
 import bamboo from './bamboo.js';
 
 // constants
-// default options for each ArrowNode of the plot, just using ArrowNode defaults
 const DEFAULT_PAINTABLE_OPTIONS = { fill: 'black' };
 
 class UpDownArrowPlot extends Node {

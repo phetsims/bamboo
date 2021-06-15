@@ -66,13 +66,7 @@ class BarPlot extends Node {
    * @public
    */
   setDataSet( dataSet ) {
-    this.rectangles.forEach( rectangle => this.removeChild( rectangle ) );
-
     this.dataSet = dataSet;
-
-    this.rectangles = dataSet.map( () => new Rectangle( 0, 0, 0, 0 ) );
-    this.rectangles.forEach( rectangle => this.addChild( rectangle ) );
-
     this.update();
   }
 
@@ -80,6 +74,20 @@ class BarPlot extends Node {
    * @public
    */
   update() {
+
+    // add one rectangle per data point
+    while ( this.rectangles.length < this.dataSet.length ) {
+      const rectangle = new Rectangle( 0, 0, 0, 0 );
+      this.rectangles.push( rectangle );
+      this.addChild( rectangle );
+    }
+
+    // if any data points were removed, remove any extra rectangles
+    while ( this.rectangles.length > this.dataSet.length ) {
+      const rectangle = this.rectangles.pop();
+      this.removeChild( rectangle );
+    }
+
     for ( let i = 0; i < this.rectangles.length; i++ ) {
       const tail = this.chartTransform.modelToViewPosition( new Vector2( this.dataSet[ i ].x, 0 ) );
       const tip = this.chartTransform.modelToViewPosition( this.dataSet[ i ] );

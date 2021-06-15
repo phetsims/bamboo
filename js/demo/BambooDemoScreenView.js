@@ -18,6 +18,7 @@ import DemoLinePlot from './DemoLinePlot.js';
 import DemoMultiplePlots from './DemoMultiplePlots.js';
 import DemoScatterPlot from './DemoScatterPlot.js';
 import DemoLinearEquationPlot from './DemoLinearEquationPlot.js';
+import DemoUpDownArrowPlot from './DemoUpDownArrowPlot.js';
 
 // constants - this is a hack to enable components to animate from the animation loop
 const emitter = new Emitter( { parameters: [ { valueType: 'number' } ] } );
@@ -60,6 +61,12 @@ class BambooDemoScreenView extends DemosScreenView {
       {
         label: 'BarPlot',
         createNode: layoutBounds => new DemoBarPlot( {
+          center: layoutBounds.center
+        } )
+      },
+      {
+        label: 'UpDownArrowPlot',
+        createNode: layoutBounds => new DemoUpDownArrowPlot( {
           center: layoutBounds.center
         } )
       },

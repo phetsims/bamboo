@@ -61,7 +61,8 @@ class BarPlot extends Node {
   }
 
   /**
-   * Sets dataSet and redraws the plot.
+   * Sets the dataSet and redraws the plot. If instead the dataSet array is mutated, it is the client's responsibility
+   * to call `update` or make sure `update` is called elsewhere (say, if the chart scrolls in that frame).
    * @param {Vector2[]} dataSet
    * @public
    */
@@ -75,14 +76,14 @@ class BarPlot extends Node {
    */
   update() {
 
-    // add one rectangle per data point
+    // Add one rectangle per data point.
     while ( this.rectangles.length < this.dataSet.length ) {
       const rectangle = new Rectangle( 0, 0, 0, 0 );
       this.rectangles.push( rectangle );
       this.addChild( rectangle );
     }
 
-    // if any data points were removed, remove any extra rectangles
+    // If any data points were removed, remove any extra rectangles.
     while ( this.rectangles.length > this.dataSet.length ) {
       const rectangle = this.rectangles.pop();
       this.removeChild( rectangle );

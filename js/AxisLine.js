@@ -23,6 +23,8 @@ class AxisLine extends Line {
     options = merge( {
       value: 0, // by default the axis is at 0, but you can put it somewhere else
       extension: 0, // in view coordinates, how far the axis goes past the edge of the ChartRectangle
+
+      // Line options
       stroke: 'black',
       lineWidth: 2
     }, options );

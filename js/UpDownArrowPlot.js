@@ -10,11 +10,12 @@ import Vector2 from '../../dot/js/Vector2.js';
 import merge from '../../phet-core/js/merge.js';
 import ArrowNode from '../../scenery-phet/js/ArrowNode.js';
 import Node from '../../scenery/js/nodes/Node.js';
+import Paintable from '../../scenery/js/nodes/Paintable.js';
 import bamboo from './bamboo.js';
 
 // constants
 // default options for each ArrowNode of the plot, just using ArrowNode defaults
-const DEFAULT_ARROW_NODE_OPTIONS = {};
+const DEFAULT_PAINTABLE_OPTIONS = { fill: 'black' };
 
 class UpDownArrowPlot extends Node {
 
@@ -27,12 +28,21 @@ class UpDownArrowPlot extends Node {
 
     options = merge( {
 
+      // {Object} - Options passed along to each ArrowNode to set its Shape. Can not
+      // include Paintable options, those should be provided by pointToPaintableFields.
+      arrowNodeOptions: {},
+
       // {function(vector:Vector2):ColorDef} maps a {Vector2} point to an object containing ArrowNode options
       // NOTE: cannot use the "Options" suffix because merge will try to merge that as nested options.
-      pointToArrowNodeFields: point => DEFAULT_ARROW_NODE_OPTIONS
+      pointToPaintableFields: point => DEFAULT_PAINTABLE_OPTIONS
     }, options );
 
     super( options );
+
+    assert && assert(
+      Object.keys( options.arrowNodeOptions ).filter( key => Object.keys( Paintable.DEFAULT_OPTIONS ).includes( key ) ).length === 0,
+      'arrowNodeOptions should not include Paintable options, use pointToPaintableFields instead'
+    );
 
     // @private
     this.chartTransform = chartTransform;
@@ -41,7 +51,8 @@ class UpDownArrowPlot extends Node {
     this.dataSet = dataSet;
 
     // @private
-    this.pointToArrowNodeFields = options.pointToArrowNodeFields;
+    this.pointToPaintableFields = options.pointToPaintableFields;
+    this.arrowNodeOptions = options.arrowNodeOptions;
 
     // @private {ArrowNode[]}
     this.arrowNodes = [];
@@ -74,18 +85,33 @@ class UpDownArrowPlot extends Node {
    */
   update() {
 
-    // first remove all old arrows, we will create and add new ones every update
-    this.arrowNodes.forEach( arrowNode => this.removeChild( arrowNode ) );
-
-    this.dataSet.forEach( dataPoint => {
-      const tail = this.chartTransform.modelToViewPosition( new Vector2( dataPoint.x, 0 ) );
-      const tip = this.chartTransform.modelToViewPosition( dataPoint );
-
-      const arrowNode = new ArrowNode( tail.x, tail.y, tip.x, tip.y, this.pointToArrowNodeFields( dataPoint ) );
-
+    // add one rectangle per data point
+    while ( this.arrowNodes.length < this.dataSet.length ) {
+      const arrowNode = new ArrowNode( 0, 0, 0, 0, this.arrowNodeOptions );
       this.arrowNodes.push( arrowNode );
       this.addChild( arrowNode );
-    } );
+    }
+
+    // if any data points were removed, remove any extra ArrowNodes
+    while ( this.arrowNodes.length > this.dataSet.length ) {
+      const arrowNode = this.arrowNodes.pop();
+      this.removeChild( arrowNode );
+    }
+
+    for ( let i = 0; i < this.arrowNodes.length; i++ ) {
+      const dataPoint = this.dataSet[ i ];
+
+      const tail = this.chartTransform.modelToViewPosition( new Vector2( dataPoint.x, 0 ) );
+      const tip = this.chartTransform.modelToViewPosition( dataPoint );
+      this.arrowNodes[ i ].setTailAndTip( tail.x, tail.y, tip.x, tip.y );
+
+      const providedOptions = this.pointToPaintableFields( dataPoint );
+      assert && assert(
+        Object.keys( providedOptions ).filter( key => !Object.keys( Paintable.DEFAULT_OPTIONS ).includes( key ) ).length === 0,
+        'options contain keys that could be dangerous for mutate'
+      );
+      this.arrowNodes[ i ].mutate( providedOptions );
+    }
   }
 
   /**

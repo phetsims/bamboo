@@ -23,8 +23,8 @@ class AxisNode extends ArrowNode {
   constructor( chartTransform, axisOrientation, options ) {
 
     options = merge( {
-      value: 0, // by default the axis in on the 0, but you can put it somewhere else
-      extension: 20, // in view coordinates, how far the axis goes past the edge of the chart
+      value: 0, // by default the axis at 0, but you can put it somewhere else
+      extension: 20, // in view coordinates, how far the axis goes past the edge of the ChartRectangle
 
       // ArrowNode options
       doubleHead: true,
@@ -56,6 +56,7 @@ class AxisNode extends ArrowNode {
   update() {
     const viewValue = this.chartTransform.modelToView( this.axisOrientation.opposite, this.value );
 
+    // Move the axis to viewValue.
     if ( this.axisOrientation === Orientation.VERTICAL ) {
       this.setTailAndTip( viewValue, 0 - this.extension, viewValue, this.chartTransform.viewHeight + this.extension );
       this.setVisible( viewValue >= 0 && viewValue <= this.chartTransform.viewWidth );

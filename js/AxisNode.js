@@ -1,4 +1,4 @@
-// Copyright 2020, University of Colorado Boulder
+// Copyright 2020-2021, University of Colorado Boulder
 
 /**
  * Shows a line that depicts an axis.  This is typically bolder than any grid line (if any), and typically at x=0 or

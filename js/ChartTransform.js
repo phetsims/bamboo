@@ -85,47 +85,6 @@ class ChartTransform {
   }
 
   /**
-   * Transforms a model position to a view position.
-   * @param {Vector2} vector
-   * @returns {Vector2}
-   * @public
-   */
-  modelToViewPosition( vector ) {
-    return this.modelToViewXY( vector.x, vector.y );
-  }
-
-  /**
-   * Transforms model x,y coordinates to a view position.
-   * @param {number} x
-   * @param {number} y
-   * @returns {Vector2}
-   * @public
-   */
-  modelToViewXY( x, y ) {
-    return new Vector2( this.modelToViewX( x ), this.modelToViewY( y ) );
-  }
-
-  /**
-   * Transforms a model coordinate {number} to a view coordinate {number} for the x axis.
-   * @param {number} value
-   * @returns {number}
-   * @public
-   */
-  modelToViewX( value ) {
-    return this.modelToView( Orientation.HORIZONTAL, value );
-  }
-
-  /**
-   * Transforms a model coordinate {number} to a view coordinate {number} for the y axis.
-   * @param {number} value
-   * @returns {number}
-   * @public
-   */
-  modelToViewY( value ) {
-    return this.modelToView( Orientation.VERTICAL, value );
-  }
-
-  /**
    * Transforms a model coordinate {number} to a view coordinate {number} for the axis that corresponds to Orientation.
    * @param {Orientation} axisOrientation
    * @param {number} value
@@ -151,25 +110,55 @@ class ChartTransform {
   }
 
   /**
-   * Converts a scalar value from view coordinates to model coordinates, along the specified axis.  The inverse of modelToView.
-   * @param {Orientation} axisOrientation
+   * Transforms a model coordinate {number} to a view coordinate {number} for the x axis.
    * @param {number} value
    * @returns {number}
    * @public
    */
-  viewToModel( axisOrientation, value ) {
-    assert && assert( Orientation.includes( axisOrientation ), `invalid axisOrientation: ${axisOrientation}` );
+  modelToViewX( value ) {
+    return this.modelToView( Orientation.HORIZONTAL, value );
+  }
 
-    const modelRange = axisOrientation === Orientation.HORIZONTAL ? this.modelXRange : this.modelYRange;
-    const viewDimension = axisOrientation === Orientation.HORIZONTAL ? this.viewWidth : this.viewHeight;
-    const transform = axisOrientation === Orientation.HORIZONTAL ? this.xTransform : this.yTransform;
+  /**
+   * Transforms a model coordinate {number} to a view coordinate {number} for the y axis.
+   * @param {number} value
+   * @returns {number}
+   * @public
+   */
+  modelToViewY( value ) {
+    return this.modelToView( Orientation.VERTICAL, value );
+  }
 
-    // For vertical, +y is usually up
-    const out = axisOrientation === Orientation.HORIZONTAL ?
-                Util.linear( 0, viewDimension, transform.evaluate( modelRange.min ), transform.evaluate( modelRange.max ), value ) :
-                Util.linear( 0, viewDimension, transform.evaluate( modelRange.max ), transform.evaluate( modelRange.min ), value );
+  /**
+   * Transforms model x,y coordinates to a view position.
+   * @param {number} x
+   * @param {number} y
+   * @returns {Vector2}
+   * @public
+   */
+  modelToViewXY( x, y ) {
+    return new Vector2( this.modelToViewX( x ), this.modelToViewY( y ) );
+  }
 
-    return transform.inverse( out );
+  /**
+   * Transforms a model position to a view position.
+   * @param {Vector2} vector
+   * @returns {Vector2}
+   * @public
+   */
+  modelToViewPosition( vector ) {
+    return this.modelToViewXY( vector.x, vector.y );
+  }
+
+  /**
+   * Transforms a model delta {number} to a view delta {number} for the axis that corresponds to Orientation.
+   * @param {Orientation} axisOrientation
+   * @param {number} modelDelta
+   * @returns {number}
+   * @public
+   */
+  modelToViewDelta( axisOrientation, modelDelta ) {
+    return this.modelToView( axisOrientation, modelDelta ) - this.modelToView( axisOrientation, 0 );
   }
 
   /**
@@ -193,14 +182,38 @@ class ChartTransform {
   }
 
   /**
-   * Transforms a model delta {number} to a view delta {number} for the axis that corresponds to Orientation.
+   * Converts a scalar value from view coordinates to model coordinates, along the specified axis.  The inverse of modelToView.
    * @param {Orientation} axisOrientation
-   * @param {number} modelDelta
+   * @param {number} value
    * @returns {number}
    * @public
    */
-  modelToViewDelta( axisOrientation, modelDelta ) {
-    return this.modelToView( axisOrientation, modelDelta ) - this.modelToView( axisOrientation, 0 );
+  viewToModel( axisOrientation, value ) {
+    assert && assert( Orientation.includes( axisOrientation ), `invalid axisOrientation: ${axisOrientation}` );
+
+    const modelRange = axisOrientation === Orientation.HORIZONTAL ? this.modelXRange : this.modelYRange;
+    const viewDimension = axisOrientation === Orientation.HORIZONTAL ? this.viewWidth : this.viewHeight;
+    const transform = axisOrientation === Orientation.HORIZONTAL ? this.xTransform : this.yTransform;
+
+    // For vertical, +y is usually up
+    const out = axisOrientation === Orientation.HORIZONTAL ?
+                Util.linear( 0, viewDimension, transform.evaluate( modelRange.min ), transform.evaluate( modelRange.max ), value ) :
+                Util.linear( 0, viewDimension, transform.evaluate( modelRange.max ), transform.evaluate( modelRange.min ), value );
+
+    return transform.inverse( out );
+  }
+
+  /**
+   * Convert a view point to the corresponding model point.
+   * @param {Vector2} pt
+   * @returns {Vector2}
+   * @public
+   */
+  viewToModelPoint( pt ) {
+    return new Vector2(
+      this.viewToModel( Orientation.HORIZONTAL, pt.x ),
+      this.viewToModel( Orientation.VERTICAL, pt.y )
+    );
   }
 
   /**
@@ -286,19 +299,6 @@ class ChartTransform {
       this.yTransform = yTransform;
       this.changedEmitter.emit();
     }
-  }
-
-  /**
-   * Convert a view point to the corresponding model point.
-   * @param {Vector2} pt
-   * @returns {Vector2}
-   * @public
-   */
-  viewToModelPoint( pt ) {
-    return new Vector2(
-      this.viewToModel( Orientation.HORIZONTAL, pt.x ),
-      this.viewToModel( Orientation.VERTICAL, pt.y )
-    );
   }
 }
 

@@ -16,7 +16,7 @@ import PlusMinusZoomButtonGroup from '../../../scenery-phet/js/PlusMinusZoomButt
 import Node from '../../../scenery/js/nodes/Node.js';
 import Text from '../../../scenery/js/nodes/Text.js';
 import Color from '../../../scenery/js/util/Color.js';
-import AxisNode from '../AxisNode.js';
+import AxisLine from '../AxisLine.js';
 import bamboo from '../bamboo.js';
 import CanvasLinePlot from '../CanvasLinePlot.js';
 import ChartCanvasNode from '../ChartCanvasNode.js';
@@ -112,14 +112,16 @@ class DemoChartCanvasNode extends Node {
           new GridLineSet( chartTransform, Orientation.HORIZONTAL, Math.PI / 32, { stroke: 'lightGray' } ),
           new GridLineSet( chartTransform, Orientation.VERTICAL, 0.5, { stroke: 'lightGray' } ),
 
-          // Axes nodes are clipped in the chart
-          new AxisNode( chartTransform, Orientation.HORIZONTAL ),
-          new AxisNode( chartTransform, Orientation.VERTICAL ),
-
           // Some data
           chartCanvasNode
         ]
       } ),
+
+      // Axes and labels outside the chart
+      new AxisLine( chartTransform, Orientation.HORIZONTAL ),
+      new Text( 'x', { leftCenter: chartRectangle.rightCenter.plusXY( 8, 0 ), fontSize: 18 } ),
+      new AxisLine( chartTransform, Orientation.VERTICAL ),
+      new Text( 'y', { centerBottom: chartRectangle.centerTop.minusXY( 0, 4 ), fontSize: 18 } ),
 
       // Tick marks outside the chart
       new TickMarkSet( chartTransform, Orientation.VERTICAL, 0.5, { edge: 'min' } ),
@@ -130,7 +132,6 @@ class DemoChartCanvasNode extends Node {
           fontSize: 12
         } )
       } ),
-      new Text( 'x', { leftCenter: chartRectangle.rightCenter.plusXY( 4, 0 ), fontSize: 18 } ),
 
       zoomButtonGroup
     ];

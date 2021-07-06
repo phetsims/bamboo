@@ -9,7 +9,7 @@ import Orientation from '../../../phet-core/js/Orientation.js';
 import Node from '../../../scenery/js/nodes/Node.js';
 import VBox from '../../../scenery/js/nodes/VBox.js';
 import HSlider from '../../../sun/js/HSlider.js';
-import AxisNode from '../AxisNode.js';
+import AxisArrowNode from '../AxisArrowNode.js';
 import BarPlot from '../BarPlot.js';
 import ChartTransform from '../ChartTransform.js';
 import ChartRectangle from '../ChartRectangle.js';
@@ -88,8 +88,8 @@ class DemoScatterPlot extends VBox {
         new GridLineSet( chartTransform, Orientation.VERTICAL, 0.2, { stroke: 'black' } ),
 
         // axes nodes not clipped
-        new AxisNode( chartTransform, Orientation.VERTICAL ),
-        new AxisNode( chartTransform, Orientation.HORIZONTAL ),
+        new AxisArrowNode( chartTransform, Orientation.VERTICAL ),
+        new AxisArrowNode( chartTransform, Orientation.HORIZONTAL ),
 
         // Tick marks outside the chart
         new TickMarkSet( chartTransform, Orientation.VERTICAL, 0.2, { edge: 'min' } ),

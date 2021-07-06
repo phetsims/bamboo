@@ -17,7 +17,7 @@ import PhetFont from '../../../scenery-phet/js/PhetFont.js';
 import PlusMinusZoomButtonGroup from '../../../scenery-phet/js/PlusMinusZoomButtonGroup.js';
 import Node from '../../../scenery/js/nodes/Node.js';
 import Text from '../../../scenery/js/nodes/Text.js';
-import AxisNode from '../AxisNode.js';
+import AxisArrowNode from '../AxisArrowNode.js';
 import bamboo from '../bamboo.js';
 import ChartRectangle from '../ChartRectangle.js';
 import ChartTransform from '../ChartTransform.js';
@@ -95,8 +95,8 @@ class DemoLinePlot extends Node {
           new GridLineSet( chartTransform, Orientation.VERTICAL, 0.5, { stroke: 'lightGray' } ),
 
           // Axes nodes are clipped in the chart
-          new AxisNode( chartTransform, Orientation.HORIZONTAL ),
-          new AxisNode( chartTransform, Orientation.VERTICAL ),
+          new AxisArrowNode( chartTransform, Orientation.HORIZONTAL ),
+          new AxisArrowNode( chartTransform, Orientation.VERTICAL ),
 
           // Some data
           new LinePlot( chartTransform, createDataSet( -2, 2, 5 ), { stroke: 'red', lineWidth: 2 } ),

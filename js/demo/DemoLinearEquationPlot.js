@@ -20,7 +20,7 @@ import RichText from '../../../scenery/js/nodes/RichText.js';
 import Text from '../../../scenery/js/nodes/Text.js';
 import VBox from '../../../scenery/js/nodes/VBox.js';
 import VSlider from '../../../sun/js/VSlider.js';
-import AxisNode from '../AxisNode.js';
+import AxisArrowNode from '../AxisArrowNode.js';
 import bamboo from '../bamboo.js';
 import ChartRectangle from '../ChartRectangle.js';
 import ChartTransform from '../ChartTransform.js';
@@ -130,12 +130,12 @@ class DemoLinearEquationPlot extends Node {
 
     // Axes
     const axisFont = new PhetFont( 16 );
-    const xAxis = new AxisNode( chartTransform, Orientation.HORIZONTAL );
+    const xAxis = new AxisArrowNode( chartTransform, Orientation.HORIZONTAL );
     const xAxisLabel = new RichText( xSymbol, {
       font: axisFont,
       leftCenter: chartRectangle.rightCenter.plusXY( 4, 0 )
     } );
-    const yAxis = new AxisNode( chartTransform, Orientation.VERTICAL );
+    const yAxis = new AxisArrowNode( chartTransform, Orientation.VERTICAL );
     const yAxisLabel = new RichText( ySymbol, {
       font: axisFont,
       centerBottom: chartRectangle.centerTop.minusXY( 0, 4 )

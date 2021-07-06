@@ -9,7 +9,7 @@
 import Range from '../../../dot/js/Range.js';
 import Vector2 from '../../../dot/js/Vector2.js';
 import Orientation from '../../../phet-core/js/Orientation.js';
-import AxisNode from '../AxisNode.js';
+import AxisArrowNode from '../AxisArrowNode.js';
 import bamboo from '../bamboo.js';
 import ChartRectangle from '../ChartRectangle.js';
 import ChartTransform from '../ChartTransform.js';
@@ -57,7 +57,7 @@ class DemoUpDownArrowPlot extends Node {
         return { fill: c };
       }
     } );
-    const xAxis = new AxisNode( chartTransform, Orientation.HORIZONTAL );
+    const xAxis = new AxisArrowNode( chartTransform, Orientation.HORIZONTAL );
 
     // anything you want clipped goes in here
     const chartClip = new Node( {

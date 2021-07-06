@@ -20,7 +20,7 @@ import Node from '../../../scenery/js/nodes/Node.js';
 import Text from '../../../scenery/js/nodes/Text.js';
 import VBox from '../../../scenery/js/nodes/VBox.js';
 import VerticalAquaRadioButtonGroup from '../../../sun/js/VerticalAquaRadioButtonGroup.js';
-import AxisNode from '../AxisNode.js';
+import AxisArrowNode from '../AxisArrowNode.js';
 import BarPlot from '../BarPlot.js';
 import ChartTransform from '../ChartTransform.js';
 import ChartRectangle from '../ChartRectangle.js';
@@ -97,8 +97,8 @@ class DemoMultiplePlots extends VBox {
         chartClip,
 
         // axes nodes not clipped
-        new AxisNode( chartTransform, Orientation.VERTICAL ),
-        new AxisNode( chartTransform, Orientation.HORIZONTAL ),
+        new AxisArrowNode( chartTransform, Orientation.VERTICAL ),
+        new AxisArrowNode( chartTransform, Orientation.HORIZONTAL ),
 
         // Tick marks outside the chart
         new TickMarkSet( chartTransform, Orientation.HORIZONTAL, 2, { edge: 'min' } ),

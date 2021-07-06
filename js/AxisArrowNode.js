@@ -1,9 +1,8 @@
 // Copyright 2020-2021, University of Colorado Boulder
 
 /**
- * Shows a line that depicts an axis.  This is typically bolder than any grid line (if any), and typically at x=0 or
- * y=0, but those defaults can be overridden with options.  It has a double sided arrow, but those won't be shown if
- * this is added to the clipping area of a chart.
+ * AxisArrowNode shows an axis with arrows at one or both ends. An axis is typically bolder than any grid line (if any),
+ * and typically at x=0 or y=0, but those defaults can be overridden with options.
  *
  * @author Sam Reid (PhET Interactive Simulations)
  */
@@ -13,7 +12,7 @@ import Orientation from '../../phet-core/js/Orientation.js';
 import ArrowNode from '../../scenery-phet/js/ArrowNode.js';
 import bamboo from './bamboo.js';
 
-class AxisNode extends ArrowNode {
+class AxisArrowNode extends ArrowNode {
 
   /**
    * @param {ChartTransform} chartTransform
@@ -77,5 +76,5 @@ class AxisNode extends ArrowNode {
   }
 }
 
-bamboo.register( 'AxisNode', AxisNode );
-export default AxisNode;
+bamboo.register( 'AxisArrowNode', AxisArrowNode );
+export default AxisArrowNode;

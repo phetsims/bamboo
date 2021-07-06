@@ -132,7 +132,7 @@ class DemoMultiplePlots extends VBox {
       const point = event.pointer.point;
       const parentPoint = chartRectangle.globalToParentPoint( point );
       const constrainedParentPoint = new Bounds2( 0, 0, chartTransform.viewWidth, chartTransform.viewHeight ).closestPointTo( parentPoint );
-      const modelPt = chartTransform.viewToModelPoint( constrainedParentPoint );
+      const modelPt = chartTransform.viewToModelPosition( constrainedParentPoint );
 
       readout.text = `x: ${Utils.toFixed( modelPt.x, 1 )}, y: ${Utils.toFixed( modelPt.y, 1 )}`;
     };

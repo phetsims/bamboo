@@ -142,12 +142,12 @@ class ChartTransform {
 
   /**
    * Transforms a model position to a view position.
-   * @param {Vector2} vector
+   * @param {Vector2} position
    * @returns {Vector2}
    * @public
    */
-  modelToViewPosition( vector ) {
-    return this.modelToViewXY( vector.x, vector.y );
+  modelToViewPosition( position ) {
+    return this.modelToViewXY( position.x, position.y );
   }
 
   /**
@@ -205,14 +205,14 @@ class ChartTransform {
 
   /**
    * Convert a view point to the corresponding model point.
-   * @param {Vector2} pt
+   * @param {Vector2} position
    * @returns {Vector2}
    * @public
    */
-  viewToModelPoint( pt ) {
+  viewToModelPosition( position ) {
     return new Vector2(
-      this.viewToModel( Orientation.HORIZONTAL, pt.x ),
-      this.viewToModel( Orientation.VERTICAL, pt.y )
+      this.viewToModel( Orientation.HORIZONTAL, position.x ),
+      this.viewToModel( Orientation.VERTICAL, position.y )
     );
   }
 

@@ -203,8 +203,16 @@ class ChartTransform {
     return transform.inverse( out );
   }
 
+  //TODO https://github.com/phetsims/bamboo/issues/27 missing methods, for symmetry with modelToView:
+  // viewToModelX
+  // viewToModelY
+  // viewToModelXY
+  // viewToModelDelta
+  // viewToModelDeltaX
+  // viewToModelDeltaY
+
   /**
-   * Convert a view point to the corresponding model point.
+   * Convert a view position to a model position.
    * @param {Vector2} position
    * @returns {Vector2}
    * @public

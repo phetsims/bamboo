@@ -111,22 +111,22 @@ class ChartTransform {
 
   /**
    * Transforms a model coordinate {number} to a view coordinate {number} for the x axis.
-   * @param {number} value
+   * @param {number} x
    * @returns {number}
    * @public
    */
-  modelToViewX( value ) {
-    return this.modelToView( Orientation.HORIZONTAL, value );
+  modelToViewX( x ) {
+    return this.modelToView( Orientation.HORIZONTAL, x );
   }
 
   /**
    * Transforms a model coordinate {number} to a view coordinate {number} for the y axis.
-   * @param {number} value
+   * @param {number} y
    * @returns {number}
    * @public
    */
-  modelToViewY( value ) {
-    return this.modelToView( Orientation.VERTICAL, value );
+  modelToViewY( y ) {
+    return this.modelToView( Orientation.VERTICAL, y );
   }
 
   /**

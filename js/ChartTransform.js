@@ -203,13 +203,36 @@ class ChartTransform {
     return transform.inverse( out );
   }
 
-  //TODO https://github.com/phetsims/bamboo/issues/27 missing methods, for symmetry with modelToView:
-  // viewToModelX
-  // viewToModelY
-  // viewToModelXY
-  // viewToModelDelta
-  // viewToModelDeltaX
-  // viewToModelDeltaY
+  /**
+   * Convert a view position to a model position, in the horizontal direction.
+   * @param {number} x
+   * @returns {number}
+   * @public
+   */
+  viewToModelX( x ) {
+    return this.viewToModel( Orientation.HORIZONTAL, x );
+  }
+
+  /**
+   * Convert a view position to a model position, in the vertical direction.
+   * @param {number} y
+   * @returns {number}
+   * @public
+   */
+  viewToModelY( y ) {
+    return this.viewToModel( Orientation.VERTICAL, y );
+  }
+
+  /**
+   * Convert a view position to a model position, for a coordinate specified as x,y.
+   * @param {number} x
+   * @param {number} y
+   * @returns {Vector2}
+   * @public
+   */
+  viewToModelXY( x, y ) {
+    return new Vector2( this.viewToModelX( x ), this.viewToModelY( y ) );
+  }
 
   /**
    * Convert a view position to a model position.
@@ -218,10 +241,37 @@ class ChartTransform {
    * @public
    */
   viewToModelPosition( position ) {
-    return new Vector2(
-      this.viewToModel( Orientation.HORIZONTAL, position.x ),
-      this.viewToModel( Orientation.VERTICAL, position.y )
-    );
+    return this.viewToModelXY( position.x, position.y );
+  }
+
+  /**
+   * Convert a delta in the view to a delta in the model, in the horizontal direction.
+   * @param {number} dx
+   * @returns {number}
+   * @public
+   */
+  viewToModelDeltaX( dx ) {
+    return this.viewToModelX( dx ) - this.viewToModelX( 0 );
+  }
+
+  /**
+   * Convert a delta in the view to a delta in the model, in the vertical direction.
+   * @param {number} dy
+   * @returns {number}
+   * @public
+   */
+  viewToModelDeltaY( dy ) {
+    return this.viewToModelY( dy ) - this.viewToModelY( 0 );
+  }
+
+  /**
+   * Convert a delta in the view to a delta in the model, for a Vector2
+   * @param {Vector2} deltaVector
+   * @returns {Vector2}
+   * @public
+   */
+  viewToModelDelta( deltaVector ) {
+    return this.viewToModelPosition( deltaVector ).minus( this.viewToModelPosition( Vector2.ZERO ) );
   }
 
   /**

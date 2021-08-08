@@ -30,7 +30,7 @@ class BarPlot extends Node {
       // {number} - width in view coordinates of each bar in the plot
       barWidth: 10,
 
-      // {function(vector:Vector2):Object} maps a {Vector2} point to an object containing Paintable options
+      // {function(vector:Vector2):Object} maps a {Vector2} point to an {Object} containing Paintable options
       // NOTE: cannot use the "Options" suffix because merge will try to merge that as nested options.
       pointToPaintableFields: point => DEFAULT_PAINTABLE_OPTIONS
     }, options );

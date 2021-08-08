@@ -31,7 +31,7 @@ class UpDownArrowPlot extends Node {
       // include Paintable options, those should be provided by pointToPaintableFields.
       arrowNodeOptions: {},
 
-      // {function(vector:Vector2):Object} maps a {Vector2} point to an object containing ArrowNode options
+      // {function(vector:Vector2):Object} maps a {Vector2} point to an {Object} containing Paintable options
       // NOTE: cannot use the "Options" suffix because merge will try to merge that as nested options.
       pointToPaintableFields: point => DEFAULT_PAINTABLE_OPTIONS
     }, options );

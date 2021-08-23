@@ -22,9 +22,9 @@ import CanvasLinePlot from '../CanvasLinePlot.js';
 import ChartCanvasNode from '../ChartCanvasNode.js';
 import ChartRectangle from '../ChartRectangle.js';
 import ChartTransform from '../ChartTransform.js';
-import GridLineSet from '../GridLineSet.js';
 import LabelSet from '../LabelSet.js';
 import TickMarkSet from '../TickMarkSet.js';
+import CanvasGridLineSet from '../CanvasGridLineSet.js';
 
 class DemoChartCanvasNode extends Node {
 
@@ -72,7 +72,12 @@ class DemoChartCanvasNode extends Node {
                                      zoomLevel === 4 ? new Range( -Math.PI / 2, Math.PI / 2 ) : null );
     } );
 
-    const painters = [];
+    const painters = [
+
+      // Minor grid lines
+      new CanvasGridLineSet( chartTransform, Orientation.HORIZONTAL, Math.PI / 32, { stroke: 'lightGray' } ),
+      new CanvasGridLineSet( chartTransform, Orientation.VERTICAL, 0.5, { stroke: 'lightGray' } )
+    ];
     const colors = [ 'red', 'blue', 'green', 'violet', 'pink', null, 'blue' ];
 
     const canvasLinePlots = [];
@@ -107,10 +112,6 @@ class DemoChartCanvasNode extends Node {
         // TODO https://github.com/phetsims/bamboo/issues/15 what if the chart area changes, then clip needs to change
         clipArea: chartRectangle.getShape(),
         children: [
-
-          // Minor grid lines
-          new GridLineSet( chartTransform, Orientation.HORIZONTAL, Math.PI / 32, { stroke: 'lightGray' } ),
-          new GridLineSet( chartTransform, Orientation.VERTICAL, 0.5, { stroke: 'lightGray' } ),
 
           // Some data
           chartCanvasNode

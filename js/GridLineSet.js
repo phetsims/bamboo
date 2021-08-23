@@ -4,6 +4,9 @@
  * Draws a set of lines within a graph.  For example, the minor horizontal lines.  Back-computes the model
  * locations given the view area.
  *
+ * See also CanvasGridLineSet for one that renders to canvas. Note, these 2 files should be maintained together,
+ * to keep as similar an API as possible.
+ *
  * @author Sam Reid (PhET Interactive Simulations)
  */
 

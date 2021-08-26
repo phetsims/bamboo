@@ -22,7 +22,7 @@ import BarPlot from '../BarPlot.js';
 import ChartRectangle from '../ChartRectangle.js';
 import ChartTransform from '../ChartTransform.js';
 import GridLineSet from '../GridLineSet.js';
-import LabelSet from '../LabelSet.js';
+import TickLabelSet from '../TickLabelSet.js';
 import TickMarkSet from '../TickMarkSet.js';
 
 class DemoBarPlot extends Node {
@@ -94,13 +94,13 @@ class DemoBarPlot extends Node {
 
         // Major ticks on the y-axis
         new TickMarkSet( chartTransform, Orientation.VERTICAL, 0.05, { edge: 'min' } ),
-        new LabelSet( chartTransform, Orientation.VERTICAL, 0.05, {
+        new TickLabelSet( chartTransform, Orientation.VERTICAL, 0.05, {
           edge: 'min',
           createLabel: value => new Text( Utils.toFixed( value, 2 ), { fontSize: 12 } )
         } ),
 
         new TickMarkSet( chartTransform, Orientation.HORIZONTAL, Math.PI * 2, { edge: 'min' } ),
-        new LabelSet( chartTransform, Orientation.HORIZONTAL, Math.PI * 2, {
+        new TickLabelSet( chartTransform, Orientation.HORIZONTAL, Math.PI * 2, {
           edge: 'min',
           createLabel: value => new Text( Utils.toFixed( value / Math.PI, 0 ) + MathSymbols.PI, { fontSize: 12 } )
         } )

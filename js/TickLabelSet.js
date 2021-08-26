@@ -1,7 +1,7 @@
 // Copyright 2020, University of Colorado Boulder
 
 /**
- * Shows a set of labels within or next to a chart.
+ * Shows a set of tick labels within or next to a chart.
  *
  * @author Sam Reid (PhET Interactive Simulations)
  */
@@ -16,7 +16,7 @@ import bamboo from './bamboo.js';
 import ClippingType from './ClippingType.js';
 import TickMarkSet from './TickMarkSet.js';
 
-class LabelSet extends Path {
+class TickLabelSet extends Path {
 
   /**
    * @param {ChartTransform} chartTransform
@@ -52,7 +52,7 @@ class LabelSet extends Path {
       }
     }, options );
 
-    assert && assert( !options.children, 'LabelSet sets children in updateLabelSet' );
+    assert && assert( !options.children, 'TickLabelSet sets children in updateLabelSet' );
     if ( options.edge ) {
       assert && assert( options.value === 0, 'value and edge are mutually exclusive' );
     }
@@ -82,7 +82,7 @@ class LabelSet extends Path {
     chartTransform.changedEmitter.addListener( changedListener );
 
     // @private
-    this.disposeLabelSet = () => chartTransform.changedEmitter.removeListener( changedListener );
+    this.disposeTickLabelSet = () => chartTransform.changedEmitter.removeListener( changedListener );
   }
 
   /**
@@ -148,7 +148,7 @@ class LabelSet extends Path {
    * symbolic labels (e.g. '2L').
    * @public
    */
-  invalidateLabelSet() {
+  invalidateTickLabelSet() {
     this.labelMap.clear();
     this.update();
   }
@@ -158,10 +158,10 @@ class LabelSet extends Path {
    * @override
    */
   dispose() {
-    this.disposeLabelSet();
+    this.disposeTickLabelSet();
     super.dispose();
   }
 }
 
-bamboo.register( 'LabelSet', LabelSet );
-export default LabelSet;
+bamboo.register( 'TickLabelSet', TickLabelSet );
+export default TickLabelSet;

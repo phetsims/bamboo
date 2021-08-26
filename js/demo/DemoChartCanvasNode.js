@@ -22,7 +22,7 @@ import CanvasLinePlot from '../CanvasLinePlot.js';
 import ChartCanvasNode from '../ChartCanvasNode.js';
 import ChartRectangle from '../ChartRectangle.js';
 import ChartTransform from '../ChartTransform.js';
-import LabelSet from '../LabelSet.js';
+import TickLabelSet from '../TickLabelSet.js';
 import TickMarkSet from '../TickMarkSet.js';
 import CanvasGridLineSet from '../CanvasGridLineSet.js';
 
@@ -127,7 +127,7 @@ class DemoChartCanvasNode extends Node {
       // Tick marks outside the chart
       new TickMarkSet( chartTransform, Orientation.VERTICAL, 0.5, { edge: 'min' } ),
       new TickMarkSet( chartTransform, Orientation.HORIZONTAL, Math.PI / 8, { edge: 'min' } ),
-      new LabelSet( chartTransform, Orientation.HORIZONTAL, Math.PI / 8, {
+      new TickLabelSet( chartTransform, Orientation.HORIZONTAL, Math.PI / 8, {
         edge: 'min',
         createLabel: value => new Text( Math.abs( value ) < 1E-6 ? Utils.toFixed( value, 0 ) : Utils.toFixed( value, 2 ), {
           fontSize: 12

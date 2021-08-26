@@ -25,7 +25,7 @@ import bamboo from '../bamboo.js';
 import ChartRectangle from '../ChartRectangle.js';
 import ChartTransform from '../ChartTransform.js';
 import GridLineSet from '../GridLineSet.js';
-import LabelSet from '../LabelSet.js';
+import TickLabelSet from '../TickLabelSet.js';
 import LinearEquationPlot from '../LinearEquationPlot.js';
 import TickMarkSet from '../TickMarkSet.js';
 
@@ -149,14 +149,14 @@ class DemoLinearEquationPlot extends Node {
     const xTickMarkSet = new TickMarkSet( chartTransform, Orientation.HORIZONTAL, tickXSpacing, {
       edge: 'min'
     } );
-    const xTickLabelSet = new LabelSet( chartTransform, Orientation.HORIZONTAL, tickXSpacing, {
+    const xTickLabelSet = new TickLabelSet( chartTransform, Orientation.HORIZONTAL, tickXSpacing, {
       edge: 'min',
       createLabel: value => new Text( Utils.toFixed( value, 0 ), { fontSize: 12 } )
     } );
     const yTickMarkSet = new TickMarkSet( chartTransform, Orientation.VERTICAL, tickYSpacing, {
       edge: 'min'
     } );
-    const yTickLabelSet = new LabelSet( chartTransform, Orientation.VERTICAL, tickYSpacing, {
+    const yTickLabelSet = new TickLabelSet( chartTransform, Orientation.VERTICAL, tickYSpacing, {
       edge: 'min',
       createLabel: value => new Text( Utils.toFixed( value, 0 ), { fontSize: 12 } )
     } );

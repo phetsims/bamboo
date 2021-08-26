@@ -15,7 +15,7 @@ import ChartTransform from '../ChartTransform.js';
 import ChartRectangle from '../ChartRectangle.js';
 import ClippingType from '../ClippingType.js';
 import GridLineSet from '../GridLineSet.js';
-import LabelSet from '../LabelSet.js';
+import TickLabelSet from '../TickLabelSet.js';
 import LinePlot from '../LinePlot.js';
 import ScatterPlot from '../ScatterPlot.js';
 import TickMarkSet from '../TickMarkSet.js';
@@ -94,8 +94,8 @@ class DemoScatterPlot extends VBox {
         // Tick marks outside the chart
         new TickMarkSet( chartTransform, Orientation.VERTICAL, 0.2, { edge: 'min' } ),
         new TickMarkSet( chartTransform, Orientation.HORIZONTAL, 0.2, { edge: 'min' } ),
-        new LabelSet( chartTransform, Orientation.VERTICAL, 0.2, { edge: 'min' } ),
-        new LabelSet( chartTransform, Orientation.HORIZONTAL, 0.2, { edge: 'min' } )
+        new TickLabelSet( chartTransform, Orientation.VERTICAL, 0.2, { edge: 'min' } ),
+        new TickLabelSet( chartTransform, Orientation.HORIZONTAL, 0.2, { edge: 'min' } )
       ]
     } );
 

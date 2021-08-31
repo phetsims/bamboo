@@ -80,6 +80,7 @@ class CanvasGridLineSet extends CanvasPainter {
     context.save();
     context.strokeStyle = this.stroke;
     context.lineWidth = this.lineWidth;
+    context.beginPath();
     context.setLineDash( this.lineDash );
     context.lineDashOffset = this.lineDashOffset;
 

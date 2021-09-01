@@ -69,7 +69,9 @@ class ChartCanvasNode extends CanvasNode {
   paintCanvas( context ) {
     this.painters.forEach( painter => {
       if ( painter.visible ) {
+        context.save();
         painter.paintCanvas( context );
+        context.restore();
       }
     } );
   }

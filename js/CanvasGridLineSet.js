@@ -77,7 +77,6 @@ class CanvasGridLineSet extends CanvasPainter {
 
   // @public @override
   paintCanvas( context ) {
-    context.save();
     context.strokeStyle = this.stroke;
     context.lineWidth = this.lineWidth;
     context.beginPath();
@@ -98,7 +97,6 @@ class CanvasGridLineSet extends CanvasPainter {
       } );
 
     context.stroke();
-    context.restore();
   }
 }
 

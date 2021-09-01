@@ -72,7 +72,7 @@ class GridLineSet extends Path {
           shape.lineTo( viewPosition, this.chartTransform.viewHeight );
         }
       } );
-    this.shape = shape;
+    this.shape = shape.makeImmutable();
   }
 
   /**

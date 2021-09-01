@@ -86,7 +86,7 @@ class LinePlot extends Path {
         moveToNextPoint = true;
       }
     }
-    this.shape = shape;
+    this.shape = shape.makeImmutable();
   }
 
   /**

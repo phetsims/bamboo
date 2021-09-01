@@ -98,7 +98,7 @@ class TickMarkSet extends Path {
       }
     } );
 
-    this.shape = shape;
+    this.shape = shape.makeImmutable();
   }
 
   /**

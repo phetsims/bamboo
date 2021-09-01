@@ -75,7 +75,7 @@ class ScatterPlot extends Path {
         shape.circle( viewPoint.x, viewPoint.y, this.radius );
       }
     }
-    this.shape = shape;
+    this.shape = shape.makeImmutable();
   }
 
   /**

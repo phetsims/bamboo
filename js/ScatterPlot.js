@@ -66,11 +66,13 @@ class ScatterPlot extends Path {
    */
   update() {
     const shape = new Shape();
-    for ( let i = 0; i < this.dataSet.length; i++ ) {
+    const length = this.dataSet.length;
+    for ( let i = 0; i < length; i++ ) {
 
       // NaN or Infinite components draw nothing
-      if ( this.dataSet[ i ].isFinite() ) {
-        const viewPoint = this.chartTransform.modelToViewPosition( this.dataSet[ i ] );
+      const dataPoint = this.dataSet[ i ];
+      if ( dataPoint.isFinite() ) {
+        const viewPoint = this.chartTransform.modelToViewPosition( dataPoint );
         shape.moveToPoint( viewPoint );
         shape.circle( viewPoint.x, viewPoint.y, this.radius );
       }

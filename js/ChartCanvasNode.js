@@ -69,6 +69,9 @@ class ChartCanvasNode extends CanvasNode {
   paintCanvas( context ) {
     this.painters.forEach( painter => {
       if ( painter.visible ) {
+
+        // The context save and restore for each painter is intentional, so that we are guaranteed that a fill,
+        // transform, etc, from one painter won't leak into another painter.
         context.save();
         painter.paintCanvas( context );
         context.restore();

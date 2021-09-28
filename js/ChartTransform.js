@@ -104,9 +104,13 @@ class ChartTransform {
     }
 
     // For vertical, +y is usually up
-    return axisOrientation === Orientation.HORIZONTAL ?
-           Util.linear( transform.evaluate( modelRange.min ), transform.evaluate( modelRange.max ), 0, viewDimension, transformedValue ) :
-           Util.linear( transform.evaluate( modelRange.max ), transform.evaluate( modelRange.min ), 0, viewDimension, transformedValue );
+    const view = axisOrientation === Orientation.HORIZONTAL ?
+                 Util.linear( transform.evaluate( modelRange.min ), transform.evaluate( modelRange.max ), 0, viewDimension, transformedValue ) :
+                 Util.linear( transform.evaluate( modelRange.max ), transform.evaluate( modelRange.min ), 0, viewDimension, transformedValue );
+    assert && assert( Number.isFinite( view ), 'view value should be finite' );
+    assert && assert( !isNaN( view ), 'view value should be a number' );
+
+    return view;
   }
 
   /**
@@ -199,8 +203,14 @@ class ChartTransform {
     const out = axisOrientation === Orientation.HORIZONTAL ?
                 Util.linear( 0, viewDimension, transform.evaluate( modelRange.min ), transform.evaluate( modelRange.max ), value ) :
                 Util.linear( 0, viewDimension, transform.evaluate( modelRange.max ), transform.evaluate( modelRange.min ), value );
+    assert && assert( Number.isFinite( out ), 'out value should be finite' );
+    assert && assert( !isNaN( out ), 'out value should be a number' );
 
-    return transform.inverse( out );
+    const inverse = transform.inverse( out );
+    assert && assert( Number.isFinite( inverse ), 'inverse value should be finite' );
+    assert && assert( !isNaN( inverse ), 'inverse value should be a number' );
+
+    return inverse;
   }
 
   /**

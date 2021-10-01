@@ -45,11 +45,8 @@ class DemoMultiplePlots extends VBox {
       viewWidth: 600,
       viewHeight: 400,
       modelXRange: new Range( 2, 10 ),
-      modelYRange: new Range( 1, 22000 ),
-      yScale: new Transform1( Math.log, Math.exp, {
-        domain: new Range( 0, Number.POSITIVE_INFINITY ),
-        range: new Range( 0, Number.POSITIVE_INFINITY )
-      } )
+      modelYRange: new Range( 1, 22000 )
+      // yTransform is set in link() below
     } );
 
     const chartRectangle = new ChartRectangle( chartTransform, {

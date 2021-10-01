@@ -29,6 +29,7 @@ class BarPlot extends Node {
 
       // {number} - width in view coordinates of each bar in the plot
       barWidth: 10,
+      barTailValue: 0,
 
       // {function(vector:Vector2):Object} maps a {Vector2} point to an {Object} containing Paintable options
       // NOTE: cannot use the "Options" suffix because merge will try to merge that as nested options.
@@ -39,6 +40,7 @@ class BarPlot extends Node {
 
     // @private
     this.chartTransform = chartTransform;
+    this.barTailValue = options.barTailValue;
 
     // @public if you change this directly, you are responsible for calling update
     this.dataSet = dataSet;
@@ -91,7 +93,7 @@ class BarPlot extends Node {
     }
 
     for ( let i = 0; i < this.rectangles.length; i++ ) {
-      const tail = this.chartTransform.modelToViewPosition( new Vector2( this.dataSet[ i ].x, 0 ) );
+      const tail = this.chartTransform.modelToViewPosition( new Vector2( this.dataSet[ i ].x, this.barTailValue ) );
       const tip = this.chartTransform.modelToViewPosition( this.dataSet[ i ] );
 
       // rectangles cannot have negative height, determine the bottom so its "tail" is at the origin

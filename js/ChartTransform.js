@@ -98,10 +98,9 @@ class ChartTransform {
     const viewDimension = axisOrientation === Orientation.HORIZONTAL ? this.viewWidth : this.viewHeight;
     const transform = axisOrientation === Orientation.HORIZONTAL ? this.xTransform : this.yTransform;
 
-    let transformedValue = transform.evaluate( value );
-    if ( isNaN( transformedValue ) || !Number.isFinite( transformedValue ) ) {
-      transformedValue = value;
-    }
+    const transformedValue = transform.evaluate( value );
+    assert && assert( !isNaN( transformedValue ), 'transformed value was NaN' );
+    assert && assert( Number.isFinite( transformedValue ), 'transformed value was not finite' );
 
     // For vertical, +y is usually up
     const viewValue = axisOrientation === Orientation.HORIZONTAL ?

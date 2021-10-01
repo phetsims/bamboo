@@ -20,7 +20,6 @@ import Node from '../../../scenery/js/nodes/Node.js';
 import Text from '../../../scenery/js/nodes/Text.js';
 import VBox from '../../../scenery/js/nodes/VBox.js';
 import VerticalAquaRadioButtonGroup from '../../../sun/js/VerticalAquaRadioButtonGroup.js';
-import AxisArrowNode from '../AxisArrowNode.js';
 import BarPlot from '../BarPlot.js';
 import ChartTransform from '../ChartTransform.js';
 import ChartRectangle from '../ChartRectangle.js';
@@ -65,13 +64,12 @@ class DemoMultiplePlots extends VBox {
         new GridLineSet( chartTransform, Orientation.HORIZONTAL, 2, { stroke: 'darkGray', clippingType: ClippingType.LOOSE } ),
         new GridLineSet( chartTransform, Orientation.VERTICAL, 5000, { stroke: 'darkGray', clippingType: ClippingType.LOOSE } ),
 
-        // Tick labels along the axes
-        new TickMarkSet( chartTransform, Orientation.HORIZONTAL, 2, { clippingType: ClippingType.LOOSE } ),
-        new TickMarkSet( chartTransform, Orientation.VERTICAL, 5000, { clippingType: ClippingType.LOOSE } ),
-
         // Some data
         new BarPlot( chartTransform, dataSet, {
-          opacity: 0.1
+          opacity: 0.1,
+
+          // So that log plot doesn't compute Math.log(0) = -Infinity
+          barTailValue: 1E-8
         } ),
         new LinePlot( chartTransform, dataSet, {
           stroke: 'red',
@@ -92,10 +90,6 @@ class DemoMultiplePlots extends VBox {
 
         // Clipped contents
         chartClip,
-
-        // axes nodes not clipped
-        new AxisArrowNode( chartTransform, Orientation.VERTICAL ),
-        new AxisArrowNode( chartTransform, Orientation.HORIZONTAL ),
 
         // Tick marks outside the chart
         new TickMarkSet( chartTransform, Orientation.HORIZONTAL, 2, { edge: 'min' } ),

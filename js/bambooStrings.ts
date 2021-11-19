@@ -3,11 +3,17 @@
 /**
  * Auto-generated from modulify, DO NOT manually modify.
  */
-
+/* eslint-disable */
 import getStringModule from '../../chipper/js/getStringModule.js';
 import bamboo from './bamboo.js';
 
-const bambooStrings = getStringModule( 'BAMBOO' );
+type StringsType = {
+  'bamboo': {
+    'title': string
+  }
+};
+
+const bambooStrings = getStringModule( 'BAMBOO' ) as StringsType;
 
 bamboo.register( 'bambooStrings', bambooStrings );
 

@@ -10,7 +10,7 @@
  */
 
 import merge from '../../phet-core/js/merge.js';
-import Color from '../../scenery/js/util/Color.js';
+import { Color } from '../../scenery/js/imports.js';
 import bamboo from './bamboo.js';
 import CanvasPainter from './CanvasPainter.js';
 

@@ -9,7 +9,7 @@
  */
 
 import merge from '../../phet-core/js/merge.js';
-import Line from '../../scenery/js/nodes/Line.js';
+import { Line } from '../../scenery/js/imports.js';
 import bamboo from './bamboo.js';
 
 class LinearEquationPlot extends Line {

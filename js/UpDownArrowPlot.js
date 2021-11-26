@@ -9,8 +9,8 @@
 import Vector2 from '../../dot/js/Vector2.js';
 import merge from '../../phet-core/js/merge.js';
 import ArrowNode from '../../scenery-phet/js/ArrowNode.js';
-import Node from '../../scenery/js/nodes/Node.js';
-import Paintable from '../../scenery/js/nodes/Paintable.js';
+import { Node } from '../../scenery/js/imports.js';
+import { Paintable } from '../../scenery/js/imports.js';
 import bamboo from './bamboo.js';
 
 // constants

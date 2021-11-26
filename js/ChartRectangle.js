@@ -7,7 +7,7 @@
  * @author Sam Reid (PhET Interactive Simulations)
  */
 
-import Rectangle from '../../scenery/js/nodes/Rectangle.js';
+import { Rectangle } from '../../scenery/js/imports.js';
 import bamboo from './bamboo.js';
 
 class ChartRectangle extends Rectangle {

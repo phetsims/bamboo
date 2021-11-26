@@ -8,7 +8,7 @@
 
 import Shape from '../../kite/js/Shape.js';
 import merge from '../../phet-core/js/merge.js';
-import Path from '../../scenery/js/nodes/Path.js';
+import { Path } from '../../scenery/js/imports.js';
 import bamboo from './bamboo.js';
 
 class ScatterPlot extends Path {

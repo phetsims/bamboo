@@ -8,7 +8,7 @@
 
 import merge from '../../phet-core/js/merge.js';
 import Orientation from '../../phet-core/js/Orientation.js';
-import Line from '../../scenery/js/nodes/Line.js';
+import { Line } from '../../scenery/js/imports.js';
 import bamboo from './bamboo.js';
 
 class AxisLine extends Line {

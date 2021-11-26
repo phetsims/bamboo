@@ -10,9 +10,9 @@
 import merge from '../../phet-core/js/merge.js';
 import Orientation from '../../phet-core/js/Orientation.js';
 import ArrowNode from '../../scenery-phet/js/ArrowNode.js';
-import LayoutBox from '../../scenery/js/nodes/LayoutBox.js';
-import Line from '../../scenery/js/nodes/Line.js';
-import Node from '../../scenery/js/nodes/Node.js';
+import { LayoutBox } from '../../scenery/js/imports.js';
+import { Line } from '../../scenery/js/imports.js';
+import { Node } from '../../scenery/js/imports.js';
 import bamboo from './bamboo.js';
 import ChartTransform from './ChartTransform.js';
 

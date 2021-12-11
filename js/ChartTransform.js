@@ -92,7 +92,7 @@ class ChartTransform {
    * @public
    */
   modelToView( axisOrientation, value ) {
-    assert && assert( Orientation.includes( axisOrientation ), `invalid axisOrientation: ${axisOrientation}` );
+    assert && assert( axisOrientation instanceof Orientation, `invalid axisOrientation: ${axisOrientation}` );
 
     const modelRange = axisOrientation === Orientation.HORIZONTAL ? this.modelXRange : this.modelYRange;
     const viewDimension = axisOrientation === Orientation.HORIZONTAL ? this.viewWidth : this.viewHeight;
@@ -192,7 +192,7 @@ class ChartTransform {
    * @public
    */
   viewToModel( axisOrientation, value ) {
-    assert && assert( Orientation.includes( axisOrientation ), `invalid axisOrientation: ${axisOrientation}` );
+    assert && assert( axisOrientation instanceof Orientation, `invalid axisOrientation: ${axisOrientation}` );
 
     const modelRange = axisOrientation === Orientation.HORIZONTAL ? this.modelXRange : this.modelYRange;
     const viewDimension = axisOrientation === Orientation.HORIZONTAL ? this.viewWidth : this.viewHeight;
@@ -338,7 +338,7 @@ class ChartTransform {
    * @public
    */
   getModelRange( axisOrientation ) {
-    assert && assert( Orientation.includes( axisOrientation ), `invalid axisOrientation: ${axisOrientation}` );
+    assert && assert( axisOrientation instanceof Orientation, `invalid axisOrientation: ${axisOrientation}` );
     return ( axisOrientation === Orientation.HORIZONTAL ) ? this.modelXRange : this.modelYRange;
   }
 

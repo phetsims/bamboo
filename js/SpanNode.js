@@ -32,7 +32,7 @@ class SpanNode extends LayoutBox {
   constructor( chartTransform, axisOrientation, delta, labelNode, options ) {
 
     assert && assert( chartTransform instanceof ChartTransform, 'invalid chartTransform' );
-    assert && assert( Orientation.includes( axisOrientation ), 'invalid axisOrientation' );
+    assert && assert( axisOrientation instanceof Orientation, 'invalid axisOrientation' );
     assert && assert( typeof delta === 'number', 'invalid delta' );
     assert && assert( labelNode instanceof Node, 'invalid labelNode' );
 

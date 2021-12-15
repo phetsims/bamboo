@@ -10,7 +10,7 @@
 import Emitter from '../../axon/js/Emitter.js';
 import Range from '../../dot/js/Range.js';
 import Transform1 from '../../dot/js/Transform1.js';
-import Util from '../../dot/js/Utils.js';
+import Utils from '../../dot/js/Utils.js';
 import Vector2 from '../../dot/js/Vector2.js';
 import merge from '../../phet-core/js/merge.js';
 import Orientation from '../../phet-core/js/Orientation.js';
@@ -104,8 +104,8 @@ class ChartTransform {
 
     // For vertical, +y is usually up
     const viewValue = axisOrientation === Orientation.HORIZONTAL ?
-                      Util.linear( transform.evaluate( modelRange.min ), transform.evaluate( modelRange.max ), 0, viewDimension, transformedValue ) :
-                      Util.linear( transform.evaluate( modelRange.max ), transform.evaluate( modelRange.min ), 0, viewDimension, transformedValue );
+                      Utils.linear( transform.evaluate( modelRange.min ), transform.evaluate( modelRange.max ), 0, viewDimension, transformedValue ) :
+                      Utils.linear( transform.evaluate( modelRange.max ), transform.evaluate( modelRange.min ), 0, viewDimension, transformedValue );
     assert && assert( Number.isFinite( viewValue ), 'viewValue should be finite' );
     assert && assert( !isNaN( viewValue ), 'viewValue should be a number' );
 
@@ -200,8 +200,8 @@ class ChartTransform {
 
     // For vertical, +y is usually up
     const out = axisOrientation === Orientation.HORIZONTAL ?
-                Util.linear( 0, viewDimension, transform.evaluate( modelRange.min ), transform.evaluate( modelRange.max ), value ) :
-                Util.linear( 0, viewDimension, transform.evaluate( modelRange.max ), transform.evaluate( modelRange.min ), value );
+                Utils.linear( 0, viewDimension, transform.evaluate( modelRange.min ), transform.evaluate( modelRange.max ), value ) :
+                Utils.linear( 0, viewDimension, transform.evaluate( modelRange.max ), transform.evaluate( modelRange.min ), value );
     assert && assert( Number.isFinite( out ), 'out value should be finite' );
     assert && assert( !isNaN( out ), 'out value should be a number' );
 
@@ -382,7 +382,7 @@ class ChartTransform {
  */
 function getValueForSpacing( value, clippingType, origin, spacing, round ) {
   return clippingType === ClippingType.LENIENT ?
-         Util.roundSymmetric( ( value - origin ) / spacing ) :
+         Utils.roundSymmetric( ( value - origin ) / spacing ) :
          round( ( value - origin ) / spacing );
 }
 

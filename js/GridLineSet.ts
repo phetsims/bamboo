@@ -16,21 +16,28 @@ import Orientation from '../../phet-core/js/Orientation.js';
 import { Path } from '../../scenery/js/imports.js';
 import bamboo from './bamboo.js';
 import ClippingType from './ClippingType.js';
+import ChartTransform from './ChartTransform.js';
 
 class GridLineSet extends Path {
+  private readonly chartTransform: ChartTransform;
+  private readonly axisOrientation: Orientation;
+  private spacing: number;
+  private readonly origin: any;
+  private readonly clippingType: ClippingType;
+  private disposeGridLineSet: () => void;
 
   /**
-   * @param {ChartTransform} chartTransform
-   * @param {Orientation} axisOrientation - axis along which successive grid lines appear.  For example,
+   * @param chartTransform
+   * @param axisOrientation - axis along which successive grid lines appear.  For example,
    *                                      - grid lines that are drawn horizontally progress up the Orientation.VERTICAL axis
-   * @param {number} spacing - in model coordinates
-   * @param {Object} [options]
+   * @param spacing - in model coordinates
+   * @param [options]
    */
-  constructor( chartTransform, axisOrientation, spacing, options ) {
+  constructor( chartTransform: ChartTransform, axisOrientation: Orientation, spacing: number, options?: any ) {
 
     options = merge( {
       origin: 0,
-      clippingType: ClippingType.STRICT,
+      clippingType: 'strict',
 
       // Path options
       stroke: 'black'
@@ -38,7 +45,6 @@ class GridLineSet extends Path {
 
     super( null, options );
 
-    // @private
     this.chartTransform = chartTransform;
     this.axisOrientation = axisOrientation;
     this.spacing = spacing;
@@ -52,14 +58,10 @@ class GridLineSet extends Path {
     const changedListener = () => this.update();
     chartTransform.changedEmitter.addListener( changedListener );
 
-    // @private
     this.disposeGridLineSet = () => chartTransform.changedEmitter.removeListener( changedListener );
   }
 
-  /**
-   * @private
-   */
-  update() {
+  private update() {
     const shape = new Shape();
     this.chartTransform.forEachSpacing( this.axisOrientation, this.spacing, this.origin, this.clippingType,
       ( modelPosition, viewPosition ) => {
@@ -75,22 +77,14 @@ class GridLineSet extends Path {
     this.shape = shape.makeImmutable();
   }
 
-  /**
-   * @param {number} spacing
-   * @public
-   */
-  setSpacing( spacing ) {
+  setSpacing( spacing: number ): void {
     if ( this.spacing !== spacing ) {
       this.spacing = spacing;
       this.update();
     }
   }
 
-  /**
-   * @public
-   * @override
-   */
-  dispose() {
+  dispose(): void {
     this.disposeGridLineSet();
     super.dispose();
   }

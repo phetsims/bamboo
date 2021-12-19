@@ -11,16 +11,21 @@
 import merge from '../../phet-core/js/merge.js';
 import { Line } from '../../scenery/js/imports.js';
 import bamboo from './bamboo.js';
+import ChartTransform from './ChartTransform.js';
 
 class LinearEquationPlot extends Line {
+  chartTransform: ChartTransform;
+  private _b: number;
+  private _m: number;
+  private disposeStraightLinePlot: () => void;
 
   /**
    * @param chartTransform
-   * @param {number} m - the slope, use Infinity or -Infinity for infinite (aka undefined) slope, a vertical line
-   * @param {number} b - the y-intercept
-   * @param options
+   * @param m - the slope, use Infinity or -Infinity for infinite (aka undefined) slope, a vertical line
+   * @param b - the y-intercept
+   * @param [options]
    */
-  constructor( chartTransform, m, b, options ) {
+  constructor( chartTransform: ChartTransform, m: number, b: number, options?: any ) {
 
     options = merge( {
 
@@ -31,7 +36,6 @@ class LinearEquationPlot extends Line {
 
     super( 0, 0, 1, 1, options );
 
-    // @private
     this.chartTransform = chartTransform;
     this._m = m;
     this._b = b;
@@ -43,52 +47,43 @@ class LinearEquationPlot extends Line {
     const changedListener = () => this.update();
     chartTransform.changedEmitter.addListener( changedListener );
 
-    // @private
     this.disposeStraightLinePlot = () => chartTransform.changedEmitter.removeListener( changedListener );
   }
 
-  /**
-   * Sets the slope and redraws the plot.
-   * @param {number} m
-   * @public
-   */
-  setSlope( m ) {
+  // Sets the slope and redraws the plot
+  setSlope( m: number ): void {
     this._m = m;
     this.update();
   }
 
-  set m( value ) { this.setSlope( value ); }
+  set m( value ) {
+    this.setSlope( value );
+  }
 
-  get m() { return this._m; }
+  get m(): number {
+    return this._m;
+  }
 
-  /**
-   * Sets the y-intercept and redraws the plot.
-   * @param {number} b
-   * @public
-   */
-  setYIntercept( b ) {
+  // Sets the y-intercept and redraws the plot.
+  setYIntercept( b: number ): void {
     this._b = b;
     this.update();
   }
 
-  set b( value ) { this.setYIntercept( value ); }
+  set b( value ) {
+    this.setYIntercept( value );
+  }
 
-  get b() { return this._b; }
+  get b(): number {
+    return this._b;
+  }
 
-  /**
-   * Solves for y.
-   * @param {number} x
-   * @returns {number}
-   * @public
-   */
-  solve( x ) {
+  // Solves for y.
+  solve( x: number ): number {
     return ( this._m * x ) + this._b;
   }
 
-  /**
-   * Recomputes the endpoints of the line.
-   * @public
-   */
+  // Recomputes the endpoints of the line.
   update() {
 
     if ( this._m === Infinity || this._m === -Infinity ) {
@@ -123,10 +118,6 @@ class LinearEquationPlot extends Line {
     }
   }
 
-  /**
-   * @public
-   * @override
-   */
   dispose() {
     this.disposeStraightLinePlot();
     super.dispose();

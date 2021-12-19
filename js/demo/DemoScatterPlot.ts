@@ -13,7 +13,6 @@ import AxisArrowNode from '../AxisArrowNode.js';
 import BarPlot from '../BarPlot.js';
 import ChartTransform from '../ChartTransform.js';
 import ChartRectangle from '../ChartRectangle.js';
-import ClippingType from '../ClippingType.js';
 import GridLineSet from '../GridLineSet.js';
 import TickLabelSet from '../TickLabelSet.js';
 import LinePlot from '../LinePlot.js';
@@ -28,7 +27,7 @@ import bamboo from '../bamboo.js';
 
 class DemoScatterPlot extends VBox {
 
-  constructor( options ) {
+  constructor( options?: any ) {
 
     const dataSet = [];
     for ( let i = -3; i < 3; i += 0.01 ) {
@@ -55,8 +54,8 @@ class DemoScatterPlot extends VBox {
       children: [
 
         // Tick labels along the axes
-        new TickMarkSet( chartTransform, Orientation.HORIZONTAL, 0.2, { clippingType: ClippingType.LOOSE } ),
-        new TickMarkSet( chartTransform, Orientation.VERTICAL, 0.2, { clippingType: ClippingType.LOOSE } ),
+        new TickMarkSet( chartTransform, Orientation.HORIZONTAL, 0.2, { clippingType: 'lenient' } ),
+        new TickMarkSet( chartTransform, Orientation.VERTICAL, 0.2, { clippingType: 'lenient' } ),
 
         // Some data
         new BarPlot( chartTransform, dataSet, { opacity: 0.2 } ),

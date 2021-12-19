@@ -8,22 +8,26 @@
 
 import Vector2 from '../../dot/js/Vector2.js';
 import merge from '../../phet-core/js/merge.js';
-import { Node } from '../../scenery/js/imports.js';
-import { Paintable } from '../../scenery/js/imports.js';
+import { Node, PAINTABLE_DEFAULT_OPTIONS } from '../../scenery/js/imports.js';
 import { Rectangle } from '../../scenery/js/imports.js';
 import bamboo from './bamboo.js';
+import ChartTransform from './ChartTransform.js';
 
 // constants
 const DEFAULT_PAINTABLE_OPTIONS = { fill: 'black' };
 
 class BarPlot extends Node {
+  private chartTransform: ChartTransform;
+  private barTailValue: number;
 
-  /**
-   * @param {ChartTransform} chartTransform
-   * @param {Vector2[]} dataSet
-   * @param {Object} [options]
-   */
-  constructor( chartTransform, dataSet, options ) {
+  // if you change this directly, you are responsible for calling update
+  dataSet: Vector2[];
+  private barWidth: number;
+  pointToPaintableFields: ( point: Vector2 ) => any;
+  private rectangles: Rectangle[];
+  private disposeBarPlot: () => void;
+
+  constructor( chartTransform: ChartTransform, dataSet: Vector2[], options: any ) {
 
     options = merge( {
 
@@ -33,25 +37,18 @@ class BarPlot extends Node {
 
       // {function(vector:Vector2):Object} maps a {Vector2} point to an {Object} containing Paintable options
       // NOTE: cannot use the "Options" suffix because merge will try to merge that as nested options.
-      pointToPaintableFields: point => DEFAULT_PAINTABLE_OPTIONS
+      pointToPaintableFields: ( point: Vector2 ) => DEFAULT_PAINTABLE_OPTIONS
     }, options );
 
     super( options );
 
-    // @private
     this.chartTransform = chartTransform;
     this.barTailValue = options.barTailValue;
-
-    // @public if you change this directly, you are responsible for calling update
     this.dataSet = dataSet;
 
-    // @private
     this.barWidth = options.barWidth;
-
-    // @private
     this.pointToPaintableFields = options.pointToPaintableFields;
 
-    // @private {Rectangle[]}
     this.rectangles = [];
     this.setDataSet( dataSet );
 
@@ -59,24 +56,18 @@ class BarPlot extends Node {
     const changedListener = () => this.update();
     chartTransform.changedEmitter.addListener( changedListener );
 
-    // @private
     this.disposeBarPlot = () => chartTransform.changedEmitter.removeListener( changedListener );
   }
 
   /**
    * Sets the dataSet and redraws the plot. If instead the dataSet array is mutated, it is the client's responsibility
    * to call `update` or make sure `update` is called elsewhere (say, if the chart scrolls in that frame).
-   * @param {Vector2[]} dataSet
-   * @public
    */
-  setDataSet( dataSet ) {
+  setDataSet( dataSet: Vector2[] ) {
     this.dataSet = dataSet;
     this.update();
   }
 
-  /**
-   * @public
-   */
   update() {
 
     // Add one rectangle per data point.
@@ -88,7 +79,7 @@ class BarPlot extends Node {
 
     // If any data points were removed, remove any extra rectangles.
     while ( this.rectangles.length > this.dataSet.length ) {
-      const rectangle = this.rectangles.pop();
+      const rectangle = this.rectangles.pop()!;
       this.removeChild( rectangle );
     }
 
@@ -103,7 +94,7 @@ class BarPlot extends Node {
 
       const providedOptions = this.pointToPaintableFields( this.dataSet[ i ] );
       assert && assert(
-        Object.keys( providedOptions ).filter( key => !Object.keys( Paintable.DEFAULT_OPTIONS ).includes( key ) ).length === 0,
+        Object.keys( providedOptions ).filter( key => !Object.keys( PAINTABLE_DEFAULT_OPTIONS ).includes( key ) ).length === 0,
         'options contain keys that could be dangerous for mutate'
       );
 
@@ -111,10 +102,6 @@ class BarPlot extends Node {
     }
   }
 
-  /**
-   * @public
-   * @override
-   */
   dispose() {
     this.disposeBarPlot();
     super.dispose();

@@ -9,18 +9,20 @@
 
 import { Rectangle } from '../../scenery/js/imports.js';
 import bamboo from './bamboo.js';
+import ChartTransform from './ChartTransform.js';
 
 class ChartRectangle extends Rectangle {
+  private chartTransform: ChartTransform;
+  private disposeChartRectangle: () => void;
 
   /**
    * @param {ChartTransform} chartTransform
    * @param {Object} [options]
    */
-  constructor( chartTransform, options ) {
+  constructor( chartTransform: ChartTransform, options?: any ) {
 
     super( 0, 0, 0, 0, options );
 
-    // @private
     this.chartTransform = chartTransform;
 
     // Initialize
@@ -30,20 +32,14 @@ class ChartRectangle extends Rectangle {
     const changedListener = () => this.update();
     chartTransform.changedEmitter.addListener( changedListener );
 
-    // @private
     this.disposeChartRectangle = () => chartTransform.changedEmitter.removeListener( changedListener );
   }
 
-  // @private
-  update() {
+  private update(): void {
     this.setRect( 0, 0, this.chartTransform.viewWidth, this.chartTransform.viewHeight );
   }
 
-  /**
-   * @public
-   * @override
-   */
-  dispose() {
+  dispose(): void {
     this.disposeChartRectangle();
     super.dispose();
   }

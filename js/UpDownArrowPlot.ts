@@ -10,20 +10,23 @@ import Vector2 from '../../dot/js/Vector2.js';
 import merge from '../../phet-core/js/merge.js';
 import ArrowNode from '../../scenery-phet/js/ArrowNode.js';
 import { Node } from '../../scenery/js/imports.js';
-import { Paintable } from '../../scenery/js/imports.js';
 import bamboo from './bamboo.js';
+import ChartTransform from './ChartTransform.js';
 
 // constants
 const DEFAULT_PAINTABLE_OPTIONS = { fill: 'black' };
 
 class UpDownArrowPlot extends Node {
+  private chartTransform: ChartTransform;
 
-  /**
-   * @param {ChartTransform} chartTransform
-   * @param {Vector2[]} dataSet
-   * @param {Object} [options]
-   */
-  constructor( chartTransform, dataSet, options ) {
+  // if you change this directly, you are responsible for calling update
+  public dataSet: Vector2[];
+  private pointToPaintableFields: ( point: Vector2 ) => any;
+  private arrowNodes: ArrowNode[];
+  private disposeUpDownArrowPLot: () => void;
+  private arrowNodeOptions: any;
+
+  constructor( chartTransform: ChartTransform, dataSet: Vector2[], options?: any ) {
 
     options = merge( {
 
@@ -31,29 +34,23 @@ class UpDownArrowPlot extends Node {
       // include Paintable options, those should be provided by pointToPaintableFields.
       arrowNodeOptions: {},
 
-      // {function(vector:Vector2):Object} maps a {Vector2} point to an {Object} containing Paintable options
       // NOTE: cannot use the "Options" suffix because merge will try to merge that as nested options.
-      pointToPaintableFields: point => DEFAULT_PAINTABLE_OPTIONS
+      pointToPaintableFields: ( point: Vector2 ) => DEFAULT_PAINTABLE_OPTIONS
     }, options );
 
     super( options );
 
     assert && assert(
-      Object.keys( options.arrowNodeOptions ).filter( key => Object.keys( Paintable.DEFAULT_OPTIONS ).includes( key ) ).length === 0,
+      Object.keys( options.arrowNodeOptions ).filter( key => Object.keys( DEFAULT_PAINTABLE_OPTIONS ).includes( key ) ).length === 0,
       'arrowNodeOptions should not include Paintable options, use pointToPaintableFields instead'
     );
 
-    // @private
     this.chartTransform = chartTransform;
 
-    // @public - if you change this directly, you are responsible for calling update
     this.dataSet = dataSet;
 
-    // @private
     this.pointToPaintableFields = options.pointToPaintableFields;
     this.arrowNodeOptions = options.arrowNodeOptions;
-
-    // @private {ArrowNode[]}
     this.arrowNodes = [];
 
     this.setDataSet( dataSet );
@@ -62,17 +59,11 @@ class UpDownArrowPlot extends Node {
     const changedListener = () => this.update();
     chartTransform.changedEmitter.addListener( changedListener );
 
-    // @private
     this.disposeUpDownArrowPLot = () => chartTransform.changedEmitter.removeListener( changedListener );
   }
 
-  /**
-   * Sets the dataSet and redraws the plot.
-   * @public
-   *
-   * @param {Vector2[]} dataSet
-   */
-  setDataSet( dataSet ) {
+  // Sets the dataSet and redraws the plot.
+  setDataSet( dataSet: Vector2[] ) {
     this.dataSet = dataSet;
     this.update();
   }
@@ -80,7 +71,6 @@ class UpDownArrowPlot extends Node {
   /**
    * Redraw the plot. Called automatically if you update the dataSet with setDataSet(). But you can call this
    * yourself if you want to set the dataSet directly and then update later (presumably for performance).
-   * @public
    */
   update() {
 
@@ -93,7 +83,7 @@ class UpDownArrowPlot extends Node {
 
     // if any data points were removed, remove any extra ArrowNodes
     while ( this.arrowNodes.length > this.dataSet.length ) {
-      const arrowNode = this.arrowNodes.pop();
+      const arrowNode = this.arrowNodes.pop()!;
       this.removeChild( arrowNode );
     }
 
@@ -106,17 +96,13 @@ class UpDownArrowPlot extends Node {
 
       const providedOptions = this.pointToPaintableFields( dataPoint );
       assert && assert(
-        Object.keys( providedOptions ).filter( key => !Object.keys( Paintable.DEFAULT_OPTIONS ).includes( key ) ).length === 0,
+        Object.keys( providedOptions ).filter( key => !Object.keys( DEFAULT_PAINTABLE_OPTIONS ).includes( key ) ).length === 0,
         'options contain keys that could be dangerous for mutate'
       );
       this.arrowNodes[ i ].mutate( providedOptions );
     }
   }
 
-  /**
-   * @public
-   * @override
-   */
   dispose() {
     this.disposeUpDownArrowPLot();
     super.dispose();

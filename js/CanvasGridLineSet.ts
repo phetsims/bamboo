@@ -10,23 +10,33 @@
 import merge from '../../phet-core/js/merge.js';
 import Orientation from '../../phet-core/js/Orientation.js';
 import bamboo from './bamboo.js';
-import ClippingType from './ClippingType.js';
 import CanvasPainter from './CanvasPainter.js';
+import ChartTransform from './ChartTransform.js';
+import ClippingType from './ClippingType.js';
 
 class CanvasGridLineSet extends CanvasPainter {
+  private readonly chartTransform: ChartTransform;
+  private readonly axisOrientation: Orientation;
+  private spacing: number;
+  private readonly origin: number;
+  private readonly clippingType: ClippingType;
+  private readonly stroke: any;
+  private readonly lineDash: number[];
+  private readonly lineWidth: number;
+  private lineDashOffset: number;
 
   /**
-   * @param {ChartTransform} chartTransform
-   * @param {Orientation} axisOrientation - axis along which successive grid lines appear.  For example,
-   *                                      - grid lines that are drawn horizontally progress up the Orientation.VERTICAL axis
-   * @param {number} spacing - in model coordinates
-   * @param {Object} [options]
+   * @param chartTransform
+   * @param axisOrientation - axis along which successive grid lines appear.  For example,
+   *                        - grid lines that are drawn horizontally progress up the Orientation.VERTICAL axis
+   * @param spacing - in model coordinates
+   * @param [options]
    */
-  constructor( chartTransform, axisOrientation, spacing, options ) {
+  constructor( chartTransform: ChartTransform, axisOrientation: Orientation, spacing: number, options?: any ) {
 
     options = merge( {
       origin: 0,
-      clippingType: ClippingType.STRICT,
+      clippingType: 'strict',
 
       // Path options
       stroke: 'black',
@@ -37,7 +47,6 @@ class CanvasGridLineSet extends CanvasPainter {
 
     super();
 
-    // @private
     this.chartTransform = chartTransform;
     this.axisOrientation = axisOrientation;
     this.spacing = spacing;
@@ -51,32 +60,17 @@ class CanvasGridLineSet extends CanvasPainter {
     this.lineDashOffset = options.lineDashOffset;
   }
 
-  /**
-   * @param {number} spacing
-   * @public
-   */
-  setSpacing( spacing ) {
+  setSpacing( spacing: number ): void {
     if ( this.spacing !== spacing ) {
       this.spacing = spacing;
     }
   }
 
-  /**
-   * @public
-   * @override
-   */
-  dispose() {
-    this.disposeGridLineSet();
-    super.dispose();
-  }
-
-  // @public
-  setLineDashOffset( lineDashOffset ) {
+  setLineDashOffset( lineDashOffset: number ) {
     this.lineDashOffset = lineDashOffset;
   }
 
-  // @public @override
-  paintCanvas( context ) {
+  paintCanvas( context: CanvasRenderingContext2D ) {
     context.strokeStyle = this.stroke;
     context.lineWidth = this.lineWidth;
     context.beginPath();

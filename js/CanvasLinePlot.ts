@@ -9,19 +9,31 @@
  * @author Sam Reid (PhET Interactive Simulations)
  */
 
+import Vector2 from '../../dot/js/Vector2.js';
 import merge from '../../phet-core/js/merge.js';
 import { Color } from '../../scenery/js/imports.js';
 import bamboo from './bamboo.js';
 import CanvasPainter from './CanvasPainter.js';
+import ChartTransform from './ChartTransform.js';
 
 class CanvasLinePlot extends CanvasPainter {
+  private chartTransform: ChartTransform;
+
+  // if you change this directly, you are responsible for calling update on the corresponding ChartCanvasNode
+  dataSet: ( Vector2 | null )[];
+
+  // if you change this directly, you are responsible for calling update on the corresponding ChartCanvasNode
+  lineWidth: number;
+
+  // CSS for rendering the stroke
+  private strokeCSS: string | null;
 
   /**
    * @param {ChartTransform} chartTransform
    * @param {Array.<Vector2|null>} dataSet
    * @param {Object} [options]
    */
-  constructor( chartTransform, dataSet, options ) {
+  constructor( chartTransform: ChartTransform, dataSet: Array<Vector2 | null>, options?: any ) {
 
     options = merge( {
       stroke: 'black', // {Color|string|null}
@@ -30,56 +42,41 @@ class CanvasLinePlot extends CanvasPainter {
 
     super();
 
-    // @private
     this.chartTransform = chartTransform;
-
-    // @public if you change this directly, you are responsible for calling update on the corresponding ChartCanvasNode
     this.dataSet = dataSet;
 
-    // @public if you change this directly, you are responsible for calling update on the corresponding ChartCanvasNode
+
     this.lineWidth = options.lineWidth;
 
-    // @private - CSS for rendering the stroke
     this.strokeCSS = null; // updated in setStroke
     this.setStroke( options.stroke );
   }
 
   /**
    * Sets the stroke.
-   * @param {Color|string|null} stroke - If you call setStroke, you are responsible for calling update on the associated ChartCanvasNode(s).
-   * @public
+   * @param stroke - If you call setStroke, you are responsible for calling update on the associated ChartCanvasNode(s).
    */
-  setStroke( stroke ) {
+  setStroke( stroke: Color | string | null ): void {
     assert && assert( stroke instanceof Color || ( typeof stroke === 'string' && Color.isCSSColorString( stroke ) ) || stroke === null, 'invalid stroke' );
     this.strokeCSS = stroke instanceof Color ? stroke.toCSS() : stroke;
   }
 
-  // @public - see setStroke()
-  set stroke( stroke ) {
+  set stroke( stroke: Color | string | null ) {
     this.setStroke( stroke );
   }
 
-  // @public
-  dispose() {
+  dispose(): void {
     assert && assert( !this.isDisposed, 'already disposed' );
     this.isDisposed = true;
   }
 
-  /**
-   * Sets dataSet. You are responsible for calling update on the associated ChartCanvasNode(s).
-   * @param {Vector2[]} dataSet
-   * @public
-   */
-  setDataSet( dataSet ) {
+  // Sets dataSet. You are responsible for calling update on the associated ChartCanvasNode(s).
+  setDataSet( dataSet: Vector2[] ) {
     this.dataSet = dataSet;
   }
 
-  /**
-   * Intended to be called by ChartCanvasNode.
-   * @param {CanvasRenderingContext2D} context
-   * @public
-   */
-  paintCanvas( context ) {
+  // Intended to be called by ChartCanvasNode.
+  paintCanvas( context: CanvasRenderingContext2D ) {
     context.beginPath();
 
     if ( this.strokeCSS ) {

@@ -18,7 +18,7 @@ import UpDownArrowPlot from '../UpDownArrowPlot.js';
 import { Node } from '../../../scenery/js/imports.js';
 
 class DemoUpDownArrowPlot extends Node {
-  constructor( options ) {
+  constructor( options?: any ) {
     super();
 
     const modelXRange = new Range( 0, 10 );
@@ -49,7 +49,7 @@ class DemoUpDownArrowPlot extends Node {
         headWidth: 15,
         headHeight: 15
       },
-      pointToPaintableFields: point => {
+      pointToPaintableFields: ( point: Vector2 ) => {
 
         // interpolate from red at modelYRange.min, green at modelYRange.max
         const distance = 1 / ( modelYRange.getLength() ) * ( point.y - modelYRange.min );

@@ -10,15 +10,17 @@
 import Bounds2 from '../../dot/js/Bounds2.js';
 import { CanvasNode } from '../../scenery/js/imports.js';
 import bamboo from './bamboo.js';
+import ChartTransform from './ChartTransform.js';
+import CanvasPainter from './CanvasPainter.js';
 
 class ChartCanvasNode extends CanvasNode {
+  private chartTransform: ChartTransform;
 
-  /**
-   * @param {ChartTransform} chartTransform
-   * @param {CanvasPainter[]} painters
-   * @param {Object} [options]
-   */
-  constructor( chartTransform, painters, options ) {
+  // if you change this directly, you are responsible for calling update
+  painters: CanvasPainter[];
+  private disposeChartCanvasLinePlot: () => void;
+
+  constructor( chartTransform: ChartTransform, painters: CanvasPainter[], options?: any ) {
 
     options = options || {};
 
@@ -27,10 +29,7 @@ class ChartCanvasNode extends CanvasNode {
 
     super( options );
 
-    // @private
     this.chartTransform = chartTransform;
-
-    // @public if you change this directly, you are responsible for calling update
     this.painters = painters;
 
     // Initialize
@@ -40,33 +39,21 @@ class ChartCanvasNode extends CanvasNode {
     const changedListener = () => this.update();
     chartTransform.changedEmitter.addListener( changedListener );
 
-    // @private
     this.disposeChartCanvasLinePlot = () => chartTransform.changedEmitter.removeListener( changedListener );
   }
 
-  /**
-   * Sets the painters and redraws the chart.
-   * @param {CanvasPainter[]} painters
-   * @public
-   */
-  setPainters( painters ) {
+  // Sets the painters and redraws the chart.
+  setPainters( painters: CanvasPainter[] ): void {
     this.painters = painters;
     this.update();
   }
 
-  // @public
-  update() {
+  update(): void {
     this.invalidatePaint();
   }
 
-  /**
-   * Used to redraw the CanvasNode. Use CanvasNode.invalidatePaint to signify that it is time to redraw the canvas.
-   * @protected
-   * @override
-   *
-   * @param {CanvasRenderingContext2D} context
-   */
-  paintCanvas( context ) {
+  // Used to redraw the CanvasNode. Use CanvasNode.invalidatePaint to signify that it is time to redraw the canvas.
+  paintCanvas( context: CanvasRenderingContext2D ): void {
     this.painters.forEach( painter => {
       if ( painter.visible ) {
 
@@ -79,10 +66,6 @@ class ChartCanvasNode extends CanvasNode {
     } );
   }
 
-  /**
-   * @public
-   * @override
-   */
   dispose() {
     this.disposeChartCanvasLinePlot();
     super.dispose();

@@ -28,11 +28,11 @@ import TickMarkSet from '../TickMarkSet.js';
 
 class DemoLinePlot extends Node {
 
-  constructor( options ) {
+  constructor( options?: any ) {
 
     super();
 
-    const createDataSet = ( min, max, frequency, delta = 0.005 ) => {
+    const createDataSet = ( min: number, max: number, frequency: number, delta = 0.005 ) => {
       const dataSet = [];
       for ( let x = min; x <= max; x += delta ) {
         dataSet.push( new Vector2( x, Math.sin( x * frequency ) ) );
@@ -66,7 +66,7 @@ class DemoLinePlot extends Node {
         zoomLevel === 1 ? new Range( -Math.PI / 8, Math.PI / 8 ) :
         zoomLevel === 2 ? new Range( -Math.PI / 4, Math.PI / 4 ) :
         zoomLevel === 3 ? new Range( -Math.PI / 3, Math.PI / 3 ) :
-        zoomLevel === 4 ? new Range( -Math.PI / 2, Math.PI / 2 ) : null
+        new Range( -Math.PI / 2, Math.PI / 2 )
       );
     } );
 
@@ -112,7 +112,7 @@ class DemoLinePlot extends Node {
       new TickMarkSet( chartTransform, Orientation.HORIZONTAL, Math.PI / 8, { edge: 'min' } ),
       new TickLabelSet( chartTransform, Orientation.HORIZONTAL, Math.PI / 8, {
         edge: 'min',
-        createLabel: value => new Text( Math.abs( value ) < 1E-6 ? Utils.toFixed( value, 0 ) : Utils.toFixed( value, 2 ), {
+        createLabel: ( value: number ) => new Text( Math.abs( value ) < 1E-6 ? Utils.toFixed( value, 0 ) : Utils.toFixed( value, 2 ), {
           fontSize: 12
         } )
       } ),

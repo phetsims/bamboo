@@ -6,19 +6,22 @@
  * @author Sam Reid (PhET Interactive Simulations)
  */
 
+import Vector2 from '../../dot/js/Vector2.js';
 import Shape from '../../kite/js/Shape.js';
 import merge from '../../phet-core/js/merge.js';
 import { Path } from '../../scenery/js/imports.js';
 import bamboo from './bamboo.js';
+import ChartTransform from './ChartTransform.js';
 
 class ScatterPlot extends Path {
+  private chartTransform: ChartTransform;
 
-  /**
-   * @param {ChartTransform} chartTransform
-   * @param {Vector2[]} dataSet
-   * @param {Object} [options]
-   */
-  constructor( chartTransform, dataSet, options ) {
+  // if you change this directly, you are responsible for calling update
+  dataSet: Vector2[];
+  private radius: number;
+  private disposeScatterPlot: () => void;
+
+  constructor( chartTransform: ChartTransform, dataSet: Vector2[], options?: any ) {
 
     options = merge( {
       radius: 2,
@@ -29,13 +32,10 @@ class ScatterPlot extends Path {
 
     super( null, options );
 
-    // @private
     this.chartTransform = chartTransform;
 
-    // @public if you change this directly, you are responsible for calling update
     this.dataSet = dataSet;
 
-    // @private
     this.radius = options.radius;
 
     // Initialize
@@ -45,25 +45,19 @@ class ScatterPlot extends Path {
     const changedListener = () => this.update();
     chartTransform.changedEmitter.addListener( changedListener );
 
-    // @private
     this.disposeScatterPlot = () => chartTransform.changedEmitter.removeListener( changedListener );
   }
 
   /**
    * Sets the dataSet and redraws the plot. If instead the dataSet array is mutated, it is the client's responsibility
    * to call `update` or make sure `update` is called elsewhere (say, if the chart scrolls in that frame).
-   * @param {Vector2[]} dataSet
-   * @public
    */
-  setDataSet( dataSet ) {
+  setDataSet( dataSet: Vector2[] ) {
     this.dataSet = dataSet;
     this.update();
   }
 
-  /**
-   * Recomputes the rendered shape.
-   * @public
-   */
+  // Recomputes the rendered shape.
   update() {
     const shape = new Shape();
     const length = this.dataSet.length;
@@ -80,10 +74,6 @@ class ScatterPlot extends Path {
     this.shape = shape.makeImmutable();
   }
 
-  /**
-   * @public
-   * @override
-   */
   dispose() {
     this.disposeScatterPlot();
     super.dispose();

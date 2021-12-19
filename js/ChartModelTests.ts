@@ -6,6 +6,7 @@
  * @author Sam Reid (PhET Interactive Simulations)
  */
 
+// @ts-ignore
 QUnit.module( 'ChartModel' );
 
 QUnit.test( 'basic tests', assert => {

@@ -1,6 +1,5 @@
 // Copyright 2020, University of Colorado Boulder
 
-import Enumeration from '../../phet-core/js/Enumeration.js';
 import bamboo from './bamboo.js';
 
 /**
@@ -13,7 +12,10 @@ import bamboo from './bamboo.js';
  * @author Sam Reid (PhET Interactive Simulations)
  */
 
-const ClippingType = Enumeration.byKeys( [ 'STRICT', 'LENIENT' ] );
+const ClippingTypeValues = [ 'strict', 'lenient' ] as const;
+type ClippingType = typeof ClippingTypeValues[number];
 
-bamboo.register( 'ClippingType', ClippingType );
+bamboo.register( 'ClippingTypeValues', ClippingTypeValues );
+
+export { ClippingTypeValues };
 export default ClippingType;

@@ -10,7 +10,7 @@
 import merge from '../../phet-core/js/merge.js';
 import Orientation from '../../phet-core/js/Orientation.js';
 import ArrowNode from '../../scenery-phet/js/ArrowNode.js';
-import { LayoutBox } from '../../scenery/js/imports.js';
+import { Color, LayoutBox } from '../../scenery/js/imports.js';
 import { Line } from '../../scenery/js/imports.js';
 import { Node } from '../../scenery/js/imports.js';
 import bamboo from './bamboo.js';
@@ -21,15 +21,24 @@ const notificationThreshold = 1e-13;
 
 //TODO https://github.com/phetsims/bamboo/issues/21 VBox only works for Orientation.HORIZONTAL
 class SpanNode extends LayoutBox {
+  private chartTransform: ChartTransform;
+  private axisOrientation: Orientation;
+  private delta: number;
+  private labelNode: Node;
+  private color: string | Color;
+  private outerLineLength: number;
+  private viewWidth: number;
+  private arrowNodeOptions: any;
+  private disposeSpanNode: () => void;
 
   /**
-   * @param {ChartTransform} chartTransform
-   * @param {Orientation} axisOrientation
-   * @param {number} delta - in model coordinates
-   * @param {Node} labelNode
-   * @param {Object} [options]
+   * @param chartTransform
+   * @param axisOrientation
+   * @param delta - in model coordinates
+   * @param labelNode
+   * @param [options]
    */
-  constructor( chartTransform, axisOrientation, delta, labelNode, options ) {
+  constructor( chartTransform: ChartTransform, axisOrientation: Orientation, delta: number, labelNode: Node, options?: any ) {
 
     assert && assert( chartTransform instanceof ChartTransform, 'invalid chartTransform' );
     assert && assert( axisOrientation instanceof Orientation, 'invalid axisOrientation' );
@@ -62,7 +71,6 @@ class SpanNode extends LayoutBox {
 
     super();
 
-    // @private
     this.chartTransform = chartTransform;
     this.axisOrientation = axisOrientation;
     this.delta = delta;
@@ -82,24 +90,21 @@ class SpanNode extends LayoutBox {
     const changedListener = () => this.update();
     chartTransform.changedEmitter.addListener( changedListener );
 
-    // @private
     this.disposeSpanNode = () => chartTransform.changedEmitter.removeListener( changedListener );
   }
 
   /**
    * Sets delta and updates.
-   * @param {number} delta - in model coordinates
-   * @public
+   * @param delta - in model coordinates
    */
-  setDelta( delta ) {
+  setDelta( delta: number ): void {
     if ( delta !== this.delta ) {
       this.delta = delta;
       this.update();
     }
   }
 
-  // @private
-  update() {
+  private update(): void {
 
     const viewWidth = this.chartTransform.modelToViewDelta( this.axisOrientation, this.delta );
 
@@ -110,7 +115,7 @@ class SpanNode extends LayoutBox {
       //TODO https://github.com/phetsims/bamboo/issues/21 support Orientation.VERTICAL
 
       // Create double-headed arrow with perpendicular lines at ends to show modelDelta
-      const createBar = centerX => new Line( 0, 0, 0, this.outerLineLength, { stroke: this.color, centerX: centerX } );
+      const createBar = ( centerX: number ) => new Line( 0, 0, 0, this.outerLineLength, { stroke: this.color, centerX: centerX } );
       const leftBar = createBar( 0 );
       const rightBar = createBar( viewWidth );
       const arrowNode = new ArrowNode(
@@ -133,10 +138,6 @@ class SpanNode extends LayoutBox {
     }
   }
 
-  /**
-   * @public
-   * @override
-   */
   dispose() {
     this.disposeSpanNode();
     super.dispose();

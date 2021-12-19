@@ -10,23 +10,22 @@
 import merge from '../../phet-core/js/merge.js';
 import bamboo from './bamboo.js';
 
-class CanvasPainter {
+abstract class CanvasPainter {
+
+  // if changed, you should probably invalidate the parent ChartCanvasNode
+  visible: boolean;
+  protected isDisposed: boolean;
 
   // Modeled as a class for readability because JavaScript does not have interfaces
-  constructor( options ) {
+  constructor( options?: any ) {
     options = merge( { visible: true }, options );
 
-    // @public {boolean} - if changed, you should probably invalidate the parent ChartCanvasNode
     this.visible = options.visible;
-
-    // @protected {boolean}
     this.isDisposed = false;
   }
 
-  // @public @abstract - override to paint or change the canvas context state.  Only called if this.visible is true
-  paintCanvas( context ) {
-    assert && assert( false, 'should be overridden in subclasses' );
-  }
+  // override to paint or change the canvas context state.  Only called if this.visible is true
+  abstract paintCanvas( context: CanvasRenderingContext2D ): void;
 }
 
 bamboo.register( 'CanvasPainter', CanvasPainter );

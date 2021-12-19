@@ -23,7 +23,6 @@ import VerticalAquaRadioButtonGroup from '../../../sun/js/VerticalAquaRadioButto
 import BarPlot from '../BarPlot.js';
 import ChartTransform from '../ChartTransform.js';
 import ChartRectangle from '../ChartRectangle.js';
-import ClippingType from '../ClippingType.js';
 import GridLineSet from '../GridLineSet.js';
 import TickLabelSet from '../TickLabelSet.js';
 import LinePlot from '../LinePlot.js';
@@ -33,7 +32,7 @@ import bamboo from '../bamboo.js';
 
 class DemoMultiplePlots extends VBox {
 
-  constructor( options ) {
+  constructor( options?: any ) {
 
     const dataSet = [];
     for ( let x = 2; x < 10; x += 0.1 ) {
@@ -61,8 +60,8 @@ class DemoMultiplePlots extends VBox {
       children: [
 
         // Major grid lines
-        new GridLineSet( chartTransform, Orientation.HORIZONTAL, 2, { stroke: 'darkGray', clippingType: ClippingType.LOOSE } ),
-        new GridLineSet( chartTransform, Orientation.VERTICAL, 5000, { stroke: 'darkGray', clippingType: ClippingType.LOOSE } ),
+        new GridLineSet( chartTransform, Orientation.HORIZONTAL, 2, { stroke: 'darkGray', clippingType: 'lenient' } ),
+        new GridLineSet( chartTransform, Orientation.VERTICAL, 5000, { stroke: 'darkGray', clippingType: 'lenient' } ),
 
         // Some data
         new BarPlot( chartTransform, dataSet, {
@@ -118,7 +117,7 @@ class DemoMultiplePlots extends VBox {
       fill: 'black'
     } );
 
-    const update = event => {
+    const update = ( event?: any ) => {
 
       const point = event.pointer.point;
       const parentPoint = chartRectangle.globalToParentPoint( point );

@@ -25,14 +25,16 @@ import ChartTransform from '../ChartTransform.js';
 import TickLabelSet from '../TickLabelSet.js';
 import TickMarkSet from '../TickMarkSet.js';
 import CanvasGridLineSet from '../CanvasGridLineSet.js';
+import Emitter from '../../../axon/js/Emitter.js';
+import CanvasPainter from '../CanvasPainter.js';
 
 class DemoChartCanvasNode extends Node {
 
-  constructor( emitter, options ) {
+  constructor( emitter: Emitter<[ number ]>, options?: any ) {
 
     super();
 
-    const createDataSet = ( min, max, frequency, offset, delta, missingData = false ) => {
+    const createDataSet = ( min: number, max: number, frequency: number, offset: number, delta: number, missingData = false ) => {
       const dataSet = [];
       for ( let x = min; x <= max; x += delta ) {
 
@@ -69,10 +71,10 @@ class DemoChartCanvasNode extends Node {
       chartTransform.setModelXRange( zoomLevel === 1 ? new Range( -Math.PI / 8, Math.PI / 8 ) :
                                      zoomLevel === 2 ? new Range( -Math.PI / 4, Math.PI / 4 ) :
                                      zoomLevel === 3 ? new Range( -Math.PI / 3, Math.PI / 3 ) :
-                                     zoomLevel === 4 ? new Range( -Math.PI / 2, Math.PI / 2 ) : null );
+                                     new Range( -Math.PI / 2, Math.PI / 2 ) );
     } );
 
-    const painters = [
+    const painters: CanvasPainter[] = [
 
       // Minor grid lines
       new CanvasGridLineSet( chartTransform, Orientation.HORIZONTAL, Math.PI / 32, { stroke: 'lightGray' } ),
@@ -80,7 +82,7 @@ class DemoChartCanvasNode extends Node {
     ];
     const colors = [ 'red', 'blue', 'green', 'violet', 'pink', null, 'blue' ];
 
-    const canvasLinePlots = [];
+    const canvasLinePlots: CanvasLinePlot[] = [];
     for ( let i = 0; i < colors.length; i++ ) {
       const d = createDataSet( -2, 2, 5 + i / 10 + dotRandom.nextDouble() / 10, dotRandom.nextDouble() * 2, 0.005, i === colors.length - 1 );
       const canvasLinePlot = new CanvasLinePlot( chartTransform, d, {
@@ -129,7 +131,7 @@ class DemoChartCanvasNode extends Node {
       new TickMarkSet( chartTransform, Orientation.HORIZONTAL, Math.PI / 8, { edge: 'min' } ),
       new TickLabelSet( chartTransform, Orientation.HORIZONTAL, Math.PI / 8, {
         edge: 'min',
-        createLabel: value => new Text( Math.abs( value ) < 1E-6 ? Utils.toFixed( value, 0 ) : Utils.toFixed( value, 2 ), {
+        createLabel: ( value: number ) => new Text( Math.abs( value ) < 1E-6 ? Utils.toFixed( value, 0 ) : Utils.toFixed( value, 2 ), {
           fontSize: 12
         } )
       } ),

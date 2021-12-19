@@ -19,10 +19,16 @@ import ClippingType from './ClippingType.js';
 
 class ChartTransform {
 
-  /**
-   * @param [options]
-   */
-  constructor( options ) {
+  // fires when some aspect of this transform changes
+  changedEmitter: Emitter<[]>;
+  viewWidth: number;
+  viewHeight: number;
+  modelXRange: Range;
+  modelYRange: Range;
+  private xTransform: Transform1;
+  private yTransform: Transform1;
+
+  constructor( options: any ) {
 
     options = merge( {
 
@@ -40,38 +46,32 @@ class ChartTransform {
     assert && assert( options.xTransform instanceof Transform1, 'xTransform must be of type Transform' );
     assert && assert( options.yTransform instanceof Transform1, 'yTransform must be of type Transform' );
 
-    // @public fires when some aspect of this transform changes
     this.changedEmitter = new Emitter();
 
-    // @public (read-only)
     this.viewWidth = options.viewWidth;
     this.viewHeight = options.viewHeight;
     this.modelXRange = options.modelXRange;
     this.modelYRange = options.modelYRange;
 
-    // @private
     this.xTransform = options.xTransform;
     this.yTransform = options.yTransform;
   }
 
-  /**
-   * @public
-   */
-  dispose() {
+  dispose(): void {
     this.changedEmitter.dispose();
   }
 
   /**
    * For the axis that corresponds to Orientation, iterates over the range and performs an operation (specified by
    * callback) at regular intervals (specified by spacing).
-   * @param {Orientation} axisOrientation
-   * @param {number} spacing - the spacing (delta) between operations, in model coordinates
-   * @param {number} origin - the origin for the operation, in model coordinates. The operation is guaranteed to occur at this position.
-   * @param {ClippingType} clippingType - if something is clipped elsewhere, we allow slack so it doesn't disappear from view like a flicker
-   * @param {function(modelPosition:Vector2, viewPosition:Vector2)} callback
-   * @public
+   * @param axisOrientation
+   * @param spacing - the spacing (delta) between operations, in model coordinates
+   * @param origin - the origin for the operation, in model coordinates. The operation is guaranteed to occur at this position.
+   * @param clippingType - if something is clipped elsewhere, we allow slack so it doesn't disappear from view like a flicker
+   * @param callback
    */
-  forEachSpacing( axisOrientation, spacing, origin, clippingType, callback ) {
+  forEachSpacing( axisOrientation: Orientation, spacing: number, origin: number, clippingType: ClippingType,
+                  callback: ( modelPosition: number, viewPosition: number ) => void ): void {
 
     const modelRange = this.getModelRange( axisOrientation );
     const nMin = getValueForSpacing( modelRange.min, clippingType, origin, spacing, Math.ceil );
@@ -84,14 +84,8 @@ class ChartTransform {
     }
   }
 
-  /**
-   * Transforms a model coordinate {number} to a view coordinate {number} for the axis that corresponds to Orientation.
-   * @param {Orientation} axisOrientation
-   * @param {number} value
-   * @returns {number}
-   * @public
-   */
-  modelToView( axisOrientation, value ) {
+  // Transforms a model coordinate {number} to a view coordinate {number} for the axis that corresponds to Orientation.
+  modelToView( axisOrientation: Orientation, value: number ): number {
     assert && assert( axisOrientation instanceof Orientation, `invalid axisOrientation: ${axisOrientation}` );
 
     const modelRange = axisOrientation === Orientation.HORIZONTAL ? this.modelXRange : this.modelYRange;
@@ -112,86 +106,43 @@ class ChartTransform {
     return viewValue;
   }
 
-  /**
-   * Transforms a model coordinate {number} to a view coordinate {number} for the x axis.
-   * @param {number} x
-   * @returns {number}
-   * @public
-   */
-  modelToViewX( x ) {
+  // Transforms a model coordinate {number} to a view coordinate {number} for the x axis.
+  modelToViewX( x: number ): number {
     return this.modelToView( Orientation.HORIZONTAL, x );
   }
 
-  /**
-   * Transforms a model coordinate {number} to a view coordinate {number} for the y axis.
-   * @param {number} y
-   * @returns {number}
-   * @public
-   */
-  modelToViewY( y ) {
+  // Transforms a model coordinate {number} to a view coordinate {number} for the y axis.
+  modelToViewY( y: number ) {
     return this.modelToView( Orientation.VERTICAL, y );
   }
 
-  /**
-   * Transforms model x,y coordinates to a view position.
-   * @param {number} x
-   * @param {number} y
-   * @returns {Vector2}
-   * @public
-   */
-  modelToViewXY( x, y ) {
+  // Transforms model x,y coordinates to a view position.
+  modelToViewXY( x: number, y: number ): Vector2 {
     return new Vector2( this.modelToViewX( x ), this.modelToViewY( y ) );
   }
 
-  /**
-   * Transforms a model position to a view position.
-   * @param {Vector2} position
-   * @returns {Vector2}
-   * @public
-   */
-  modelToViewPosition( position ) {
+  // Transforms a model position to a view position.
+  modelToViewPosition( position: Vector2 ) {
     return this.modelToViewXY( position.x, position.y );
   }
 
-  /**
-   * Transforms a model delta {number} to a view delta {number} for the axis that corresponds to Orientation.
-   * @param {Orientation} axisOrientation
-   * @param {number} modelDelta
-   * @returns {number}
-   * @public
-   */
-  modelToViewDelta( axisOrientation, modelDelta ) {
+  // Transforms a model delta {number} to a view delta {number} for the axis that corresponds to Orientation.
+  modelToViewDelta( axisOrientation: Orientation, modelDelta: number ) {
     return this.modelToView( axisOrientation, modelDelta ) - this.modelToView( axisOrientation, 0 );
   }
 
-  /**
-   * Transforms a model delta {number} to a view delta {number} for the x axis.
-   * @param {number} dx
-   * @returns {number}
-   * @public
-   */
-  modelToViewDeltaX( dx ) {
+  // Transforms a model delta {number} to a view delta {number} for the x axis.
+  modelToViewDeltaX( dx: number ): number {
     return this.modelToViewDelta( Orientation.HORIZONTAL, dx );
   }
 
-  /**
-   * Transforms a model delta {number} to a view delta {number} for the y axis.
-   * @param {number} dy
-   * @returns {number}
-   * @public
-   */
-  modelToViewDeltaY( dy ) {
+  // Transforms a model delta {number} to a view delta {number} for the y axis.
+  modelToViewDeltaY( dy: number ): number {
     return this.modelToViewDelta( Orientation.VERTICAL, dy );
   }
 
-  /**
-   * Converts a scalar value from view coordinates to model coordinates, along the specified axis.  The inverse of modelToView.
-   * @param {Orientation} axisOrientation
-   * @param {number} value
-   * @returns {number}
-   * @public
-   */
-  viewToModel( axisOrientation, value ) {
+  // Converts a scalar value from view coordinates to model coordinates, along the specified axis.  The inverse of modelToView.
+  viewToModel( axisOrientation: Orientation, value: number ): number {
     assert && assert( axisOrientation instanceof Orientation, `invalid axisOrientation: ${axisOrientation}` );
 
     const modelRange = axisOrientation === Orientation.HORIZONTAL ? this.modelXRange : this.modelYRange;
@@ -212,156 +163,88 @@ class ChartTransform {
     return modelValue;
   }
 
-  /**
-   * Convert a view position to a model position, in the horizontal direction.
-   * @param {number} x
-   * @returns {number}
-   * @public
-   */
-  viewToModelX( x ) {
+  // Convert a view position to a model position, in the horizontal direction.
+  viewToModelX( x: number ): number {
     return this.viewToModel( Orientation.HORIZONTAL, x );
   }
 
-  /**
-   * Convert a view position to a model position, in the vertical direction.
-   * @param {number} y
-   * @returns {number}
-   * @public
-   */
-  viewToModelY( y ) {
+  // Convert a view position to a model position, in the vertical direction.
+  viewToModelY( y: number ): number {
     return this.viewToModel( Orientation.VERTICAL, y );
   }
 
-  /**
-   * Convert a view position to a model position, for a coordinate specified as x,y.
-   * @param {number} x
-   * @param {number} y
-   * @returns {Vector2}
-   * @public
-   */
-  viewToModelXY( x, y ) {
+  // Convert a view position to a model position, for a coordinate specified as x,y.
+  viewToModelXY( x: number, y: number ): Vector2 {
     return new Vector2( this.viewToModelX( x ), this.viewToModelY( y ) );
   }
 
-  /**
-   * Convert a view position to a model position.
-   * @param {Vector2} position
-   * @returns {Vector2}
-   * @public
-   */
-  viewToModelPosition( position ) {
+  // Convert a view position to a model position.
+  viewToModelPosition( position: Vector2 ): Vector2 {
     return this.viewToModelXY( position.x, position.y );
   }
 
-  /**
-   * Convert a delta in the view to a delta in the model, in the horizontal direction.
-   * @param {number} dx
-   * @returns {number}
-   * @public
-   */
-  viewToModelDeltaX( dx ) {
+  // Convert a delta in the view to a delta in the model, in the horizontal direction.
+  viewToModelDeltaX( dx: number ): number {
     return this.viewToModelX( dx ) - this.viewToModelX( 0 );
   }
 
-  /**
-   * Convert a delta in the view to a delta in the model, in the vertical direction.
-   * @param {number} dy
-   * @returns {number}
-   * @public
-   */
-  viewToModelDeltaY( dy ) {
+  // Convert a delta in the view to a delta in the model, in the vertical direction.
+  viewToModelDeltaY( dy: number ): number {
     return this.viewToModelY( dy ) - this.viewToModelY( 0 );
   }
 
-  /**
-   * Convert a delta in the view to a delta in the model, for a Vector2
-   * @param {Vector2} deltaVector
-   * @returns {Vector2}
-   * @public
-   */
-  viewToModelDelta( deltaVector ) {
+  // Convert a delta in the view to a delta in the model, for a Vector2
+  viewToModelDelta( deltaVector: Vector2 ): Vector2 {
     return this.viewToModelPosition( deltaVector ).minus( this.viewToModelPosition( Vector2.ZERO ) );
   }
 
-  /**
-   * Sets the view width.
-   * @param {number} viewWidth
-   * @public
-   */
-  setViewWidth( viewWidth ) {
+  // Sets the view width.
+  setViewWidth( viewWidth: number ): void {
     if ( viewWidth !== this.viewWidth ) {
       this.viewWidth = viewWidth;
       this.changedEmitter.emit();
     }
   }
 
-  /**
-   * Sets the view height.
-   * @param {number} viewHeight
-   * @public
-   */
-  setViewHeight( viewHeight ) {
+  // Sets the view height.
+  setViewHeight( viewHeight: number ): void {
     if ( viewHeight !== this.viewHeight ) {
       this.viewHeight = viewHeight;
       this.changedEmitter.emit();
     }
   }
 
-  /**
-   * Sets the Range for the model's x dimension.
-   * @param {Range} modelXRange
-   * @public
-   */
-  setModelXRange( modelXRange ) {
+  // Sets the Range for the model's x dimension.
+  setModelXRange( modelXRange: Range ): void {
     if ( !modelXRange.equals( this.modelXRange ) ) {
       this.modelXRange = modelXRange;
       this.changedEmitter.emit();
     }
   }
 
-  /**
-   * Sets the Range for the model's y dimension.
-   * @param {Range} modelYRange
-   * @public
-   */
-  setModelYRange( modelYRange ) {
+  // Sets the Range for the model's y dimension.
+  setModelYRange( modelYRange: Range ): void {
     if ( !modelYRange.equals( this.modelYRange ) ) {
       this.modelYRange = modelYRange;
       this.changedEmitter.emit();
     }
   }
 
-  /**
-   * Gets the model range for the axis that corresponds to Orientation.
-   * @param {Orientation} axisOrientation
-   * @returns {Object.modelXRange|Object.modelYRange}
-   * @public
-   */
-  getModelRange( axisOrientation ) {
-    assert && assert( axisOrientation instanceof Orientation, `invalid axisOrientation: ${axisOrientation}` );
+  // Gets the model range for the axis that corresponds to Orientation.
+  getModelRange( axisOrientation: Orientation ) {
     return ( axisOrientation === Orientation.HORIZONTAL ) ? this.modelXRange : this.modelYRange;
   }
 
-  /**
-   * Sets the model-to-view scaling function for the x-axis.
-   * @param {function(number):number} xTransform
-   * @public
-   */
-  setXTransform( xTransform ) {
-    assert && assert( xTransform instanceof Transform1, 'xTransform must be a Transform1' );
+  // Sets the model-to-view scaling function for the x-axis.
+  setXTransform( xTransform: Transform1 ): void {
     if ( this.xTransform !== xTransform ) {
       this.xTransform = xTransform;
       this.changedEmitter.emit();
     }
   }
 
-  /**
-   * Sets the model-to-view scaling function for the y-axis.
-   * @param {function(number):number} yTransform
-   * @public
-   */
-  setYTransform( yTransform ) {
-    assert && assert( yTransform instanceof Transform1, 'yTransform must be a Transform1' );
+  // Sets the model-to-view scaling function for the y-axis.
+  setYTransform( yTransform: Transform1 ) {
     if ( this.yTransform !== yTransform ) {
       this.yTransform = yTransform;
       this.changedEmitter.emit();
@@ -373,15 +256,10 @@ class ChartTransform {
  * Solve for spaced value.
  * n * spacing + origin = x
  * n = (x-origin)/spacing, where n is an integer
- * @param {number} value
- * @param {ClippingType} clippingType
- * @param {number} origin
- * @param {number} spacing
- * @param {function} round - rounding type for strict
- * @returns {number}
  */
-function getValueForSpacing( value, clippingType, origin, spacing, round ) {
-  return clippingType === ClippingType.LENIENT ?
+function getValueForSpacing( value: number, clippingType: ClippingType,
+                             origin: number, spacing: number, round: ( n: number ) => number ): number {
+  return clippingType === 'lenient' ?
          Utils.roundSymmetric( ( value - origin ) / spacing ) :
          round( ( value - origin ) / spacing );
 }

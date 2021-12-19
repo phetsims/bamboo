@@ -11,20 +11,34 @@ import Utils from '../../dot/js/Utils.js';
 import merge from '../../phet-core/js/merge.js';
 import Orientation from '../../phet-core/js/Orientation.js';
 import { Path } from '../../scenery/js/imports.js';
+import { Node } from '../../scenery/js/imports.js';
 import { Text } from '../../scenery/js/imports.js';
 import bamboo from './bamboo.js';
 import ClippingType from './ClippingType.js';
 import TickMarkSet from './TickMarkSet.js';
+import ChartTransform from './ChartTransform.js';
 
 class TickLabelSet extends Path {
+  private chartTransform: ChartTransform;
+  private axisOrientation: Orientation;
+  private spacing: number;
+  private origin: number;
+  private extent: number;
+  private value: number;
+  private clippingType: ClippingType;
+  private edge: null | 'min' | 'max';
+  private createLabel;
+  private positionLabel;
+  private labelMap: Map<number, Node>; // cache labels for quick reuse
+  private disposeTickLabelSet: () => void;
 
   /**
-   * @param {ChartTransform} chartTransform
-   * @param {Orientation} axisOrientation - the progression of the ticks.  For instance HORIZONTAL has ticks at x=0,1,2, etc.
-   * @param {number} spacing - in model coordinates
-   * @param {Object} [options]
+   * @param chartTransform
+   * @param axisOrientation - the progression of the ticks.  For instance HORIZONTAL has ticks at x=0,1,2, etc.
+   * @param spacing - in model coordinates
+   * @param [options]
    */
-  constructor( chartTransform, axisOrientation, spacing, options ) {
+  constructor( chartTransform: ChartTransform, axisOrientation: Orientation, spacing: number, options?: any ) {
 
     options = merge( {
       value: 0, // appear on the axis by default
@@ -34,12 +48,12 @@ class TickLabelSet extends Path {
       // act as if there is a corresponding tick with this extent, for positioning the label relatively
       extent: TickMarkSet.DEFAULT_EXTENT,
 
-      // determines whether the rounding is loose, see ChartTransform
-      clippingType: ClippingType.STRICT,
+      // determines whether the rounding is lenient, see ChartTransform
+      clippingType: 'strict',
 
       // or return null if no label for that value
-      createLabel: value => new Text( Utils.toFixed( value, 1 ), { fontSize: 12 } ),
-      positionLabel: ( label, tickBounds, axisOrientation ) => {
+      createLabel: ( value: number ) => new Text( Utils.toFixed( value, 1 ), { fontSize: 12 } ),
+      positionLabel: ( label: Node, tickBounds: Bounds2, axisOrientation: Orientation ) => {
         if ( axisOrientation === Orientation.HORIZONTAL ) {
 
           // ticks flow horizontally, so tick labels should be below
@@ -59,7 +73,6 @@ class TickLabelSet extends Path {
 
     super( null, options );
 
-    // @private
     this.chartTransform = chartTransform;
     this.axisOrientation = axisOrientation;
     this.spacing = spacing;
@@ -71,7 +84,6 @@ class TickLabelSet extends Path {
     this.createLabel = options.createLabel;
     this.positionLabel = options.positionLabel;
 
-    // @private cache labels for quick reuse
     this.labelMap = new Map();
 
     // Initialize
@@ -81,27 +93,19 @@ class TickLabelSet extends Path {
     const changedListener = () => this.update();
     chartTransform.changedEmitter.addListener( changedListener );
 
-    // @private
     this.disposeTickLabelSet = () => chartTransform.changedEmitter.removeListener( changedListener );
   }
 
-  /**
-   * @param {number} spacing
-   * @public
-   */
-  setSpacing( spacing ) {
+  setSpacing( spacing: number ) {
     if ( this.spacing !== spacing ) {
       this.spacing = spacing;
       this.update();
     }
   }
 
-  /**
-   * Updates the labels when range or spacing has changed.
-   * @private
-   */
+  // Updates the labels when range or spacing has changed.
   update() {
-    const children = [];
+    const children: Node[] = [];
     const used = new Set();
 
     this.chartTransform.forEachSpacing( this.axisOrientation, this.spacing, this.origin, this.clippingType, ( modelPosition, viewPosition ) => {
@@ -146,17 +150,12 @@ class TickLabelSet extends Path {
    * Clears the cache and updates the label set. Use this if you need to have new labels for values that are in
    * the cache. For example, if your createLabel function had logic to switch between numeric (e.g. 2) and
    * symbolic labels (e.g. '2L').
-   * @public
    */
   invalidateTickLabelSet() {
     this.labelMap.clear();
     this.update();
   }
 
-  /**
-   * @public
-   * @override
-   */
   dispose() {
     this.disposeTickLabelSet();
     super.dispose();

@@ -10,15 +10,16 @@ import merge from '../../phet-core/js/merge.js';
 import Orientation from '../../phet-core/js/Orientation.js';
 import { Line } from '../../scenery/js/imports.js';
 import bamboo from './bamboo.js';
+import ChartTransform from './ChartTransform.js';
 
 class AxisLine extends Line {
+  private readonly chartTransform: ChartTransform;
+  private readonly axisOrientation: Orientation;
+  private readonly value: number;
+  private readonly extension: number;
+  private disposeAxisLine: () => void;
 
-  /**
-   * @param {ChartTransform} chartTransform
-   * @param {Orientation} axisOrientation - which axis is represented
-   * @param {Object} [options]
-   */
-  constructor( chartTransform, axisOrientation, options ) {
+  constructor( chartTransform: ChartTransform, axisOrientation: Orientation, options?: any ) {
 
     options = merge( {
       value: 0, // by default the axis is at 0, but you can put it somewhere else
@@ -31,7 +32,6 @@ class AxisLine extends Line {
 
     super( 0, 0, 0, 0, options );
 
-    // @private
     this.chartTransform = chartTransform;
     this.axisOrientation = axisOrientation;
     this.value = options.value;
@@ -44,12 +44,10 @@ class AxisLine extends Line {
     const changedListener = () => this.update();
     chartTransform.changedEmitter.addListener( changedListener );
 
-    // @private
     this.disposeAxisLine = () => chartTransform.changedEmitter.removeListener( changedListener );
   }
 
-  // @private
-  update() {
+  private update() {
     const viewValue = this.chartTransform.modelToView( this.axisOrientation.opposite, this.value );
 
     // Move the axis to viewValue.
@@ -63,10 +61,6 @@ class AxisLine extends Line {
     }
   }
 
-  /**
-   * @public
-   * @override
-   */
   dispose() {
     this.disposeAxisLine();
     super.dispose();

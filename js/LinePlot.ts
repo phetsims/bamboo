@@ -10,19 +10,21 @@
  * @author Sam Reid (PhET Interactive Simulations)
  */
 
+import Vector2 from '../../dot/js/Vector2.js';
 import Shape from '../../kite/js/Shape.js';
 import merge from '../../phet-core/js/merge.js';
 import { Path } from '../../scenery/js/imports.js';
 import bamboo from './bamboo.js';
+import ChartTransform from './ChartTransform.js';
 
 class LinePlot extends Path {
+  private chartTransform: ChartTransform;
 
-  /**
-   * @param {ChartTransform} chartTransform
-   * @param {Vector2[]} dataSet
-   * @param {Object} [options]
-   */
-  constructor( chartTransform, dataSet, options ) {
+  // if you change this directly, you are responsible for calling update
+  dataSet: Vector2[];
+  private disposeLinePlot: () => void;
+
+  constructor( chartTransform: ChartTransform, dataSet: Vector2[], options?: any ) {
 
     options = merge( {
 
@@ -32,10 +34,7 @@ class LinePlot extends Path {
 
     super( null, options );
 
-    // @private
     this.chartTransform = chartTransform;
-
-    // @public if you change this directly, you are responsible for calling update
     this.dataSet = dataSet;
 
     // Initialize
@@ -45,25 +44,19 @@ class LinePlot extends Path {
     const changedListener = () => this.update();
     chartTransform.changedEmitter.addListener( changedListener );
 
-    // @private
     this.disposeLinePlot = () => chartTransform.changedEmitter.removeListener( changedListener );
   }
 
   /**
    * Sets the dataSet and redraws the plot. If instead the dataSet array is mutated, it is the client's responsibility
    * to call `update` or make sure `update` is called elsewhere (say, if the chart scrolls in that frame).
-   * @param {Vector2[]} dataSet
-   * @public
    */
-  setDataSet( dataSet ) {
+  setDataSet( dataSet: Vector2[] ): void {
     this.dataSet = dataSet;
     this.update();
   }
 
-  /**
-   * Recomputes the rendered shape.
-   * @public
-   */
+  // Recomputes the rendered shape.
   update() {
     const shape = new Shape();
     let moveToNextPoint = true;
@@ -89,11 +82,7 @@ class LinePlot extends Path {
     this.shape = shape.makeImmutable();
   }
 
-  /**
-   * @public
-   * @override
-   */
-  dispose() {
+  dispose(): void {
     this.disposeLinePlot();
     super.dispose();
   }

@@ -34,7 +34,7 @@ class DemoLinearEquationPlot extends Node {
   /**
    * @param {Object} [options]
    */
-  constructor( options ) {
+  constructor( options?: any ) {
 
     options = merge( {}, options );
 
@@ -75,7 +75,7 @@ class DemoLinearEquationPlot extends Node {
       align: 'center'
     } );
     const mSlider = new VSlider( mProperty, mProperty.range, {
-      constrainValue: value => Utils.roundToInterval( value, 0.1 ) // 1 decimal place
+      constrainValue: ( value: number ) => Utils.roundToInterval( value, 0.1 ) // 1 decimal place
     } );
     const mControl = new VBox( {
       spacing: 4,
@@ -90,7 +90,7 @@ class DemoLinearEquationPlot extends Node {
       align: 'center'
     } );
     const bSlider = new VSlider( bProperty, bProperty.range, {
-      constrainValue: value => Utils.roundSymmetric( value )  // integers
+      constrainValue: ( value: number ) => Utils.roundSymmetric( value )  // integers
     } );
     const bControl = new VBox( {
       spacing: 4,
@@ -151,14 +151,14 @@ class DemoLinearEquationPlot extends Node {
     } );
     const xTickLabelSet = new TickLabelSet( chartTransform, Orientation.HORIZONTAL, tickXSpacing, {
       edge: 'min',
-      createLabel: value => new Text( Utils.toFixed( value, 0 ), { fontSize: 12 } )
+      createLabel: ( value: number ) => new Text( Utils.toFixed( value, 0 ), { fontSize: 12 } )
     } );
     const yTickMarkSet = new TickMarkSet( chartTransform, Orientation.VERTICAL, tickYSpacing, {
       edge: 'min'
     } );
     const yTickLabelSet = new TickLabelSet( chartTransform, Orientation.VERTICAL, tickYSpacing, {
       edge: 'min',
-      createLabel: value => new Text( Utils.toFixed( value, 0 ), { fontSize: 12 } )
+      createLabel: ( value: number ) => new Text( Utils.toFixed( value, 0 ), { fontSize: 12 } )
     } );
 
     // All the parts of the chart

@@ -13,8 +13,18 @@ import Orientation from '../../phet-core/js/Orientation.js';
 import { Path } from '../../scenery/js/imports.js';
 import bamboo from './bamboo.js';
 import ClippingType from './ClippingType.js';
+import ChartTransform from './ChartTransform.js';
 
 class TickMarkSet extends Path {
+  private chartTransform: ChartTransform;
+  private axisOrientation: Orientation;
+  private spacing: number;
+  private value: number;
+  private edge: null | 'min' | 'max';
+  private origin: number;
+  private extent: number;
+  private clippingType: ClippingType;
+  private disposeTickMarkSet: () => void;
 
   /**
    * @param {ChartTransform} chartTransform
@@ -22,7 +32,7 @@ class TickMarkSet extends Path {
    * @param {number} spacing - in model coordinates
    * @param {Object} [options]
    */
-  constructor( chartTransform, axisOrientation, spacing, options ) {
+  constructor( chartTransform: ChartTransform, axisOrientation: Orientation, spacing: number, options?: any ) {
 
     options = merge( {
       value: 0, // appear on the axis by default
@@ -32,8 +42,8 @@ class TickMarkSet extends Path {
       lineWidth: 1,
       extent: TickMarkSet.DEFAULT_EXTENT,
 
-      // determines whether the rounding is loose, see ChartTransform
-      clippingType: ClippingType.STRICT
+      // determines whether the rounding is lenient, see ChartTransform
+      clippingType: 'strict'
     }, options );
 
     if ( options.edge ) {
@@ -42,7 +52,6 @@ class TickMarkSet extends Path {
 
     super( null, options );
 
-    // @private
     this.chartTransform = chartTransform;
     this.axisOrientation = axisOrientation;
     this.spacing = spacing;
@@ -59,23 +68,17 @@ class TickMarkSet extends Path {
     const changedListener = () => this.update();
     chartTransform.changedEmitter.addListener( changedListener );
 
-    // @private
     this.disposeTickMarkSet = () => chartTransform.changedEmitter.removeListener( changedListener );
   }
 
-  /**
-   * @param {number} spacing
-   * @public
-   */
-  setSpacing( spacing ) {
+  setSpacing( spacing: number ) {
     if ( spacing !== this.spacing ) {
       this.spacing = spacing;
       this.update();
     }
   }
 
-  // @private
-  update() {
+  private update() {
     const shape = new Shape();
 
     this.chartTransform.forEachSpacing( this.axisOrientation, this.spacing, this.origin, this.clippingType, ( modelPosition, viewPosition ) => {
@@ -101,18 +104,13 @@ class TickMarkSet extends Path {
     this.shape = shape.makeImmutable();
   }
 
-  /**
-   * @public
-   * @override
-   */
   dispose() {
     this.disposeTickMarkSet();
     super.dispose();
   }
-}
 
-// @public @static
-TickMarkSet.DEFAULT_EXTENT = 10;
+  static DEFAULT_EXTENT = 10;
+}
 
 bamboo.register( 'TickMarkSet', TickMarkSet );
 export default TickMarkSet;

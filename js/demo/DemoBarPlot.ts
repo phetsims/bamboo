@@ -27,10 +27,10 @@ import TickMarkSet from '../TickMarkSet.js';
 
 class DemoBarPlot extends Node {
 
-  constructor( options ) {
+  constructor( options?: any ) {
     super();
 
-    const createDataSet = ( randomX, randomY ) => {
+    const createDataSet = ( randomX: number, randomY: number ) => {
       const dataSet = [];
       for ( let i = 0; i <= 24; i++ ) {
         const x = Math.PI * i;
@@ -59,7 +59,7 @@ class DemoBarPlot extends Node {
 
     // Anything you want clipped goes in here
     const barPlot = new BarPlot( chartTransform, dataSet, {
-      pointToPaintableFields: point => {
+      pointToPaintableFields: ( point: Vector2 ) => {
         const c = Utils.linear( 0, 24 * Math.PI, 0, 240, point.x );
         return { fill: new Color( c, c, c ) };
       }
@@ -96,13 +96,13 @@ class DemoBarPlot extends Node {
         new TickMarkSet( chartTransform, Orientation.VERTICAL, 0.05, { edge: 'min' } ),
         new TickLabelSet( chartTransform, Orientation.VERTICAL, 0.05, {
           edge: 'min',
-          createLabel: value => new Text( Utils.toFixed( value, 2 ), { fontSize: 12 } )
+          createLabel: ( value: number ) => new Text( Utils.toFixed( value, 2 ), { fontSize: 12 } )
         } ),
 
         new TickMarkSet( chartTransform, Orientation.HORIZONTAL, Math.PI * 2, { edge: 'min' } ),
         new TickLabelSet( chartTransform, Orientation.HORIZONTAL, Math.PI * 2, {
           edge: 'min',
-          createLabel: value => new Text( Utils.toFixed( value / Math.PI, 0 ) + MathSymbols.PI, { fontSize: 12 } )
+          createLabel: ( value: number ) => new Text( Utils.toFixed( value / Math.PI, 0 ) + MathSymbols.PI, { fontSize: 12 } )
         } )
       ]
     } );

@@ -11,15 +11,16 @@ import merge from '../../phet-core/js/merge.js';
 import Orientation from '../../phet-core/js/Orientation.js';
 import ArrowNode from '../../scenery-phet/js/ArrowNode.js';
 import bamboo from './bamboo.js';
+import ChartTransform from './ChartTransform.js';
 
 class AxisArrowNode extends ArrowNode {
+  private readonly chartTransform: ChartTransform;
+  private readonly value: number;
+  private readonly extension: number;
+  private readonly axisOrientation: Orientation;
+  private disposeAxisNode: () => void;
 
-  /**
-   * @param {ChartTransform} chartTransform
-   * @param {Orientation} axisOrientation - which axis is represented
-   * @param {Object} [options]
-   */
-  constructor( chartTransform, axisOrientation, options ) {
+  constructor( chartTransform: ChartTransform, axisOrientation: Orientation, options?: any ) {
 
     options = merge( {
       value: 0, // by default the axis is at 0, but you can put it somewhere else
@@ -34,7 +35,6 @@ class AxisArrowNode extends ArrowNode {
 
     super( 0, 0, 0, 0, options );
 
-    // @private
     this.chartTransform = chartTransform;
     this.axisOrientation = axisOrientation;
     this.value = options.value;
@@ -47,12 +47,10 @@ class AxisArrowNode extends ArrowNode {
     const changedListener = () => this.update();
     chartTransform.changedEmitter.addListener( changedListener );
 
-    // @private
     this.disposeAxisNode = () => chartTransform.changedEmitter.removeListener( changedListener );
   }
 
-  // @private
-  update() {
+  private update() {
     const viewValue = this.chartTransform.modelToView( this.axisOrientation.opposite, this.value );
 
     // Move the axis to viewValue.
@@ -66,10 +64,6 @@ class AxisArrowNode extends ArrowNode {
     }
   }
 
-  /**
-   * @public
-   * @override
-   */
   dispose() {
     this.disposeAxisNode();
     super.dispose();

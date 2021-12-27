@@ -9,7 +9,7 @@
 import Vector2 from '../../dot/js/Vector2.js';
 import merge from '../../phet-core/js/merge.js';
 import ArrowNode from '../../scenery-phet/js/ArrowNode.js';
-import { Node } from '../../scenery/js/imports.js';
+import { Node, PAINTABLE_DEFAULT_OPTIONS } from '../../scenery/js/imports.js';
 import bamboo from './bamboo.js';
 import ChartTransform from './ChartTransform.js';
 
@@ -41,7 +41,7 @@ class UpDownArrowPlot extends Node {
     super( options );
 
     assert && assert(
-      Object.keys( options.arrowNodeOptions ).filter( key => Object.keys( DEFAULT_PAINTABLE_OPTIONS ).includes( key ) ).length === 0,
+      Object.keys( options.arrowNodeOptions ).filter( key => Object.keys( PAINTABLE_DEFAULT_OPTIONS ).includes( key ) ).length === 0,
       'arrowNodeOptions should not include Paintable options, use pointToPaintableFields instead'
     );
 
@@ -96,7 +96,7 @@ class UpDownArrowPlot extends Node {
 
       const providedOptions = this.pointToPaintableFields( dataPoint );
       assert && assert(
-        Object.keys( providedOptions ).filter( key => !Object.keys( DEFAULT_PAINTABLE_OPTIONS ).includes( key ) ).length === 0,
+        Object.keys( providedOptions ).filter( key => !Object.keys( PAINTABLE_DEFAULT_OPTIONS ).includes( key ) ).length === 0,
         'options contain keys that could be dangerous for mutate'
       );
       this.arrowNodes[ i ].mutate( providedOptions );

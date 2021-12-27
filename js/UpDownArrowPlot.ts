@@ -35,6 +35,7 @@ class UpDownArrowPlot extends Node {
       arrowNodeOptions: {},
 
       // NOTE: cannot use the "Options" suffix because merge will try to merge that as nested options.
+      // A function that will return the Paintable options for the ArrowNode at the provided point in model coordinates.
       pointToPaintableFields: ( point: Vector2 ) => DEFAULT_ARROW_PAINTABLE_OPTIONS
     }, options );
 

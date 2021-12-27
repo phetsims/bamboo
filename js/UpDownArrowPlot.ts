@@ -14,7 +14,7 @@ import bamboo from './bamboo.js';
 import ChartTransform from './ChartTransform.js';
 
 // constants
-const DEFAULT_PAINTABLE_OPTIONS = { fill: 'black' };
+const DEFAULT_ARROW_PAINTABLE_OPTIONS = { fill: 'black' };
 
 class UpDownArrowPlot extends Node {
   private chartTransform: ChartTransform;
@@ -35,7 +35,7 @@ class UpDownArrowPlot extends Node {
       arrowNodeOptions: {},
 
       // NOTE: cannot use the "Options" suffix because merge will try to merge that as nested options.
-      pointToPaintableFields: ( point: Vector2 ) => DEFAULT_PAINTABLE_OPTIONS
+      pointToPaintableFields: ( point: Vector2 ) => DEFAULT_ARROW_PAINTABLE_OPTIONS
     }, options );
 
     super( options );

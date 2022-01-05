@@ -60,8 +60,8 @@ class DemoMultiplePlots extends VBox {
       children: [
 
         // Major grid lines
-        new GridLineSet( chartTransform, Orientation.HORIZONTAL, 2, { stroke: 'darkGray', clippingType: 'lenient' } ),
-        new GridLineSet( chartTransform, Orientation.VERTICAL, 5000, { stroke: 'darkGray', clippingType: 'lenient' } ),
+        new GridLineSet( chartTransform, Orientation.HORIZONTAL, 2, { stroke: 'darkGray', clippingType: 'loose' } ),
+        new GridLineSet( chartTransform, Orientation.VERTICAL, 5000, { stroke: 'darkGray', clippingType: 'loose' } ),
 
         // Some data
         new BarPlot( chartTransform, dataSet, {

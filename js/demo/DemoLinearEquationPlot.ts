@@ -19,7 +19,6 @@ import { Node } from '../../../scenery/js/imports.js';
 import { RichText } from '../../../scenery/js/imports.js';
 import { Text } from '../../../scenery/js/imports.js';
 import { VBox } from '../../../scenery/js/imports.js';
-import VSlider from '../../../sun/js/VSlider.js';
 import AxisArrowNode from '../AxisArrowNode.js';
 import bamboo from '../bamboo.js';
 import ChartRectangle from '../ChartRectangle.js';
@@ -28,6 +27,7 @@ import GridLineSet from '../GridLineSet.js';
 import TickLabelSet from '../TickLabelSet.js';
 import LinearEquationPlot from '../LinearEquationPlot.js';
 import TickMarkSet from '../TickMarkSet.js';
+import HSlider from '../../../sun/js/HSlider.js';
 
 class DemoLinearEquationPlot extends Node {
 
@@ -74,7 +74,7 @@ class DemoLinearEquationPlot extends Node {
       decimalPlaces: 1,
       align: 'center'
     } );
-    const mSlider = new VSlider( mProperty, mProperty.range, {
+    const mSlider = new HSlider( mProperty, mProperty.range, {
       constrainValue: ( value: number ) => Utils.roundToInterval( value, 0.1 ) // 1 decimal place
     } );
     const mControl = new VBox( {
@@ -89,7 +89,7 @@ class DemoLinearEquationPlot extends Node {
       decimalPlaces: 0,
       align: 'center'
     } );
-    const bSlider = new VSlider( bProperty, bProperty.range, {
+    const bSlider = new HSlider( bProperty, bProperty.range, {
       constrainValue: ( value: number ) => Utils.roundSymmetric( value )  // integers
     } );
     const bControl = new VBox( {

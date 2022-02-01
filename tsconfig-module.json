@@ -2,18 +2,21 @@
   "extends": "../chipper/tsconfig-core.json",
   "references": [
     {
-      "path": "../joist/tsconfig-module.json"
-    },
-    {
-      "path": "./tsconfig-module.json"
+      "path": "../scenery-phet/tsconfig-module.json"
     }
   ],
   "include": [
-    "js/demo/**/*",
-    "js/bamboo-main.ts",
-    "js/bamboo-tests.ts",
+    "js/**/*",
+    "sounds/**/*",
+    "mipmaps/**/*",
+    "images/**/*",
     "../chipper/phet-types.d.ts",
     "../chipper/node_modules/@types/lodash/index.d.ts",
     "../chipper/node_modules/@types/qunit/index.d.ts"
+  ],
+  "exclude": [
+    "js/demo/**/*",
+    "js/bamboo-main.ts",
+    "js/bamboo-tests.ts",
   ]
 }

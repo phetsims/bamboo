@@ -117,7 +117,7 @@ class DemoMultiplePlots extends VBox {
       fill: 'black'
     } );
 
-    const update = ( event?: any ) => {
+    const update = ( event: any ) => {
 
       const point = event.pointer.point;
       const parentPoint = chartRectangle.globalToParentPoint( point );

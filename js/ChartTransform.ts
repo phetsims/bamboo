@@ -28,7 +28,7 @@ class ChartTransform {
   private xTransform: Transform1;
   private yTransform: Transform1;
 
-  constructor( options: any ) {
+  constructor( options?: any ) {
 
     options = merge( {
 

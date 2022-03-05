@@ -67,14 +67,20 @@ class DemoLinearEquationPlot extends Node {
       font: new PhetFont( 20 )
     } );
 
+    const mRange = mProperty.range!;
+    assert && assert( mRange );
+
+    const bRange = bProperty.range!;
+    assert && assert( bRange );
+
     // Slope slider
-    const mDisplay = new NumberDisplay( mProperty, mProperty.range, {
+    const mDisplay = new NumberDisplay( mProperty, mRange, {
       valuePattern: `${mSymbol} = {{value}}`,
       useRichText: true,
       decimalPlaces: 1,
       align: 'center'
     } );
-    const mSlider = new VSlider( mProperty, mProperty.range, {
+    const mSlider = new VSlider( mProperty, mRange, {
       constrainValue: ( value: number ) => Utils.roundToInterval( value, 0.1 ) // 1 decimal place
     } );
     const mControl = new VBox( {
@@ -83,13 +89,13 @@ class DemoLinearEquationPlot extends Node {
     } );
 
     // Y-intercept slider
-    const bDisplay = new NumberDisplay( bProperty, bProperty.range, {
+    const bDisplay = new NumberDisplay( bProperty, bRange, {
       valuePattern: `${bSymbol} = {{value}}`,
       useRichText: true,
       decimalPlaces: 0,
       align: 'center'
     } );
-    const bSlider = new VSlider( bProperty, bProperty.range, {
+    const bSlider = new VSlider( bProperty, bRange, {
       constrainValue: ( value: number ) => Utils.roundSymmetric( value )  // integers
     } );
     const bControl = new VBox( {

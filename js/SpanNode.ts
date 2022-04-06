@@ -138,7 +138,7 @@ class SpanNode extends LayoutBox {
     }
   }
 
-  dispose() {
+  override dispose() {
     this.disposeSpanNode();
     super.dispose();
   }

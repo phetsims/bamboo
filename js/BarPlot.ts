@@ -102,7 +102,7 @@ class BarPlot extends Node {
     }
   }
 
-  dispose() {
+  override dispose() {
     this.disposeBarPlot();
     super.dispose();
   }

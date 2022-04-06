@@ -74,7 +74,7 @@ class ScatterPlot extends Path {
     this.shape = shape.makeImmutable();
   }
 
-  dispose() {
+  override dispose() {
     this.disposeScatterPlot();
     super.dispose();
   }

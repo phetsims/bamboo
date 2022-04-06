@@ -61,7 +61,7 @@ class AxisLine extends Line {
     }
   }
 
-  dispose() {
+  override dispose() {
     this.disposeAxisLine();
     super.dispose();
   }

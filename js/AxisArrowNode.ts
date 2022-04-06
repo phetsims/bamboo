@@ -64,7 +64,7 @@ class AxisArrowNode extends ArrowNode {
     }
   }
 
-  dispose() {
+  override dispose() {
     this.disposeAxisNode();
     super.dispose();
   }

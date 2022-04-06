@@ -66,7 +66,7 @@ class ChartCanvasNode extends CanvasNode {
     } );
   }
 
-  dispose() {
+  override dispose() {
     this.disposeChartCanvasLinePlot();
     super.dispose();
   }

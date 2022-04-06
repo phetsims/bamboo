@@ -39,7 +39,7 @@ class ChartRectangle extends Rectangle {
     this.setRect( 0, 0, this.chartTransform.viewWidth, this.chartTransform.viewHeight );
   }
 
-  dispose(): void {
+  override dispose(): void {
     this.disposeChartRectangle();
     super.dispose();
   }

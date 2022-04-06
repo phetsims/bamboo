@@ -82,7 +82,7 @@ class LinePlot extends Path {
     this.shape = shape.makeImmutable();
   }
 
-  dispose(): void {
+  override dispose(): void {
     this.disposeLinePlot();
     super.dispose();
   }

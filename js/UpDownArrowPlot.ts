@@ -104,7 +104,7 @@ class UpDownArrowPlot extends Node {
     }
   }
 
-  dispose() {
+  override dispose() {
     this.disposeUpDownArrowPLot();
     super.dispose();
   }

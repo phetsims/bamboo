@@ -156,7 +156,7 @@ class TickLabelSet extends Path {
     this.update();
   }
 
-  dispose() {
+  override dispose() {
     this.disposeTickLabelSet();
     super.dispose();
   }

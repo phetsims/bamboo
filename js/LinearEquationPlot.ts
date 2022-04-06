@@ -118,7 +118,7 @@ class LinearEquationPlot extends Line {
     }
   }
 
-  dispose() {
+  override dispose() {
     this.disposeStraightLinePlot();
     super.dispose();
   }

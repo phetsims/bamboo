@@ -84,7 +84,7 @@ class GridLineSet extends Path {
     }
   }
 
-  dispose(): void {
+  override dispose(): void {
     this.disposeGridLineSet();
     super.dispose();
   }

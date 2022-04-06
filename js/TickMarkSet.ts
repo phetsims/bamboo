@@ -104,7 +104,7 @@ class TickMarkSet extends Path {
     this.shape = shape.makeImmutable();
   }
 
-  dispose() {
+  override dispose() {
     this.disposeTickMarkSet();
     super.dispose();
   }

@@ -19,6 +19,7 @@ import DemoMultiplePlots from './DemoMultiplePlots.js';
 import DemoScatterPlot from './DemoScatterPlot.js';
 import DemoLinearEquationPlot from './DemoLinearEquationPlot.js';
 import DemoUpDownArrowPlot from './DemoUpDownArrowPlot.js';
+import Tandem from '../../../tandem/js/Tandem.js';
 
 // constants - this is a hack to enable components to animate from the animation loop
 const emitter = new Emitter<[ number ]>( { parameters: [ { valueType: 'number' } ] } );
@@ -91,7 +92,8 @@ class BambooDemoScreenView extends DemosScreenView {
         } )
       }
     ], {
-      selectedDemoLabel: sceneryPhetQueryParameters.component
+      selectedDemoLabel: sceneryPhetQueryParameters.component,
+      tandem: Tandem.OPT_OUT
     } );
   }
 

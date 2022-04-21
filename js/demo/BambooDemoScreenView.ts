@@ -101,7 +101,7 @@ class BambooDemoScreenView extends DemosScreenView {
    * Move the model forward in time.
    * @param dt - elapsed time in seconds
    */
-  step( dt: number ) {
+  override step( dt: number ) {
     emitter.emit( dt );
   }
 }

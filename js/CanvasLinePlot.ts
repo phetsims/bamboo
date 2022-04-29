@@ -71,12 +71,12 @@ class CanvasLinePlot extends CanvasPainter {
   }
 
   // Sets dataSet. You are responsible for calling update on the associated ChartCanvasNode(s).
-  setDataSet( dataSet: Vector2[] ) {
+  setDataSet( dataSet: Vector2[] ): void {
     this.dataSet = dataSet;
   }
 
   // Intended to be called by ChartCanvasNode.
-  paintCanvas( context: CanvasRenderingContext2D ) {
+  paintCanvas( context: CanvasRenderingContext2D ): void {
     context.beginPath();
 
     if ( this.strokeCSS ) {

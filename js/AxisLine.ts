@@ -47,7 +47,7 @@ class AxisLine extends Line {
     this.disposeAxisLine = () => chartTransform.changedEmitter.removeListener( changedListener );
   }
 
-  private update() {
+  private update(): void {
     const viewValue = this.chartTransform.modelToView( this.axisOrientation.opposite, this.value );
 
     // Move the axis to viewValue.
@@ -61,7 +61,7 @@ class AxisLine extends Line {
     }
   }
 
-  override dispose() {
+  override dispose(): void {
     this.disposeAxisLine();
     super.dispose();
   }

@@ -63,12 +63,12 @@ class BarPlot extends Node {
    * Sets the dataSet and redraws the plot. If instead the dataSet array is mutated, it is the client's responsibility
    * to call `update` or make sure `update` is called elsewhere (say, if the chart scrolls in that frame).
    */
-  setDataSet( dataSet: Vector2[] ) {
+  setDataSet( dataSet: Vector2[] ): void {
     this.dataSet = dataSet;
     this.update();
   }
 
-  update() {
+  update(): void {
 
     // Add one rectangle per data point.
     while ( this.rectangles.length < this.dataSet.length ) {
@@ -102,7 +102,7 @@ class BarPlot extends Node {
     }
   }
 
-  override dispose() {
+  override dispose(): void {
     this.disposeBarPlot();
     super.dispose();
   }

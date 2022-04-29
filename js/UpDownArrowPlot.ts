@@ -64,7 +64,7 @@ class UpDownArrowPlot extends Node {
   }
 
   // Sets the dataSet and redraws the plot.
-  setDataSet( dataSet: Vector2[] ) {
+  setDataSet( dataSet: Vector2[] ): void {
     this.dataSet = dataSet;
     this.update();
   }
@@ -73,7 +73,7 @@ class UpDownArrowPlot extends Node {
    * Redraw the plot. Called automatically if you update the dataSet with setDataSet(). But you can call this
    * yourself if you want to set the dataSet directly and then update later (presumably for performance).
    */
-  update() {
+  update(): void {
 
     // add one rectangle per data point
     while ( this.arrowNodes.length < this.dataSet.length ) {
@@ -104,7 +104,7 @@ class UpDownArrowPlot extends Node {
     }
   }
 
-  override dispose() {
+  override dispose(): void {
     this.disposeUpDownArrowPLot();
     super.dispose();
   }

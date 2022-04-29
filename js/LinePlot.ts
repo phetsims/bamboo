@@ -57,7 +57,7 @@ class LinePlot extends Path {
   }
 
   // Recomputes the rendered shape.
-  update() {
+  update(): void {
     const shape = new Shape();
     let moveToNextPoint = true;
     for ( let i = 0; i < this.dataSet.length; i++ ) {

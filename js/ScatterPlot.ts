@@ -52,13 +52,13 @@ class ScatterPlot extends Path {
    * Sets the dataSet and redraws the plot. If instead the dataSet array is mutated, it is the client's responsibility
    * to call `update` or make sure `update` is called elsewhere (say, if the chart scrolls in that frame).
    */
-  setDataSet( dataSet: Vector2[] ) {
+  setDataSet( dataSet: Vector2[] ): void {
     this.dataSet = dataSet;
     this.update();
   }
 
   // Recomputes the rendered shape.
-  update() {
+  update(): void {
     const shape = new Shape();
     const length = this.dataSet.length;
     for ( let i = 0; i < length; i++ ) {
@@ -74,7 +74,7 @@ class ScatterPlot extends Path {
     this.shape = shape.makeImmutable();
   }
 
-  override dispose() {
+  override dispose(): void {
     this.disposeScatterPlot();
     super.dispose();
   }

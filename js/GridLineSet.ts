@@ -61,7 +61,7 @@ class GridLineSet extends Path {
     this.disposeGridLineSet = () => chartTransform.changedEmitter.removeListener( changedListener );
   }
 
-  private update() {
+  private update(): void {
     const shape = new Shape();
     this.chartTransform.forEachSpacing( this.axisOrientation, this.spacing, this.origin, this.clippingType,
       ( modelPosition, viewPosition ) => {

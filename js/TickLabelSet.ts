@@ -96,7 +96,7 @@ class TickLabelSet extends Path {
     this.disposeTickLabelSet = () => chartTransform.changedEmitter.removeListener( changedListener );
   }
 
-  setSpacing( spacing: number ) {
+  setSpacing( spacing: number ): void {
     if ( this.spacing !== spacing ) {
       this.spacing = spacing;
       this.update();
@@ -104,7 +104,7 @@ class TickLabelSet extends Path {
   }
 
   // Updates the labels when range or spacing has changed.
-  update() {
+  update(): void {
     const children: Node[] = [];
     const used = new Set();
 
@@ -151,12 +151,12 @@ class TickLabelSet extends Path {
    * the cache. For example, if your createLabel function had logic to switch between numeric (e.g. 2) and
    * symbolic labels (e.g. '2L').
    */
-  invalidateTickLabelSet() {
+  invalidateTickLabelSet(): void {
     this.labelMap.clear();
     this.update();
   }
 
-  override dispose() {
+  override dispose(): void {
     this.disposeTickLabelSet();
     super.dispose();
   }

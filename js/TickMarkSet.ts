@@ -71,14 +71,14 @@ class TickMarkSet extends Path {
     this.disposeTickMarkSet = () => chartTransform.changedEmitter.removeListener( changedListener );
   }
 
-  setSpacing( spacing: number ) {
+  setSpacing( spacing: number ): void {
     if ( spacing !== this.spacing ) {
       this.spacing = spacing;
       this.update();
     }
   }
 
-  private update() {
+  private update(): void {
     const shape = new Shape();
 
     this.chartTransform.forEachSpacing( this.axisOrientation, this.spacing, this.origin, this.clippingType, ( modelPosition, viewPosition ) => {
@@ -104,7 +104,7 @@ class TickMarkSet extends Path {
     this.shape = shape.makeImmutable();
   }
 
-  override dispose() {
+  override dispose(): void {
     this.disposeTickMarkSet();
     super.dispose();
   }

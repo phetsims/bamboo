@@ -50,7 +50,7 @@ class AxisArrowNode extends ArrowNode {
     this.disposeAxisNode = () => chartTransform.changedEmitter.removeListener( changedListener );
   }
 
-  private update() {
+  private update(): void {
     const viewValue = this.chartTransform.modelToView( this.axisOrientation.opposite, this.value );
 
     // Move the axis to viewValue.
@@ -64,7 +64,7 @@ class AxisArrowNode extends ArrowNode {
     }
   }
 
-  override dispose() {
+  override dispose(): void {
     this.disposeAxisNode();
     super.dispose();
   }

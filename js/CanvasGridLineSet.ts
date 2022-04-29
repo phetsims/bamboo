@@ -66,11 +66,11 @@ class CanvasGridLineSet extends CanvasPainter {
     }
   }
 
-  setLineDashOffset( lineDashOffset: number ) {
+  setLineDashOffset( lineDashOffset: number ): void {
     this.lineDashOffset = lineDashOffset;
   }
 
-  paintCanvas( context: CanvasRenderingContext2D ) {
+  paintCanvas( context: CanvasRenderingContext2D ): void {
     context.strokeStyle = this.stroke;
     context.lineWidth = this.lineWidth;
     context.beginPath();

@@ -84,7 +84,7 @@ class LinearEquationPlot extends Line {
   }
 
   // Recomputes the endpoints of the line.
-  update() {
+  update(): void {
 
     if ( this._m === Infinity || this._m === -Infinity ) {
 
@@ -118,7 +118,7 @@ class LinearEquationPlot extends Line {
     }
   }
 
-  override dispose() {
+  override dispose(): void {
     this.disposeStraightLinePlot();
     super.dispose();
   }

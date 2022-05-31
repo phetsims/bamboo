@@ -19,8 +19,8 @@ import ChartTransform from './ChartTransform.js';
 // Same as the value in Node's validateBounds
 const notificationThreshold = 1e-13;
 
-//TODO https://github.com/phetsims/bamboo/issues/21 VBox only works for Orientation.HORIZONTAL
 class SpanNode extends LayoutBox {
+
   private chartTransform: ChartTransform;
   private axisOrientation: Orientation;
   private delta: number;

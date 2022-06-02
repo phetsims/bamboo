@@ -15,10 +15,6 @@ class ChartRectangle extends Rectangle {
   private chartTransform: ChartTransform;
   private disposeChartRectangle: () => void;
 
-  /**
-   * @param {ChartTransform} chartTransform
-   * @param {Object} [options]
-   */
   constructor( chartTransform: ChartTransform, options?: any ) {
 
     super( 0, 0, 0, 0, options );

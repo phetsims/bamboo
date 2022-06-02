@@ -27,10 +27,10 @@ class TickMarkSet extends Path {
   private disposeTickMarkSet: () => void;
 
   /**
-   * @param {ChartTransform} chartTransform
-   * @param {Orientation} axisOrientation - the progression of the ticks.  For instance HORIZONTAL has ticks at x=0,1,2, etc.
-   * @param {number} spacing - in model coordinates
-   * @param {Object} [options]
+   * @param chartTransform
+   * @param axisOrientation - the progression of the ticks.  For instance HORIZONTAL has ticks at x=0,1,2, etc.
+   * @param spacing - in model coordinates
+   * @param [options]
    */
   constructor( chartTransform: ChartTransform, axisOrientation: Orientation, spacing: number, options?: any ) {
 

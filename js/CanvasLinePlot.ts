@@ -28,11 +28,6 @@ class CanvasLinePlot extends CanvasPainter {
   // CSS for rendering the stroke
   private strokeCSS: string | null;
 
-  /**
-   * @param {ChartTransform} chartTransform
-   * @param {Array.<Vector2|null>} dataSet
-   * @param {Object} [options]
-   */
   constructor( chartTransform: ChartTransform, dataSet: Array<Vector2 | null>, options?: any ) {
 
     options = merge( {

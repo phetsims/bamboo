@@ -31,9 +31,6 @@ import TickMarkSet from '../TickMarkSet.js';
 
 class DemoLinearEquationPlot extends Node {
 
-  /**
-   * @param {Object} [options]
-   */
   constructor( options?: any ) {
 
     options = merge( {}, options );

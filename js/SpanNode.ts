@@ -10,7 +10,7 @@
 import merge from '../../phet-core/js/merge.js';
 import Orientation from '../../phet-core/js/Orientation.js';
 import ArrowNode from '../../scenery-phet/js/ArrowNode.js';
-import { Color, LayoutBox } from '../../scenery/js/imports.js';
+import { Color, FlowBox } from '../../scenery/js/imports.js';
 import { Line } from '../../scenery/js/imports.js';
 import { Node } from '../../scenery/js/imports.js';
 import bamboo from './bamboo.js';
@@ -19,7 +19,7 @@ import ChartTransform from './ChartTransform.js';
 // Same as the value in Node's validateBounds
 const notificationThreshold = 1e-13;
 
-class SpanNode extends LayoutBox {
+class SpanNode extends FlowBox {
 
   private chartTransform: ChartTransform;
   private axisOrientation: Orientation;

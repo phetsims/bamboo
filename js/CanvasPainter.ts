@@ -7,8 +7,13 @@
  * @author Sam Reid (PhET Interactive Simulations)
  */
 
-import merge from '../../phet-core/js/merge.js';
+import optionize from '../../phet-core/js/optionize.js';
 import bamboo from './bamboo.js';
+
+type SelfOptions = {
+  visible?: boolean;
+};
+export type CanvasPainterOptions = SelfOptions;
 
 abstract class CanvasPainter {
 
@@ -17,8 +22,10 @@ abstract class CanvasPainter {
   protected isDisposed: boolean;
 
   // Modeled as a class for readability because JavaScript does not have interfaces
-  constructor( options?: any ) {
-    options = merge( { visible: true }, options );
+  constructor( providedOptions?: CanvasPainterOptions ) {
+    const options = optionize<CanvasPainterOptions, SelfOptions>()( {
+      visible: true
+    }, providedOptions );
 
     this.visible = options.visible;
     this.isDisposed = false;

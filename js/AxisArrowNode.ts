@@ -7,11 +7,17 @@
  * @author Sam Reid (PhET Interactive Simulations)
  */
 
-import merge from '../../phet-core/js/merge.js';
+import optionize from '../../phet-core/js/optionize.js';
 import Orientation from '../../phet-core/js/Orientation.js';
-import ArrowNode from '../../scenery-phet/js/ArrowNode.js';
+import ArrowNode, { ArrowNodeOptions } from '../../scenery-phet/js/ArrowNode.js';
 import bamboo from './bamboo.js';
 import ChartTransform from './ChartTransform.js';
+
+type SelfOptions = {
+  value?: number; // Location of the axis
+  extension?: number; // in view coordinates, how far the axis goes past the edge of the ChartRectangle
+};
+type AxisArrowNodeOptions = SelfOptions & ArrowNodeOptions;
 
 class AxisArrowNode extends ArrowNode {
   private readonly chartTransform: ChartTransform;
@@ -20,18 +26,18 @@ class AxisArrowNode extends ArrowNode {
   private readonly axisOrientation: Orientation;
   private disposeAxisNode: () => void;
 
-  constructor( chartTransform: ChartTransform, axisOrientation: Orientation, options?: any ) {
+  constructor( chartTransform: ChartTransform, axisOrientation: Orientation, providedOptions?: AxisArrowNodeOptions ) {
 
-    options = merge( {
+    const options = optionize<AxisArrowNodeOptions, SelfOptions, ArrowNodeOptions>()( {
       value: 0, // by default the axis is at 0, but you can put it somewhere else
-      extension: 20, // in view coordinates, how far the axis goes past the edge of the ChartRectangle
+      extension: 20,
 
       // ArrowNode options
       doubleHead: true,
       headHeight: 10,
       headWidth: 10,
       tailWidth: 2
-    }, options );
+    }, providedOptions );
 
     super( 0, 0, 0, 0, options );
 

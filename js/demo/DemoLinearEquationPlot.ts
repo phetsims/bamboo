@@ -14,7 +14,7 @@ import Orientation from '../../../phet-core/js/Orientation.js';
 import MathSymbolFont from '../../../scenery-phet/js/MathSymbolFont.js';
 import NumberDisplay from '../../../scenery-phet/js/NumberDisplay.js';
 import PhetFont from '../../../scenery-phet/js/PhetFont.js';
-import { HBox } from '../../../scenery/js/imports.js';
+import { HBox, NodeOptions } from '../../../scenery/js/imports.js';
 import { Node } from '../../../scenery/js/imports.js';
 import { RichText } from '../../../scenery/js/imports.js';
 import { Text } from '../../../scenery/js/imports.js';
@@ -31,7 +31,7 @@ import TickMarkSet from '../TickMarkSet.js';
 
 class DemoLinearEquationPlot extends Node {
 
-  constructor( options?: any ) {
+  constructor( options?: NodeOptions ) {
 
     options = merge( {}, options );
 

@@ -8,10 +8,15 @@
 
 import Vector2 from '../../dot/js/Vector2.js';
 import { Shape } from '../../kite/js/imports.js';
-import merge from '../../phet-core/js/merge.js';
-import { Path } from '../../scenery/js/imports.js';
+import optionize from '../../phet-core/js/optionize.js';
+import { Path, PathOptions } from '../../scenery/js/imports.js';
 import bamboo from './bamboo.js';
 import ChartTransform from './ChartTransform.js';
+
+type SelfOptions = {
+  radius?: number;
+};
+type ScatterPlotOptions = SelfOptions & PathOptions;
 
 class ScatterPlot extends Path {
   private chartTransform: ChartTransform;
@@ -21,14 +26,14 @@ class ScatterPlot extends Path {
   private radius: number;
   private disposeScatterPlot: () => void;
 
-  constructor( chartTransform: ChartTransform, dataSet: Vector2[], options?: any ) {
+  constructor( chartTransform: ChartTransform, dataSet: Vector2[], providedOptions?: ScatterPlotOptions ) {
 
-    options = merge( {
+    const options = optionize<ScatterPlotOptions, SelfOptions, PathOptions>()( {
       radius: 2,
 
       // Path options
       fill: 'black'
-    }, options );
+    }, providedOptions );
 
     super( null, options );
 

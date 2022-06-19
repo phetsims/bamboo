@@ -7,14 +7,26 @@
  */
 
 import Vector2 from '../../dot/js/Vector2.js';
-import merge from '../../phet-core/js/merge.js';
-import { Node, PAINTABLE_DEFAULT_OPTIONS } from '../../scenery/js/imports.js';
+import optionize from '../../phet-core/js/optionize.js';
+import { Node, NodeOptions, PaintableOptions, PAINTABLE_DEFAULT_OPTIONS } from '../../scenery/js/imports.js';
 import { Rectangle } from '../../scenery/js/imports.js';
 import bamboo from './bamboo.js';
 import ChartTransform from './ChartTransform.js';
 
 // constants
 const DEFAULT_PAINTABLE_OPTIONS = { fill: 'black' };
+
+type SelfOptions = {
+
+  // width in view coordinates of each bar in the plot
+  barWidth?: number;
+  barTailValue?: number;
+
+  // maps a point to an containing Paintable options
+  // NOTE: cannot use the "Options" suffix because merge will try to merge that as nested options.
+  pointToPaintableFields?: ( point: Vector2 ) => PaintableOptions;
+};
+type BarPlotOptions = SelfOptions & NodeOptions;
 
 class BarPlot extends Node {
   private chartTransform: ChartTransform;
@@ -23,22 +35,18 @@ class BarPlot extends Node {
   // if you change this directly, you are responsible for calling update
   dataSet: Vector2[];
   private barWidth: number;
-  pointToPaintableFields: ( point: Vector2 ) => any;
+  pointToPaintableFields: ( point: Vector2 ) => PaintableOptions;
   private rectangles: Rectangle[];
   private disposeBarPlot: () => void;
 
-  constructor( chartTransform: ChartTransform, dataSet: Vector2[], options: any ) {
+  constructor( chartTransform: ChartTransform, dataSet: Vector2[], providedOptions?: BarPlotOptions ) {
 
-    options = merge( {
+    const options = optionize<BarPlotOptions, SelfOptions, NodeOptions>()( {
 
-      // {number} - width in view coordinates of each bar in the plot
       barWidth: 10,
       barTailValue: 0,
-
-      // {function(vector:Vector2):Object} maps a {Vector2} point to an {Object} containing Paintable options
-      // NOTE: cannot use the "Options" suffix because merge will try to merge that as nested options.
       pointToPaintableFields: ( point: Vector2 ) => DEFAULT_PAINTABLE_OPTIONS
-    }, options );
+    }, providedOptions );
 
     super( options );
 
@@ -92,9 +100,9 @@ class BarPlot extends Node {
       const bottom = Math.min( tail.y, tip.y );
       this.rectangles[ i ].setRect( tail.x - this.barWidth / 2, bottom, this.barWidth, Math.abs( rectHeight ) );
 
-      const providedOptions = this.pointToPaintableFields( this.dataSet[ i ] );
+      const paintableFields = this.pointToPaintableFields( this.dataSet[ i ] );
       assert && assert(
-        Object.keys( providedOptions ).filter( key => !Object.keys( PAINTABLE_DEFAULT_OPTIONS ).includes( key ) ).length === 0,
+        Object.keys( paintableFields ).filter( key => !Object.keys( PAINTABLE_DEFAULT_OPTIONS ).includes( key ) ).length === 0,
         'options contain keys that could be dangerous for mutate'
       );
 

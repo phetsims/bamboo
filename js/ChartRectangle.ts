@@ -7,7 +7,7 @@
  * @author Sam Reid (PhET Interactive Simulations)
  */
 
-import { Rectangle } from '../../scenery/js/imports.js';
+import { Rectangle, RectangleOptions } from '../../scenery/js/imports.js';
 import bamboo from './bamboo.js';
 import ChartTransform from './ChartTransform.js';
 
@@ -15,7 +15,7 @@ class ChartRectangle extends Rectangle {
   private chartTransform: ChartTransform;
   private disposeChartRectangle: () => void;
 
-  constructor( chartTransform: ChartTransform, options?: any ) {
+  constructor( chartTransform: ChartTransform, options?: RectangleOptions ) {
 
     super( 0, 0, 0, 0, options );
 

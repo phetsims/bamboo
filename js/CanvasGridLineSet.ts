@@ -7,12 +7,24 @@
  * @author Sam Reid (PhET Interactive Simulations)
  */
 
-import merge from '../../phet-core/js/merge.js';
+import optionize from '../../phet-core/js/optionize.js';
 import Orientation from '../../phet-core/js/Orientation.js';
 import bamboo from './bamboo.js';
-import CanvasPainter from './CanvasPainter.js';
+import CanvasPainter, { CanvasPainterOptions } from './CanvasPainter.js';
 import ChartTransform from './ChartTransform.js';
 import ClippingType from './ClippingType.js';
+
+type SelfOptions = {
+  origin?: number;
+  clippingType?: ClippingType;
+
+  // Path options
+  stroke?: string | CanvasGradient | CanvasPattern;
+  lineDash?: number[];
+  lineWidth?: number;
+  lineDashOffset?: number;
+};
+type CanvasGridLineSetOptions = SelfOptions & CanvasPainterOptions;
 
 class CanvasGridLineSet extends CanvasPainter {
   private readonly chartTransform: ChartTransform;
@@ -20,7 +32,7 @@ class CanvasGridLineSet extends CanvasPainter {
   private spacing: number;
   private readonly origin: number;
   private readonly clippingType: ClippingType;
-  private readonly stroke: any;
+  private readonly stroke: string | CanvasGradient | CanvasPattern;
   private readonly lineDash: number[];
   private readonly lineWidth: number;
   private lineDashOffset: number;
@@ -30,11 +42,11 @@ class CanvasGridLineSet extends CanvasPainter {
    * @param axisOrientation - axis along which successive grid lines appear.  For example,
    *                        - grid lines that are drawn horizontally progress up the Orientation.VERTICAL axis
    * @param spacing - in model coordinates
-   * @param [options]
+   * @param [providedOptions]
    */
-  constructor( chartTransform: ChartTransform, axisOrientation: Orientation, spacing: number, options?: any ) {
+  constructor( chartTransform: ChartTransform, axisOrientation: Orientation, spacing: number, providedOptions?: CanvasGridLineSetOptions ) {
 
-    options = merge( {
+    const options = optionize<CanvasGridLineSetOptions, SelfOptions>()( {
       origin: 0,
       clippingType: 'strict',
 
@@ -43,7 +55,7 @@ class CanvasGridLineSet extends CanvasPainter {
       lineDash: [ 1 ],
       lineWidth: 1,
       lineDashOffset: 0
-    }, options );
+    }, providedOptions );
 
     super();
 

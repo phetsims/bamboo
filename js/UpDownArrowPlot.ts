@@ -7,28 +7,34 @@
  */
 
 import Vector2 from '../../dot/js/Vector2.js';
-import merge from '../../phet-core/js/merge.js';
-import ArrowNode from '../../scenery-phet/js/ArrowNode.js';
-import { Node, PAINTABLE_DEFAULT_OPTIONS } from '../../scenery/js/imports.js';
+import optionize from '../../phet-core/js/optionize.js';
+import ArrowNode, { ArrowNodeOptions } from '../../scenery-phet/js/ArrowNode.js';
+import { Node, NodeOptions, PAINTABLE_DEFAULT_OPTIONS, PaintableOptions } from '../../scenery/js/imports.js';
 import bamboo from './bamboo.js';
 import ChartTransform from './ChartTransform.js';
 
 // constants
 const DEFAULT_ARROW_PAINTABLE_OPTIONS = { fill: 'black' };
 
+type SelfOptions = {
+  arrowNodeOptions?: ArrowNodeOptions;
+  pointToPaintableFields?: ( point: Vector2 ) => PaintableOptions;
+};
+type UpDownArrowPlotOptions = SelfOptions & NodeOptions;
+
 class UpDownArrowPlot extends Node {
   private chartTransform: ChartTransform;
 
   // if you change this directly, you are responsible for calling update
   public dataSet: Vector2[];
-  private pointToPaintableFields: ( point: Vector2 ) => any;
+  private pointToPaintableFields: ( point: Vector2 ) => PaintableOptions;
   private arrowNodes: ArrowNode[];
   private disposeUpDownArrowPLot: () => void;
-  private arrowNodeOptions: any;
+  private arrowNodeOptions: ArrowNodeOptions;
 
-  constructor( chartTransform: ChartTransform, dataSet: Vector2[], options?: any ) {
+  constructor( chartTransform: ChartTransform, dataSet: Vector2[], providedOptions?: UpDownArrowPlotOptions ) {
 
-    options = merge( {
+    const options = optionize<UpDownArrowPlotOptions, SelfOptions, NodeOptions>()( {
 
       // {Object} - Options passed along to each ArrowNode to set its Shape. Can not
       // include Paintable options, those should be provided by pointToPaintableFields.
@@ -37,7 +43,7 @@ class UpDownArrowPlot extends Node {
       // NOTE: cannot use the "Options" suffix because merge will try to merge that as nested options.
       // A function that will return the Paintable options for the ArrowNode at the provided point in model coordinates.
       pointToPaintableFields: ( point: Vector2 ) => DEFAULT_ARROW_PAINTABLE_OPTIONS
-    }, options );
+    }, providedOptions );
 
     super( options );
 

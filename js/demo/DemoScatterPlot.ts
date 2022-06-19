@@ -6,7 +6,7 @@ import dotRandom from '../../../dot/js/dotRandom.js';
 import Range from '../../../dot/js/Range.js';
 import Vector2 from '../../../dot/js/Vector2.js';
 import Orientation from '../../../phet-core/js/Orientation.js';
-import { Node } from '../../../scenery/js/imports.js';
+import { Node, VBoxOptions } from '../../../scenery/js/imports.js';
 import { VBox } from '../../../scenery/js/imports.js';
 import HSlider from '../../../sun/js/HSlider.js';
 import AxisArrowNode from '../AxisArrowNode.js';
@@ -27,7 +27,7 @@ import bamboo from '../bamboo.js';
 
 class DemoScatterPlot extends VBox {
 
-  constructor( options?: any ) {
+  constructor( options?: VBoxOptions ) {
 
     const dataSet = [];
     for ( let i = -3; i < 3; i += 0.01 ) {

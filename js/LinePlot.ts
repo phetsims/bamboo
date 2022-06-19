@@ -12,10 +12,14 @@
 
 import Vector2 from '../../dot/js/Vector2.js';
 import { Shape } from '../../kite/js/imports.js';
-import merge from '../../phet-core/js/merge.js';
-import { Path } from '../../scenery/js/imports.js';
+import optionize from '../../phet-core/js/optionize.js';
+import EmptyObjectType from '../../phet-core/js/types/EmptyObjectType.js';
+import { Path, PathOptions } from '../../scenery/js/imports.js';
 import bamboo from './bamboo.js';
 import ChartTransform from './ChartTransform.js';
+
+type SelfOptions = EmptyObjectType;
+type LinePlotOptions = SelfOptions & PathOptions;
 
 class LinePlot extends Path {
   private chartTransform: ChartTransform;
@@ -24,13 +28,13 @@ class LinePlot extends Path {
   dataSet: Vector2[];
   private disposeLinePlot: () => void;
 
-  constructor( chartTransform: ChartTransform, dataSet: Vector2[], options?: any ) {
+  constructor( chartTransform: ChartTransform, dataSet: Vector2[], providedOptions?: LinePlotOptions ) {
 
-    options = merge( {
+    const options = optionize<LinePlotOptions, SelfOptions, PathOptions>()( {
 
       // Path options
       stroke: 'black'
-    }, options );
+    }, providedOptions );
 
     super( null, options );
 

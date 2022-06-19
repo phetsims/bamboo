@@ -15,7 +15,7 @@ import Orientation from '../../../phet-core/js/Orientation.js';
 import MathSymbols from '../../../scenery-phet/js/MathSymbols.js';
 import PhetFont from '../../../scenery-phet/js/PhetFont.js';
 import PlusMinusZoomButtonGroup from '../../../scenery-phet/js/PlusMinusZoomButtonGroup.js';
-import { Node } from '../../../scenery/js/imports.js';
+import { Node, NodeOptions } from '../../../scenery/js/imports.js';
 import { Text } from '../../../scenery/js/imports.js';
 import AxisArrowNode from '../AxisArrowNode.js';
 import bamboo from '../bamboo.js';
@@ -28,7 +28,7 @@ import TickMarkSet from '../TickMarkSet.js';
 
 class DemoLinePlot extends Node {
 
-  constructor( options?: any ) {
+  constructor( options?: NodeOptions ) {
 
     super();
 

@@ -8,10 +8,14 @@
  * @author Chris Malley (PixelZoom, Inc.)
  */
 
-import merge from '../../phet-core/js/merge.js';
-import { Line } from '../../scenery/js/imports.js';
+import optionize from '../../phet-core/js/optionize.js';
+import EmptyObjectType from '../../phet-core/js/types/EmptyObjectType.js';
+import { Line, LineOptions } from '../../scenery/js/imports.js';
 import bamboo from './bamboo.js';
 import ChartTransform from './ChartTransform.js';
+
+type SelfOptions = EmptyObjectType;
+type LinearEquationPlotOptions = SelfOptions & LineOptions;
 
 class LinearEquationPlot extends Line {
   chartTransform: ChartTransform;
@@ -23,16 +27,16 @@ class LinearEquationPlot extends Line {
    * @param chartTransform
    * @param m - the slope, use Infinity or -Infinity for infinite (aka undefined) slope, a vertical line
    * @param b - the y-intercept
-   * @param [options]
+   * @param [providedOptions]
    */
-  constructor( chartTransform: ChartTransform, m: number, b: number, options?: any ) {
+  constructor( chartTransform: ChartTransform, m: number, b: number, providedOptions?: LinearEquationPlotOptions ) {
 
-    options = merge( {
+    const options = optionize<LinearEquationPlotOptions, SelfOptions, LineOptions>()( {
 
       // Path options
       stroke: 'black',
       lineWidth: 1
-    }, options );
+    }, providedOptions );
 
     super( 0, 0, 1, 1, options );
 

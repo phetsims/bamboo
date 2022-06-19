@@ -8,15 +8,34 @@
 
 import Bounds2 from '../../dot/js/Bounds2.js';
 import Utils from '../../dot/js/Utils.js';
-import merge from '../../phet-core/js/merge.js';
 import Orientation from '../../phet-core/js/Orientation.js';
-import { Path } from '../../scenery/js/imports.js';
+import { Path, PathOptions } from '../../scenery/js/imports.js';
 import { Node } from '../../scenery/js/imports.js';
 import { Text } from '../../scenery/js/imports.js';
 import bamboo from './bamboo.js';
 import ClippingType from './ClippingType.js';
 import TickMarkSet from './TickMarkSet.js';
 import ChartTransform from './ChartTransform.js';
+import optionize from '../../phet-core/js/optionize.js';
+
+type SelfOptions = {
+
+  value?: number;
+  edge?: null | 'min' | 'max'; // 'min' or 'max' put the ticks on that edge of the chart (takes precedence over value)
+  origin?: number;
+
+  // act as if there is a corresponding tick with this extent, for positioning the label relatively
+  extent?: number;
+
+  // determines whether the rounding is lenient, see ChartTransform
+  clippingType?: ClippingType;
+
+  // or return null if no label for that value
+  createLabel?: ( value: number ) => Node | null;
+  positionLabel?: ( label: Node, tickBounds: Bounds2, axisOrientation: Orientation ) => Node;
+
+};
+type TickLabelSetOptions = SelfOptions & PathOptions;
 
 class TickLabelSet extends Path {
   private chartTransform: ChartTransform;
@@ -29,18 +48,18 @@ class TickLabelSet extends Path {
   private edge: null | 'min' | 'max';
   private createLabel;
   private positionLabel;
-  private labelMap: Map<number, Node>; // cache labels for quick reuse
+  private labelMap: Map<number, Node|null>; // cache labels for quick reuse
   private disposeTickLabelSet: () => void;
 
   /**
    * @param chartTransform
    * @param axisOrientation - the progression of the ticks.  For instance HORIZONTAL has ticks at x=0,1,2, etc.
    * @param spacing - in model coordinates
-   * @param [options]
+   * @param [providedOptions]
    */
-  constructor( chartTransform: ChartTransform, axisOrientation: Orientation, spacing: number, options?: any ) {
+  constructor( chartTransform: ChartTransform, axisOrientation: Orientation, spacing: number, providedOptions?: TickLabelSetOptions ) {
 
-    options = merge( {
+    const options = optionize<TickLabelSetOptions, SelfOptions, PathOptions>()( {
       value: 0, // appear on the axis by default
       edge: null, // 'min' or 'max' put the ticks on that edge of the chart (takes precedence over value)
       origin: 0,
@@ -64,7 +83,7 @@ class TickLabelSet extends Path {
         }
         return label;
       }
-    }, options );
+    }, providedOptions );
 
     assert && assert( !options.children, 'TickLabelSet sets children in updateLabelSet' );
     if ( options.edge ) {
@@ -123,7 +142,7 @@ class TickLabelSet extends Path {
         tickBounds.setMinMax( viewX - this.extent / 2, viewPosition, viewX + this.extent / 2, viewPosition );
       }
 
-      const label = this.labelMap.has( modelPosition ) ? this.labelMap.get( modelPosition ) :
+      const label = this.labelMap.has( modelPosition ) ? this.labelMap.get( modelPosition )! :
                     this.createLabel ? this.createLabel( modelPosition ) :
                     null;
       this.labelMap.set( modelPosition, label );

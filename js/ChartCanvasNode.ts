@@ -8,10 +8,16 @@
  */
 
 import Bounds2 from '../../dot/js/Bounds2.js';
-import { CanvasNode } from '../../scenery/js/imports.js';
+import { CanvasNode, CanvasNodeOptions } from '../../scenery/js/imports.js';
 import bamboo from './bamboo.js';
 import ChartTransform from './ChartTransform.js';
 import CanvasPainter from './CanvasPainter.js';
+import StrictOmit from '../../phet-core/js/types/StrictOmit.js';
+import EmptyObjectType from '../../phet-core/js/types/EmptyObjectType.js';
+import optionize from '../../phet-core/js/optionize.js';
+
+type SelfOptions = EmptyObjectType;
+type ChartCanvasNodeOptions = SelfOptions & CanvasNodeOptions;
 
 class ChartCanvasNode extends CanvasNode {
   private chartTransform: ChartTransform;
@@ -20,12 +26,11 @@ class ChartCanvasNode extends CanvasNode {
   painters: CanvasPainter[];
   private disposeChartCanvasLinePlot: () => void;
 
-  constructor( chartTransform: ChartTransform, painters: CanvasPainter[], options?: any ) {
+  constructor( chartTransform: ChartTransform, painters: CanvasPainter[], providedOptions?: StrictOmit<CanvasNodeOptions, 'canvasBounds'> ) {
 
-    options = options || {};
-
-    assert && assert( !options.canvasBounds, 'ChartCanvasNode sets canvasBounds' );
-    options.canvasBounds = new Bounds2( 0, 0, chartTransform.viewWidth, chartTransform.viewHeight );
+    const options = optionize<ChartCanvasNodeOptions, SelfOptions, CanvasNodeOptions>()( {
+      canvasBounds: new Bounds2( 0, 0, chartTransform.viewWidth, chartTransform.viewHeight )
+    }, providedOptions );
 
     super( options );
 

@@ -14,7 +14,7 @@ import Utils from '../../../dot/js/Utils.js';
 import Transform1 from '../../../dot/js/Transform1.js';
 import Vector2 from '../../../dot/js/Vector2.js';
 import Orientation from '../../../phet-core/js/Orientation.js';
-import { DragListener } from '../../../scenery/js/imports.js';
+import { DragListener, SceneryEvent, VBoxOptions } from '../../../scenery/js/imports.js';
 import { HBox } from '../../../scenery/js/imports.js';
 import { Node } from '../../../scenery/js/imports.js';
 import { Text } from '../../../scenery/js/imports.js';
@@ -32,7 +32,7 @@ import bamboo from '../bamboo.js';
 
 class DemoMultiplePlots extends VBox {
 
-  constructor( options?: any ) {
+  constructor( options?: VBoxOptions ) {
 
     const dataSet = [];
     for ( let x = 2; x < 10; x += 0.1 ) {
@@ -60,8 +60,8 @@ class DemoMultiplePlots extends VBox {
       children: [
 
         // Major grid lines
-        new GridLineSet( chartTransform, Orientation.HORIZONTAL, 2, { stroke: 'darkGray', clippingType: 'loose' } ),
-        new GridLineSet( chartTransform, Orientation.VERTICAL, 5000, { stroke: 'darkGray', clippingType: 'loose' } ),
+        new GridLineSet( chartTransform, Orientation.HORIZONTAL, 2, { stroke: 'darkGray', clippingType: 'strict' } ),
+        new GridLineSet( chartTransform, Orientation.VERTICAL, 5000, { stroke: 'darkGray', clippingType: 'strict' } ),
 
         // Some data
         new BarPlot( chartTransform, dataSet, {
@@ -117,7 +117,7 @@ class DemoMultiplePlots extends VBox {
       fill: 'black'
     } );
 
-    const update = ( event: any ) => {
+    const update = ( event: SceneryEvent ) => {
 
       const point = event.pointer.point;
       const parentPoint = chartRectangle.globalToParentPoint( point );

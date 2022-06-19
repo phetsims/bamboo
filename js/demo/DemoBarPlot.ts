@@ -12,7 +12,7 @@ import Utils from '../../../dot/js/Utils.js';
 import Vector2 from '../../../dot/js/Vector2.js';
 import Orientation from '../../../phet-core/js/Orientation.js';
 import MathSymbols from '../../../scenery-phet/js/MathSymbols.js';
-import { Node } from '../../../scenery/js/imports.js';
+import { Node, NodeOptions } from '../../../scenery/js/imports.js';
 import { Text } from '../../../scenery/js/imports.js';
 import { VBox } from '../../../scenery/js/imports.js';
 import { Color } from '../../../scenery/js/imports.js';
@@ -27,7 +27,7 @@ import TickMarkSet from '../TickMarkSet.js';
 
 class DemoBarPlot extends Node {
 
-  constructor( options?: any ) {
+  constructor( options?: NodeOptions ) {
     super();
 
     const createDataSet = ( randomX: number, randomY: number ) => {

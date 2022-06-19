@@ -6,11 +6,17 @@
  * @author Chris Malley (PixelZoom, Inc.)
  */
 
-import merge from '../../phet-core/js/merge.js';
+import optionize from '../../phet-core/js/optionize.js';
 import Orientation from '../../phet-core/js/Orientation.js';
-import { Line } from '../../scenery/js/imports.js';
+import { Line, LineOptions } from '../../scenery/js/imports.js';
 import bamboo from './bamboo.js';
 import ChartTransform from './ChartTransform.js';
+
+type SelfOptions = {
+  value?: number; // Value where the axis lies
+  extension?: number; // in view coordinates, how far the axis goes past the edge of the ChartRectangle
+};
+type AxisLineOptions = SelfOptions & LineOptions;
 
 class AxisLine extends Line {
   private readonly chartTransform: ChartTransform;
@@ -19,16 +25,16 @@ class AxisLine extends Line {
   private readonly extension: number;
   private disposeAxisLine: () => void;
 
-  constructor( chartTransform: ChartTransform, axisOrientation: Orientation, options?: any ) {
+  constructor( chartTransform: ChartTransform, axisOrientation: Orientation, providedOptions?: AxisLineOptions ) {
 
-    options = merge( {
+    const options = optionize<AxisLineOptions, SelfOptions, LineOptions>()( {
       value: 0, // by default the axis is at 0, but you can put it somewhere else
-      extension: 0, // in view coordinates, how far the axis goes past the edge of the ChartRectangle
+      extension: 0,
 
       // Line options
       stroke: 'black',
       lineWidth: 2
-    }, options );
+    }, providedOptions );
 
     super( 0, 0, 0, 0, options );
 

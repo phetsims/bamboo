@@ -12,10 +12,24 @@ import Range from '../../dot/js/Range.js';
 import Transform1 from '../../dot/js/Transform1.js';
 import Utils from '../../dot/js/Utils.js';
 import Vector2 from '../../dot/js/Vector2.js';
-import merge from '../../phet-core/js/merge.js';
+import optionize from '../../phet-core/js/optionize.js';
 import Orientation from '../../phet-core/js/Orientation.js';
 import bamboo from './bamboo.js';
 import ClippingType from './ClippingType.js';
+
+type SelfOptions = {
+
+  // The horizontal axis is referred to as the "x" axis, though it may be used to depict another dimension, such as "time"
+  viewWidth?: number; // width in view coordinates
+  modelXRange?: Range; // range of the x axis, in model coordinates
+  xTransform?: Transform1; // model-to-view scaling function for the x axis
+
+  // The vertical axis is referred to as the "y" axis, though it may be used to depict another dimension such as "width"
+  viewHeight?: number; // height in view coordinates
+  modelYRange?: Range; // range of the y axis, in model coordinates
+  yTransform?: Transform1; // model-to-view scaling function for the y axis
+};
+type ChartTransformOptions = SelfOptions;
 
 class ChartTransform {
 
@@ -28,20 +42,17 @@ class ChartTransform {
   private xTransform: Transform1;
   private yTransform: Transform1;
 
-  constructor( options?: any ) {
+  constructor( providedOptions?: ChartTransformOptions ) {
 
-    options = merge( {
+    const options = optionize<ChartTransformOptions, SelfOptions>()( {
+      viewWidth: 100,
+      modelXRange: new Range( -1, 1 ),
+      xTransform: new Transform1( x => x, x => x ),
 
-      // The horizontal axis is referred to as the "x" axis, though it may be used to depict another dimension, such as "time"
-      viewWidth: 100, // {number} width in view coordinates
-      modelXRange: new Range( -1, 1 ), // {Range} range of the x axis, in model coordinates
-      xTransform: new Transform1( x => x, x => x ), // {Transform1} model-to-view scaling function for the x axis
-
-      // The vertical axis is referred to as the "y" axis, though it may be used to depict another dimension such as "width"
-      viewHeight: 100, // {number} height in view coordinates
-      modelYRange: new Range( -1, 1 ), // {Range} range of the y axis, in model coordinates
-      yTransform: new Transform1( x => x, x => x ) // {Transform1} model-to-view scaling function for the y axis
-    }, options );
+      viewHeight: 100,
+      modelYRange: new Range( -1, 1 ),
+      yTransform: new Transform1( x => x, x => x )
+    }, providedOptions );
 
     assert && assert( options.xTransform instanceof Transform1, 'xTransform must be of type Transform' );
     assert && assert( options.yTransform instanceof Transform1, 'yTransform must be of type Transform' );

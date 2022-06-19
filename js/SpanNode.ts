@@ -7,10 +7,10 @@
  * @author Sam Reid (PhET Interactive Simulations)
  */
 
-import merge from '../../phet-core/js/merge.js';
+import optionize from '../../phet-core/js/optionize.js';
 import Orientation from '../../phet-core/js/Orientation.js';
-import ArrowNode from '../../scenery-phet/js/ArrowNode.js';
-import { Color, FlowBox } from '../../scenery/js/imports.js';
+import ArrowNode, { ArrowNodeOptions } from '../../scenery-phet/js/ArrowNode.js';
+import { Color, FlowBox, FlowBoxOptions } from '../../scenery/js/imports.js';
 import { Line } from '../../scenery/js/imports.js';
 import { Node } from '../../scenery/js/imports.js';
 import bamboo from './bamboo.js';
@@ -18,6 +18,14 @@ import ChartTransform from './ChartTransform.js';
 
 // Same as the value in Node's validateBounds
 const notificationThreshold = 1e-13;
+
+type SelfOptions = {
+  color?: string | Color;
+  spacing?: number;
+  outerLineLength?: number;
+  arrowNodeOptions?: ArrowNodeOptions;
+};
+type SpanNodeOptions = SelfOptions & FlowBoxOptions;
 
 class SpanNode extends FlowBox {
 
@@ -28,7 +36,7 @@ class SpanNode extends FlowBox {
   private color: string | Color;
   private outerLineLength: number;
   private viewWidth: number;
-  private arrowNodeOptions: any;
+  private arrowNodeOptions: ArrowNodeOptions;
   private disposeSpanNode: () => void;
 
   /**
@@ -36,9 +44,9 @@ class SpanNode extends FlowBox {
    * @param axisOrientation
    * @param delta - in model coordinates
    * @param labelNode
-   * @param [options]
+   * @param [providedOptions]
    */
-  constructor( chartTransform: ChartTransform, axisOrientation: Orientation, delta: number, labelNode: Node, options?: any ) {
+  constructor( chartTransform: ChartTransform, axisOrientation: Orientation, delta: number, labelNode: Node, providedOptions?: SpanNodeOptions ) {
 
     assert && assert( chartTransform instanceof ChartTransform, 'invalid chartTransform' );
     assert && assert( axisOrientation instanceof Orientation, 'invalid axisOrientation' );
@@ -48,7 +56,7 @@ class SpanNode extends FlowBox {
     //TODO https://github.com/phetsims/bamboo/issues/21 support Orientation.VERTICAL
     assert && assert( axisOrientation !== Orientation.VERTICAL, 'Orientation.VERTICAL is not yet supported' );
 
-    options = merge( {
+    const options = optionize<SpanNodeOptions, SelfOptions, FlowBoxOptions>()( {
       color: 'black',
       spacing: -2, // between arrow and labelNode (option passed to supertype LayoutBox)
       outerLineLength: 6, // length of the bars at the ends of each arrow
@@ -59,7 +67,7 @@ class SpanNode extends FlowBox {
         tailWidth: 1.5,
         stroke: null // Not supported since it throws off the dimensions, use fill instead
       }
-    }, options );
+    }, providedOptions );
 
     assert && assert( !options.children, 'SpanNode sets children' );
     assert && assert( !options.orientation, 'SpanNode sets orientation' );

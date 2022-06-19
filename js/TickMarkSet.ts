@@ -8,12 +8,24 @@
 
 import Bounds2 from '../../dot/js/Bounds2.js';
 import { Shape } from '../../kite/js/imports.js';
-import merge from '../../phet-core/js/merge.js';
 import Orientation from '../../phet-core/js/Orientation.js';
-import { Path } from '../../scenery/js/imports.js';
+import { Path, PathOptions } from '../../scenery/js/imports.js';
 import bamboo from './bamboo.js';
 import ClippingType from './ClippingType.js';
 import ChartTransform from './ChartTransform.js';
+import optionize from '../../phet-core/js/optionize.js';
+
+type SelfOptions = {
+  value?: number;
+  edge?: null | 'min' | 'max'; // 'min' or 'max' put the ticks on that edge of the chart (takes precedence over value)
+  origin?: number;
+  lineWidth?: number;
+  extent?: number;
+
+  // determines whether the rounding is lenient, see ChartTransform
+  clippingType?: ClippingType;
+};
+type TickMarkSetOptions = SelfOptions & PathOptions;
 
 class TickMarkSet extends Path {
   private chartTransform: ChartTransform;
@@ -30,11 +42,11 @@ class TickMarkSet extends Path {
    * @param chartTransform
    * @param axisOrientation - the progression of the ticks.  For instance HORIZONTAL has ticks at x=0,1,2, etc.
    * @param spacing - in model coordinates
-   * @param [options]
+   * @param [providedOptions]
    */
-  constructor( chartTransform: ChartTransform, axisOrientation: Orientation, spacing: number, options?: any ) {
+  constructor( chartTransform: ChartTransform, axisOrientation: Orientation, spacing: number, providedOptions?: TickMarkSetOptions ) {
 
-    options = merge( {
+    const options = optionize<TickMarkSetOptions, SelfOptions, PathOptions>()( {
       value: 0, // appear on the axis by default
       edge: null, // 'min' or 'max' put the ticks on that edge of the chart (takes precedence over value)
       origin: 0,
@@ -44,7 +56,7 @@ class TickMarkSet extends Path {
 
       // determines whether the rounding is lenient, see ChartTransform
       clippingType: 'strict'
-    }, options );
+    }, providedOptions );
 
     if ( options.edge ) {
       assert && assert( options.value === 0, 'value and edge are mutually exclusive' );

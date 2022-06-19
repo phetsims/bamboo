@@ -11,18 +11,24 @@
  */
 
 import { Shape } from '../../kite/js/imports.js';
-import merge from '../../phet-core/js/merge.js';
 import Orientation from '../../phet-core/js/Orientation.js';
-import { Path } from '../../scenery/js/imports.js';
+import { Path, PathOptions } from '../../scenery/js/imports.js';
 import bamboo from './bamboo.js';
 import ClippingType from './ClippingType.js';
 import ChartTransform from './ChartTransform.js';
+import optionize from '../../phet-core/js/optionize.js';
+
+type SelfOptions = {
+  origin?: number;
+  clippingType?: ClippingType;
+};
+type GridLineSetOptions = SelfOptions & PathOptions;
 
 class GridLineSet extends Path {
   private readonly chartTransform: ChartTransform;
   private readonly axisOrientation: Orientation;
   private spacing: number;
-  private readonly origin: any;
+  private readonly origin: number;
   private readonly clippingType: ClippingType;
   private disposeGridLineSet: () => void;
 
@@ -31,17 +37,17 @@ class GridLineSet extends Path {
    * @param axisOrientation - axis along which successive grid lines appear.  For example,
    *                                      - grid lines that are drawn horizontally progress up the Orientation.VERTICAL axis
    * @param spacing - in model coordinates
-   * @param [options]
+   * @param [providedOptions]
    */
-  constructor( chartTransform: ChartTransform, axisOrientation: Orientation, spacing: number, options?: any ) {
+  constructor( chartTransform: ChartTransform, axisOrientation: Orientation, spacing: number, providedOptions?: GridLineSetOptions ) {
 
-    options = merge( {
+    const options = optionize<GridLineSetOptions, SelfOptions, PathOptions>()( {
       origin: 0,
       clippingType: 'strict',
 
       // Path options
       stroke: 'black'
-    }, options );
+    }, providedOptions );
 
     super( null, options );
 

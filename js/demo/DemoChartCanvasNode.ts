@@ -13,7 +13,7 @@ import Utils from '../../../dot/js/Utils.js';
 import Vector2 from '../../../dot/js/Vector2.js';
 import Orientation from '../../../phet-core/js/Orientation.js';
 import PlusMinusZoomButtonGroup from '../../../scenery-phet/js/PlusMinusZoomButtonGroup.js';
-import { Node } from '../../../scenery/js/imports.js';
+import { Node, NodeOptions } from '../../../scenery/js/imports.js';
 import { Text } from '../../../scenery/js/imports.js';
 import { Color } from '../../../scenery/js/imports.js';
 import AxisLine from '../AxisLine.js';
@@ -30,7 +30,7 @@ import CanvasPainter from '../CanvasPainter.js';
 
 class DemoChartCanvasNode extends Node {
 
-  constructor( emitter: Emitter<[ number ]>, options?: any ) {
+  constructor( emitter: Emitter<[ number ]>, options?: NodeOptions ) {
 
     super();
 
@@ -86,7 +86,7 @@ class DemoChartCanvasNode extends Node {
     for ( let i = 0; i < colors.length; i++ ) {
       const d = createDataSet( -2, 2, 5 + i / 10 + dotRandom.nextDouble() / 10, dotRandom.nextDouble() * 2, 0.005, i === colors.length - 1 );
       const canvasLinePlot = new CanvasLinePlot( chartTransform, d, {
-        stroke: colors[ i % colors.length ],
+        stroke: colors[ i % colors.length ]!,
         lineWidth: i
       } );
       canvasLinePlots.push( canvasLinePlot );

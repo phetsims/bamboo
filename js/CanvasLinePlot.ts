@@ -10,11 +10,18 @@
  */
 
 import Vector2 from '../../dot/js/Vector2.js';
-import merge from '../../phet-core/js/merge.js';
+import optionize from '../../phet-core/js/optionize.js';
 import { Color } from '../../scenery/js/imports.js';
 import bamboo from './bamboo.js';
-import CanvasPainter from './CanvasPainter.js';
+import CanvasPainter, { CanvasPainterOptions } from './CanvasPainter.js';
 import ChartTransform from './ChartTransform.js';
+
+type SelfOptions = {
+  stroke?: string;
+  lineWidth?: number;
+};
+
+type CanvasLinePlotOptions = SelfOptions & CanvasPainterOptions;
 
 class CanvasLinePlot extends CanvasPainter {
   private chartTransform: ChartTransform;
@@ -28,12 +35,12 @@ class CanvasLinePlot extends CanvasPainter {
   // CSS for rendering the stroke
   private strokeCSS: string | null;
 
-  constructor( chartTransform: ChartTransform, dataSet: Array<Vector2 | null>, options?: any ) {
+  constructor( chartTransform: ChartTransform, dataSet: Array<Vector2 | null>, providedOptions?: CanvasLinePlotOptions ) {
 
-    options = merge( {
+    const options = optionize<CanvasLinePlotOptions, SelfOptions>()( {
       stroke: 'black', // {Color|string|null}
       lineWidth: 1
-    }, options );
+    }, providedOptions );
 
     super();
 

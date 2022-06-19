@@ -106,6 +106,8 @@ class UpDownArrowPlot extends Node {
         Object.keys( providedOptions ).filter( key => !Object.keys( PAINTABLE_DEFAULT_OPTIONS ).includes( key ) ).length === 0,
         'options contain keys that could be dangerous for mutate'
       );
+
+      // @ts-ignore, see https://github.com/phetsims/scenery/issues/1428
       this.arrowNodes[ i ].mutate( providedOptions );
     }
   }

@@ -9,7 +9,6 @@
 import NumberProperty from '../../../axon/js/NumberProperty.js';
 import Range from '../../../dot/js/Range.js';
 import Utils from '../../../dot/js/Utils.js';
-import merge from '../../../phet-core/js/merge.js';
 import Orientation from '../../../phet-core/js/Orientation.js';
 import MathSymbolFont from '../../../scenery-phet/js/MathSymbolFont.js';
 import NumberDisplay from '../../../scenery-phet/js/NumberDisplay.js';
@@ -28,12 +27,18 @@ import GridLineSet from '../GridLineSet.js';
 import TickLabelSet from '../TickLabelSet.js';
 import LinearEquationPlot from '../LinearEquationPlot.js';
 import TickMarkSet from '../TickMarkSet.js';
+import EmptyObjectType from '../../../phet-core/js/types/EmptyObjectType.js';
+import optionize from '../../../phet-core/js/optionize.js';
+import StrictOmit from '../../../phet-core/js/types/StrictOmit.js';
+
+type SelfOptions = EmptyObjectType;
+type DemoLinearEquationPlotOptions = SelfOptions & StrictOmit<NodeOptions, 'children'>;
 
 class DemoLinearEquationPlot extends Node {
 
-  constructor( options?: NodeOptions ) {
+  constructor( providedOptions?: DemoLinearEquationPlotOptions ) {
 
-    options = merge( {}, options );
+    const options = optionize<DemoLinearEquationPlotOptions, SelfOptions, NodeOptions>()( {}, providedOptions );
 
     const modelXRange = new Range( -50, 50 );
     const modelYRange = new Range( -50, 50 );
@@ -201,7 +206,6 @@ class DemoLinearEquationPlot extends Node {
       ]
     } );
 
-    assert && assert( !options.children, 'DemoLinearEquationPlot sets children' );
     options.children = [
       new HBox( {
         excludeInvisibleChildrenFromBounds: false,

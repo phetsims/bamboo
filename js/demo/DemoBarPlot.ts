@@ -27,7 +27,7 @@ import TickMarkSet from '../TickMarkSet.js';
 
 class DemoBarPlot extends Node {
 
-  constructor( options?: NodeOptions ) {
+  public constructor( options?: NodeOptions ) {
     super();
 
     const createDataSet = ( randomX: number, randomY: number ) => {

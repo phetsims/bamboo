@@ -32,7 +32,7 @@ import bamboo from '../bamboo.js';
 
 class DemoMultiplePlots extends VBox {
 
-  constructor( options?: VBoxOptions ) {
+  public constructor( options?: VBoxOptions ) {
 
     const dataSet = [];
     for ( let x = 2; x < 10; x += 0.1 ) {

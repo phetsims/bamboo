@@ -18,7 +18,7 @@ import UpDownArrowPlot from '../UpDownArrowPlot.js';
 import { Node } from '../../../scenery/js/imports.js';
 
 class DemoUpDownArrowPlot extends Node {
-  constructor( options?: NodeOptions ) {
+  public constructor( options?: NodeOptions ) {
     super();
 
     const modelXRange = new Range( 0, 10 );

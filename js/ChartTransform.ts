@@ -34,15 +34,16 @@ type ChartTransformOptions = SelfOptions;
 class ChartTransform {
 
   // fires when some aspect of this transform changes
-  changedEmitter: Emitter<[]>;
-  viewWidth: number;
-  viewHeight: number;
-  modelXRange: Range;
-  modelYRange: Range;
-  private xTransform: Transform1;
-  private yTransform: Transform1;
+  public readonly changedEmitter: Emitter<[]>;
 
-  constructor( providedOptions?: ChartTransformOptions ) {
+  public viewWidth: number;
+  public viewHeight: number;
+  public modelXRange: Range;
+  public modelYRange: Range;
+  public xTransform: Transform1;
+  public yTransform: Transform1;
+
+  public constructor( providedOptions?: ChartTransformOptions ) {
 
     const options = optionize<ChartTransformOptions, SelfOptions>()( {
       viewWidth: 100,
@@ -68,7 +69,7 @@ class ChartTransform {
     this.yTransform = options.yTransform;
   }
 
-  dispose(): void {
+  public dispose(): void {
     this.changedEmitter.dispose();
   }
 
@@ -81,8 +82,8 @@ class ChartTransform {
    * @param clippingType - if something is clipped elsewhere, we allow slack so it doesn't disappear from view like a flicker
    * @param callback
    */
-  forEachSpacing( axisOrientation: Orientation, spacing: number, origin: number, clippingType: ClippingType,
-                  callback: ( modelPosition: number, viewPosition: number ) => void ): void {
+  public forEachSpacing( axisOrientation: Orientation, spacing: number, origin: number, clippingType: ClippingType,
+                         callback: ( modelPosition: number, viewPosition: number ) => void ): void {
 
     const modelRange = this.getModelRange( axisOrientation );
     const nMin = getValueForSpacing( modelRange.min, clippingType, origin, spacing, Math.ceil );
@@ -96,7 +97,7 @@ class ChartTransform {
   }
 
   // Transforms a model coordinate {number} to a view coordinate {number} for the axis that corresponds to Orientation.
-  modelToView( axisOrientation: Orientation, value: number ): number {
+  public modelToView( axisOrientation: Orientation, value: number ): number {
     assert && assert( axisOrientation instanceof Orientation, `invalid axisOrientation: ${axisOrientation}` );
 
     const modelRange = axisOrientation === Orientation.HORIZONTAL ? this.modelXRange : this.modelYRange;
@@ -118,42 +119,42 @@ class ChartTransform {
   }
 
   // Transforms a model coordinate {number} to a view coordinate {number} for the x axis.
-  modelToViewX( x: number ): number {
+  public modelToViewX( x: number ): number {
     return this.modelToView( Orientation.HORIZONTAL, x );
   }
 
   // Transforms a model coordinate {number} to a view coordinate {number} for the y axis.
-  modelToViewY( y: number ): number {
+  public modelToViewY( y: number ): number {
     return this.modelToView( Orientation.VERTICAL, y );
   }
 
   // Transforms model x,y coordinates to a view position.
-  modelToViewXY( x: number, y: number ): Vector2 {
+  public modelToViewXY( x: number, y: number ): Vector2 {
     return new Vector2( this.modelToViewX( x ), this.modelToViewY( y ) );
   }
 
   // Transforms a model position to a view position.
-  modelToViewPosition( position: Vector2 ): Vector2 {
+  public modelToViewPosition( position: Vector2 ): Vector2 {
     return this.modelToViewXY( position.x, position.y );
   }
 
   // Transforms a model delta {number} to a view delta {number} for the axis that corresponds to Orientation.
-  modelToViewDelta( axisOrientation: Orientation, modelDelta: number ): number {
+  public modelToViewDelta( axisOrientation: Orientation, modelDelta: number ): number {
     return this.modelToView( axisOrientation, modelDelta ) - this.modelToView( axisOrientation, 0 );
   }
 
   // Transforms a model delta {number} to a view delta {number} for the x axis.
-  modelToViewDeltaX( dx: number ): number {
+  public modelToViewDeltaX( dx: number ): number {
     return this.modelToViewDelta( Orientation.HORIZONTAL, dx );
   }
 
   // Transforms a model delta {number} to a view delta {number} for the y axis.
-  modelToViewDeltaY( dy: number ): number {
+  public modelToViewDeltaY( dy: number ): number {
     return this.modelToViewDelta( Orientation.VERTICAL, dy );
   }
 
   // Converts a scalar value from view coordinates to model coordinates, along the specified axis.  The inverse of modelToView.
-  viewToModel( axisOrientation: Orientation, value: number ): number {
+  public viewToModel( axisOrientation: Orientation, value: number ): number {
     assert && assert( axisOrientation instanceof Orientation, `invalid axisOrientation: ${axisOrientation}` );
 
     const modelRange = axisOrientation === Orientation.HORIZONTAL ? this.modelXRange : this.modelYRange;
@@ -175,42 +176,42 @@ class ChartTransform {
   }
 
   // Convert a view position to a model position, in the horizontal direction.
-  viewToModelX( x: number ): number {
+  public viewToModelX( x: number ): number {
     return this.viewToModel( Orientation.HORIZONTAL, x );
   }
 
   // Convert a view position to a model position, in the vertical direction.
-  viewToModelY( y: number ): number {
+  public viewToModelY( y: number ): number {
     return this.viewToModel( Orientation.VERTICAL, y );
   }
 
   // Convert a view position to a model position, for a coordinate specified as x,y.
-  viewToModelXY( x: number, y: number ): Vector2 {
+  public viewToModelXY( x: number, y: number ): Vector2 {
     return new Vector2( this.viewToModelX( x ), this.viewToModelY( y ) );
   }
 
   // Convert a view position to a model position.
-  viewToModelPosition( position: Vector2 ): Vector2 {
+  public viewToModelPosition( position: Vector2 ): Vector2 {
     return this.viewToModelXY( position.x, position.y );
   }
 
   // Convert a delta in the view to a delta in the model, in the horizontal direction.
-  viewToModelDeltaX( dx: number ): number {
+  public viewToModelDeltaX( dx: number ): number {
     return this.viewToModelX( dx ) - this.viewToModelX( 0 );
   }
 
   // Convert a delta in the view to a delta in the model, in the vertical direction.
-  viewToModelDeltaY( dy: number ): number {
+  public viewToModelDeltaY( dy: number ): number {
     return this.viewToModelY( dy ) - this.viewToModelY( 0 );
   }
 
   // Convert a delta in the view to a delta in the model, for a Vector2
-  viewToModelDelta( deltaVector: Vector2 ): Vector2 {
+  public viewToModelDelta( deltaVector: Vector2 ): Vector2 {
     return this.viewToModelPosition( deltaVector ).minus( this.viewToModelPosition( Vector2.ZERO ) );
   }
 
   // Sets the view width.
-  setViewWidth( viewWidth: number ): void {
+  public setViewWidth( viewWidth: number ): void {
     if ( viewWidth !== this.viewWidth ) {
       this.viewWidth = viewWidth;
       this.changedEmitter.emit();
@@ -218,7 +219,7 @@ class ChartTransform {
   }
 
   // Sets the view height.
-  setViewHeight( viewHeight: number ): void {
+  public setViewHeight( viewHeight: number ): void {
     if ( viewHeight !== this.viewHeight ) {
       this.viewHeight = viewHeight;
       this.changedEmitter.emit();
@@ -226,7 +227,7 @@ class ChartTransform {
   }
 
   // Sets the Range for the model's x dimension.
-  setModelXRange( modelXRange: Range ): void {
+  public setModelXRange( modelXRange: Range ): void {
     if ( !modelXRange.equals( this.modelXRange ) ) {
       this.modelXRange = modelXRange;
       this.changedEmitter.emit();
@@ -234,7 +235,7 @@ class ChartTransform {
   }
 
   // Sets the Range for the model's y dimension.
-  setModelYRange( modelYRange: Range ): void {
+  public setModelYRange( modelYRange: Range ): void {
     if ( !modelYRange.equals( this.modelYRange ) ) {
       this.modelYRange = modelYRange;
       this.changedEmitter.emit();
@@ -242,12 +243,12 @@ class ChartTransform {
   }
 
   // Gets the model range for the axis that corresponds to Orientation.
-  getModelRange( axisOrientation: Orientation ): Range {
+  public getModelRange( axisOrientation: Orientation ): Range {
     return ( axisOrientation === Orientation.HORIZONTAL ) ? this.modelXRange : this.modelYRange;
   }
 
   // Sets the model-to-view scaling function for the x-axis.
-  setXTransform( xTransform: Transform1 ): void {
+  public setXTransform( xTransform: Transform1 ): void {
     if ( this.xTransform !== xTransform ) {
       this.xTransform = xTransform;
       this.changedEmitter.emit();
@@ -255,7 +256,7 @@ class ChartTransform {
   }
 
   // Sets the model-to-view scaling function for the y-axis.
-  setYTransform( yTransform: Transform1 ): void {
+  public setYTransform( yTransform: Transform1 ): void {
     if ( this.yTransform !== yTransform ) {
       this.yTransform = yTransform;
       this.changedEmitter.emit();

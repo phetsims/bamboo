@@ -25,10 +25,10 @@ class LinePlot extends Path {
   private chartTransform: ChartTransform;
 
   // if you change this directly, you are responsible for calling update
-  dataSet: Vector2[];
-  private disposeLinePlot: () => void;
+  public dataSet: Vector2[];
+  private readonly disposeLinePlot: () => void;
 
-  constructor( chartTransform: ChartTransform, dataSet: Vector2[], providedOptions?: LinePlotOptions ) {
+  public constructor( chartTransform: ChartTransform, dataSet: Vector2[], providedOptions?: LinePlotOptions ) {
 
     const options = optionize<LinePlotOptions, SelfOptions, PathOptions>()( {
 
@@ -55,13 +55,13 @@ class LinePlot extends Path {
    * Sets the dataSet and redraws the plot. If instead the dataSet array is mutated, it is the client's responsibility
    * to call `update` or make sure `update` is called elsewhere (say, if the chart scrolls in that frame).
    */
-  setDataSet( dataSet: Vector2[] ): void {
+  public setDataSet( dataSet: Vector2[] ): void {
     this.dataSet = dataSet;
     this.update();
   }
 
   // Recomputes the rendered shape.
-  update(): void {
+  public update(): void {
     const shape = new Shape();
     let moveToNextPoint = true;
     for ( let i = 0; i < this.dataSet.length; i++ ) {
@@ -86,7 +86,7 @@ class LinePlot extends Path {
     this.shape = shape.makeImmutable();
   }
 
-  override dispose(): void {
+  public override dispose(): void {
     this.disposeLinePlot();
     super.dispose();
   }

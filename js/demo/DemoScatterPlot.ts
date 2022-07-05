@@ -27,7 +27,7 @@ import bamboo from '../bamboo.js';
 
 class DemoScatterPlot extends VBox {
 
-  constructor( options?: VBoxOptions ) {
+  public constructor( options?: VBoxOptions ) {
 
     const dataSet = [];
     for ( let i = -3; i < 3; i += 0.01 ) {

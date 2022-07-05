@@ -18,11 +18,11 @@ export type CanvasPainterOptions = SelfOptions;
 abstract class CanvasPainter {
 
   // if changed, you should probably invalidate the parent ChartCanvasNode
-  visible: boolean;
+  public visible: boolean;
   protected isDisposed: boolean;
 
   // Modeled as a class for readability because JavaScript does not have interfaces
-  constructor( providedOptions?: CanvasPainterOptions ) {
+  protected constructor( providedOptions?: CanvasPainterOptions ) {
     const options = optionize<CanvasPainterOptions, SelfOptions>()( {
       visible: true
     }, providedOptions );
@@ -32,7 +32,7 @@ abstract class CanvasPainter {
   }
 
   // override to paint or change the canvas context state.  Only called if this.visible is true
-  abstract paintCanvas( context: CanvasRenderingContext2D ): void;
+  public abstract paintCanvas( context: CanvasRenderingContext2D ): void;
 }
 
 bamboo.register( 'CanvasPainter', CanvasPainter );

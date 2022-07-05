@@ -27,12 +27,12 @@ class UpDownArrowPlot extends Node {
 
   // if you change this directly, you are responsible for calling update
   public dataSet: Vector2[];
-  private pointToPaintableFields: ( point: Vector2 ) => PaintableOptions;
+  private readonly pointToPaintableFields: ( point: Vector2 ) => PaintableOptions;
   private arrowNodes: ArrowNode[];
-  private disposeUpDownArrowPLot: () => void;
-  private arrowNodeOptions: ArrowNodeOptions;
+  private readonly arrowNodeOptions: ArrowNodeOptions;
+  private readonly disposeUpDownArrowPLot: () => void;
 
-  constructor( chartTransform: ChartTransform, dataSet: Vector2[], providedOptions?: UpDownArrowPlotOptions ) {
+  public constructor( chartTransform: ChartTransform, dataSet: Vector2[], providedOptions?: UpDownArrowPlotOptions ) {
 
     const options = optionize<UpDownArrowPlotOptions, SelfOptions, NodeOptions>()( {
 
@@ -70,7 +70,7 @@ class UpDownArrowPlot extends Node {
   }
 
   // Sets the dataSet and redraws the plot.
-  setDataSet( dataSet: Vector2[] ): void {
+  public setDataSet( dataSet: Vector2[] ): void {
     this.dataSet = dataSet;
     this.update();
   }
@@ -79,7 +79,7 @@ class UpDownArrowPlot extends Node {
    * Redraw the plot. Called automatically if you update the dataSet with setDataSet(). But you can call this
    * yourself if you want to set the dataSet directly and then update later (presumably for performance).
    */
-  update(): void {
+  public update(): void {
 
     // add one rectangle per data point
     while ( this.arrowNodes.length < this.dataSet.length ) {
@@ -112,7 +112,7 @@ class UpDownArrowPlot extends Node {
     }
   }
 
-  override dispose(): void {
+  public override dispose(): void {
     this.disposeUpDownArrowPLot();
     super.dispose();
   }

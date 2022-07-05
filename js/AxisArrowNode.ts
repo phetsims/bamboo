@@ -26,7 +26,7 @@ class AxisArrowNode extends ArrowNode {
   private readonly axisOrientation: Orientation;
   private disposeAxisNode: () => void;
 
-  constructor( chartTransform: ChartTransform, axisOrientation: Orientation, providedOptions?: AxisArrowNodeOptions ) {
+  public constructor( chartTransform: ChartTransform, axisOrientation: Orientation, providedOptions?: AxisArrowNodeOptions ) {
 
     const options = optionize<AxisArrowNodeOptions, SelfOptions, ArrowNodeOptions>()( {
       value: 0, // by default the axis is at 0, but you can put it somewhere else
@@ -70,7 +70,7 @@ class AxisArrowNode extends ArrowNode {
     }
   }
 
-  override dispose(): void {
+  public override dispose(): void {
     this.disposeAxisNode();
     super.dispose();
   }

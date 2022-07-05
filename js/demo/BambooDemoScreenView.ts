@@ -25,7 +25,7 @@ import Tandem from '../../../tandem/js/Tandem.js';
 const emitter = new Emitter<[ number ]>( { parameters: [ { valueType: 'number' } ] } );
 
 class BambooDemoScreenView extends DemosScreenView {
-  constructor() {
+  public constructor() {
 
     super( [
 
@@ -101,7 +101,7 @@ class BambooDemoScreenView extends DemosScreenView {
    * Move the model forward in time.
    * @param dt - elapsed time in seconds
    */
-  override step( dt: number ): void {
+  public override step( dt: number ): void {
     emitter.emit( dt );
   }
 }

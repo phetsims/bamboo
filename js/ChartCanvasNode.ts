@@ -23,10 +23,10 @@ class ChartCanvasNode extends CanvasNode {
   private chartTransform: ChartTransform;
 
   // if you change this directly, you are responsible for calling update
-  painters: CanvasPainter[];
-  private disposeChartCanvasLinePlot: () => void;
+  public painters: CanvasPainter[];
+  private readonly disposeChartCanvasLinePlot: () => void;
 
-  constructor( chartTransform: ChartTransform, painters: CanvasPainter[], providedOptions?: StrictOmit<CanvasNodeOptions, 'canvasBounds'> ) {
+  public constructor( chartTransform: ChartTransform, painters: CanvasPainter[], providedOptions?: StrictOmit<CanvasNodeOptions, 'canvasBounds'> ) {
 
     const options = optionize<ChartCanvasNodeOptions, SelfOptions, CanvasNodeOptions>()( {
       canvasBounds: new Bounds2( 0, 0, chartTransform.viewWidth, chartTransform.viewHeight )
@@ -48,17 +48,17 @@ class ChartCanvasNode extends CanvasNode {
   }
 
   // Sets the painters and redraws the chart.
-  setPainters( painters: CanvasPainter[] ): void {
+  public setPainters( painters: CanvasPainter[] ): void {
     this.painters = painters;
     this.update();
   }
 
-  update(): void {
+  public update(): void {
     this.invalidatePaint();
   }
 
   // Used to redraw the CanvasNode. Use CanvasNode.invalidatePaint to signify that it is time to redraw the canvas.
-  paintCanvas( context: CanvasRenderingContext2D ): void {
+  public paintCanvas( context: CanvasRenderingContext2D ): void {
     this.painters.forEach( painter => {
       if ( painter.visible ) {
 
@@ -71,7 +71,7 @@ class ChartCanvasNode extends CanvasNode {
     } );
   }
 
-  override dispose(): void {
+  public override dispose(): void {
     this.disposeChartCanvasLinePlot();
     super.dispose();
   }

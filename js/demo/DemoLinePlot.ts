@@ -28,7 +28,7 @@ import TickMarkSet from '../TickMarkSet.js';
 
 class DemoLinePlot extends Node {
 
-  constructor( options?: NodeOptions ) {
+  public constructor( options?: NodeOptions ) {
 
     super();
 

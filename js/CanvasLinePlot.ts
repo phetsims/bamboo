@@ -27,15 +27,15 @@ class CanvasLinePlot extends CanvasPainter {
   private chartTransform: ChartTransform;
 
   // if you change this directly, you are responsible for calling update on the corresponding ChartCanvasNode
-  dataSet: ( Vector2 | null )[];
+  public dataSet: ( Vector2 | null )[];
 
   // if you change this directly, you are responsible for calling update on the corresponding ChartCanvasNode
-  lineWidth: number;
+  public lineWidth: number;
 
   // CSS for rendering the stroke
   private strokeCSS: string | null;
 
-  constructor( chartTransform: ChartTransform, dataSet: Array<Vector2 | null>, providedOptions?: CanvasLinePlotOptions ) {
+  public constructor( chartTransform: ChartTransform, dataSet: Array<Vector2 | null>, providedOptions?: CanvasLinePlotOptions ) {
 
     const options = optionize<CanvasLinePlotOptions, SelfOptions>()( {
       stroke: 'black', // {Color|string|null}
@@ -58,27 +58,27 @@ class CanvasLinePlot extends CanvasPainter {
    * Sets the stroke.
    * @param stroke - If you call setStroke, you are responsible for calling update on the associated ChartCanvasNode(s).
    */
-  setStroke( stroke: Color | string | null ): void {
+  public setStroke( stroke: Color | string | null ): void {
     assert && assert( stroke instanceof Color || ( typeof stroke === 'string' && Color.isCSSColorString( stroke ) ) || stroke === null, 'invalid stroke' );
     this.strokeCSS = stroke instanceof Color ? stroke.toCSS() : stroke;
   }
 
-  set stroke( stroke: Color | string | null ) {
+  public set stroke( stroke: Color | string | null ) {
     this.setStroke( stroke );
   }
 
-  dispose(): void {
+  public dispose(): void {
     assert && assert( !this.isDisposed, 'already disposed' );
     this.isDisposed = true;
   }
 
   // Sets dataSet. You are responsible for calling update on the associated ChartCanvasNode(s).
-  setDataSet( dataSet: Vector2[] ): void {
+  public setDataSet( dataSet: Vector2[] ): void {
     this.dataSet = dataSet;
   }
 
   // Intended to be called by ChartCanvasNode.
-  paintCanvas( context: CanvasRenderingContext2D ): void {
+  public paintCanvas( context: CanvasRenderingContext2D ): void {
     context.beginPath();
 
     if ( this.strokeCSS ) {

@@ -36,7 +36,7 @@ type DemoLinearEquationPlotOptions = SelfOptions & StrictOmit<NodeOptions, 'chil
 
 class DemoLinearEquationPlot extends Node {
 
-  constructor( providedOptions?: DemoLinearEquationPlotOptions ) {
+  public constructor( providedOptions?: DemoLinearEquationPlotOptions ) {
 
     const options = optionize<DemoLinearEquationPlotOptions, SelfOptions, NodeOptions>()( {}, providedOptions );
 

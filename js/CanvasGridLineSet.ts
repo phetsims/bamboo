@@ -44,7 +44,8 @@ class CanvasGridLineSet extends CanvasPainter {
    * @param spacing - in model coordinates
    * @param [providedOptions]
    */
-  constructor( chartTransform: ChartTransform, axisOrientation: Orientation, spacing: number, providedOptions?: CanvasGridLineSetOptions ) {
+  public constructor( chartTransform: ChartTransform, axisOrientation: Orientation, spacing: number,
+                      providedOptions?: CanvasGridLineSetOptions ) {
 
     const options = optionize<CanvasGridLineSetOptions, SelfOptions>()( {
       origin: 0,
@@ -72,17 +73,17 @@ class CanvasGridLineSet extends CanvasPainter {
     this.lineDashOffset = options.lineDashOffset;
   }
 
-  setSpacing( spacing: number ): void {
+  public setSpacing( spacing: number ): void {
     if ( this.spacing !== spacing ) {
       this.spacing = spacing;
     }
   }
 
-  setLineDashOffset( lineDashOffset: number ): void {
+  public setLineDashOffset( lineDashOffset: number ): void {
     this.lineDashOffset = lineDashOffset;
   }
 
-  paintCanvas( context: CanvasRenderingContext2D ): void {
+  public paintCanvas( context: CanvasRenderingContext2D ): void {
     context.strokeStyle = this.stroke;
     context.lineWidth = this.lineWidth;
     context.beginPath();

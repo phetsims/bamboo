@@ -28,15 +28,18 @@ type SelfOptions = {
 type TickMarkSetOptions = SelfOptions & PathOptions;
 
 class TickMarkSet extends Path {
+
   private chartTransform: ChartTransform;
-  private axisOrientation: Orientation;
+  private readonly axisOrientation: Orientation;
   private spacing: number;
-  private value: number;
+  private readonly value: number;
   private edge: null | 'min' | 'max';
-  private origin: number;
-  private extent: number;
-  private clippingType: ClippingType;
-  private disposeTickMarkSet: () => void;
+  private readonly origin: number;
+  private readonly extent: number;
+  private readonly clippingType: ClippingType;
+  private readonly disposeTickMarkSet: () => void;
+
+  public static DEFAULT_EXTENT = 10;
 
   /**
    * @param chartTransform
@@ -44,7 +47,8 @@ class TickMarkSet extends Path {
    * @param spacing - in model coordinates
    * @param [providedOptions]
    */
-  constructor( chartTransform: ChartTransform, axisOrientation: Orientation, spacing: number, providedOptions?: TickMarkSetOptions ) {
+  public constructor( chartTransform: ChartTransform, axisOrientation: Orientation, spacing: number,
+                      providedOptions?: TickMarkSetOptions ) {
 
     const options = optionize<TickMarkSetOptions, SelfOptions, PathOptions>()( {
       value: 0, // appear on the axis by default
@@ -83,7 +87,7 @@ class TickMarkSet extends Path {
     this.disposeTickMarkSet = () => chartTransform.changedEmitter.removeListener( changedListener );
   }
 
-  setSpacing( spacing: number ): void {
+  public setSpacing( spacing: number ): void {
     if ( spacing !== this.spacing ) {
       this.spacing = spacing;
       this.update();
@@ -116,12 +120,10 @@ class TickMarkSet extends Path {
     this.shape = shape.makeImmutable();
   }
 
-  override dispose(): void {
+  public override dispose(): void {
     this.disposeTickMarkSet();
     super.dispose();
   }
-
-  static DEFAULT_EXTENT = 10;
 }
 
 bamboo.register( 'TickMarkSet', TickMarkSet );

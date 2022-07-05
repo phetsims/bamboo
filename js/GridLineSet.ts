@@ -25,12 +25,13 @@ type SelfOptions = {
 type GridLineSetOptions = SelfOptions & PathOptions;
 
 class GridLineSet extends Path {
+
   private readonly chartTransform: ChartTransform;
   private readonly axisOrientation: Orientation;
   private spacing: number;
   private readonly origin: number;
   private readonly clippingType: ClippingType;
-  private disposeGridLineSet: () => void;
+  private readonly disposeGridLineSet: () => void;
 
   /**
    * @param chartTransform
@@ -39,7 +40,8 @@ class GridLineSet extends Path {
    * @param spacing - in model coordinates
    * @param [providedOptions]
    */
-  constructor( chartTransform: ChartTransform, axisOrientation: Orientation, spacing: number, providedOptions?: GridLineSetOptions ) {
+  public constructor( chartTransform: ChartTransform, axisOrientation: Orientation, spacing: number,
+                      providedOptions?: GridLineSetOptions ) {
 
     const options = optionize<GridLineSetOptions, SelfOptions, PathOptions>()( {
       origin: 0,
@@ -83,14 +85,14 @@ class GridLineSet extends Path {
     this.shape = shape.makeImmutable();
   }
 
-  setSpacing( spacing: number ): void {
+  public setSpacing( spacing: number ): void {
     if ( this.spacing !== spacing ) {
       this.spacing = spacing;
       this.update();
     }
   }
 
-  override dispose(): void {
+  public override dispose(): void {
     this.disposeGridLineSet();
     super.dispose();
   }

@@ -33,13 +33,13 @@ class BarPlot extends Node {
   private barTailValue: number;
 
   // if you change this directly, you are responsible for calling update
-  dataSet: Vector2[];
-  private barWidth: number;
-  pointToPaintableFields: ( point: Vector2 ) => PaintableOptions;
+  public dataSet: Vector2[];
+  private readonly barWidth: number;
+  private readonly pointToPaintableFields: ( point: Vector2 ) => PaintableOptions;
   private rectangles: Rectangle[];
-  private disposeBarPlot: () => void;
+  private readonly disposeBarPlot: () => void;
 
-  constructor( chartTransform: ChartTransform, dataSet: Vector2[], providedOptions?: BarPlotOptions ) {
+  public constructor( chartTransform: ChartTransform, dataSet: Vector2[], providedOptions?: BarPlotOptions ) {
 
     const options = optionize<BarPlotOptions, SelfOptions, NodeOptions>()( {
 
@@ -71,12 +71,12 @@ class BarPlot extends Node {
    * Sets the dataSet and redraws the plot. If instead the dataSet array is mutated, it is the client's responsibility
    * to call `update` or make sure `update` is called elsewhere (say, if the chart scrolls in that frame).
    */
-  setDataSet( dataSet: Vector2[] ): void {
+  public setDataSet( dataSet: Vector2[] ): void {
     this.dataSet = dataSet;
     this.update();
   }
 
-  update(): void {
+  public update(): void {
 
     // Add one rectangle per data point.
     while ( this.rectangles.length < this.dataSet.length ) {
@@ -111,7 +111,7 @@ class BarPlot extends Node {
     }
   }
 
-  override dispose(): void {
+  public override dispose(): void {
     this.disposeBarPlot();
     super.dispose();
   }

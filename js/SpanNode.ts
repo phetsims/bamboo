@@ -30,14 +30,14 @@ type SpanNodeOptions = SelfOptions & FlowBoxOptions;
 class SpanNode extends FlowBox {
 
   private chartTransform: ChartTransform;
-  private axisOrientation: Orientation;
+  private readonly axisOrientation: Orientation;
   private delta: number;
-  private labelNode: Node;
-  private color: string | Color;
-  private outerLineLength: number;
+  private readonly labelNode: Node;
+  private readonly color: string | Color;
+  private readonly outerLineLength: number;
   private viewWidth: number;
-  private arrowNodeOptions: ArrowNodeOptions;
-  private disposeSpanNode: () => void;
+  private readonly arrowNodeOptions: ArrowNodeOptions;
+  private readonly disposeSpanNode: () => void;
 
   /**
    * @param chartTransform
@@ -46,7 +46,8 @@ class SpanNode extends FlowBox {
    * @param labelNode
    * @param [providedOptions]
    */
-  constructor( chartTransform: ChartTransform, axisOrientation: Orientation, delta: number, labelNode: Node, providedOptions?: SpanNodeOptions ) {
+  public constructor( chartTransform: ChartTransform, axisOrientation: Orientation, delta: number, labelNode: Node,
+                      providedOptions?: SpanNodeOptions ) {
 
     assert && assert( chartTransform instanceof ChartTransform, 'invalid chartTransform' );
     assert && assert( axisOrientation instanceof Orientation, 'invalid axisOrientation' );
@@ -105,7 +106,7 @@ class SpanNode extends FlowBox {
    * Sets delta and updates.
    * @param delta - in model coordinates
    */
-  setDelta( delta: number ): void {
+  public setDelta( delta: number ): void {
     if ( delta !== this.delta ) {
       this.delta = delta;
       this.update();
@@ -146,7 +147,7 @@ class SpanNode extends FlowBox {
     }
   }
 
-  override dispose(): void {
+  public override dispose(): void {
     this.disposeSpanNode();
     super.dispose();
   }

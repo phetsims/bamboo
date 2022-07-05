@@ -18,10 +18,11 @@ type SelfOptions = EmptyObjectType;
 type LinearEquationPlotOptions = SelfOptions & LineOptions;
 
 class LinearEquationPlot extends Line {
-  chartTransform: ChartTransform;
+
+  private chartTransform: ChartTransform;
   private _b: number;
   private _m: number;
-  private disposeStraightLinePlot: () => void;
+  private readonly disposeStraightLinePlot: () => void;
 
   /**
    * @param chartTransform
@@ -29,7 +30,7 @@ class LinearEquationPlot extends Line {
    * @param b - the y-intercept
    * @param [providedOptions]
    */
-  constructor( chartTransform: ChartTransform, m: number, b: number, providedOptions?: LinearEquationPlotOptions ) {
+  public constructor( chartTransform: ChartTransform, m: number, b: number, providedOptions?: LinearEquationPlotOptions ) {
 
     const options = optionize<LinearEquationPlotOptions, SelfOptions, LineOptions>()( {
 
@@ -55,40 +56,40 @@ class LinearEquationPlot extends Line {
   }
 
   // Sets the slope and redraws the plot
-  setSlope( m: number ): void {
+  public setSlope( m: number ): void {
     this._m = m;
     this.update();
   }
 
-  set m( value ) {
+  public set m( value ) {
     this.setSlope( value );
   }
 
-  get m(): number {
+  public get m(): number {
     return this._m;
   }
 
   // Sets the y-intercept and redraws the plot.
-  setYIntercept( b: number ): void {
+  public setYIntercept( b: number ): void {
     this._b = b;
     this.update();
   }
 
-  set b( value ) {
+  public set b( value ) {
     this.setYIntercept( value );
   }
 
-  get b(): number {
+  public get b(): number {
     return this._b;
   }
 
   // Solves for y.
-  solve( x: number ): number {
+  public solve( x: number ): number {
     return ( this._m * x ) + this._b;
   }
 
   // Recomputes the endpoints of the line.
-  update(): void {
+  private update(): void {
 
     if ( this._m === Infinity || this._m === -Infinity ) {
 
@@ -122,7 +123,7 @@ class LinearEquationPlot extends Line {
     }
   }
 
-  override dispose(): void {
+  public override dispose(): void {
     this.disposeStraightLinePlot();
     super.dispose();
   }

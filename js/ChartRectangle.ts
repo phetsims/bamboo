@@ -12,10 +12,11 @@ import bamboo from './bamboo.js';
 import ChartTransform from './ChartTransform.js';
 
 class ChartRectangle extends Rectangle {
-  private chartTransform: ChartTransform;
-  private disposeChartRectangle: () => void;
 
-  constructor( chartTransform: ChartTransform, options?: RectangleOptions ) {
+  private readonly chartTransform: ChartTransform;
+  private readonly disposeChartRectangle: () => void;
+
+  public constructor( chartTransform: ChartTransform, options?: RectangleOptions ) {
 
     super( 0, 0, 0, 0, options );
 
@@ -35,7 +36,7 @@ class ChartRectangle extends Rectangle {
     this.setRect( 0, 0, this.chartTransform.viewWidth, this.chartTransform.viewHeight );
   }
 
-  override dispose(): void {
+  public override dispose(): void {
     this.disposeChartRectangle();
     super.dispose();
   }

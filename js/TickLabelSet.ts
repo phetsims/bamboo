@@ -38,18 +38,19 @@ type SelfOptions = {
 type TickLabelSetOptions = SelfOptions & PathOptions;
 
 class TickLabelSet extends Path {
+
   private chartTransform: ChartTransform;
-  private axisOrientation: Orientation;
+  private readonly axisOrientation: Orientation;
   private spacing: number;
-  private origin: number;
-  private extent: number;
-  private value: number;
-  private clippingType: ClippingType;
-  private edge: null | 'min' | 'max';
-  private createLabel;
-  private positionLabel;
-  private labelMap: Map<number, Node|null>; // cache labels for quick reuse
-  private disposeTickLabelSet: () => void;
+  private readonly origin: number;
+  private readonly extent: number;
+  private readonly value: number;
+  private readonly clippingType: ClippingType;
+  private readonly edge: null | 'min' | 'max';
+  private readonly createLabel;
+  private readonly positionLabel;
+  private labelMap: Map<number, Node | null>; // cache labels for quick reuse
+  private readonly disposeTickLabelSet: () => void;
 
   /**
    * @param chartTransform
@@ -57,7 +58,8 @@ class TickLabelSet extends Path {
    * @param spacing - in model coordinates
    * @param [providedOptions]
    */
-  constructor( chartTransform: ChartTransform, axisOrientation: Orientation, spacing: number, providedOptions?: TickLabelSetOptions ) {
+  public constructor( chartTransform: ChartTransform, axisOrientation: Orientation, spacing: number,
+                      providedOptions?: TickLabelSetOptions ) {
 
     const options = optionize<TickLabelSetOptions, SelfOptions, PathOptions>()( {
       value: 0, // appear on the axis by default
@@ -115,7 +117,7 @@ class TickLabelSet extends Path {
     this.disposeTickLabelSet = () => chartTransform.changedEmitter.removeListener( changedListener );
   }
 
-  setSpacing( spacing: number ): void {
+  public setSpacing( spacing: number ): void {
     if ( this.spacing !== spacing ) {
       this.spacing = spacing;
       this.update();
@@ -123,7 +125,7 @@ class TickLabelSet extends Path {
   }
 
   // Updates the labels when range or spacing has changed.
-  update(): void {
+  private update(): void {
     const children: Node[] = [];
     const used = new Set();
 
@@ -170,12 +172,12 @@ class TickLabelSet extends Path {
    * the cache. For example, if your createLabel function had logic to switch between numeric (e.g. 2) and
    * symbolic labels (e.g. '2L').
    */
-  invalidateTickLabelSet(): void {
+  private invalidateTickLabelSet(): void {
     this.labelMap.clear();
     this.update();
   }
 
-  override dispose(): void {
+  public override dispose(): void {
     this.disposeTickLabelSet();
     super.dispose();
   }

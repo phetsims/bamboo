@@ -30,7 +30,7 @@ import CanvasPainter from '../CanvasPainter.js';
 
 class DemoChartCanvasNode extends Node {
 
-  constructor( emitter: Emitter<[ number ]>, options?: NodeOptions ) {
+  public constructor( emitter: Emitter<[ number ]>, options?: NodeOptions ) {
 
     super();
 

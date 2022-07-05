@@ -25,7 +25,7 @@ class AxisLine extends Line {
   private readonly extension: number;
   private disposeAxisLine: () => void;
 
-  constructor( chartTransform: ChartTransform, axisOrientation: Orientation, providedOptions?: AxisLineOptions ) {
+  public constructor( chartTransform: ChartTransform, axisOrientation: Orientation, providedOptions?: AxisLineOptions ) {
 
     const options = optionize<AxisLineOptions, SelfOptions, LineOptions>()( {
       value: 0, // by default the axis is at 0, but you can put it somewhere else
@@ -67,7 +67,7 @@ class AxisLine extends Line {
     }
   }
 
-  override dispose(): void {
+  public override dispose(): void {
     this.disposeAxisLine();
     super.dispose();
   }

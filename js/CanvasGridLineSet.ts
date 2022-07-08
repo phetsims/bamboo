@@ -1,4 +1,4 @@
-// Copyright 2020-2021, University of Colorado Boulder
+// Copyright 2020-2022, University of Colorado Boulder
 
 /**
  * Copy/paste of GridLineSet that renders to canvas.  Note, these 2 files should be maintained together,

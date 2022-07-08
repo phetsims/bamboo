@@ -1,4 +1,4 @@
-// Copyright 2020-2021, University of Colorado Boulder
+// Copyright 2020-2022, University of Colorado Boulder
 
 /**
  * CanvasLinePlot renders a {Array.<Vector2|null>} dataSet on a canvas that is managed by a ChartCanvasNode.

@@ -1,4 +1,4 @@
-// Copyright 2020-2021, University of Colorado Boulder
+// Copyright 2020-2022, University of Colorado Boulder
 
 /**
  * ChartCanvasNode renders to a canvas. It is usually preferable to use the other scenery Node-based

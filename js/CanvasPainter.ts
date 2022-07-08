@@ -1,4 +1,4 @@
-// Copyright 2020, University of Colorado Boulder
+// Copyright 2020-2022, University of Colorado Boulder
 
 /**
  * CanvasPainter is the abstract base class for bamboo components that use the Canvas API. Typically this would

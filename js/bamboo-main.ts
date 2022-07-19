@@ -18,9 +18,13 @@ const simOptions: SimOptions = {
   }
 };
 
+class Model {
+  public step(): void { /* no stepping here */ }
+}
+
 simLauncher.launch( () => {
   new Sim( bambooStrings.bamboo.title, [
-    new Screen( () => {return {};}, () => new BambooDemoScreenView(), {
+    new Screen( () => new Model(), () => new BambooDemoScreenView(), {
         name: 'Bamboo Demo',
         backgroundColorProperty: new Property( '#e4fcf4' ),
         tandem: Tandem.OPT_OUT

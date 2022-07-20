@@ -35,7 +35,7 @@ type ChartTransformOptions = SelfOptions;
 class ChartTransform {
 
   // fires when some aspect of this transform changes
-  public readonly changedEmitter: IEmitter<[]>;
+  public readonly changedEmitter: IEmitter;
 
   public viewWidth: number;
   public viewHeight: number;

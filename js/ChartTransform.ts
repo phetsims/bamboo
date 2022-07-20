@@ -8,6 +8,7 @@
  */
 
 import Emitter from '../../axon/js/Emitter.js';
+import IEmitter from '../../axon/js/IEmitter.js';
 import Range from '../../dot/js/Range.js';
 import Transform1 from '../../dot/js/Transform1.js';
 import Utils from '../../dot/js/Utils.js';
@@ -34,7 +35,7 @@ type ChartTransformOptions = SelfOptions;
 class ChartTransform {
 
   // fires when some aspect of this transform changes
-  public readonly changedEmitter: Emitter<[]>;
+  public readonly changedEmitter: IEmitter<[]>;
 
   public viewWidth: number;
   public viewHeight: number;

@@ -25,12 +25,12 @@ import ChartTransform from '../ChartTransform.js';
 import TickLabelSet from '../TickLabelSet.js';
 import TickMarkSet from '../TickMarkSet.js';
 import CanvasGridLineSet from '../CanvasGridLineSet.js';
-import Emitter from '../../../axon/js/Emitter.js';
 import CanvasPainter from '../CanvasPainter.js';
+import IEmitter from '../../../axon/js/IEmitter.js';
 
 class DemoChartCanvasNode extends Node {
 
-  public constructor( emitter: Emitter<[ number ]>, options?: NodeOptions ) {
+  public constructor( emitter: IEmitter<[ number ]>, options?: NodeOptions ) {
 
     super();
 

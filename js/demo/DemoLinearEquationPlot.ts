@@ -27,11 +27,11 @@ import GridLineSet from '../GridLineSet.js';
 import TickLabelSet from '../TickLabelSet.js';
 import LinearEquationPlot from '../LinearEquationPlot.js';
 import TickMarkSet from '../TickMarkSet.js';
-import EmptyObjectType from '../../../phet-core/js/types/EmptyObjectType.js';
+import { EmptySelfOptions } from '../../../phet-core/js/optionize.js';
 import optionize from '../../../phet-core/js/optionize.js';
 import StrictOmit from '../../../phet-core/js/types/StrictOmit.js';
 
-type SelfOptions = EmptyObjectType;
+type SelfOptions = EmptySelfOptions;
 type DemoLinearEquationPlotOptions = SelfOptions & StrictOmit<NodeOptions, 'children'>;
 
 class DemoLinearEquationPlot extends Node {

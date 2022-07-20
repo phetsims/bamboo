@@ -13,10 +13,10 @@ import bamboo from './bamboo.js';
 import ChartTransform from './ChartTransform.js';
 import CanvasPainter from './CanvasPainter.js';
 import StrictOmit from '../../phet-core/js/types/StrictOmit.js';
-import EmptyObjectType from '../../phet-core/js/types/EmptyObjectType.js';
+import { EmptySelfOptions } from '../../phet-core/js/optionize.js';
 import optionize from '../../phet-core/js/optionize.js';
 
-type SelfOptions = EmptyObjectType;
+type SelfOptions = EmptySelfOptions;
 type ChartCanvasNodeOptions = SelfOptions & CanvasNodeOptions;
 
 class ChartCanvasNode extends CanvasNode {

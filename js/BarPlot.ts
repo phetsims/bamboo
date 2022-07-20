@@ -8,8 +8,7 @@
 
 import Vector2 from '../../dot/js/Vector2.js';
 import optionize from '../../phet-core/js/optionize.js';
-import { Node, NodeOptions, PaintableOptions, PAINTABLE_DEFAULT_OPTIONS } from '../../scenery/js/imports.js';
-import { Rectangle } from '../../scenery/js/imports.js';
+import { Node, NodeOptions, PAINTABLE_DEFAULT_OPTIONS, PaintableOptions, Rectangle } from '../../scenery/js/imports.js';
 import bamboo from './bamboo.js';
 import ChartTransform from './ChartTransform.js';
 

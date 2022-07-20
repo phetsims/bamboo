@@ -10,9 +10,7 @@
 import optionize from '../../phet-core/js/optionize.js';
 import Orientation from '../../phet-core/js/Orientation.js';
 import ArrowNode, { ArrowNodeOptions } from '../../scenery-phet/js/ArrowNode.js';
-import { Color, FlowBox, FlowBoxOptions } from '../../scenery/js/imports.js';
-import { Line } from '../../scenery/js/imports.js';
-import { Node } from '../../scenery/js/imports.js';
+import { Color, FlowBox, FlowBoxOptions, Line, Node } from '../../scenery/js/imports.js';
 import bamboo from './bamboo.js';
 import ChartTransform from './ChartTransform.js';
 

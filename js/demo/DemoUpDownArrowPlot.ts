@@ -13,9 +13,8 @@ import AxisArrowNode from '../AxisArrowNode.js';
 import bamboo from '../bamboo.js';
 import ChartRectangle from '../ChartRectangle.js';
 import ChartTransform from '../ChartTransform.js';
-import { Color, NodeOptions } from '../../../scenery/js/imports.js';
+import { Color, Node, NodeOptions } from '../../../scenery/js/imports.js';
 import UpDownArrowPlot from '../UpDownArrowPlot.js';
-import { Node } from '../../../scenery/js/imports.js';
 
 class DemoUpDownArrowPlot extends Node {
   public constructor( options?: NodeOptions ) {

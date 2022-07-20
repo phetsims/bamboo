@@ -9,9 +9,7 @@
 import Bounds2 from '../../dot/js/Bounds2.js';
 import Utils from '../../dot/js/Utils.js';
 import Orientation from '../../phet-core/js/Orientation.js';
-import { Path, PathOptions } from '../../scenery/js/imports.js';
-import { Node } from '../../scenery/js/imports.js';
-import { Text } from '../../scenery/js/imports.js';
+import { Node, Path, PathOptions, Text } from '../../scenery/js/imports.js';
 import bamboo from './bamboo.js';
 import ClippingType from './ClippingType.js';
 import TickMarkSet from './TickMarkSet.js';

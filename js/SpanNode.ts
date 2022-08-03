@@ -57,7 +57,7 @@ class SpanNode extends FlowBox {
 
     const options = optionize<SpanNodeOptions, SelfOptions, FlowBoxOptions>()( {
       color: 'black',
-      spacing: -2, // between arrow and labelNode (option passed to supertype LayoutBox)
+      spacing: 0, // between arrow and labelNode (option passed to supertype LayoutBox)
       outerLineLength: 6, // length of the bars at the ends of each arrow
       arrowNodeOptions: {
         doubleHead: true,

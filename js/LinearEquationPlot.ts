@@ -60,7 +60,7 @@ class LinearEquationPlot extends Line {
     this.update();
   }
 
-  public set m( value ) {
+  public set m( value: number ) {
     this.setSlope( value );
   }
 
@@ -74,7 +74,7 @@ class LinearEquationPlot extends Line {
     this.update();
   }
 
-  public set b( value ) {
+  public set b( value: number ) {
     this.setYIntercept( value );
   }
 

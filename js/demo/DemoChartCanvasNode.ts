@@ -24,11 +24,11 @@ import TickLabelSet from '../TickLabelSet.js';
 import TickMarkSet from '../TickMarkSet.js';
 import CanvasGridLineSet from '../CanvasGridLineSet.js';
 import CanvasPainter from '../CanvasPainter.js';
-import IEmitter from '../../../axon/js/IEmitter.js';
+import TEmitter from '../../../axon/js/TEmitter.js';
 
 class DemoChartCanvasNode extends Node {
 
-  public constructor( emitter: IEmitter<[ number ]>, options?: NodeOptions ) {
+  public constructor( emitter: TEmitter<[ number ]>, options?: NodeOptions ) {
 
     super();
 

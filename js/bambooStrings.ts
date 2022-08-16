@@ -5,11 +5,13 @@
  */
 /* eslint-disable */
 import getStringModule from '../../chipper/js/getStringModule.js';
+import TReadOnlyProperty from '../../axon/js/TReadOnlyProperty.js';
 import bamboo from './bamboo.js';
 
 type StringsType = {
   'bamboo': {
     'title': string;
+    'titleProperty': TReadOnlyProperty<string>;
   }
 };
 

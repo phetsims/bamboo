@@ -11,7 +11,7 @@ import bamboo from './bamboo.js';
 type StringsType = {
   'bamboo': {
     'title': string;
-    'titleProperty': TReadOnlyProperty<string>;
+    'titleStringProperty': TReadOnlyProperty<string>;
   }
 };
 

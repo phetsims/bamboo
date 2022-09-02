@@ -23,7 +23,7 @@ class Model {
 }
 
 simLauncher.launch( () => {
-  new Sim( bambooStrings.bamboo.title, [
+  new Sim( bambooStrings.bamboo.titleStringProperty, [
     new Screen( () => new Model(), () => new BambooDemoScreenView(), {
         name: 'Bamboo Demo',
         backgroundColorProperty: new Property( '#e4fcf4' ),

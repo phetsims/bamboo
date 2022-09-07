@@ -15,8 +15,8 @@ type StringsType = {
   }
 };
 
-const bambooStrings = getStringModule( 'BAMBOO' ) as StringsType;
+const BambooStrings = getStringModule( 'BAMBOO' ) as StringsType;
 
-bamboo.register( 'bambooStrings', bambooStrings );
+bamboo.register( 'BambooStrings', BambooStrings );
 
-export default bambooStrings;
+export default BambooStrings;

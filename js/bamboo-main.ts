@@ -9,7 +9,7 @@ import Screen from '../../joist/js/Screen.js';
 import Sim, { SimOptions } from '../../joist/js/Sim.js';
 import simLauncher from '../../joist/js/simLauncher.js';
 import BambooDemoScreenView from './demo/BambooDemoScreenView.js';
-import bambooStrings from './bambooStrings.js';
+import BambooStrings from './BambooStrings.js';
 import Tandem from '../../tandem/js/Tandem.js';
 
 const simOptions: SimOptions = {
@@ -23,7 +23,7 @@ class Model {
 }
 
 simLauncher.launch( () => {
-  new Sim( bambooStrings.bamboo.titleStringProperty, [
+  new Sim( BambooStrings.bamboo.titleStringProperty, [
     new Screen( () => new Model(), () => new BambooDemoScreenView(), {
         name: 'Bamboo Demo',
         backgroundColorProperty: new Property( '#e4fcf4' ),

@@ -25,6 +25,7 @@ import LinePlot from '../LinePlot.js';
 import ScatterPlot from '../ScatterPlot.js';
 import TickMarkSet from '../TickMarkSet.js';
 import bamboo from '../bamboo.js';
+import Tandem from '../../../tandem/js/Tandem.js';
 
 class DemoMultiplePlots extends VBox {
 
@@ -98,9 +99,9 @@ class DemoMultiplePlots extends VBox {
     const linear = new Transform1( x => x, x => x );
     const transformProperty = new Property( linear );
     const controls = new VerticalAquaRadioButtonGroup( transformProperty, [
-      { node: new Text( 'linear', { fontSize: 14 } ), value: linear },
+      { createNode: ( tandem: Tandem ) => new Text( 'linear', { fontSize: 14 } ), value: linear },
       {
-        node: new Text( 'log', { fontSize: 14 } ), value: new Transform1( Math.log, Math.exp, {
+        createNode: ( tandem: Tandem ) => new Text( 'log', { fontSize: 14 } ), value: new Transform1( Math.log, Math.exp, {
           range: new Range( 0, Number.POSITIVE_INFINITY ),
           domain: new Range( 0, Number.POSITIVE_INFINITY )
         } )

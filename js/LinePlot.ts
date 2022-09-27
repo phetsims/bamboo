@@ -24,10 +24,10 @@ class LinePlot extends Path {
   private chartTransform: ChartTransform;
 
   // if you change this directly, you are responsible for calling update
-  public dataSet: Vector2[];
+  public dataSet: ( Vector2 | null )[];
   private readonly disposeLinePlot: () => void;
 
-  public constructor( chartTransform: ChartTransform, dataSet: Vector2[], providedOptions?: LinePlotOptions ) {
+  public constructor( chartTransform: ChartTransform, dataSet: ( Vector2 | null )[], providedOptions?: LinePlotOptions ) {
 
     const options = optionize<LinePlotOptions, SelfOptions, PathOptions>()( {
 
@@ -54,7 +54,7 @@ class LinePlot extends Path {
    * Sets the dataSet and redraws the plot. If instead the dataSet array is mutated, it is the client's responsibility
    * to call `update` or make sure `update` is called elsewhere (say, if the chart scrolls in that frame).
    */
-  public setDataSet( dataSet: Vector2[] ): void {
+  public setDataSet( dataSet: ( Vector2 | null )[] ): void {
     this.dataSet = dataSet;
     this.update();
   }
@@ -65,11 +65,12 @@ class LinePlot extends Path {
     let moveToNextPoint = true;
     for ( let i = 0; i < this.dataSet.length; i++ ) {
 
-      assert && assert( this.dataSet[ i ] === null || this.dataSet[ i ].isFinite(), 'data points must be finite Vector2 or null' );
+      const dataPoint = this.dataSet[ i ];
+      assert && assert( dataPoint === null || dataPoint.isFinite(), 'data points must be finite Vector2 or null' );
 
       // Draw a line segment to the next non-null value. Null values result in a gap (via move) in the plot.
-      if ( this.dataSet[ i ] ) {
-        const viewPoint = this.chartTransform.modelToViewPosition( this.dataSet[ i ] );
+      if ( dataPoint ) {
+        const viewPoint = this.chartTransform.modelToViewPosition( dataPoint );
         if ( moveToNextPoint ) {
           shape.moveToPoint( viewPoint );
           moveToNextPoint = false;

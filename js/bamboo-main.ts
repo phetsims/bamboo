@@ -19,7 +19,7 @@ const simOptions: SimOptions = {
 };
 
 class Model {
-  public step(): void { /* no stepping here */ }
+  public reset(): void { /* nothing to do */ }
 }
 
 simLauncher.launch( () => {

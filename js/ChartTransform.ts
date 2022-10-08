@@ -23,11 +23,13 @@ type SelfOptions = {
   // The horizontal axis is referred to as the "x" axis, though it may be used to depict another dimension, such as "time"
   viewWidth?: number; // width in view coordinates
   modelXRange?: Range; // range of the x axis, in model coordinates
+  modelXRangeInverted?: boolean;
   xTransform?: Transform1; // model-to-view scaling function for the x axis
 
   // The vertical axis is referred to as the "y" axis, though it may be used to depict another dimension such as "width"
   viewHeight?: number; // height in view coordinates
   modelYRange?: Range; // range of the y axis, in model coordinates
+  modelYRangeInverted?: boolean;
   yTransform?: Transform1; // model-to-view scaling function for the y axis
 };
 type ChartTransformOptions = SelfOptions;
@@ -43,16 +45,20 @@ class ChartTransform {
   public modelYRange: Range;
   public xTransform: Transform1;
   public yTransform: Transform1;
+  public modelXRangeInverted: boolean;
+  public modelYRangeInverted: boolean;
 
   public constructor( providedOptions?: ChartTransformOptions ) {
 
     const options = optionize<ChartTransformOptions, SelfOptions>()( {
       viewWidth: 100,
       modelXRange: new Range( -1, 1 ),
+      modelXRangeInverted: false,
       xTransform: new Transform1( x => x, x => x ),
 
       viewHeight: 100,
       modelYRange: new Range( -1, 1 ),
+      modelYRangeInverted: false,
       yTransform: new Transform1( x => x, x => x )
     }, providedOptions );
 
@@ -63,8 +69,12 @@ class ChartTransform {
 
     this.viewWidth = options.viewWidth;
     this.viewHeight = options.viewHeight;
+
     this.modelXRange = options.modelXRange;
+    this.modelXRangeInverted = options.modelXRangeInverted;
+
     this.modelYRange = options.modelYRange;
+    this.modelYRangeInverted = options.modelYRangeInverted;
 
     this.xTransform = options.xTransform;
     this.yTransform = options.yTransform;
@@ -104,15 +114,19 @@ class ChartTransform {
     const modelRange = axisOrientation === Orientation.HORIZONTAL ? this.modelXRange : this.modelYRange;
     const viewDimension = axisOrientation === Orientation.HORIZONTAL ? this.viewWidth : this.viewHeight;
     const transform = axisOrientation === Orientation.HORIZONTAL ? this.xTransform : this.yTransform;
+    const inverted = axisOrientation === Orientation.HORIZONTAL ? this.modelXRangeInverted : this.modelYRangeInverted;
 
     const transformedValue = transform.evaluate( value );
     assert && assert( !isNaN( transformedValue ), 'transformed value was NaN' );
     assert && assert( Number.isFinite( transformedValue ), 'transformed value was not finite' );
 
+    const lowSide = inverted ? viewDimension : 0;
+    const highSide = inverted ? 0 : viewDimension;
+
     // For vertical, +y is usually up
     const viewValue = axisOrientation === Orientation.HORIZONTAL ?
-                      Utils.linear( transform.evaluate( modelRange.min ), transform.evaluate( modelRange.max ), 0, viewDimension, transformedValue ) :
-                      Utils.linear( transform.evaluate( modelRange.max ), transform.evaluate( modelRange.min ), 0, viewDimension, transformedValue );
+                      Utils.linear( transform.evaluate( modelRange.min ), transform.evaluate( modelRange.max ), lowSide, highSide, transformedValue ) :
+                      Utils.linear( transform.evaluate( modelRange.max ), transform.evaluate( modelRange.min ), lowSide, highSide, transformedValue );
     assert && assert( Number.isFinite( viewValue ), 'viewValue should be finite' );
     assert && assert( !isNaN( viewValue ), 'viewValue should be a number' );
 
@@ -161,11 +175,15 @@ class ChartTransform {
     const modelRange = axisOrientation === Orientation.HORIZONTAL ? this.modelXRange : this.modelYRange;
     const viewDimension = axisOrientation === Orientation.HORIZONTAL ? this.viewWidth : this.viewHeight;
     const transform = axisOrientation === Orientation.HORIZONTAL ? this.xTransform : this.yTransform;
+    const inverted = axisOrientation === Orientation.HORIZONTAL ? this.modelXRangeInverted : this.modelYRangeInverted;
+
+    const lowSide = inverted ? viewDimension : 0;
+    const highSide = inverted ? 0 : viewDimension;
 
     // For vertical, +y is usually up
     const out = axisOrientation === Orientation.HORIZONTAL ?
-                Utils.linear( 0, viewDimension, transform.evaluate( modelRange.min ), transform.evaluate( modelRange.max ), value ) :
-                Utils.linear( 0, viewDimension, transform.evaluate( modelRange.max ), transform.evaluate( modelRange.min ), value );
+                Utils.linear( lowSide, highSide, transform.evaluate( modelRange.min ), transform.evaluate( modelRange.max ), value ) :
+                Utils.linear( lowSide, highSide, transform.evaluate( modelRange.max ), transform.evaluate( modelRange.min ), value );
     assert && assert( Number.isFinite( out ), 'out value should be finite' );
     assert && assert( !isNaN( out ), 'out value should be a number' );
 

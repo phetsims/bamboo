@@ -40,6 +40,7 @@ class DemoMultiplePlots extends VBox {
       viewWidth: 600,
       viewHeight: 400,
       modelXRange: new Range( 2, 10 ),
+      modelXRangeInverted: true,
       modelYRange: new Range( 1, 22000 )
       // yTransform is set in link() below
     } );

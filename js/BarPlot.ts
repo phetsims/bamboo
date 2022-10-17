@@ -21,7 +21,7 @@ type SelfOptions = {
   barWidth?: number;
   barTailValue?: number;
 
-  // maps a point to an containing Paintable options
+  // maps a point to a containing Paintable options
   // NOTE: cannot use the "Options" suffix because merge will try to merge that as nested options.
   pointToPaintableFields?: ( point: Vector2 ) => PaintableOptions;
 };

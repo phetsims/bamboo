@@ -25,7 +25,8 @@ type SelfOptions = {
   // determines whether the rounding is lenient, see ChartTransform
   clippingType?: ClippingType;
 };
-type TickMarkSetOptions = SelfOptions & PathOptions;
+
+export type TickMarkSetOptions = SelfOptions & PathOptions;
 
 class TickMarkSet extends Path {
 

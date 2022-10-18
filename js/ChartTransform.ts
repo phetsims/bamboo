@@ -32,7 +32,7 @@ type SelfOptions = {
   modelYRangeInverted?: boolean;
   yTransform?: Transform1; // model-to-view scaling function for the y axis
 };
-type ChartTransformOptions = SelfOptions;
+export type ChartTransformOptions = SelfOptions;
 
 class ChartTransform {
 

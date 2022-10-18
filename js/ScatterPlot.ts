@@ -16,7 +16,7 @@ import ChartTransform from './ChartTransform.js';
 type SelfOptions = {
   radius?: number;
 };
-type ScatterPlotOptions = SelfOptions & PathOptions;
+export type ScatterPlotOptions = SelfOptions & PathOptions;
 
 class ScatterPlot extends Path {
   private chartTransform: ChartTransform;

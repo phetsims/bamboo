@@ -23,7 +23,7 @@ type SelfOptions = {
   outerLineLength?: number;
   arrowNodeOptions?: ArrowNodeOptions;
 };
-type SpanNodeOptions = SelfOptions & FlowBoxOptions;
+export type SpanNodeOptions = SelfOptions & FlowBoxOptions;
 
 class SpanNode extends FlowBox {
 

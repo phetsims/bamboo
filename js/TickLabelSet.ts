@@ -33,7 +33,8 @@ type SelfOptions = {
   positionLabel?: ( label: Node, tickBounds: Bounds2, axisOrientation: Orientation ) => Node;
 
 };
-type TickLabelSetOptions = SelfOptions & PathOptions;
+
+export type TickLabelSetOptions = SelfOptions & PathOptions;
 
 class TickLabelSet extends Path {
 

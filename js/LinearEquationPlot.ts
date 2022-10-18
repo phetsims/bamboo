@@ -14,7 +14,7 @@ import bamboo from './bamboo.js';
 import ChartTransform from './ChartTransform.js';
 
 type SelfOptions = EmptySelfOptions;
-type LinearEquationPlotOptions = SelfOptions & LineOptions;
+export type LinearEquationPlotOptions = SelfOptions & LineOptions;
 
 class LinearEquationPlot extends Line {
 

@@ -25,7 +25,7 @@ type SelfOptions = {
   // NOTE: cannot use the "Options" suffix because merge will try to merge that as nested options.
   pointToPaintableFields?: ( point: Vector2 ) => PaintableOptions;
 };
-type BarPlotOptions = SelfOptions & NodeOptions;
+export type BarPlotOptions = SelfOptions & NodeOptions;
 
 class BarPlot extends Node {
   private chartTransform: ChartTransform;

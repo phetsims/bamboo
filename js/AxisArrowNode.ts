@@ -17,7 +17,7 @@ type SelfOptions = {
   value?: number; // Location of the axis
   extension?: number; // in view coordinates, how far the axis goes past the edge of the ChartRectangle
 };
-type AxisArrowNodeOptions = SelfOptions & ArrowNodeOptions;
+export type AxisArrowNodeOptions = SelfOptions & ArrowNodeOptions;
 
 class AxisArrowNode extends ArrowNode {
   private readonly chartTransform: ChartTransform;

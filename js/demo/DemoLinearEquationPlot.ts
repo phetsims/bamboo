@@ -27,7 +27,8 @@ import optionize, { EmptySelfOptions } from '../../../phet-core/js/optionize.js'
 import StrictOmit from '../../../phet-core/js/types/StrictOmit.js';
 
 type SelfOptions = EmptySelfOptions;
-type DemoLinearEquationPlotOptions = SelfOptions & StrictOmit<NodeOptions, 'children'>;
+
+export type DemoLinearEquationPlotOptions = SelfOptions & StrictOmit<NodeOptions, 'children'>;
 
 class DemoLinearEquationPlot extends Node {
 

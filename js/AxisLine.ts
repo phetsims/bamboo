@@ -16,7 +16,7 @@ type SelfOptions = {
   value?: number; // Value where the axis lies
   extension?: number; // in view coordinates, how far the axis goes past the edge of the ChartRectangle
 };
-type AxisLineOptions = SelfOptions & LineOptions;
+export type AxisLineOptions = SelfOptions & LineOptions;
 
 class AxisLine extends Line {
   private readonly chartTransform: ChartTransform;

@@ -18,7 +18,7 @@ import bamboo from './bamboo.js';
 import ChartTransform from './ChartTransform.js';
 
 type SelfOptions = EmptySelfOptions;
-type LinePlotOptions = SelfOptions & PathOptions;
+export type LinePlotOptions = SelfOptions & PathOptions;
 
 class LinePlot extends Path {
   private chartTransform: ChartTransform;

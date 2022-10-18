@@ -21,7 +21,7 @@ type SelfOptions = {
   lineWidth?: number;
 };
 
-type CanvasLinePlotOptions = SelfOptions & CanvasPainterOptions;
+export type CanvasLinePlotOptions = SelfOptions & CanvasPainterOptions;
 
 class CanvasLinePlot extends CanvasPainter {
   private chartTransform: ChartTransform;

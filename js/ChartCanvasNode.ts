@@ -16,7 +16,8 @@ import StrictOmit from '../../phet-core/js/types/StrictOmit.js';
 import optionize, { EmptySelfOptions } from '../../phet-core/js/optionize.js';
 
 type SelfOptions = EmptySelfOptions;
-type ChartCanvasNodeOptions = SelfOptions & CanvasNodeOptions;
+
+export type ChartCanvasNodeOptions = SelfOptions & CanvasNodeOptions;
 
 class ChartCanvasNode extends CanvasNode {
   private chartTransform: ChartTransform;

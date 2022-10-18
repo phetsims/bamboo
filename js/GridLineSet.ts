@@ -22,7 +22,7 @@ type SelfOptions = {
   origin?: number;
   clippingType?: ClippingType;
 };
-type GridLineSetOptions = SelfOptions & PathOptions;
+export type GridLineSetOptions = SelfOptions & PathOptions;
 
 class GridLineSet extends Path {
 

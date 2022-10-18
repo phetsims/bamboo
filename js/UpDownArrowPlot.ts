@@ -20,7 +20,8 @@ type SelfOptions = {
   arrowNodeOptions?: ArrowNodeOptions;
   pointToPaintableFields?: ( point: Vector2 ) => PaintableOptions;
 };
-type UpDownArrowPlotOptions = SelfOptions & NodeOptions;
+
+export type UpDownArrowPlotOptions = SelfOptions & NodeOptions;
 
 class UpDownArrowPlot extends Node {
   private chartTransform: ChartTransform;

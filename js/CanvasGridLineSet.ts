@@ -24,7 +24,7 @@ type SelfOptions = {
   lineWidth?: number;
   lineDashOffset?: number;
 };
-type CanvasGridLineSetOptions = SelfOptions & CanvasPainterOptions;
+export type CanvasGridLineSetOptions = SelfOptions & CanvasPainterOptions;
 
 class CanvasGridLineSet extends CanvasPainter {
   private readonly chartTransform: ChartTransform;

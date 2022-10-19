@@ -109,7 +109,6 @@ class ChartTransform {
 
   // Transforms a model coordinate {number} to a view coordinate {number} for the axis that corresponds to Orientation.
   public modelToView( axisOrientation: Orientation, value: number ): number {
-    assert && assert( axisOrientation instanceof Orientation, `invalid axisOrientation: ${axisOrientation}` );
 
     const modelRange = axisOrientation === Orientation.HORIZONTAL ? this.modelXRange : this.modelYRange;
     const viewDimension = axisOrientation === Orientation.HORIZONTAL ? this.viewWidth : this.viewHeight;
@@ -170,7 +169,6 @@ class ChartTransform {
 
   // Converts a scalar value from view coordinates to model coordinates, along the specified axis.  The inverse of modelToView.
   public viewToModel( axisOrientation: Orientation, value: number ): number {
-    assert && assert( axisOrientation instanceof Orientation, `invalid axisOrientation: ${axisOrientation}` );
 
     const modelRange = axisOrientation === Orientation.HORIZONTAL ? this.modelXRange : this.modelYRange;
     const viewDimension = axisOrientation === Orientation.HORIZONTAL ? this.viewWidth : this.viewHeight;

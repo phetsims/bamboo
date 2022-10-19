@@ -47,11 +47,6 @@ class SpanNode extends FlowBox {
   public constructor( chartTransform: ChartTransform, axisOrientation: Orientation, delta: number, labelNode: Node,
                       providedOptions?: SpanNodeOptions ) {
 
-    assert && assert( chartTransform instanceof ChartTransform, 'invalid chartTransform' );
-    assert && assert( axisOrientation instanceof Orientation, 'invalid axisOrientation' );
-    assert && assert( typeof delta === 'number', 'invalid delta' );
-    assert && assert( labelNode instanceof Node, 'invalid labelNode' );
-
     //TODO https://github.com/phetsims/bamboo/issues/21 support Orientation.VERTICAL
     assert && assert( axisOrientation !== Orientation.VERTICAL, 'Orientation.VERTICAL is not yet supported' );
 

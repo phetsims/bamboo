@@ -59,7 +59,10 @@ class CanvasLinePlot extends CanvasPainter {
    * @param stroke - If you call setStroke, you are responsible for calling update on the associated ChartCanvasNode(s).
    */
   public setStroke( stroke: Color | string | null ): void {
-    assert && assert( stroke instanceof Color || ( typeof stroke === 'string' && Color.isCSSColorString( stroke ) ) || stroke === null, 'invalid stroke' );
+    if ( assert && typeof stroke === 'string' ) {
+      assert && assert( Color.isCSSColorString( stroke ), 'invalid stroke' );
+    }
+
     this.strokeCSS = stroke instanceof Color ? stroke.toCSS() : stroke;
   }
 

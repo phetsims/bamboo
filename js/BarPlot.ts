@@ -33,9 +33,9 @@ class BarPlot extends Node {
 
   // if you change this directly, you are responsible for calling update
   public dataSet: Vector2[];
-  private readonly barWidth: number;
+  public barWidth: number;
   private readonly pointToPaintableFields: ( point: Vector2 ) => PaintableOptions;
-  private rectangles: Rectangle[];
+  public rectangles: Rectangle[];
   private readonly disposeBarPlot: () => void;
 
   public constructor( chartTransform: ChartTransform, dataSet: Vector2[], providedOptions?: BarPlotOptions ) {

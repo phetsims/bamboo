@@ -40,7 +40,7 @@ class TickMarkSet extends Path {
   private readonly clippingType: ClippingType;
   private readonly disposeTickMarkSet: () => void;
 
-  public static DEFAULT_EXTENT = 10;
+  public static readonly DEFAULT_EXTENT = 10;
 
   /**
    * @param chartTransform

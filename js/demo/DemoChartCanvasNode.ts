@@ -58,7 +58,7 @@ class DemoChartCanvasNode extends Node {
       cornerYRadius: 6
     } );
 
-    const zoomLevelProperty = new NumberProperty( 1, { range: new Range( 1, 4 ) } ).asRanged();
+    const zoomLevelProperty = new NumberProperty( 1, { range: new Range( 1, 4 ) } );
 
     const zoomButtonGroup = new PlusMinusZoomButtonGroup( zoomLevelProperty, {
       orientation: 'horizontal',

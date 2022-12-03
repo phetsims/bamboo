@@ -65,10 +65,10 @@ class DemoLinearEquationPlot extends Node {
       font: new PhetFont( 20 )
     } );
 
-    const mRange = mProperty.range!;
+    const mRange = mProperty.range;
     assert && assert( mRange );
 
-    const bRange = bProperty.range!;
+    const bRange = bProperty.range;
     assert && assert( bRange );
 
     // Slope slider

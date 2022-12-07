@@ -105,7 +105,7 @@ class BarPlot extends Node {
         'options contain keys that could be dangerous for mutate'
       );
 
-      // @ts-ignore - mutate needs to know about the suboptions, see https://github.com/phetsims/scenery/issues/1428
+      // @ts-expect-error - mutate needs to know about the suboptions, see https://github.com/phetsims/scenery/issues/1428
       this.rectangles[ i ].mutate( paintableFields );
     }
   }

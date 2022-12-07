@@ -38,7 +38,6 @@ class BambooDemoScreenView extends DemosScreenView {
       {
         label: 'ScatterPlot',
 
-        // @ts-ignore
         createNode: layoutBounds => new DemoScatterPlot( {
           center: layoutBounds.center
         } )
@@ -46,7 +45,6 @@ class BambooDemoScreenView extends DemosScreenView {
       {
         label: 'LinePlot',
 
-        // @ts-ignore
         createNode: layoutBounds => new DemoLinePlot( {
           center: layoutBounds.center
         } )
@@ -54,7 +52,6 @@ class BambooDemoScreenView extends DemosScreenView {
       {
         label: 'ChartCanvasNode',
 
-        // @ts-ignore
         createNode: layoutBounds => new DemoChartCanvasNode( emitter, {
           center: layoutBounds.center
         } )
@@ -62,7 +59,6 @@ class BambooDemoScreenView extends DemosScreenView {
       {
         label: 'MultiplePlots',
 
-        // @ts-ignore
         createNode: layoutBounds => new DemoMultiplePlots( {
           center: layoutBounds.center
         } )
@@ -70,7 +66,6 @@ class BambooDemoScreenView extends DemosScreenView {
       {
         label: 'BarPlot',
 
-        // @ts-ignore
         createNode: layoutBounds => new DemoBarPlot( {
           center: layoutBounds.center
         } )
@@ -78,7 +73,6 @@ class BambooDemoScreenView extends DemosScreenView {
       {
         label: 'UpDownArrowPlot',
 
-        // @ts-ignore
         createNode: layoutBounds => new DemoUpDownArrowPlot( {
           center: layoutBounds.center
         } )
@@ -86,7 +80,6 @@ class BambooDemoScreenView extends DemosScreenView {
       {
         label: 'LinearEquationPlot',
 
-        // @ts-ignore
         createNode: layoutBounds => new DemoLinearEquationPlot( {
           center: layoutBounds.center
         } )

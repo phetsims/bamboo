@@ -108,7 +108,7 @@ class UpDownArrowPlot extends Node {
         'options contain keys that could be dangerous for mutate'
       );
 
-      // @ts-ignore, see https://github.com/phetsims/scenery/issues/1428
+      // @ts-expect-error, see https://github.com/phetsims/scenery/issues/1428
       this.arrowNodes[ i ].mutate( providedOptions );
     }
   }

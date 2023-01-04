@@ -46,7 +46,7 @@ class TickLabelSet extends Path {
   private readonly value: number;
   private readonly clippingType: ClippingType;
   private readonly edge: null | 'min' | 'max';
-  private readonly createLabel;
+  private createLabel;
   private readonly positionLabel;
   private labelMap: Map<number, Node | null>; // cache labels for quick reuse
   private readonly disposeTickLabelSet: () => void;
@@ -174,6 +174,11 @@ class TickLabelSet extends Path {
   private invalidateTickLabelSet(): void {
     this.labelMap.clear();
     this.update();
+  }
+
+  public setCreateLabel( createLabel: ( value: number ) => Node | null ): void {
+    this.createLabel = createLabel;
+    this.invalidateTickLabelSet();
   }
 
   public override dispose(): void {

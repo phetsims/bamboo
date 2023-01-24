@@ -13,7 +13,7 @@ import Utils from '../../../dot/js/Utils.js';
 import Vector2 from '../../../dot/js/Vector2.js';
 import Orientation from '../../../phet-core/js/Orientation.js';
 import PlusMinusZoomButtonGroup from '../../../scenery-phet/js/PlusMinusZoomButtonGroup.js';
-import { Node, NodeOptions, Text } from '../../../scenery/js/imports.js';
+import { HBoxOptions, Node, Text } from '../../../scenery/js/imports.js';
 import AxisArrowNode from '../AxisArrowNode.js';
 import bamboo from '../bamboo.js';
 import ChartRectangle from '../ChartRectangle.js';
@@ -23,6 +23,9 @@ import TickLabelSet, { TickLabelSetOptions } from '../TickLabelSet.js';
 import TickMarkSet, { TickMarkSetOptions } from '../TickMarkSet.js';
 import StrictOmit from '../../../phet-core/js/types/StrictOmit.js';
 import optionize, { EmptySelfOptions } from '../../../phet-core/js/optionize.js';
+import VSlider from '../../../sun/js/VSlider.js';
+import Dimension2 from '../../../dot/js/Dimension2.js';
+import PhetFont from '../../../scenery-phet/js/PhetFont.js';
 
 const MAX_X_RANGE = new Range( -5, 5 );
 const MAX_Y_RANGE = new Range( -5, 5 );
@@ -31,14 +34,14 @@ const GRID_Y_SPACING = 1;
 
 type SelfOptions = EmptySelfOptions;
 
-type DemoAreaPlotOptions = SelfOptions & StrictOmit<NodeOptions, 'children'>;
+type DemoAreaPlotOptions = SelfOptions & StrictOmit<HBoxOptions, 'children'>;
 
 export default class DemoAreaPlot extends Node {
 
   public constructor( providedOptions?: DemoAreaPlotOptions ) {
 
-    const options = optionize<DemoAreaPlotOptions, SelfOptions, NodeOptions>()( {
-      // We're setting options.children below.
+    const options = optionize<DemoAreaPlotOptions, SelfOptions, HBoxOptions>()( {
+      // We're setting options.children below
     }, providedOptions );
 
     const chartTransform = new ChartTransform( {
@@ -50,9 +53,7 @@ export default class DemoAreaPlot extends Node {
 
     const chartRectangle = new ChartRectangle( chartTransform, {
       fill: 'white',
-      stroke: 'black',
-      cornerXRadius: 6,
-      cornerYRadius: 6
+      stroke: 'black'
     } );
 
     const xZoomLevelProperty = new NumberProperty( 1, {
@@ -65,8 +66,8 @@ export default class DemoAreaPlot extends Node {
 
     const xZoomButtonGroup = new PlusMinusZoomButtonGroup( xZoomLevelProperty, {
       orientation: 'horizontal',
-      left: chartRectangle.right + 10,
-      bottom: chartRectangle.bottom
+      right: chartRectangle.right,
+      top: chartRectangle.bottom + 25
     } );
 
     const gridLineSetOptions: GridLineSetOptions = {
@@ -84,47 +85,84 @@ export default class DemoAreaPlot extends Node {
       } )
     };
 
-    options.children = [
+    const areaPlot = new AreaPlot( chartTransform, createSineDataSet( MAX_X_RANGE, 1, MAX_Y_RANGE.max ), {
+      fill: 'rgba( 255, 0, 0, 0.7 )'
+    } );
 
-      // Background
-      chartRectangle,
+    const chartNode = new Node( {
+      children: [
 
-      // Clipped contents - anything you want clipped goes in here.
-      new Node( {
-        clipArea: chartRectangle.getShape(),
-        children: [
+        // Background
+        chartRectangle,
 
-          // Minor grid lines
-          new GridLineSet( chartTransform, Orientation.HORIZONTAL, GRID_Y_SPACING, gridLineSetOptions ),
-          new GridLineSet( chartTransform, Orientation.VERTICAL, GRID_X_SPACING, gridLineSetOptions ),
+        // Clipped contents - anything you want clipped goes in here.
+        new Node( {
+          clipArea: chartRectangle.getShape(),
+          children: [
 
-          // Axes nodes are clipped in the chart
-          new AxisArrowNode( chartTransform, Orientation.HORIZONTAL ),
-          new AxisArrowNode( chartTransform, Orientation.VERTICAL ),
+            // Minor grid lines
+            new GridLineSet( chartTransform, Orientation.HORIZONTAL, GRID_Y_SPACING, gridLineSetOptions ),
+            new GridLineSet( chartTransform, Orientation.VERTICAL, GRID_X_SPACING, gridLineSetOptions ),
 
-          // Some data
-          new AreaPlot( chartTransform, createSineDataSet( MAX_X_RANGE, 1, MAX_Y_RANGE.max - 1 ), {
-            fill: 'red'
-          } )
-        ]
-      } ),
+            // Axes nodes are clipped in the chart
+            new AxisArrowNode( chartTransform, Orientation.HORIZONTAL ),
+            new AxisArrowNode( chartTransform, Orientation.VERTICAL ),
 
-      // x-axis label
-      new Text( 'x', {
-        leftCenter: chartRectangle.rightCenter.plusXY( 4, 0 ),
-        fontSize: 18
-      } ),
+            // AreaPlot
+            areaPlot
+          ]
+        } ),
 
-      // x-axis ticks and labels
-      new TickMarkSet( chartTransform, Orientation.HORIZONTAL, 1, tickMarkSetOptions ),
-      new TickLabelSet( chartTransform, Orientation.HORIZONTAL, 1, tickLabelSetOptions ),
+        // x-axis label
+        new Text( 'x', {
+          leftCenter: chartRectangle.rightCenter.plusXY( 4, 0 ),
+          fontSize: 18
+        } ),
 
-      // y-axis ticks and labels
-      new TickMarkSet( chartTransform, Orientation.VERTICAL, 1, tickMarkSetOptions ),
-      new TickLabelSet( chartTransform, Orientation.VERTICAL, 1, tickLabelSetOptions ),
+        // x-axis ticks and labels
+        new TickMarkSet( chartTransform, Orientation.HORIZONTAL, 1, tickMarkSetOptions ),
+        new TickLabelSet( chartTransform, Orientation.HORIZONTAL, 1, tickLabelSetOptions ),
 
-      xZoomButtonGroup
-    ];
+        // y-axis ticks and labels
+        new TickMarkSet( chartTransform, Orientation.VERTICAL, 1, tickMarkSetOptions ),
+        new TickLabelSet( chartTransform, Orientation.VERTICAL, 1, tickLabelSetOptions ),
+
+        xZoomButtonGroup
+      ]
+    } );
+
+    const baselineRange = new Range( MAX_Y_RANGE.min, MAX_Y_RANGE.max );
+    const baselineProperty = new NumberProperty( 0, {
+      range: baselineRange
+    } );
+
+    const baselineSlider = new VSlider( baselineProperty, baselineProperty.range, {
+
+      // Snap to integer when thumb is released.
+      endDrag: () => {
+        baselineProperty.value = Utils.toFixedNumber( baselineProperty.value, 0 );
+      },
+      trackSize: new Dimension2( 5, chartRectangle.height ),
+      majorTickStroke: 'gray',
+      left: chartNode.right + 20,
+      top: chartNode.top
+    } );
+    for ( let i = baselineRange.min; i <= baselineRange.max; i++ ) {
+      baselineSlider.addMajorTick( i );
+    }
+
+    const baselineText = new Text( '', {
+      font: new PhetFont( 14 ),
+      left: baselineSlider.left,
+      bottom: baselineSlider.top - 6
+    } );
+
+    baselineProperty.link( baseline => {
+      areaPlot.setBaseline( baseline );
+      baselineText.text = `baseline = ${Utils.toFixedNumber( baseline, 2 )}`;
+    } );
+
+    options.children = [ chartNode, baselineSlider, baselineText ];
 
     super( options );
   }

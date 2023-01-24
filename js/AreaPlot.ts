@@ -14,7 +14,7 @@ import Vector2 from '../../dot/js/Vector2.js';
 import { Shape } from '../../kite/js/imports.js';
 import optionize from '../../phet-core/js/optionize.js';
 import { Path, PathOptions } from '../../scenery/js/imports.js';
-import calculusGrapher from '../../calculus-grapher/js/calculusGrapher.js';
+import bamboo from './bamboo.js';
 
 export type AreaChartDataSet = ( Vector2 | null )[];
 
@@ -153,4 +153,5 @@ export default class AreaPlot extends Path {
     this.update();
   }
 }
-calculusGrapher.register( 'AreaPlot', AreaPlot );
+
+bamboo.register( 'AreaPlot', AreaPlot );

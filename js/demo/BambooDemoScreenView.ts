@@ -20,6 +20,7 @@ import DemoScatterPlot from './DemoScatterPlot.js';
 import DemoLinearEquationPlot from './DemoLinearEquationPlot.js';
 import DemoUpDownArrowPlot from './DemoUpDownArrowPlot.js';
 import Tandem from '../../../tandem/js/Tandem.js';
+import DemoAreaPlot from './DemoAreaPlot.js';
 
 // constants - this is a hack to enable components to animate from the animation loop
 const emitter = new Emitter<[ number ]>( { parameters: [ { valueType: 'number' } ] } );
@@ -34,6 +35,10 @@ class BambooDemoScreenView extends DemosScreenView {
      * {(layoutBounds: Bounds2) => Node} createNode - creates the scene graph for the demo
      */
     const demos: SunDemo[] = [
+      {
+        label: 'AreaPlot',
+        createNode: layoutBounds => new DemoAreaPlot( { center: layoutBounds.center } )
+      },
       {
         label: 'BarPlot',
         createNode: layoutBounds => new DemoBarPlot( { center: layoutBounds.center } )

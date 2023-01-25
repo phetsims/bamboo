@@ -19,6 +19,7 @@ type SelfOptions = {
   value?: number;
   edge?: null | 'min' | 'max'; // 'min' or 'max' put the ticks on that edge of the chart (takes precedence over value)
   origin?: number;
+  skipCoordinates?: number[]; // skip ticks at these coordinates, most often useful to skip zero where axes intersect
   lineWidth?: number;
   extent?: number;
 
@@ -36,6 +37,7 @@ class TickMarkSet extends Path {
   private readonly value: number;
   private edge: null | 'min' | 'max';
   private readonly origin: number;
+  private readonly skipCoordinates: number[];
   private readonly extent: number;
   private readonly clippingType: ClippingType;
   private readonly disposeTickMarkSet: () => void;
@@ -55,6 +57,7 @@ class TickMarkSet extends Path {
       value: 0, // appear on the axis by default
       edge: null, // 'min' or 'max' put the ticks on that edge of the chart (takes precedence over value)
       origin: 0,
+      skipCoordinates: [],
       stroke: 'black',
       lineWidth: 1,
       extent: TickMarkSet.DEFAULT_EXTENT,
@@ -75,6 +78,7 @@ class TickMarkSet extends Path {
     this.value = options.value;
     this.edge = options.edge;
     this.origin = options.origin;
+    this.skipCoordinates = options.skipCoordinates;
     this.extent = options.extent;
     this.clippingType = options.clippingType;
 
@@ -98,23 +102,25 @@ class TickMarkSet extends Path {
   private update(): void {
     const shape = new Shape();
 
-    this.chartTransform.forEachSpacing( this.axisOrientation, this.spacing, this.origin, this.clippingType, ( modelPosition, viewPosition ) => {
-      const tickBounds = new Bounds2( 0, 0, 0, 0 );
-      if ( this.axisOrientation === Orientation.HORIZONTAL ) {
-        const viewY = this.edge === 'min' ? this.chartTransform.viewHeight :
-                      this.edge === 'max' ? 0 :
-                      this.chartTransform.modelToView( this.axisOrientation.opposite, this.value );
-        shape.moveTo( viewPosition, viewY - this.extent / 2 );
-        shape.lineTo( viewPosition, viewY + this.extent / 2 );
-        tickBounds.setMinMax( viewPosition, viewY - this.extent / 2, viewPosition, viewY + this.extent / 2 );
-      }
-      else {
-        const viewX = this.edge === 'min' ? 0 :
-                      this.edge === 'max' ? this.chartTransform.viewWidth :
-                      this.chartTransform.modelToView( this.axisOrientation.opposite, this.value );
-        shape.moveTo( viewX - this.extent / 2, viewPosition );
-        shape.lineTo( viewX + this.extent / 2, viewPosition );
-        tickBounds.setMinMax( viewX - this.extent / 2, viewPosition, viewX + this.extent / 2, viewPosition );
+    this.chartTransform.forEachSpacing( this.axisOrientation, this.spacing, this.origin, this.clippingType, ( modelCoordinate, viewCoordinate ) => {
+      if ( !this.skipCoordinates.includes( modelCoordinate ) ) {
+        const tickBounds = new Bounds2( 0, 0, 0, 0 );
+        if ( this.axisOrientation === Orientation.HORIZONTAL ) {
+          const viewY = this.edge === 'min' ? this.chartTransform.viewHeight :
+                        this.edge === 'max' ? 0 :
+                        this.chartTransform.modelToView( this.axisOrientation.opposite, this.value );
+          shape.moveTo( viewCoordinate, viewY - this.extent / 2 );
+          shape.lineTo( viewCoordinate, viewY + this.extent / 2 );
+          tickBounds.setMinMax( viewCoordinate, viewY - this.extent / 2, viewCoordinate, viewY + this.extent / 2 );
+        }
+        else {
+          const viewX = this.edge === 'min' ? 0 :
+                        this.edge === 'max' ? this.chartTransform.viewWidth :
+                        this.chartTransform.modelToView( this.axisOrientation.opposite, this.value );
+          shape.moveTo( viewX - this.extent / 2, viewCoordinate );
+          shape.lineTo( viewX + this.extent / 2, viewCoordinate );
+          tickBounds.setMinMax( viewX - this.extent / 2, viewCoordinate, viewX + this.extent / 2, viewCoordinate );
+        }
       }
     } );
 

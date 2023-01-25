@@ -21,6 +21,7 @@ type SelfOptions = {
   value?: number;
   edge?: null | 'min' | 'max'; // 'min' or 'max' put the ticks on that edge of the chart (takes precedence over value)
   origin?: number;
+  skipCoordinates?: number[]; // skip ticks at these coordinates, most often useful to skip zero where axes intersect
 
   // act as if there is a corresponding tick with this extent, for positioning the label relatively
   extent?: number;
@@ -31,7 +32,6 @@ type SelfOptions = {
   // or return null if no label for that value
   createLabel?: ( value: number ) => Node | null;
   positionLabel?: ( label: Node, tickBounds: Bounds2, axisOrientation: Orientation ) => Node;
-
 };
 
 export type TickLabelSetOptions = SelfOptions & PathOptions;
@@ -42,6 +42,7 @@ class TickLabelSet extends Path {
   private readonly axisOrientation: Orientation;
   private spacing: number;
   private readonly origin: number;
+  private readonly skipCoordinates: number[];
   private readonly extent: number;
   private readonly value: number;
   private readonly clippingType: ClippingType;
@@ -64,6 +65,7 @@ class TickLabelSet extends Path {
       value: 0, // appear on the axis by default
       edge: null, // 'min' or 'max' put the ticks on that edge of the chart (takes precedence over value)
       origin: 0,
+      skipCoordinates: [],
 
       // act as if there is a corresponding tick with this extent, for positioning the label relatively
       extent: TickMarkSet.DEFAULT_EXTENT,
@@ -97,6 +99,7 @@ class TickLabelSet extends Path {
     this.axisOrientation = axisOrientation;
     this.spacing = spacing;
     this.origin = options.origin;
+    this.skipCoordinates = options.skipCoordinates;
     this.extent = options.extent;
     this.value = options.value;
     this.clippingType = options.clippingType;
@@ -128,28 +131,30 @@ class TickLabelSet extends Path {
     const children: Node[] = [];
     const used = new Set();
 
-    this.chartTransform.forEachSpacing( this.axisOrientation, this.spacing, this.origin, this.clippingType, ( modelPosition, viewPosition ) => {
-      const tickBounds = new Bounds2( 0, 0, 0, 0 );
-      if ( this.axisOrientation === Orientation.HORIZONTAL ) {
-        const viewY = this.edge === 'min' ? this.chartTransform.viewHeight :
-                      this.edge === 'max' ? 0 :
-                      this.chartTransform.modelToView( this.axisOrientation.opposite, this.value );
-        tickBounds.setMinMax( viewPosition, viewY - this.extent / 2, viewPosition, viewY + this.extent / 2 );
-      }
-      else {
-        const viewX = this.edge === 'min' ? 0 :
-                      this.edge === 'max' ? this.chartTransform.viewWidth :
-                      this.chartTransform.modelToView( this.axisOrientation.opposite, this.value );
-        tickBounds.setMinMax( viewX - this.extent / 2, viewPosition, viewX + this.extent / 2, viewPosition );
-      }
+    this.chartTransform.forEachSpacing( this.axisOrientation, this.spacing, this.origin, this.clippingType, ( modelCoordinate, viewCoordinate ) => {
+      if ( !this.skipCoordinates.includes( modelCoordinate ) ) {
+        const tickBounds = new Bounds2( 0, 0, 0, 0 );
+        if ( this.axisOrientation === Orientation.HORIZONTAL ) {
+          const viewY = this.edge === 'min' ? this.chartTransform.viewHeight :
+                        this.edge === 'max' ? 0 :
+                        this.chartTransform.modelToView( this.axisOrientation.opposite, this.value );
+          tickBounds.setMinMax( viewCoordinate, viewY - this.extent / 2, viewCoordinate, viewY + this.extent / 2 );
+        }
+        else {
+          const viewX = this.edge === 'min' ? 0 :
+                        this.edge === 'max' ? this.chartTransform.viewWidth :
+                        this.chartTransform.modelToView( this.axisOrientation.opposite, this.value );
+          tickBounds.setMinMax( viewX - this.extent / 2, viewCoordinate, viewX + this.extent / 2, viewCoordinate );
+        }
 
-      const label = this.labelMap.has( modelPosition ) ? this.labelMap.get( modelPosition )! :
-                    this.createLabel ? this.createLabel( modelPosition ) :
-                    null;
-      this.labelMap.set( modelPosition, label );
-      label && this.positionLabel( label, tickBounds, this.axisOrientation );
-      label && children.push( label );
-      used.add( modelPosition );
+        const label = this.labelMap.has( modelCoordinate ) ? this.labelMap.get( modelCoordinate )! :
+                      this.createLabel ? this.createLabel( modelCoordinate ) :
+                      null;
+        this.labelMap.set( modelCoordinate, label );
+        label && this.positionLabel( label, tickBounds, this.axisOrientation );
+        label && children.push( label );
+        used.add( modelCoordinate );
+      }
     } );
 
     // empty cache of unused values

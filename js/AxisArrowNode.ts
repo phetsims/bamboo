@@ -61,7 +61,7 @@ class AxisArrowNode extends ArrowNode {
 
     // Move the axis to viewValue.
     if ( this.axisOrientation === Orientation.VERTICAL ) {
-      this.setTailAndTip( viewValue, 0 - this.extension, viewValue, this.chartTransform.viewHeight + this.extension );
+      this.setTailAndTip( viewValue, this.chartTransform.viewHeight + this.extension, viewValue, 0 - this.extension );
       this.setVisible( viewValue >= 0 && viewValue <= this.chartTransform.viewWidth );
     }
     else {

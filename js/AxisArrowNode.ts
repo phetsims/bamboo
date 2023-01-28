@@ -1,4 +1,4 @@
-// Copyright 2020-2022, University of Colorado Boulder
+// Copyright 2020-2023, University of Colorado Boulder
 
 /**
  * AxisArrowNode shows an axis with arrows at one or both ends. An axis is typically bolder than any grid line (if any),

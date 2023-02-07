@@ -7,16 +7,21 @@
  * @author Sam Reid (PhET Interactive Simulations)
  */
 
+import { EmptySelfOptions } from '../../phet-core/js/optionize.js';
 import { Rectangle, RectangleOptions } from '../../scenery/js/imports.js';
 import bamboo from './bamboo.js';
 import ChartTransform from './ChartTransform.js';
+
+type SelfOptions = EmptySelfOptions;
+
+export type ChartRectangleOptions = SelfOptions & RectangleOptions;
 
 class ChartRectangle extends Rectangle {
 
   private readonly chartTransform: ChartTransform;
   private readonly disposeChartRectangle: () => void;
 
-  public constructor( chartTransform: ChartTransform, options?: RectangleOptions ) {
+  public constructor( chartTransform: ChartTransform, options?: ChartRectangleOptions ) {
 
     super( 0, 0, 0, 0, options );
 

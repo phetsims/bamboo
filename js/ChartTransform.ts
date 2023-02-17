@@ -51,6 +51,8 @@ class ChartTransform {
   public constructor( providedOptions?: ChartTransformOptions ) {
 
     const options = optionize<ChartTransformOptions, SelfOptions>()( {
+
+      // SelfOptions
       viewWidth: 100,
       modelXRange: new Range( -1, 1 ),
       modelXRangeInverted: false,

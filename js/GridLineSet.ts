@@ -44,6 +44,8 @@ class GridLineSet extends Path {
                       providedOptions?: GridLineSetOptions ) {
 
     const options = optionize<GridLineSetOptions, SelfOptions, PathOptions>()( {
+
+      // SelfOptions
       origin: 0,
       clippingType: 'strict',
 

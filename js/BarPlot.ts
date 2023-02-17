@@ -42,6 +42,7 @@ class BarPlot extends Node {
 
     const options = optionize<BarPlotOptions, SelfOptions, NodeOptions>()( {
 
+      // SelfOptions
       barWidth: 10,
       barTailValue: 0,
       pointToPaintableFields: ( point: Vector2 ) => DEFAULT_PAINTABLE_OPTIONS

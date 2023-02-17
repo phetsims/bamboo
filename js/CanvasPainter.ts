@@ -24,6 +24,8 @@ abstract class CanvasPainter {
   // Modeled as a class for readability because JavaScript does not have interfaces
   protected constructor( providedOptions?: CanvasPainterOptions ) {
     const options = optionize<CanvasPainterOptions, SelfOptions>()( {
+
+      // SelfOptions
       visible: true
     }, providedOptions );
 

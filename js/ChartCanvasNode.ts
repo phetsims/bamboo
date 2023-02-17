@@ -29,6 +29,8 @@ class ChartCanvasNode extends CanvasNode {
   public constructor( chartTransform: ChartTransform, painters: CanvasPainter[], providedOptions?: StrictOmit<CanvasNodeOptions, 'canvasBounds'> ) {
 
     const options = optionize<ChartCanvasNodeOptions, SelfOptions, CanvasNodeOptions>()( {
+
+      // CanvasNodeOptions
       canvasBounds: new Bounds2( 0, 0, chartTransform.viewWidth, chartTransform.viewHeight )
     }, providedOptions );
 

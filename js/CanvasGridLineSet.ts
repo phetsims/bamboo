@@ -48,6 +48,8 @@ class CanvasGridLineSet extends CanvasPainter {
                       providedOptions?: CanvasGridLineSetOptions ) {
 
     const options = optionize<CanvasGridLineSetOptions, SelfOptions>()( {
+
+      // SelfOptions
       origin: 0,
       clippingType: 'strict',
 

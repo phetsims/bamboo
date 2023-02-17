@@ -28,6 +28,8 @@ class AxisLine extends Line {
   public constructor( chartTransform: ChartTransform, axisOrientation: Orientation, providedOptions?: AxisLineOptions ) {
 
     const options = optionize<AxisLineOptions, SelfOptions, LineOptions>()( {
+
+      // SelfOptions
       value: 0, // by default the axis is at 0, but you can put it somewhere else
       extension: 0,
 

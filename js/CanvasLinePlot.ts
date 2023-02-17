@@ -38,6 +38,8 @@ class CanvasLinePlot extends CanvasPainter {
   public constructor( chartTransform: ChartTransform, dataSet: Array<Vector2 | null>, providedOptions?: CanvasLinePlotOptions ) {
 
     const options = optionize<CanvasLinePlotOptions, SelfOptions>()( {
+
+      // SelfOptions
       stroke: 'black', // {Color|string|null}
       lineWidth: 1
     }, providedOptions );

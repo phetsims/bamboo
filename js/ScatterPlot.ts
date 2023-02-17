@@ -29,6 +29,8 @@ class ScatterPlot extends Path {
   public constructor( chartTransform: ChartTransform, dataSet: Vector2[], providedOptions?: ScatterPlotOptions ) {
 
     const options = optionize<ScatterPlotOptions, SelfOptions, PathOptions>()( {
+
+      // SelfOptions
       radius: 2,
 
       // Path options

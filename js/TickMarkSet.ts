@@ -54,15 +54,15 @@ class TickMarkSet extends Path {
                       providedOptions?: TickMarkSetOptions ) {
 
     const options = optionize<TickMarkSetOptions, SelfOptions, PathOptions>()( {
+
+      // SelfOptions
       value: 0, // appear on the axis by default
-      edge: null, // 'min' or 'max' put the ticks on that edge of the chart (takes precedence over value)
+      edge: null,
       origin: 0,
       skipCoordinates: [],
       stroke: 'black',
       lineWidth: 1,
       extent: TickMarkSet.DEFAULT_EXTENT,
-
-      // determines whether the rounding is lenient, see ChartTransform
       clippingType: 'strict'
     }, providedOptions );
 

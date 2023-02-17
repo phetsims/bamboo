@@ -9,6 +9,8 @@
 
 import optionize from '../../phet-core/js/optionize.js';
 import Orientation from '../../phet-core/js/Orientation.js';
+import PickOptional from '../../phet-core/js/types/PickOptional.js';
+import { PathOptions } from '../../scenery/js/imports.js';
 import bamboo from './bamboo.js';
 import CanvasPainter, { CanvasPainterOptions } from './CanvasPainter.js';
 import ChartTransform from './ChartTransform.js';
@@ -17,16 +19,13 @@ import ClippingType from './ClippingType.js';
 type SelfOptions = {
   origin?: number;
   clippingType?: ClippingType;
-
-  // Path options
   stroke?: string | CanvasGradient | CanvasPattern;
-  lineDash?: number[];
-  lineWidth?: number;
-  lineDashOffset?: number;
-};
+} & PickOptional<PathOptions, 'lineWidth' | 'lineDash' | 'lineDashOffset'>;
+
 export type CanvasGridLineSetOptions = SelfOptions & CanvasPainterOptions;
 
 class CanvasGridLineSet extends CanvasPainter {
+
   private readonly chartTransform: ChartTransform;
   private readonly axisOrientation: Orientation;
   private spacing: number;
@@ -52,11 +51,9 @@ class CanvasGridLineSet extends CanvasPainter {
       // SelfOptions
       origin: 0,
       clippingType: 'strict',
-
-      // Path options
       stroke: 'black',
-      lineDash: [ 1 ],
       lineWidth: 1,
+      lineDash: [ 1 ],
       lineDashOffset: 0
     }, providedOptions );
 

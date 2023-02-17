@@ -15,6 +15,7 @@ import ClippingType from './ClippingType.js';
 import TickMarkSet from './TickMarkSet.js';
 import ChartTransform from './ChartTransform.js';
 import optionize from '../../phet-core/js/optionize.js';
+import StrictOmit from '../../phet-core/js/types/StrictOmit.js';
 
 type SelfOptions = {
 
@@ -34,7 +35,7 @@ type SelfOptions = {
   positionLabel?: ( label: Node, tickBounds: Bounds2, axisOrientation: Orientation ) => Node;
 };
 
-export type TickLabelSetOptions = SelfOptions & PathOptions;
+export type TickLabelSetOptions = SelfOptions & StrictOmit<PathOptions, 'children'>;
 
 class TickLabelSet extends Path {
 
@@ -62,18 +63,14 @@ class TickLabelSet extends Path {
                       providedOptions?: TickLabelSetOptions ) {
 
     const options = optionize<TickLabelSetOptions, SelfOptions, PathOptions>()( {
+
+      // SelfOptions
       value: 0, // appear on the axis by default
-      edge: null, // 'min' or 'max' put the ticks on that edge of the chart (takes precedence over value)
+      edge: null,
       origin: 0,
       skipCoordinates: [],
-
-      // act as if there is a corresponding tick with this extent, for positioning the label relatively
       extent: TickMarkSet.DEFAULT_EXTENT,
-
-      // determines whether the rounding is lenient, see ChartTransform
       clippingType: 'strict',
-
-      // or return null if no label for that value
       createLabel: ( value: number ) => new Text( Utils.toFixed( value, 1 ), { fontSize: 12 } ),
       positionLabel: ( label: Node, tickBounds: Bounds2, axisOrientation: Orientation ) => {
         if ( axisOrientation === Orientation.HORIZONTAL ) {
@@ -88,7 +85,6 @@ class TickLabelSet extends Path {
       }
     }, providedOptions );
 
-    assert && assert( !options.children, 'TickLabelSet sets children in updateLabelSet' );
     if ( options.edge ) {
       assert && assert( options.value === 0, 'value and edge are mutually exclusive' );
     }

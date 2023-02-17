@@ -7,8 +7,9 @@
  * @author Sam Reid (PhET Interactive Simulations)
  */
 
-import optionize from '../../phet-core/js/optionize.js';
+import optionize, { combineOptions } from '../../phet-core/js/optionize.js';
 import Orientation from '../../phet-core/js/Orientation.js';
+import StrictOmit from '../../phet-core/js/types/StrictOmit.js';
 import ArrowNode, { ArrowNodeOptions } from '../../scenery-phet/js/ArrowNode.js';
 import { Color, FlowBox, FlowBoxOptions, Line, Node } from '../../scenery/js/imports.js';
 import bamboo from './bamboo.js';
@@ -17,13 +18,21 @@ import ChartTransform from './ChartTransform.js';
 // Same as the value in Node's validateBounds
 const notificationThreshold = 1e-13;
 
+// Default option values for ArrowNode
+const ARROW_NODE_OPTIONS: ArrowNodeOptions = {
+  doubleHead: true,
+  headHeight: 4.5,
+  headWidth: 5,
+  tailWidth: 1.5,
+  stroke: null // Not supported since it throws off the dimensions, use fill instead
+};
+
 type SelfOptions = {
   color?: string | Color;
-  spacing?: number;
   outerLineLength?: number;
-  arrowNodeOptions?: ArrowNodeOptions;
+  arrowNodeOptions?: StrictOmit<ArrowNodeOptions, 'stroke'>;
 };
-export type SpanNodeOptions = SelfOptions & FlowBoxOptions;
+export type SpanNodeOptions = SelfOptions & StrictOmit<FlowBoxOptions, 'children' | 'orientation'>;
 
 class SpanNode extends FlowBox {
 
@@ -50,26 +59,15 @@ class SpanNode extends FlowBox {
     //TODO https://github.com/phetsims/bamboo/issues/21 support Orientation.VERTICAL
     assert && assert( axisOrientation !== Orientation.VERTICAL, 'Orientation.VERTICAL is not yet supported' );
 
-    const options = optionize<SpanNodeOptions, SelfOptions, FlowBoxOptions>()( {
+    const options = optionize<SpanNodeOptions, StrictOmit<SelfOptions, 'arrowNodeOptions'>, FlowBoxOptions>()( {
+
+      // SelfOptions
       color: 'black',
-      spacing: 0, // between arrow and labelNode (option passed to supertype FlowBox)
       outerLineLength: 6, // length of the bars at the ends of each arrow
-      arrowNodeOptions: {
-        doubleHead: true,
-        headHeight: 4.5,
-        headWidth: 5,
-        tailWidth: 1.5,
-        stroke: null // Not supported since it throws off the dimensions, use fill instead
-      }
+
+      // FlowBoxOptions
+      spacing: 0 // between arrow and labelNode
     }, providedOptions );
-
-    assert && assert( !options.children, 'SpanNode sets children' );
-    assert && assert( !options.orientation, 'SpanNode sets orientation' );
-    assert && assert( options.arrowNodeOptions.stroke === null, 'SpanNode sets arrowNodeOptions.stroke' );
-    options.orientation = ( axisOrientation === Orientation.HORIZONTAL ) ? 'vertical' : 'horizontal';
-
-    // Arrow node color options default to the color of the SpanNode, but can be overridden independently
-    options.arrowNodeOptions.fill = options.arrowNodeOptions.fill || options.color;
 
     super();
 
@@ -80,7 +78,9 @@ class SpanNode extends FlowBox {
     this.color = options.color;
     this.outerLineLength = options.outerLineLength;
     this.viewWidth = 0;
-    this.arrowNodeOptions = options.arrowNodeOptions;
+    this.arrowNodeOptions = combineOptions<ArrowNodeOptions>( {
+      fill: options.color // default to the color of the SpanNode, but can be overridden via arrowNodeOptions
+    }, ARROW_NODE_OPTIONS, options.arrowNodeOptions );
 
     // Initialize
     this.update();

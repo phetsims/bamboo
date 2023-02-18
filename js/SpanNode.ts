@@ -1,4 +1,4 @@
-// Copyright 2020-2022, University of Colorado Boulder
+// Copyright 2020-2023, University of Colorado Boulder
 
 /**
  * SpanNode shows a double-headed arrow pointing to parallel bars, and a text label. It is shown under a chart to

@@ -159,7 +159,7 @@ export default class DemoAreaPlot extends Node {
 
     baselineProperty.link( baseline => {
       areaPlot.setBaseline( baseline );
-      baselineText.text = `baseline = ${Utils.toFixedNumber( baseline, 2 )}`;
+      baselineText.string = `baseline = ${Utils.toFixedNumber( baseline, 2 )}`;
     } );
 
     options.children = [ chartNode, baselineSlider, baselineText ];

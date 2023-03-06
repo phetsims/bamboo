@@ -74,7 +74,7 @@ class ScatterPlot extends Path {
       const dataPoint = this.dataSet[ i ];
       if ( dataPoint.isFinite() ) {
         const viewPoint = this.chartTransform.modelToViewPosition( dataPoint );
-        shape.moveToPoint( viewPoint );
+        shape.moveTo( viewPoint.x + this.radius, viewPoint.y ); // need to move to where circle actually starts
         shape.circle( viewPoint.x, viewPoint.y, this.radius );
       }
     }

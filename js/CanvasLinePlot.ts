@@ -2,7 +2,7 @@
 
 /**
  * CanvasLinePlot renders a {Array.<Vector2|null>} dataSet on a canvas that is managed by a ChartCanvasNode.
- * Typically it is preferable to use LinePlot, but this alternative is provided for cases where canvas must be
+ * Typically, it is preferable to use LinePlot, but this alternative is provided for cases where canvas must be
  * used for performance. Like LinePlot, null values are skipped, and allow you to create gaps in a plot.
  * @see LinePlot
  *
@@ -17,20 +17,25 @@ import CanvasPainter, { CanvasPainterOptions } from './CanvasPainter.js';
 import ChartTransform from './ChartTransform.js';
 
 type SelfOptions = {
-  stroke?: string;
+  stroke?: string | Color | null;
   lineWidth?: number;
+  lineDash?: number[];
 };
 
 export type CanvasLinePlotOptions = SelfOptions & CanvasPainterOptions;
 
-class CanvasLinePlot extends CanvasPainter {
+export default class CanvasLinePlot extends CanvasPainter {
+
   private chartTransform: ChartTransform;
 
-  // if you change this directly, you are responsible for calling update on the corresponding ChartCanvasNode
+  // If you change this directly, you are responsible for calling update on the corresponding ChartCanvasNode.
   public dataSet: ( Vector2 | null )[];
 
-  // if you change this directly, you are responsible for calling update on the corresponding ChartCanvasNode
+  // If you change this directly, you are responsible for calling update on the corresponding ChartCanvasNode.
   public lineWidth: number;
+
+  // If you change this directly, you are responsible for calling update on the corresponding ChartCanvasNode.
+  public lineDash: number[];
 
   // CSS for rendering the stroke
   private strokeCSS: string | null;
@@ -40,8 +45,9 @@ class CanvasLinePlot extends CanvasPainter {
     const options = optionize<CanvasLinePlotOptions, SelfOptions>()( {
 
       // SelfOptions
-      stroke: 'black', // {Color|string|null}
-      lineWidth: 1
+      stroke: 'black',
+      lineWidth: 1,
+      lineDash: [] // solid
     }, providedOptions );
 
     super();
@@ -49,8 +55,8 @@ class CanvasLinePlot extends CanvasPainter {
     this.chartTransform = chartTransform;
     this.dataSet = dataSet;
 
-
     this.lineWidth = options.lineWidth;
+    this.lineDash = options.lineDash;
 
     this.strokeCSS = null; // updated in setStroke
     this.setStroke( options.stroke );
@@ -89,6 +95,7 @@ class CanvasLinePlot extends CanvasPainter {
     if ( this.strokeCSS ) {
       context.strokeStyle = this.strokeCSS;
       context.lineWidth = this.lineWidth;
+      context.setLineDash( this.lineDash );
 
       let moveToNextPoint = true;
 
@@ -120,4 +127,3 @@ class CanvasLinePlot extends CanvasPainter {
 }
 
 bamboo.register( 'CanvasLinePlot', CanvasLinePlot );
-export default CanvasLinePlot;

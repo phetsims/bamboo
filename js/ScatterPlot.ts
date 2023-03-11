@@ -16,6 +16,8 @@ import ChartTransform from './ChartTransform.js';
 type SelfOptions = {
   radius?: number;
 };
+
+//TODO https://github.com/phetsims/bamboo/issues/63 If 'fill' and 'stroke' are different, overlapping points will not look correct.
 export type ScatterPlotOptions = SelfOptions & PathOptions;
 
 class ScatterPlot extends Path {

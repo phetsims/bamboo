@@ -169,6 +169,11 @@ class ChartTransform {
     return this.modelToViewDelta( Orientation.VERTICAL, dy );
   }
 
+  // Transforms a model delta pair of numbers to view Vector2
+  public modelToViewDeltaXY( dx: number, dy: number ): Vector2 {
+    return new Vector2( this.modelToViewDeltaX( dx ), this.modelToViewDeltaY( dy ) );
+  }
+
   // Converts a scalar value from view coordinates to model coordinates, along the specified axis.  The inverse of modelToView.
   public viewToModel( axisOrientation: Orientation, value: number ): number {
 

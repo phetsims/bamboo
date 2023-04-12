@@ -31,15 +31,15 @@ export type TickMarkSetOptions = SelfOptions & PathOptions;
 
 class TickMarkSet extends Path {
 
-  private chartTransform: ChartTransform;
-  private readonly axisOrientation: Orientation;
-  private spacing: number;
-  private readonly value: number;
-  private edge: null | 'min' | 'max';
-  private readonly origin: number;
-  private readonly skipCoordinates: number[];
-  private readonly extent: number;
-  private readonly clippingType: ClippingType;
+  protected chartTransform: ChartTransform;
+  protected readonly axisOrientation: Orientation;
+  protected spacing: number;
+  protected readonly value: number;
+  protected edge: null | 'min' | 'max';
+  protected readonly origin: number;
+  protected readonly skipCoordinates: number[];
+  protected readonly extent: number;
+  protected readonly clippingType: ClippingType;
   private readonly disposeTickMarkSet: () => void;
 
   public static readonly DEFAULT_EXTENT = 10;
@@ -99,7 +99,7 @@ class TickMarkSet extends Path {
     }
   }
 
-  private update(): void {
+  protected update(): void {
     const shape = new Shape();
 
     this.chartTransform.forEachSpacing( this.axisOrientation, this.spacing, this.origin, this.clippingType, ( modelCoordinate, viewCoordinate ) => {

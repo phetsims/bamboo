@@ -97,10 +97,7 @@ class ChartTransform {
    */
   public forEachSpacing( axisOrientation: Orientation, spacing: number, origin: number, clippingType: ClippingType,
                          callback: ( modelPosition: number, viewPosition: number ) => void ): void {
-
-    const modelRange = this.getModelRange( axisOrientation );
-    const nMin = getValueForSpacing( modelRange.min, clippingType, origin, spacing, Math.ceil );
-    const nMax = getValueForSpacing( modelRange.max, clippingType, origin, spacing, Math.floor );
+    const [ nMin, nMax ] = this.getSpacingBorders( axisOrientation, spacing, origin, clippingType );
 
     for ( let n = nMin; n <= nMax + 1E-6; n++ ) {
       const modelPosition = n * spacing + origin;
@@ -285,6 +282,14 @@ class ChartTransform {
       this.yTransform = yTransform;
       this.changedEmitter.emit();
     }
+  }
+
+  public getSpacingBorders( axisOrientation: Orientation, spacing: number, origin: number, clippingType: ClippingType ): number[] {
+    const modelRange = this.getModelRange( axisOrientation );
+    const nMin = getValueForSpacing( modelRange.min, clippingType, origin, spacing, Math.ceil );
+    const nMax = getValueForSpacing( modelRange.max, clippingType, origin, spacing, Math.floor );
+
+    return [ nMin, nMax ];
   }
 }
 

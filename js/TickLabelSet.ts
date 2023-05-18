@@ -172,7 +172,7 @@ class TickLabelSet extends Path {
    * the cache. For example, if your createLabel function had logic to switch between numeric (e.g. 2) and
    * symbolic labels (e.g. '2L').
    */
-  private invalidateTickLabelSet(): void {
+  public invalidateTickLabelSet(): void {
     this.labelMap.clear();
     this.update();
   }

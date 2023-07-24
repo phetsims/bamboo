@@ -26,11 +26,11 @@ export type GridLineSetOptions = SelfOptions & PathOptions;
 
 class GridLineSet extends Path {
 
-  private readonly chartTransform: ChartTransform;
-  private readonly axisOrientation: Orientation;
-  private spacing: number;
-  private readonly origin: number;
-  private readonly clippingType: ClippingType;
+  protected readonly chartTransform: ChartTransform;
+  protected readonly axisOrientation: Orientation;
+  protected spacing: number;
+  protected readonly origin: number;
+  protected readonly clippingType: ClippingType;
   private readonly disposeGridLineSet: () => void;
 
   /**
@@ -71,7 +71,7 @@ class GridLineSet extends Path {
     this.disposeGridLineSet = () => chartTransform.changedEmitter.removeListener( changedListener );
   }
 
-  private update(): void {
+  protected update(): void {
     const shape = new Shape();
     this.chartTransform.forEachSpacing( this.axisOrientation, this.spacing, this.origin, this.clippingType,
       ( modelPosition, viewPosition ) => {

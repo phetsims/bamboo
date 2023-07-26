@@ -17,6 +17,7 @@ import bamboo from './bamboo.js';
 import ClippingType from './ClippingType.js';
 import ChartTransform from './ChartTransform.js';
 import optionize from '../../phet-core/js/optionize.js';
+import Range from '../../dot/js/Range.js';
 
 type SelfOptions = {
   origin?: number;
@@ -26,11 +27,11 @@ export type GridLineSetOptions = SelfOptions & PathOptions;
 
 class GridLineSet extends Path {
 
-  protected readonly chartTransform: ChartTransform;
-  protected readonly axisOrientation: Orientation;
-  protected spacing: number;
-  protected readonly origin: number;
-  protected readonly clippingType: ClippingType;
+  private readonly chartTransform: ChartTransform;
+  private readonly axisOrientation: Orientation;
+  private spacing: number;
+  private readonly origin: number;
+  private readonly clippingType: ClippingType;
   private readonly disposeGridLineSet: () => void;
 
   /**
@@ -94,9 +95,17 @@ class GridLineSet extends Path {
     }
   }
 
+  public getSpacing(): number {
+    return this.spacing;
+  }
+
   public override dispose(): void {
     this.disposeGridLineSet();
     super.dispose();
+  }
+
+  public getSpacingBorders(): Range {
+    return this.chartTransform.getSpacingBorders( this.axisOrientation, this.spacing, this.origin, this.clippingType );
   }
 }
 

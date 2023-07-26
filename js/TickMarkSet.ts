@@ -14,6 +14,7 @@ import bamboo from './bamboo.js';
 import ClippingType from './ClippingType.js';
 import ChartTransform from './ChartTransform.js';
 import optionize from '../../phet-core/js/optionize.js';
+import Range from '../../dot/js/Range.js';
 
 type SelfOptions = {
   value?: number;
@@ -136,7 +137,7 @@ class TickMarkSet extends Path {
     super.dispose();
   }
 
-  public getSpacingBorders(): number[] {
+  public getSpacingBorders(): Range {
     return this.chartTransform.getSpacingBorders( this.axisOrientation, this.spacing, this.origin, this.clippingType );
   }
 }

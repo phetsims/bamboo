@@ -97,7 +97,9 @@ class ChartTransform {
    */
   public forEachSpacing( axisOrientation: Orientation, spacing: number, origin: number, clippingType: ClippingType,
                          callback: ( modelPosition: number, viewPosition: number ) => void ): void {
-    const [ nMin, nMax ] = this.getSpacingBorders( axisOrientation, spacing, origin, clippingType );
+    const spacingBorders = this.getSpacingBorders( axisOrientation, spacing, origin, clippingType );
+    const nMin = spacingBorders.min;
+    const nMax = spacingBorders.max;
 
     for ( let n = nMin; n <= nMax + 1E-6; n++ ) {
       const modelPosition = n * spacing + origin;
@@ -284,12 +286,13 @@ class ChartTransform {
     }
   }
 
-  public getSpacingBorders( axisOrientation: Orientation, spacing: number, origin: number, clippingType: ClippingType ): number[] {
+  // Returns a range with the min and max tick indices on the selected axis.
+  public getSpacingBorders( axisOrientation: Orientation, spacing: number, origin: number, clippingType: ClippingType ): Range {
     const modelRange = this.getModelRange( axisOrientation );
     const nMin = getValueForSpacing( modelRange.min, clippingType, origin, spacing, Math.ceil );
     const nMax = getValueForSpacing( modelRange.max, clippingType, origin, spacing, Math.floor );
 
-    return [ nMin, nMax ];
+    return new Range( nMin, nMax );
   }
 }
 

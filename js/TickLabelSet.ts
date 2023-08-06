@@ -16,6 +16,7 @@ import TickMarkSet from './TickMarkSet.js';
 import ChartTransform from './ChartTransform.js';
 import optionize from '../../phet-core/js/optionize.js';
 import StrictOmit from '../../phet-core/js/types/StrictOmit.js';
+import Range from '../../dot/js/Range.js';
 
 type SelfOptions = {
 
@@ -122,8 +123,12 @@ class TickLabelSet extends Path {
     }
   }
 
+  public getSpacing(): number {
+    return this.spacing;
+  }
+
   // Updates the labels when range or spacing has changed.
-  private update(): void {
+  protected update(): void {
     const children: Node[] = [];
     const used = new Set();
 
@@ -185,6 +190,10 @@ class TickLabelSet extends Path {
   public override dispose(): void {
     this.disposeTickLabelSet();
     super.dispose();
+  }
+
+  public getSpacingBorders(): Range {
+    return this.chartTransform.getSpacingBorders( this.axisOrientation, this.spacing, this.origin, this.clippingType );
   }
 }
 

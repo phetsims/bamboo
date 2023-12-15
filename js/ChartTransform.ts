@@ -127,8 +127,8 @@ class ChartTransform {
     const viewValue = axisOrientation === Orientation.HORIZONTAL ?
                       Utils.linear( transform.evaluate( modelRange.min ), transform.evaluate( modelRange.max ), lowSide, highSide, transformedValue ) :
                       Utils.linear( transform.evaluate( modelRange.max ), transform.evaluate( modelRange.min ), lowSide, highSide, transformedValue );
-    assert && assert( Number.isFinite( viewValue ), 'viewValue should be finite' );
-    assert && assert( !isNaN( viewValue ), 'viewValue should be a number' );
+    assert && assert( Number.isFinite( viewValue ), `viewValue should be finite: ${viewValue}` );
+    assert && assert( !isNaN( viewValue ), `viewValue should be a number: ${viewValue}` );
 
     return viewValue;
   }

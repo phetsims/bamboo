@@ -10,7 +10,6 @@ import bamboo from './bamboo.js';
 
 type StringsType = {
   'bamboo': {
-    'title': string;
     'titleStringProperty': LocalizedStringProperty;
   }
 };

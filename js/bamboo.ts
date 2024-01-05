@@ -2,6 +2,8 @@
 
 /**
  * Creates the namespace for this simulation.
+ *
+ * @author Sam Reid (PhET Interactive Simulations)
  */
 
 // modules

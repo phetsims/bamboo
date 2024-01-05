@@ -2,6 +2,8 @@
 
 /**
  * Main file for the Bamboo library demo.
+ *
+ * @author Sam Reid (PhET Interactive Simulations)
  */
 
 import Property from '../../axon/js/Property.js';

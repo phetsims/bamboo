@@ -1,5 +1,9 @@
 // Copyright 2022, University of Colorado Boulder
 
+/**
+ * @author Jonathan Olson <jonathan.olson@colorado.edu>
+ */
+
 import bamboo from './bamboo.js';
 import './AxisArrowNode.js';
 import './AxisLine.js';

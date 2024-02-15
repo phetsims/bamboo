@@ -10,7 +10,7 @@
 
 import Emitter from '../../../axon/js/Emitter.js';
 import sceneryPhetQueryParameters from '../../../scenery-phet/js/sceneryPhetQueryParameters.js';
-import DemosScreenView, { SunDemo } from '../../../sun/js/demo/DemosScreenView.js';
+import DemosScreenView, { DemoItemData } from '../../../sun/js/demo/DemosScreenView.js';
 import bamboo from '../bamboo.js';
 import DemoBarPlot from './DemoBarPlot.js';
 import DemoChartCanvasNode from './DemoChartCanvasNode.js';
@@ -34,7 +34,7 @@ class BambooDemoScreenView extends DemosScreenView {
      * {string} label - label in the combo box
      * {(layoutBounds: Bounds2) => Node} createNode - creates the scene graph for the demo
      */
-    const demos: SunDemo[] = [
+    const demos: DemoItemData[] = [
       {
         label: 'AreaPlot',
         createNode: layoutBounds => new DemoAreaPlot( { center: layoutBounds.center } )

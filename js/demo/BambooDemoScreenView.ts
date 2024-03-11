@@ -9,7 +9,6 @@
  */
 
 import Emitter from '../../../axon/js/Emitter.js';
-import sceneryPhetQueryParameters from '../../../scenery-phet/js/sceneryPhetQueryParameters.js';
 import DemosScreenView, { DemoItemData } from '../../../sun/js/demo/DemosScreenView.js';
 import bamboo from '../bamboo.js';
 import DemoBarPlot from './DemoBarPlot.js';
@@ -69,7 +68,6 @@ class BambooDemoScreenView extends DemosScreenView {
     ];
 
     super( demos, {
-      selectedDemoLabel: sceneryPhetQueryParameters.component,
       tandem: Tandem.OPT_OUT
     } );
   }

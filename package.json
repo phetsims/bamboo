@@ -23,10 +23,5 @@
       "adapted-from-phet"
     ],
     "supportsOutputJS": true
-  },
-  "eslintConfig": {
-    "extends": [
-      "../chipper/eslint/phet-library_eslintrc.js"
-    ]
   }
 }

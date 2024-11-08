@@ -9,7 +9,9 @@
 import NumberProperty from '../../../axon/js/NumberProperty.js';
 import Range from '../../../dot/js/Range.js';
 import Utils from '../../../dot/js/Utils.js';
+import optionize, { EmptySelfOptions } from '../../../phet-core/js/optionize.js';
 import Orientation from '../../../phet-core/js/Orientation.js';
+import StrictOmit from '../../../phet-core/js/types/StrictOmit.js';
 import MathSymbolFont from '../../../scenery-phet/js/MathSymbolFont.js';
 import NumberDisplay from '../../../scenery-phet/js/NumberDisplay.js';
 import PhetFont from '../../../scenery-phet/js/PhetFont.js';
@@ -20,11 +22,9 @@ import bamboo from '../bamboo.js';
 import ChartRectangle from '../ChartRectangle.js';
 import ChartTransform from '../ChartTransform.js';
 import GridLineSet from '../GridLineSet.js';
-import TickLabelSet from '../TickLabelSet.js';
 import LinearEquationPlot from '../LinearEquationPlot.js';
+import TickLabelSet from '../TickLabelSet.js';
 import TickMarkSet from '../TickMarkSet.js';
-import optionize, { EmptySelfOptions } from '../../../phet-core/js/optionize.js';
-import StrictOmit from '../../../phet-core/js/types/StrictOmit.js';
 
 type SelfOptions = EmptySelfOptions;
 

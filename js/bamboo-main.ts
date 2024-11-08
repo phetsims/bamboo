@@ -10,9 +10,9 @@ import Property from '../../axon/js/Property.js';
 import Screen from '../../joist/js/Screen.js';
 import Sim, { SimOptions } from '../../joist/js/Sim.js';
 import simLauncher from '../../joist/js/simLauncher.js';
-import BambooDemoScreenView from './demo/BambooDemoScreenView.js';
-import BambooStrings from './BambooStrings.js';
 import Tandem from '../../tandem/js/Tandem.js';
+import BambooStrings from './BambooStrings.js';
+import BambooDemoScreenView from './demo/BambooDemoScreenView.js';
 
 const simOptions: SimOptions = {
   credits: {

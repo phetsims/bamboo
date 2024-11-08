@@ -21,8 +21,8 @@ import bamboo from '../bamboo.js';
 import ChartRectangle from '../ChartRectangle.js';
 import ChartTransform from '../ChartTransform.js';
 import GridLineSet from '../GridLineSet.js';
-import TickLabelSet from '../TickLabelSet.js';
 import LinePlot from '../LinePlot.js';
+import TickLabelSet from '../TickLabelSet.js';
 import TickMarkSet from '../TickMarkSet.js';
 
 class DemoLinePlot extends Node {

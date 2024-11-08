@@ -7,16 +7,16 @@
  */
 
 import Bounds2 from '../../dot/js/Bounds2.js';
+import Range from '../../dot/js/Range.js';
 import Utils from '../../dot/js/Utils.js';
+import optionize from '../../phet-core/js/optionize.js';
 import Orientation from '../../phet-core/js/Orientation.js';
+import StrictOmit from '../../phet-core/js/types/StrictOmit.js';
 import { Node, Path, PathOptions, Text } from '../../scenery/js/imports.js';
 import bamboo from './bamboo.js';
+import ChartTransform from './ChartTransform.js';
 import ClippingType from './ClippingType.js';
 import TickMarkSet from './TickMarkSet.js';
-import ChartTransform from './ChartTransform.js';
-import optionize from '../../phet-core/js/optionize.js';
-import StrictOmit from '../../phet-core/js/types/StrictOmit.js';
-import Range from '../../dot/js/Range.js';
 
 type SelfOptions = {
 

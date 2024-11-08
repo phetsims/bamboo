@@ -9,12 +9,12 @@
  * @author Martin Veillette
  */
 
-import ChartTransform from './ChartTransform.js';
 import Vector2 from '../../dot/js/Vector2.js';
 import { Shape } from '../../kite/js/imports.js';
 import optionize from '../../phet-core/js/optionize.js';
 import { Path, PathOptions } from '../../scenery/js/imports.js';
 import bamboo from './bamboo.js';
+import ChartTransform from './ChartTransform.js';
 
 export type AreaChartDataSet = ( Vector2 | null )[];
 

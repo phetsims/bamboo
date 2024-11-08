@@ -7,6 +7,7 @@
  */
 
 import NumberProperty from '../../../axon/js/NumberProperty.js';
+import { TReadOnlyEmitter } from '../../../axon/js/TEmitter.js';
 import dotRandom from '../../../dot/js/dotRandom.js';
 import Range from '../../../dot/js/Range.js';
 import Utils from '../../../dot/js/Utils.js';
@@ -16,15 +17,14 @@ import PlusMinusZoomButtonGroup from '../../../scenery-phet/js/PlusMinusZoomButt
 import { Color, Node, NodeOptions, Text } from '../../../scenery/js/imports.js';
 import AxisLine from '../AxisLine.js';
 import bamboo from '../bamboo.js';
+import CanvasGridLineSet from '../CanvasGridLineSet.js';
 import CanvasLinePlot from '../CanvasLinePlot.js';
+import CanvasPainter from '../CanvasPainter.js';
 import ChartCanvasNode from '../ChartCanvasNode.js';
 import ChartRectangle from '../ChartRectangle.js';
 import ChartTransform from '../ChartTransform.js';
 import TickLabelSet from '../TickLabelSet.js';
 import TickMarkSet from '../TickMarkSet.js';
-import CanvasGridLineSet from '../CanvasGridLineSet.js';
-import CanvasPainter from '../CanvasPainter.js';
-import { TReadOnlyEmitter } from '../../../axon/js/TEmitter.js';
 
 class DemoChartCanvasNode extends Node {
 

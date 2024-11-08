@@ -10,22 +10,22 @@ import Property from '../../../axon/js/Property.js';
 import Bounds2 from '../../../dot/js/Bounds2.js';
 import dotRandom from '../../../dot/js/dotRandom.js';
 import Range from '../../../dot/js/Range.js';
-import Utils from '../../../dot/js/Utils.js';
 import Transform1 from '../../../dot/js/Transform1.js';
+import Utils from '../../../dot/js/Utils.js';
 import Vector2 from '../../../dot/js/Vector2.js';
 import Orientation from '../../../phet-core/js/Orientation.js';
 import { DragListener, HBox, Node, SceneryEvent, Text, VBox, VBoxOptions } from '../../../scenery/js/imports.js';
 import VerticalAquaRadioButtonGroup from '../../../sun/js/VerticalAquaRadioButtonGroup.js';
+import Tandem from '../../../tandem/js/Tandem.js';
+import bamboo from '../bamboo.js';
 import BarPlot from '../BarPlot.js';
-import ChartTransform from '../ChartTransform.js';
 import ChartRectangle from '../ChartRectangle.js';
+import ChartTransform from '../ChartTransform.js';
 import GridLineSet from '../GridLineSet.js';
-import TickLabelSet from '../TickLabelSet.js';
 import LinePlot from '../LinePlot.js';
 import ScatterPlot from '../ScatterPlot.js';
+import TickLabelSet from '../TickLabelSet.js';
 import TickMarkSet from '../TickMarkSet.js';
-import bamboo from '../bamboo.js';
-import Tandem from '../../../tandem/js/Tandem.js';
 
 class DemoMultiplePlots extends VBox {
 

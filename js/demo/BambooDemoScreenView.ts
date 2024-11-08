@@ -10,16 +10,16 @@
 
 import Emitter from '../../../axon/js/Emitter.js';
 import DemosScreenView, { DemoItemData } from '../../../sun/js/demo/DemosScreenView.js';
+import Tandem from '../../../tandem/js/Tandem.js';
 import bamboo from '../bamboo.js';
+import DemoAreaPlot from './DemoAreaPlot.js';
 import DemoBarPlot from './DemoBarPlot.js';
 import DemoChartCanvasNode from './DemoChartCanvasNode.js';
+import DemoLinearEquationPlot from './DemoLinearEquationPlot.js';
 import DemoLinePlot from './DemoLinePlot.js';
 import DemoMultiplePlots from './DemoMultiplePlots.js';
 import DemoScatterPlot from './DemoScatterPlot.js';
-import DemoLinearEquationPlot from './DemoLinearEquationPlot.js';
 import DemoUpDownArrowPlot from './DemoUpDownArrowPlot.js';
-import Tandem from '../../../tandem/js/Tandem.js';
-import DemoAreaPlot from './DemoAreaPlot.js';
 
 // constants - this is a hack to enable components to animate from the animation loop
 const emitter = new Emitter<[ number ]>( { parameters: [ { valueType: 'number' } ] } );

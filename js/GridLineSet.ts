@@ -10,14 +10,14 @@
  * @author Sam Reid (PhET Interactive Simulations)
  */
 
+import Range from '../../dot/js/Range.js';
 import { Shape } from '../../kite/js/imports.js';
+import optionize from '../../phet-core/js/optionize.js';
 import Orientation from '../../phet-core/js/Orientation.js';
 import { Path, PathOptions } from '../../scenery/js/imports.js';
 import bamboo from './bamboo.js';
-import ClippingType from './ClippingType.js';
 import ChartTransform from './ChartTransform.js';
-import optionize from '../../phet-core/js/optionize.js';
-import Range from '../../dot/js/Range.js';
+import ClippingType from './ClippingType.js';
 
 type SelfOptions = {
   origin?: number;

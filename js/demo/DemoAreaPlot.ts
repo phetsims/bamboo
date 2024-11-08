@@ -6,14 +6,19 @@
  * @author Sam Reid (PhET Interactive Simulations)
  */
 
-import AreaPlot from '../AreaPlot.js';
 import NumberProperty from '../../../axon/js/NumberProperty.js';
+import Dimension2 from '../../../dot/js/Dimension2.js';
 import Range from '../../../dot/js/Range.js';
 import Utils from '../../../dot/js/Utils.js';
 import Vector2 from '../../../dot/js/Vector2.js';
+import optionize, { EmptySelfOptions } from '../../../phet-core/js/optionize.js';
 import Orientation from '../../../phet-core/js/Orientation.js';
+import StrictOmit from '../../../phet-core/js/types/StrictOmit.js';
+import PhetFont from '../../../scenery-phet/js/PhetFont.js';
 import PlusMinusZoomButtonGroup from '../../../scenery-phet/js/PlusMinusZoomButtonGroup.js';
 import { HBoxOptions, Node, Text } from '../../../scenery/js/imports.js';
+import VSlider from '../../../sun/js/VSlider.js';
+import AreaPlot from '../AreaPlot.js';
 import AxisArrowNode from '../AxisArrowNode.js';
 import bamboo from '../bamboo.js';
 import ChartRectangle from '../ChartRectangle.js';
@@ -21,11 +26,6 @@ import ChartTransform from '../ChartTransform.js';
 import GridLineSet, { GridLineSetOptions } from '../GridLineSet.js';
 import TickLabelSet, { TickLabelSetOptions } from '../TickLabelSet.js';
 import TickMarkSet, { TickMarkSetOptions } from '../TickMarkSet.js';
-import StrictOmit from '../../../phet-core/js/types/StrictOmit.js';
-import optionize, { EmptySelfOptions } from '../../../phet-core/js/optionize.js';
-import VSlider from '../../../sun/js/VSlider.js';
-import Dimension2 from '../../../dot/js/Dimension2.js';
-import PhetFont from '../../../scenery-phet/js/PhetFont.js';
 
 const MAX_X_RANGE = new Range( -5, 5 );
 const MAX_Y_RANGE = new Range( -5, 5 );

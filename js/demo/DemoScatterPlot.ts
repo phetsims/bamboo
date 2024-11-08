@@ -9,15 +9,15 @@ import Orientation from '../../../phet-core/js/Orientation.js';
 import { Node, VBox, VBoxOptions } from '../../../scenery/js/imports.js';
 import HSlider from '../../../sun/js/HSlider.js';
 import AxisArrowNode from '../AxisArrowNode.js';
+import bamboo from '../bamboo.js';
 import BarPlot from '../BarPlot.js';
-import ChartTransform from '../ChartTransform.js';
 import ChartRectangle from '../ChartRectangle.js';
+import ChartTransform from '../ChartTransform.js';
 import GridLineSet from '../GridLineSet.js';
-import TickLabelSet from '../TickLabelSet.js';
 import LinePlot from '../LinePlot.js';
 import ScatterPlot from '../ScatterPlot.js';
+import TickLabelSet from '../TickLabelSet.js';
 import TickMarkSet from '../TickMarkSet.js';
-import bamboo from '../bamboo.js';
 
 /**
  *

@@ -1,4 +1,4 @@
-// Copyright 2020-2023, University of Colorado Boulder
+// Copyright 2020-2024, University of Colorado Boulder
 
 /**
  * Draws a set of lines within a graph.  For example, the minor horizontal lines.  Back-computes the model

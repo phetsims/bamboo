@@ -166,6 +166,8 @@ class TickLabelSet extends Path {
       }
     }
     toRemove.forEach( t => {
+      const node = this.labelMap.get( t );
+      node && node.dispose();
       this.labelMap.delete( t );
     } );
 

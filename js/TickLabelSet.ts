@@ -34,13 +34,6 @@ type SelfOptions = {
   // or return null if no label for that value
   createLabel?: ( value: number ) => Node | null;
   positionLabel?: ( label: Node, tickBounds: Bounds2, axisOrientation: Orientation ) => Node;
-
-  // Whether caching of labels is enabled, see https://github.com/phetsims/bamboo/issues/65.
-  // true: On update, if a label already exists for a numeric value, that label is reused. Labels that are not reused
-  //       are disposed. Use this value to improve performance.
-  // false: Labels are not reused. On update, all existing labels are disposed, and a new set of labels is created.
-  //        Use this value if your createLabel function involves more than just the numeric value.
-  cachingEnabled?: boolean;
 };
 
 export type TickLabelSetOptions = SelfOptions & StrictOmit<PathOptions, 'children'>;
@@ -59,7 +52,6 @@ class TickLabelSet extends Path {
   private createLabel;
   private readonly positionLabel;
   private labelMap: Map<number, Node | null>; // cache labels for quick reuse
-  private readonly cachingEnabled: boolean;
   private readonly disposeTickLabelSet: () => void;
 
   /**
@@ -91,10 +83,7 @@ class TickLabelSet extends Path {
           label.rightCenter = tickBounds.leftCenter.plusXY( -1, 0 );
         }
         return label;
-      },
-
-      // false would be a preferrable default.
-      cachingEnabled: true
+      }
     }, providedOptions );
 
     if ( options.edge ) {
@@ -116,7 +105,6 @@ class TickLabelSet extends Path {
     this.positionLabel = options.positionLabel;
 
     this.labelMap = new Map();
-    this.cachingEnabled = options.cachingEnabled;
 
     // Initialize
     this.update();
@@ -160,16 +148,10 @@ class TickLabelSet extends Path {
           tickBounds.setMinMax( viewX - this.extent / 2, viewCoordinate, viewX + this.extent / 2, viewCoordinate );
         }
 
-        // Get label from cache, or create a new label.
-        let label: Node | null = null;
-        if ( this.cachingEnabled && this.labelMap.has( modelCoordinate ) ) {
-          label = this.labelMap.get( modelCoordinate )!;
-        }
-        else if ( this.createLabel ) {
-          label = this.createLabel( modelCoordinate );
-        }
+        const label = this.labelMap.has( modelCoordinate ) ? this.labelMap.get( modelCoordinate )! :
+                      this.createLabel ? this.createLabel( modelCoordinate ) :
+                      null;
         this.labelMap.set( modelCoordinate, label );
-
         label && this.positionLabel( label, tickBounds, this.axisOrientation );
         label && children.push( label );
         used.add( modelCoordinate );

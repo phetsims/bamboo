@@ -130,7 +130,6 @@ class TickLabelSet extends Path {
   // Updates the labels when range or spacing has changed.
   protected update(): void {
     const children: Node[] = [];
-    const used = new Set();
 
     this.chartTransform.forEachSpacing( this.axisOrientation, this.spacing, this.origin, this.clippingType, ( modelCoordinate, viewCoordinate ) => {
       if ( !this.skipCoordinates.includes( modelCoordinate ) ) {
@@ -165,15 +164,15 @@ class TickLabelSet extends Path {
           this.positionLabel( label, tickBounds, this.axisOrientation );
           children.push( label );
         }
-        used.add( modelCoordinate );
       }
     } );
 
-    // empty cache of unused values
-    const toRemove = [];
+    // Empty the cache of labels that are not used.
     for ( const key of this.labelMap.keys() ) {
-      if ( !used.has( key ) ) {
-        toRemove.push( key );
+      const label = this.labelMap.get( key );
+      if ( label && !children.includes( label ) ) {
+        this.labelMap.delete( key );
+        label.dispose();
       }
     }
 

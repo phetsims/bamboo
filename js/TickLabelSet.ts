@@ -180,8 +180,19 @@ class TickLabelSet extends Path {
    * symbolic labels (e.g. '2L').
    */
   public invalidateTickLabelSet(): void {
-    this.labelMap.clear();
+    this.clearCache();
     this.update();
+  }
+
+  /**
+   * Clears the cache. It is also our responsibility to dispose all labels in the cache, because they were
+   * created by calling createLabel.
+   */
+  private clearCache(): void {
+    for ( const label of this.labelMap.values() ) {
+      label && label.dispose();
+    }
+    this.labelMap.clear();
   }
 
   public setCreateLabel( createLabel: ( value: number ) => Node | null ): void {

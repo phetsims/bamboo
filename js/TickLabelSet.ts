@@ -113,7 +113,10 @@ class TickLabelSet extends Path {
     const changedListener = () => this.update();
     chartTransform.changedEmitter.addListener( changedListener );
 
-    this.disposeTickLabelSet = () => chartTransform.changedEmitter.removeListener( changedListener );
+    this.disposeTickLabelSet = () => {
+      chartTransform.changedEmitter.removeListener( changedListener );
+      this.clearCache();
+    };
   }
 
   public setSpacing( spacing: number ): void {

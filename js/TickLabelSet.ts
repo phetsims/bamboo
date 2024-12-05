@@ -148,12 +148,23 @@ class TickLabelSet extends Path {
           tickBounds.setMinMax( viewX - this.extent / 2, viewCoordinate, viewX + this.extent / 2, viewCoordinate );
         }
 
-        const label = this.labelMap.has( modelCoordinate ) ? this.labelMap.get( modelCoordinate )! :
-                      this.createLabel ? this.createLabel( modelCoordinate ) :
-                      null;
-        this.labelMap.set( modelCoordinate, label );
-        label && this.positionLabel( label, tickBounds, this.axisOrientation );
-        label && children.push( label );
+        let label: Node | null = null;
+        if ( this.labelMap.has( modelCoordinate ) ) {
+
+          // Get label from cache,
+          label = this.labelMap.get( modelCoordinate )!;
+        }
+        else if ( this.createLabel ) {
+
+          // Create a new label.
+          label = this.createLabel( modelCoordinate );
+          this.labelMap.set( modelCoordinate, label );
+        }
+
+        if ( label ) {
+          this.positionLabel( label, tickBounds, this.axisOrientation );
+          children.push( label );
+        }
         used.add( modelCoordinate );
       }
     } );
@@ -165,11 +176,6 @@ class TickLabelSet extends Path {
         toRemove.push( key );
       }
     }
-    toRemove.forEach( t => {
-      const node = this.labelMap.get( t );
-      node && node.dispose();
-      this.labelMap.delete( t );
-    } );
 
     this.children = children;
   }

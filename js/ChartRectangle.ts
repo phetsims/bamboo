@@ -8,7 +8,7 @@
  */
 
 import { EmptySelfOptions } from '../../phet-core/js/optionize.js';
-import { Rectangle, RectangleOptions } from '../../scenery/js/imports.js';
+import Rectangle, { RectangleOptions } from '../../scenery/js/nodes/Rectangle.js';
 import bamboo from './bamboo.js';
 import ChartTransform from './ChartTransform.js';
 

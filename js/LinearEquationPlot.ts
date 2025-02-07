@@ -9,7 +9,7 @@
  */
 
 import optionize, { EmptySelfOptions } from '../../phet-core/js/optionize.js';
-import { Line, LineOptions } from '../../scenery/js/imports.js';
+import Line, { LineOptions } from '../../scenery/js/nodes/Line.js';
 import bamboo from './bamboo.js';
 import ChartTransform from './ChartTransform.js';
 

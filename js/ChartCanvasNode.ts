@@ -10,7 +10,7 @@
 import Bounds2 from '../../dot/js/Bounds2.js';
 import optionize, { EmptySelfOptions } from '../../phet-core/js/optionize.js';
 import StrictOmit from '../../phet-core/js/types/StrictOmit.js';
-import { CanvasNode, CanvasNodeOptions } from '../../scenery/js/imports.js';
+import CanvasNode, { CanvasNodeOptions } from '../../scenery/js/nodes/CanvasNode.js';
 import bamboo from './bamboo.js';
 import CanvasPainter from './CanvasPainter.js';
 import ChartTransform from './ChartTransform.js';

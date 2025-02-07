@@ -11,10 +11,10 @@
  */
 
 import Range from '../../dot/js/Range.js';
-import { Shape } from '../../kite/js/imports.js';
+import Shape from '../../kite/js/Shape.js';
 import optionize from '../../phet-core/js/optionize.js';
 import Orientation from '../../phet-core/js/Orientation.js';
-import { Path, PathOptions } from '../../scenery/js/imports.js';
+import Path, { PathOptions } from '../../scenery/js/nodes/Path.js';
 import bamboo from './bamboo.js';
 import ChartTransform from './ChartTransform.js';
 import ClippingType from './ClippingType.js';

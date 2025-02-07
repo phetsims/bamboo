@@ -8,7 +8,7 @@
 
 import optionize from '../../phet-core/js/optionize.js';
 import Orientation from '../../phet-core/js/Orientation.js';
-import { Line, LineOptions } from '../../scenery/js/imports.js';
+import Line, { LineOptions } from '../../scenery/js/nodes/Line.js';
 import bamboo from './bamboo.js';
 import ChartTransform from './ChartTransform.js';
 

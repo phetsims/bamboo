@@ -11,9 +11,9 @@
  */
 
 import Vector2 from '../../dot/js/Vector2.js';
-import { Shape } from '../../kite/js/imports.js';
+import Shape from '../../kite/js/Shape.js';
 import optionize, { EmptySelfOptions } from '../../phet-core/js/optionize.js';
-import { Path, PathOptions } from '../../scenery/js/imports.js';
+import Path, { PathOptions } from '../../scenery/js/nodes/Path.js';
 import bamboo from './bamboo.js';
 import ChartTransform from './ChartTransform.js';
 

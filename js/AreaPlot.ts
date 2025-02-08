@@ -1,4 +1,4 @@
-// Copyright 2023-2024, University of Colorado Boulder
+// Copyright 2023-2025, University of Colorado Boulder
 
 /**
  * AreaPlot is a plot that combines a line plot and a bar plot. An area plot is distinguished from a line plot by

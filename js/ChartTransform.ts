@@ -11,12 +11,13 @@ import Emitter from '../../axon/js/Emitter.js';
 import TEmitter from '../../axon/js/TEmitter.js';
 import Range from '../../dot/js/Range.js';
 import Transform1 from '../../dot/js/Transform1.js';
-import Utils from '../../dot/js/Utils.js';
 import Vector2 from '../../dot/js/Vector2.js';
 import optionize from '../../phet-core/js/optionize.js';
 import Orientation from '../../phet-core/js/Orientation.js';
 import bamboo from './bamboo.js';
 import ClippingType from './ClippingType.js';
+import { linear } from '../../dot/js/util/linear.js';
+import { roundSymmetric } from '../../dot/js/util/roundSymmetric.js';
 
 type SelfOptions = {
 
@@ -125,8 +126,8 @@ class ChartTransform {
 
     // For vertical, +y is usually up
     const viewValue = axisOrientation === Orientation.HORIZONTAL ?
-                      Utils.linear( transform.evaluate( modelRange.min ), transform.evaluate( modelRange.max ), lowSide, highSide, transformedValue ) :
-                      Utils.linear( transform.evaluate( modelRange.max ), transform.evaluate( modelRange.min ), lowSide, highSide, transformedValue );
+                      linear( transform.evaluate( modelRange.min ), transform.evaluate( modelRange.max ), lowSide, highSide, transformedValue ) :
+                      linear( transform.evaluate( modelRange.max ), transform.evaluate( modelRange.min ), lowSide, highSide, transformedValue );
     assert && assert( Number.isFinite( viewValue ), `viewValue should be finite: ${viewValue}` );
     assert && assert( !isNaN( viewValue ), `viewValue should be a number: ${viewValue}` );
 
@@ -186,8 +187,8 @@ class ChartTransform {
 
     // For vertical, +y is usually up
     const out = axisOrientation === Orientation.HORIZONTAL ?
-                Utils.linear( lowSide, highSide, transform.evaluate( modelRange.min ), transform.evaluate( modelRange.max ), value ) :
-                Utils.linear( lowSide, highSide, transform.evaluate( modelRange.max ), transform.evaluate( modelRange.min ), value );
+                linear( lowSide, highSide, transform.evaluate( modelRange.min ), transform.evaluate( modelRange.max ), value ) :
+                linear( lowSide, highSide, transform.evaluate( modelRange.max ), transform.evaluate( modelRange.min ), value );
     assert && assert( Number.isFinite( out ), 'out value should be finite' );
     assert && assert( !isNaN( out ), 'out value should be a number' );
 
@@ -304,7 +305,7 @@ class ChartTransform {
 function getValueForSpacing( value: number, clippingType: ClippingType,
                              origin: number, spacing: number, round: ( n: number ) => number ): number {
   return clippingType === 'lenient' ?
-         Utils.roundSymmetric( ( value - origin ) / spacing ) :
+         roundSymmetric( ( value - origin ) / spacing ) :
          round( ( value - origin ) / spacing );
 }
 

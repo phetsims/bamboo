@@ -8,7 +8,6 @@
 
 import Bounds2 from '../../dot/js/Bounds2.js';
 import Range from '../../dot/js/Range.js';
-import Utils from '../../dot/js/Utils.js';
 import optionize from '../../phet-core/js/optionize.js';
 import Orientation from '../../phet-core/js/Orientation.js';
 import StrictOmit from '../../phet-core/js/types/StrictOmit.js';
@@ -19,6 +18,7 @@ import bamboo from './bamboo.js';
 import ChartTransform from './ChartTransform.js';
 import ClippingType from './ClippingType.js';
 import TickMarkSet from './TickMarkSet.js';
+import { toFixed } from '../../dot/js/util/toFixed.js';
 
 type SelfOptions = {
 
@@ -74,7 +74,7 @@ class TickLabelSet extends Path {
       skipCoordinates: [],
       extent: TickMarkSet.DEFAULT_EXTENT,
       clippingType: 'strict',
-      createLabel: ( value: number ) => new Text( Utils.toFixed( value, 1 ), { fontSize: 12 } ),
+      createLabel: ( value: number ) => new Text( toFixed( value, 1 ), { fontSize: 12 } ),
       positionLabel: ( label: Node, tickBounds: Bounds2, axisOrientation: Orientation ) => {
         if ( axisOrientation === Orientation.HORIZONTAL ) {
 

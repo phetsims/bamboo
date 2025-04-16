@@ -1,7 +1,5 @@
 // Copyright 2020-2022, University of Colorado Boulder
 
-import bamboo from './bamboo.js';
-
 /**
  * Indicates whether objects will be truncated right at the edge of the chart, or beyond the edge of the chart.
  *
@@ -11,6 +9,8 @@ import bamboo from './bamboo.js';
  * For objects outside the chart, you may need a strict ClippingStyle so they don't exceed the bounds of the chart.
  * @author Sam Reid (PhET Interactive Simulations)
  */
+
+import bamboo from './bamboo.js';
 
 const ClippingTypeValues = [ 'strict', 'lenient' ] as const;
 type ClippingType = typeof ClippingTypeValues[number];

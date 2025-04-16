@@ -1,5 +1,10 @@
 // Copyright 2020-2025, University of Colorado Boulder
 
+/**
+ *
+ * @author Sam Reid (PhET Interactive Simulations)
+ */
+
 import NumberProperty from '../../../axon/js/NumberProperty.js';
 import Dimension2 from '../../../dot/js/Dimension2.js';
 import dotRandom from '../../../dot/js/dotRandom.js';
@@ -19,11 +24,6 @@ import LinePlot from '../LinePlot.js';
 import ScatterPlot from '../ScatterPlot.js';
 import TickLabelSet from '../TickLabelSet.js';
 import TickMarkSet from '../TickMarkSet.js';
-
-/**
- *
- * @author Sam Reid (PhET Interactive Simulations)
- */
 
 class DemoScatterPlot extends VBox {
 

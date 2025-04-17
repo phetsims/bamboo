@@ -1,4 +1,4 @@
-// Copyright 2020-2022, University of Colorado Boulder
+// Copyright 2020-2025, University of Colorado Boulder
 
 /**
  * Indicates whether objects will be truncated right at the edge of the chart, or beyond the edge of the chart.

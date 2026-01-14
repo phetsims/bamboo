@@ -11,13 +11,13 @@ import Emitter from '../../axon/js/Emitter.js';
 import TEmitter from '../../axon/js/TEmitter.js';
 import Range from '../../dot/js/Range.js';
 import Transform1 from '../../dot/js/Transform1.js';
+import { linear } from '../../dot/js/util/linear.js';
+import { roundSymmetric } from '../../dot/js/util/roundSymmetric.js';
 import Vector2 from '../../dot/js/Vector2.js';
 import optionize from '../../phet-core/js/optionize.js';
 import Orientation from '../../phet-core/js/Orientation.js';
 import bamboo from './bamboo.js';
 import ClippingType from './ClippingType.js';
-import { linear } from '../../dot/js/util/linear.js';
-import { roundSymmetric } from '../../dot/js/util/roundSymmetric.js';
 
 type SelfOptions = {
 
@@ -62,7 +62,7 @@ class ChartTransform {
       viewHeight: 100,
       modelYRange: new Range( -1, 1 ),
       modelYRangeInverted: false,
-      yTransform: new Transform1( x => x, x => x )
+      yTransform: new Transform1( y => y, y => y )
     }, providedOptions );
 
     assert && assert( options.xTransform instanceof Transform1, 'xTransform must be of type Transform' );

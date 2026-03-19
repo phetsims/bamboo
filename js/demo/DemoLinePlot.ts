@@ -18,7 +18,6 @@ import PlusMinusZoomButtonGroup from '../../../scenery-phet/js/PlusMinusZoomButt
 import Node, { NodeOptions } from '../../../scenery/js/nodes/Node.js';
 import Text from '../../../scenery/js/nodes/Text.js';
 import AxisArrowNode from '../AxisArrowNode.js';
-import bamboo from '../bamboo.js';
 import ChartRectangle from '../ChartRectangle.js';
 import ChartTransform from '../ChartTransform.js';
 import GridLineSet from '../GridLineSet.js';
@@ -125,5 +124,4 @@ class DemoLinePlot extends Node {
   }
 }
 
-bamboo.register( 'DemoLinePlot', DemoLinePlot );
 export default DemoLinePlot;

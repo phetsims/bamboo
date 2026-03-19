@@ -22,7 +22,6 @@ import RichText from '../../../scenery/js/nodes/RichText.js';
 import Text from '../../../scenery/js/nodes/Text.js';
 import VSlider from '../../../sun/js/VSlider.js';
 import AxisArrowNode from '../AxisArrowNode.js';
-import bamboo from '../bamboo.js';
 import ChartRectangle from '../ChartRectangle.js';
 import ChartTransform from '../ChartTransform.js';
 import GridLineSet from '../GridLineSet.js';
@@ -226,5 +225,4 @@ class DemoLinearEquationPlot extends Node {
   }
 }
 
-bamboo.register( 'DemoLinearEquationPlot', DemoLinearEquationPlot );
 export default DemoLinearEquationPlot;

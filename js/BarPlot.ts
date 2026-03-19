@@ -11,7 +11,6 @@ import optionize from '../../phet-core/js/optionize.js';
 import Node, { NodeOptions } from '../../scenery/js/nodes/Node.js';
 import { PAINTABLE_DEFAULT_OPTIONS, PaintableOptions } from '../../scenery/js/nodes/Paintable.js';
 import Rectangle from '../../scenery/js/nodes/Rectangle.js';
-import bamboo from './bamboo.js';
 import ChartTransform from './ChartTransform.js';
 
 // constants
@@ -118,5 +117,4 @@ class BarPlot extends Node {
   }
 }
 
-bamboo.register( 'BarPlot', BarPlot );
 export default BarPlot;

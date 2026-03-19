@@ -16,7 +16,6 @@ import { roundSymmetric } from '../../dot/js/util/roundSymmetric.js';
 import Vector2 from '../../dot/js/Vector2.js';
 import optionize from '../../phet-core/js/optionize.js';
 import Orientation from '../../phet-core/js/Orientation.js';
-import bamboo from './bamboo.js';
 import ClippingType from './ClippingType.js';
 
 type SelfOptions = {
@@ -309,5 +308,4 @@ function getValueForSpacing( value: number, clippingType: ClippingType,
          round( ( value - origin ) / spacing );
 }
 
-bamboo.register( 'ChartTransform', ChartTransform );
 export default ChartTransform;

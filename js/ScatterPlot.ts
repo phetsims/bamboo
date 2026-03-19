@@ -10,7 +10,6 @@ import Vector2 from '../../dot/js/Vector2.js';
 import Shape from '../../kite/js/Shape.js';
 import optionize from '../../phet-core/js/optionize.js';
 import Path, { PathOptions } from '../../scenery/js/nodes/Path.js';
-import bamboo from './bamboo.js';
 import ChartTransform from './ChartTransform.js';
 
 type SelfOptions = {
@@ -89,5 +88,4 @@ class ScatterPlot extends Path {
   }
 }
 
-bamboo.register( 'ScatterPlot', ScatterPlot );
 export default ScatterPlot;

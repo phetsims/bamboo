@@ -17,7 +17,6 @@ import Node, { NodeOptions } from '../../../scenery/js/nodes/Node.js';
 import Text from '../../../scenery/js/nodes/Text.js';
 import Color from '../../../scenery/js/util/Color.js';
 import TextPushButton from '../../../sun/js/buttons/TextPushButton.js';
-import bamboo from '../bamboo.js';
 import BarPlot from '../BarPlot.js';
 import ChartRectangle from '../ChartRectangle.js';
 import ChartTransform from '../ChartTransform.js';
@@ -125,5 +124,4 @@ class DemoBarPlot extends Node {
   }
 }
 
-bamboo.register( 'DemoBarPlot', DemoBarPlot );
 export default DemoBarPlot;

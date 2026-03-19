@@ -22,7 +22,6 @@ import Node from '../../../scenery/js/nodes/Node.js';
 import Text from '../../../scenery/js/nodes/Text.js';
 import VerticalAquaRadioButtonGroup from '../../../sun/js/VerticalAquaRadioButtonGroup.js';
 import Tandem from '../../../tandem/js/Tandem.js';
-import bamboo from '../bamboo.js';
 import BarPlot from '../BarPlot.js';
 import ChartRectangle from '../ChartRectangle.js';
 import ChartTransform from '../ChartTransform.js';
@@ -148,5 +147,4 @@ class DemoMultiplePlots extends VBox {
   }
 }
 
-bamboo.register( 'DemoMultiplePlots', DemoMultiplePlots );
 export default DemoMultiplePlots;

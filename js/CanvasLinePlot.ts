@@ -12,7 +12,6 @@
 import Vector2 from '../../dot/js/Vector2.js';
 import optionize from '../../phet-core/js/optionize.js';
 import Color from '../../scenery/js/util/Color.js';
-import bamboo from './bamboo.js';
 import CanvasPainter, { CanvasPainterOptions } from './CanvasPainter.js';
 import ChartTransform from './ChartTransform.js';
 
@@ -125,5 +124,3 @@ export default class CanvasLinePlot extends CanvasPainter {
     }
   }
 }
-
-bamboo.register( 'CanvasLinePlot', CanvasLinePlot );

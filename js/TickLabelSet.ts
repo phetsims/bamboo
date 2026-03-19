@@ -14,7 +14,6 @@ import StrictOmit from '../../phet-core/js/types/StrictOmit.js';
 import Node from '../../scenery/js/nodes/Node.js';
 import Path, { PathOptions } from '../../scenery/js/nodes/Path.js';
 import Text from '../../scenery/js/nodes/Text.js';
-import bamboo from './bamboo.js';
 import ChartTransform from './ChartTransform.js';
 import ClippingType from './ClippingType.js';
 import TickMarkSet from './TickMarkSet.js';
@@ -220,5 +219,4 @@ class TickLabelSet extends Path {
   }
 }
 
-bamboo.register( 'TickLabelSet', TickLabelSet );
 export default TickLabelSet;

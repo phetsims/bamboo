@@ -12,7 +12,6 @@ import Shape from '../../kite/js/Shape.js';
 import optionize from '../../phet-core/js/optionize.js';
 import Orientation from '../../phet-core/js/Orientation.js';
 import Path, { PathOptions } from '../../scenery/js/nodes/Path.js';
-import bamboo from './bamboo.js';
 import ChartTransform from './ChartTransform.js';
 import ClippingType from './ClippingType.js';
 
@@ -142,5 +141,4 @@ class TickMarkSet extends Path {
   }
 }
 
-bamboo.register( 'TickMarkSet', TickMarkSet );
 export default TickMarkSet;

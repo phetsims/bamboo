@@ -15,7 +15,6 @@ import FlowBox, { FlowBoxOptions } from '../../scenery/js/layout/nodes/FlowBox.j
 import Line from '../../scenery/js/nodes/Line.js';
 import Node from '../../scenery/js/nodes/Node.js';
 import Color from '../../scenery/js/util/Color.js';
-import bamboo from './bamboo.js';
 import ChartTransform from './ChartTransform.js';
 
 // Same as the value in Node's validateBounds
@@ -149,5 +148,4 @@ class SpanNode extends FlowBox {
   }
 }
 
-bamboo.register( 'SpanNode', SpanNode );
 export default SpanNode;

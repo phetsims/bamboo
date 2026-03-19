@@ -11,7 +11,6 @@ import optionize from '../../phet-core/js/optionize.js';
 import ArrowNode, { ArrowNodeOptions } from '../../scenery-phet/js/ArrowNode.js';
 import Node, { NodeOptions } from '../../scenery/js/nodes/Node.js';
 import { PAINTABLE_DEFAULT_OPTIONS, PaintableOptions } from '../../scenery/js/nodes/Paintable.js';
-import bamboo from './bamboo.js';
 import ChartTransform from './ChartTransform.js';
 
 // constants
@@ -119,5 +118,4 @@ class UpDownArrowPlot extends Node {
   }
 }
 
-bamboo.register( 'UpDownArrowPlot', UpDownArrowPlot );
 export default UpDownArrowPlot;

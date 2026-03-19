@@ -11,7 +11,6 @@ import optionize from '../../phet-core/js/optionize.js';
 import Orientation from '../../phet-core/js/Orientation.js';
 import PickOptional from '../../phet-core/js/types/PickOptional.js';
 import { PathOptions } from '../../scenery/js/nodes/Path.js';
-import bamboo from './bamboo.js';
 import CanvasPainter, { CanvasPainterOptions } from './CanvasPainter.js';
 import ChartTransform from './ChartTransform.js';
 import ClippingType from './ClippingType.js';
@@ -106,5 +105,4 @@ class CanvasGridLineSet extends CanvasPainter {
   }
 }
 
-bamboo.register( 'CanvasGridLineSet', CanvasGridLineSet );
 export default CanvasGridLineSet;

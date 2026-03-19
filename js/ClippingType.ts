@@ -10,12 +10,8 @@
  * @author Sam Reid (PhET Interactive Simulations)
  */
 
-import bamboo from './bamboo.js';
-
 const ClippingTypeValues = [ 'strict', 'lenient' ] as const;
 type ClippingType = typeof ClippingTypeValues[number];
-
-bamboo.register( 'ClippingTypeValues', ClippingTypeValues );
 
 export { ClippingTypeValues };
 export default ClippingType;

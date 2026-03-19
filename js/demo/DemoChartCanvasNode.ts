@@ -18,7 +18,6 @@ import Node, { NodeOptions } from '../../../scenery/js/nodes/Node.js';
 import Text from '../../../scenery/js/nodes/Text.js';
 import Color from '../../../scenery/js/util/Color.js';
 import AxisLine from '../AxisLine.js';
-import bamboo from '../bamboo.js';
 import CanvasGridLineSet from '../CanvasGridLineSet.js';
 import CanvasLinePlot from '../CanvasLinePlot.js';
 import CanvasPainter from '../CanvasPainter.js';
@@ -143,5 +142,4 @@ class DemoChartCanvasNode extends Node {
   }
 }
 
-bamboo.register( 'DemoChartCanvasNode', DemoChartCanvasNode );
 export default DemoChartCanvasNode;

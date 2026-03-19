@@ -10,7 +10,6 @@
 
 import optionize, { EmptySelfOptions } from '../../phet-core/js/optionize.js';
 import Line, { LineOptions } from '../../scenery/js/nodes/Line.js';
-import bamboo from './bamboo.js';
 import ChartTransform from './ChartTransform.js';
 
 type SelfOptions = EmptySelfOptions;
@@ -128,5 +127,4 @@ class LinearEquationPlot extends Line {
   }
 }
 
-bamboo.register( 'LinearEquationPlot', LinearEquationPlot );
 export default LinearEquationPlot;

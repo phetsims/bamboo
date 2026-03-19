@@ -13,7 +13,6 @@ import Vector2 from '../../dot/js/Vector2.js';
 import Shape from '../../kite/js/Shape.js';
 import optionize from '../../phet-core/js/optionize.js';
 import Path, { PathOptions } from '../../scenery/js/nodes/Path.js';
-import bamboo from './bamboo.js';
 import ChartTransform from './ChartTransform.js';
 
 export type AreaChartDataSet = ( Vector2 | null )[];
@@ -153,5 +152,3 @@ export default class AreaPlot extends Path {
     this.update();
   }
 }
-
-bamboo.register( 'AreaPlot', AreaPlot );

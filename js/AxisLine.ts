@@ -9,7 +9,6 @@
 import optionize from '../../phet-core/js/optionize.js';
 import Orientation from '../../phet-core/js/Orientation.js';
 import Line, { LineOptions } from '../../scenery/js/nodes/Line.js';
-import bamboo from './bamboo.js';
 import ChartTransform from './ChartTransform.js';
 
 type SelfOptions = {
@@ -75,5 +74,4 @@ class AxisLine extends Line {
   }
 }
 
-bamboo.register( 'AxisLine', AxisLine );
 export default AxisLine;

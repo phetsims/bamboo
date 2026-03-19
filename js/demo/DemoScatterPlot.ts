@@ -15,7 +15,6 @@ import VBox, { VBoxOptions } from '../../../scenery/js/layout/nodes/VBox.js';
 import Node from '../../../scenery/js/nodes/Node.js';
 import HSlider from '../../../sun/js/HSlider.js';
 import AxisArrowNode from '../AxisArrowNode.js';
-import bamboo from '../bamboo.js';
 import BarPlot from '../BarPlot.js';
 import ChartRectangle from '../ChartRectangle.js';
 import ChartTransform from '../ChartTransform.js';
@@ -113,5 +112,4 @@ class DemoScatterPlot extends VBox {
   }
 }
 
-bamboo.register( 'DemoScatterPlot', DemoScatterPlot );
 export default DemoScatterPlot;

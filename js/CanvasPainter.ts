@@ -8,7 +8,6 @@
  */
 
 import optionize from '../../phet-core/js/optionize.js';
-import bamboo from './bamboo.js';
 
 type SelfOptions = {
   visible?: boolean;
@@ -37,5 +36,4 @@ abstract class CanvasPainter {
   public abstract paintCanvas( context: CanvasRenderingContext2D ): void;
 }
 
-bamboo.register( 'CanvasPainter', CanvasPainter );
 export default CanvasPainter;

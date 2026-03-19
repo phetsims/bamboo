@@ -12,7 +12,6 @@ import Orientation from '../../../phet-core/js/Orientation.js';
 import Node, { NodeOptions } from '../../../scenery/js/nodes/Node.js';
 import Color from '../../../scenery/js/util/Color.js';
 import AxisArrowNode from '../AxisArrowNode.js';
-import bamboo from '../bamboo.js';
 import ChartRectangle from '../ChartRectangle.js';
 import ChartTransform from '../ChartTransform.js';
 import UpDownArrowPlot from '../UpDownArrowPlot.js';
@@ -75,5 +74,4 @@ class DemoUpDownArrowPlot extends Node {
   }
 }
 
-bamboo.register( 'DemoUpDownArrowPlot', DemoUpDownArrowPlot );
 export default DemoUpDownArrowPlot;

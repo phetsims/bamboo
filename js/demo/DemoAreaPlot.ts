@@ -22,7 +22,6 @@ import Text from '../../../scenery/js/nodes/Text.js';
 import VSlider from '../../../sun/js/VSlider.js';
 import AreaPlot from '../AreaPlot.js';
 import AxisArrowNode from '../AxisArrowNode.js';
-import bamboo from '../bamboo.js';
 import ChartRectangle from '../ChartRectangle.js';
 import ChartTransform from '../ChartTransform.js';
 import GridLineSet, { GridLineSetOptions } from '../GridLineSet.js';
@@ -181,5 +180,3 @@ const createSineDataSet = ( xRange: Range, period: number, amplitude: number, de
   }
   return dataSet;
 };
-
-bamboo.register( 'DemoAreaPlot', DemoAreaPlot );

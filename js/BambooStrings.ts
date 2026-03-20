@@ -19,4 +19,6 @@ type StringsType = {
 
 const BambooStrings = getStringModule( 'BAMBOO' ) as StringsType;
 
+bamboo.register( 'BambooStrings', BambooStrings );
+
 export default BambooStrings;

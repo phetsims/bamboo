@@ -31,7 +31,7 @@ export default class AreaPlot extends Path {
   // a y-value that serves as foundation for the area plot.
   public baseline: number;
 
-  private chartTransform: ChartTransform;
+  private readonly chartTransform: ChartTransform;
   private readonly disposeAreaChart: () => void;
 
   public constructor( chartTransform: ChartTransform,

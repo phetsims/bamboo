@@ -31,7 +31,7 @@ export type TickMarkSetOptions = SelfOptions & PathOptions;
 
 class TickMarkSet extends Path {
 
-  private chartTransform: ChartTransform;
+  private readonly chartTransform: ChartTransform;
   private readonly axisOrientation: Orientation;
   private spacing: number;
   private readonly value: number;

@@ -20,7 +20,7 @@ type SelfOptions = EmptySelfOptions;
 export type LinePlotOptions = SelfOptions & PathOptions;
 
 class LinePlot extends Path {
-  private chartTransform: ChartTransform;
+  private readonly chartTransform: ChartTransform;
 
   // if you change this directly, you are responsible for calling update
   public dataSet: ( Vector2 | null )[];

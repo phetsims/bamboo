@@ -17,7 +17,7 @@ export type LinearEquationPlotOptions = SelfOptions & LineOptions;
 
 class LinearEquationPlot extends Line {
 
-  private chartTransform: ChartTransform;
+  private readonly chartTransform: ChartTransform;
   private _b: number;
   private _m: number;
   private readonly disposeStraightLinePlot: () => void;

@@ -20,7 +20,7 @@ type SelfOptions = {
 export type ScatterPlotOptions = SelfOptions & PathOptions;
 
 class ScatterPlot extends Path {
-  private chartTransform: ChartTransform;
+  private readonly chartTransform: ChartTransform;
 
   // if you change this directly, you are responsible for calling update
   public dataSet: Vector2[];

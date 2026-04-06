@@ -8,6 +8,7 @@
 
 import Bounds2 from '../../dot/js/Bounds2.js';
 import Range from '../../dot/js/Range.js';
+import { toFixed } from '../../dot/js/util/toFixed.js';
 import optionize from '../../phet-core/js/optionize.js';
 import Orientation from '../../phet-core/js/Orientation.js';
 import StrictOmit from '../../phet-core/js/types/StrictOmit.js';
@@ -17,7 +18,6 @@ import Text from '../../scenery/js/nodes/Text.js';
 import ChartTransform from './ChartTransform.js';
 import ClippingType from './ClippingType.js';
 import TickMarkSet from './TickMarkSet.js';
-import { toFixed } from '../../dot/js/util/toFixed.js';
 
 type SelfOptions = {
 
@@ -41,7 +41,7 @@ export type TickLabelSetOptions = SelfOptions & StrictOmit<PathOptions, 'childre
 
 class TickLabelSet extends Path {
 
-  private chartTransform: ChartTransform;
+  private readonly chartTransform: ChartTransform;
   private readonly axisOrientation: Orientation;
   private spacing: number;
   private readonly origin: number;

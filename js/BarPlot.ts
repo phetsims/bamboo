@@ -29,7 +29,7 @@ type SelfOptions = {
 export type BarPlotOptions = SelfOptions & NodeOptions;
 
 class BarPlot extends Node {
-  private chartTransform: ChartTransform;
+  private readonly chartTransform: ChartTransform;
   private barTailValue: number;
 
   // if you change this directly, you are responsible for calling update

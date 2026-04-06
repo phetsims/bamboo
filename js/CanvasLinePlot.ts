@@ -25,7 +25,7 @@ export type CanvasLinePlotOptions = SelfOptions & CanvasPainterOptions;
 
 export default class CanvasLinePlot extends CanvasPainter {
 
-  private chartTransform: ChartTransform;
+  private readonly chartTransform: ChartTransform;
 
   // If you change this directly, you are responsible for calling update on the corresponding ChartCanvasNode.
   public dataSet: ( Vector2 | null )[];

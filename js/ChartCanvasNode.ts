@@ -19,7 +19,7 @@ type SelfOptions = EmptySelfOptions;
 export type ChartCanvasNodeOptions = SelfOptions & CanvasNodeOptions;
 
 class ChartCanvasNode extends CanvasNode {
-  private chartTransform: ChartTransform;
+  private readonly chartTransform: ChartTransform;
 
   // if you change this directly, you are responsible for calling update
   public painters: CanvasPainter[];

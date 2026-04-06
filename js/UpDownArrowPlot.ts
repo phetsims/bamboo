@@ -24,7 +24,7 @@ type SelfOptions = {
 export type UpDownArrowPlotOptions = SelfOptions & NodeOptions;
 
 class UpDownArrowPlot extends Node {
-  private chartTransform: ChartTransform;
+  private readonly chartTransform: ChartTransform;
 
   // if you change this directly, you are responsible for calling update
   public dataSet: Vector2[];

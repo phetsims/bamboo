@@ -38,7 +38,7 @@ export type SpanNodeOptions = SelfOptions & StrictOmit<FlowBoxOptions, 'children
 
 class SpanNode extends FlowBox {
 
-  private chartTransform: ChartTransform;
+  private readonly chartTransform: ChartTransform;
   private readonly axisOrientation: Orientation;
   private delta: number;
   private readonly labelNode: Node;
